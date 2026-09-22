@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>S2/1 Study Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f5f5f7; --bg2:#e8e8ed; --panel:rgba(255,255,255,.68); --panel-solid:#ffffff; --panel-2:rgba(255,255,255,.42);
@@ -15,9 +15,9 @@
   --radius:20px; --radius-sm:14px; --radius-pill:999px;
   --glass-blur:blur(28px) saturate(170%);
   --ease:cubic-bezier(.16,1,.3,1);
-  --shadow-sm:0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
-  --shadow-md:0 10px 30px rgba(0,0,0,.07), 0 2px 8px rgba(0,0,0,.04);
-  --shadow-lg:0 24px 60px rgba(0,0,0,.12), 0 4px 16px rgba(0,0,0,.06);
+  --shadow-sm:inset 0 1px 0 rgba(255,255,255,.55), 0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
+  --shadow-md:inset 0 1px 0 rgba(255,255,255,.6), 0 10px 30px rgba(0,0,0,.07), 0 2px 8px rgba(0,0,0,.04);
+  --shadow-lg:inset 0 1px 0 rgba(255,255,255,.65), 0 24px 60px rgba(0,0,0,.12), 0 4px 16px rgba(0,0,0,.06);
   --ob:#726fa0; --ob-ink:#5c5987; --ob-bg:#f0f0f4; --ob-bg2:#e3e3ea; --ob-grad:var(--ob);
   --pom:#9c7c66; --pom-ink:#7d6250; --pom-bg:#f3efec; --pom-bg2:#e8e0da; --pom-grad:var(--pom);
   --aw:#4f8577; --aw-ink:#3d6b5f; --aw-bg:#eef2f0; --aw-bg2:#dfe6e3; --aw-grad:var(--aw);
@@ -30,15 +30,15 @@
   --ink:#f5f5f7; --ink-soft:#a1a1a6; --ink-faint:#6e6e73; --line:rgba(255,255,255,.1); --glass-edge:rgba(255,255,255,.14);
   --side:rgba(28,28,30,.55); --side-2:rgba(255,255,255,.05); --side-line:rgba(255,255,255,.09); --side-ink:#e5e5e7; --side-ink-dim:#8e8e93; --side-text:#f5f5f7;
   --good:#32d74b; --good-bg:rgba(50,215,75,.14); --bad:#ff453a; --bad-bg:rgba(255,69,58,.14); --warn:#ffd60a; --warn-bg:rgba(255,214,10,.14);
-  --shadow-sm:0 1px 3px rgba(0,0,0,.4); --shadow-md:0 10px 30px rgba(0,0,0,.45); --shadow-lg:0 24px 60px rgba(0,0,0,.6);
+  --shadow-sm:inset 0 1px 0 rgba(255,255,255,.08), 0 1px 3px rgba(0,0,0,.4); --shadow-md:inset 0 1px 0 rgba(255,255,255,.1), 0 10px 30px rgba(0,0,0,.45); --shadow-lg:inset 0 1px 0 rgba(255,255,255,.12), 0 24px 60px rgba(0,0,0,.6);
   --accent:#0a84ff; --accent-ink:#4fa2ff; --accent-bg:rgba(10,132,255,.16); --accent-bg2:rgba(10,132,255,.26); --accent-grad:#0a84ff;
   --blob-1:#5c5480; --blob-2:#3f5a7a; --blob-3:#3d6e5c;
   --btn-dark:#f5f5f7; --btn-dark-text:#1d1d1f;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
-body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .35s var(--ease),color .35s var(--ease);}
-h1,h2,h3,h4{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Fraunces',serif;letter-spacing:-.015em;font-weight:600;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .35s var(--ease),color .35s var(--ease);}
+h1,h2,h3,h4{font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;letter-spacing:-.02em;font-weight:700;}
 ::selection{background:var(--accent-bg2);}
 ::-webkit-scrollbar{width:9px;height:9px;}
 ::-webkit-scrollbar-thumb{background:#00000018;border-radius:14px;}
@@ -119,7 +119,7 @@ a,button{font-family:inherit;}
 .sh-glass-btn:before{content:'';position:absolute;z-index:1;top:35%;left:50%;transform:translateX(-50%);width:calc(100% - 16px);height:calc(100% - 16px);border-radius:var(--radius-pill);border:1px solid rgba(0,0,0,.9);filter:blur(8px);}
 .sh-glass-btn:after{z-index:1;content:'';position:absolute;inset:0;border-radius:var(--radius-pill);filter:blur(7px);background:linear-gradient(45deg,rgba(255,255,255,.8) 0%,transparent var(--tr),transparent calc(100% - var(--tr)),rgba(255,255,255,.8) 100%);}
 .sh-glass-btn .sh-overlay{position:absolute;inset:0;margin:4px;border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-pill);filter:blur(1px);}
-.sh-glass-btn .sh-text{position:relative;z-index:2;font-size:clamp(.95rem,2.4vw,1.15rem);font-weight:600;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;color:#3e3e3e;filter:drop-shadow(0 25px 3px rgba(102,102,102,.15));white-space:nowrap;}
+.sh-glass-btn .sh-text{position:relative;z-index:2;font-size:clamp(.95rem,2.4vw,1.15rem);font-weight:600;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#3e3e3e;filter:drop-shadow(0 25px 3px rgba(102,102,102,.15));white-space:nowrap;}
 .sh-glass-btn .sh-icon{position:relative;z-index:2;flex-shrink:0;width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:#3e3e3e;border-radius:50%;box-shadow:0 0 6px rgba(0,0,0,.3);transition:transform .25s var(--ease);}
 .sh-glass-btn .sh-icon svg{width:14px;fill:#f5f5f5;filter:drop-shadow(0 25px 3px rgba(102,102,102,.2));}
 .sh-glass-btn:hover{transform:translateY(-3px);filter:brightness(.95);}
@@ -200,7 +200,7 @@ a,button{font-family:inherit;}
 /* ============ SUMMARY ============ */
 .summary-text{font-size:.97rem;line-height:1.85;color:#2c2a26;}
 .summary-text p{margin-bottom:16px;}
-.summary-text p:first-of-type::first-letter{font-family:'Fraunces',serif;font-size:2.6em;font-weight:700;float:left;line-height:.85;padding-right:8px;padding-top:4px;color:var(--accent-ink);}
+.summary-text p:first-of-type::first-letter{font-family:'Inter',-apple-system,sans-serif;font-size:2.6em;font-weight:700;float:left;line-height:.85;padding-right:8px;padding-top:4px;color:var(--accent-ink);}
 
 /* ============ FLASHCARDS ============ */
 .fc-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:18px;font-size:.8rem;color:var(--ink-soft);flex-wrap:wrap;justify-content:space-between;}
@@ -229,7 +229,7 @@ a,button{font-family:inherit;}
 .flashcard-front .fc-label{color:var(--accent-ink);}
 .flashcard-back .fc-label{color:rgba(255,255,255,.85);}
 .flashcard-face .fc-body{font-size:1.05rem;overflow-y:auto;max-height:150px;font-weight:500;line-height:1.5;}
-.flashcard-front .fc-body{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;}
+.flashcard-front .fc-body{font-family:'Inter',-apple-system,sans-serif;font-weight:600;font-size:1.2rem;}
 .fc-hint{position:absolute;bottom:14px;right:20px;font-size:.66rem;opacity:.55;font-weight:600;}
 .fc-rate{display:flex;gap:10px;margin-bottom:16px;}
 .fc-rate button{flex:1;padding:11px 8px;border-radius:16px;border:1.5px solid var(--line);background:var(--panel);font-weight:700;font-size:.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:border-color .15s var(--ease),color .15s var(--ease),background .15s var(--ease);}
@@ -273,7 +273,7 @@ a,button{font-family:inherit;}
 .quiz-timer{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent-ink);}
 .quiz-q{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 20px;margin-bottom:18px;box-shadow:var(--shadow-sm);}
 .quiz-q .qtag{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-ink);background:var(--accent-bg);display:inline-block;padding:3px 9px;border-radius:16px;margin-bottom:10px;}
-.quiz-q .qtitle{font-weight:700;margin-bottom:16px;font-size:1rem;font-family:'Fraunces',serif;line-height:1.4;}
+.quiz-q .qtitle{font-weight:700;margin-bottom:16px;font-size:1rem;font-family:'Inter',-apple-system,sans-serif;line-height:1.4;}
 .quiz-options{display:flex;flex-direction:column;gap:9px;}
 .quiz-option{border:1.5px solid var(--line);border-radius:16px;padding:12px 16px;cursor:pointer;font-size:.87rem;transition:border-color .15s var(--ease),background .15s var(--ease),transform .15s var(--ease);display:flex;align-items:center;gap:11px;background:var(--panel-2);}
 .quiz-option .letter{width:24px;height:24px;border-radius:16px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0;color:var(--ink-soft);transition:background .15s var(--ease),color .15s var(--ease);}
@@ -287,7 +287,7 @@ a,button{font-family:inherit;}
 .quiz-exp{margin-top:14px;font-size:.83rem;color:#3a362e;background:var(--bg2);padding:13px 15px;border-radius:16px;display:none;border-left:3px solid var(--accent);}
 .quiz-exp.show{display:block;animation:fadein .25s var(--ease);}
 .quiz-summary{position:sticky;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;border-radius:var(--radius) var(--radius) 0 0;box-shadow:0 -8px 20px rgba(0,0,0,.06);margin-top:8px;gap:12px;flex-wrap:wrap;}
-.quiz-score{font-weight:700;font-family:'Fraunces',serif;font-size:1.05rem;}
+.quiz-score{font-weight:700;font-family:'Inter',-apple-system,sans-serif;font-size:1.05rem;}
 /* ============ SYSTEM-WIDE LIQUID GLASS CONTROLS ============ */
 .btn,.subject-btn,#theme-toggle,#menu-toggle,.case-tab{position:relative;border:1px double rgba(51,51,51,.08);box-shadow:
     inset 1.5px -1.5px 1px -1px rgba(255,255,255,.85),
@@ -360,7 +360,7 @@ a,button{font-family:inherit;}
 .scen-person{background:var(--panel-2);border-radius:14px;padding:14px 16px;border:1px solid var(--line);}
 .scen-person .name{font-weight:700;font-size:.85rem;color:var(--accent-ink);margin-bottom:4px;}
 .scen-person .desc{font-size:.82rem;color:var(--ink-soft);line-height:1.55;}
-.scen-q{font-weight:700;font-family:'Fraunces',serif;font-size:1.02rem;margin-bottom:14px;}
+.scen-q{font-weight:700;font-family:'Inter',-apple-system,sans-serif;font-size:1.02rem;margin-bottom:14px;}
 @media(max-width:600px){.scen-people{grid-template-columns:1fr;}}
 
 /* ============ MATCHER ============ */
@@ -390,7 +390,7 @@ a,button{font-family:inherit;}
 .ratio-statement{display:grid;grid-template-columns:1fr auto;gap:8px 20px;font-size:.87rem;margin-bottom:20px;background:var(--panel-2);padding:16px 18px;border-radius:14px;}
 .ratio-statement .lbl{color:var(--ink-soft);}
 .ratio-statement .val{font-family:'JetBrains Mono',monospace;font-weight:700;text-align:right;}
-.ratio-ask{font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;margin-bottom:14px;}
+.ratio-ask{font-family:'Inter',-apple-system,sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:14px;}
 .ratio-input{display:flex;gap:10px;margin-bottom:16px;}
 .ratio-input input{flex:1;padding:12px 14px;border:1.5px solid var(--line);border-radius:16px;font-size:.95rem;font-family:'JetBrains Mono',monospace;}
 .ratio-input input:focus{outline:none;border-color:var(--accent);}
@@ -407,7 +407,7 @@ a,button{font-family:inherit;}
 .case-tab{padding:9px 15px;border-radius:14px;font-size:.78rem;font-weight:700;cursor:pointer;background:var(--panel);border:1.5px solid var(--line);color:var(--ink-soft);}
 .case-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
 .case-brief{background:var(--accent-bg);border-radius:14px;padding:18px 20px;font-size:.85rem;color:var(--ink);margin-bottom:20px;line-height:1.7;border-left:4px solid var(--accent);}
-.case-q{font-family:'Fraunces',serif;font-weight:700;font-size:1.12rem;margin-bottom:14px;}
+.case-q{font-family:'Inter',-apple-system,sans-serif;font-weight:700;font-size:1.12rem;margin-bottom:14px;}
 .case-answer-box{width:100%;min-height:110px;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;font-family:inherit;font-size:.87rem;margin-bottom:14px;resize:vertical;}
 .case-model{background:var(--panel-2);border-radius:14px;padding:18px 20px;font-size:.85rem;line-height:1.75;display:none;}
 .case-model.show{display:block;animation:fadein .25s;}
@@ -476,7 +476,7 @@ a,button{font-family:inherit;}
         <div class="kicker">Semester 2 · Block 1</div>
         <h1>Your Study Hub</h1>
         <p>Deep, tool-rich revision for all three modules — scenario practice, matching games, timed exam simulators, randomized numeric drills, citation repair and more.</p>
-        <div class="sh-glass-btn" onclick="document.getElementById('home-cards').scrollIntoView({behavior:'smooth',block:'start'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()">
+        <div class="sh-glass-btn" onclick="selectSubject('ob',true)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()">
           <span class="sh-text">Get started</span>
           <div class="sh-icon">
             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.180132 473.232045 322.354755 16.406668c-21.413706-21.413706-56.121182-21.413706-77.534887 0-21.413706 21.413706-21.413706 56.122205 0 77.534887l418.057421 418.057421L244.819868 930.057421c-21.413706 21.413706-21.413706 56.122205 0 77.534887 10.706853 10.706853 24.759917 16.059767 38.767955 16.059767s28.061103-5.353938 38.767955-16.059767L779.180132 550.767955C800.593837 529.35425 800.593837 494.64575 779.180132 473.232045z"/></svg>
