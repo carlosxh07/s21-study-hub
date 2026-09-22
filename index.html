@@ -290,10 +290,31 @@ a,button{font-family:inherit;}
 .quiz-exp.show{display:block;animation:fadein .25s var(--ease);}
 .quiz-summary{position:sticky;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;border-radius:var(--radius) var(--radius) 0 0;box-shadow:0 -8px 20px rgba(0,0,0,.06);margin-top:8px;gap:12px;flex-wrap:wrap;}
 .quiz-score{font-weight:700;font-family:'Fraunces',serif;font-size:1.05rem;}
-.btn{background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:16px;cursor:pointer;font-size:.84rem;font-weight:700;transition:opacity .15s var(--ease),transform .15s var(--ease);}
-.btn:hover{opacity:.88;transform:translateY(-1px);}
-.btn.secondary{background:var(--btn-dark);color:var(--btn-dark-text);}
-.btn.ghost{background:transparent;color:var(--accent-ink);border:1.5px solid var(--accent-bg2);}
+/* ============ SYSTEM-WIDE LIQUID GLASS CONTROLS ============ */
+.btn,.subject-btn,#theme-toggle,#menu-toggle,.case-tab{position:relative;border:1px double rgba(51,51,51,.08);box-shadow:
+    inset 1.5px -1.5px 1px -1px rgba(255,255,255,.85),
+    inset -1.5px 1.5px 1px -1px rgba(255,255,255,.85),
+    inset 4px -4px 1px -4px rgba(255,255,255,.45),
+    inset -4px 4px 1px -4px rgba(255,255,255,.45),
+    inset 0 0 2px rgba(0,0,0,.12),
+    0 3px 10px rgba(0,0,0,.1);
+  backdrop-filter:blur(8px) saturate(165%);-webkit-backdrop-filter:blur(8px) saturate(165%);
+  transition:transform .2s var(--ease),box-shadow .2s var(--ease),opacity .2s var(--ease),filter .2s var(--ease);}
+.btn{background:color-mix(in srgb, var(--accent) 88%, transparent);color:#fff;border-color:rgba(255,255,255,.35);padding:10px 20px;border-radius:16px;cursor:pointer;font-size:.84rem;font-weight:700;}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05);}
+.btn:active{transform:scale(.96);}
+.btn.secondary{background:color-mix(in srgb, var(--btn-dark) 90%, transparent);color:var(--btn-dark-text);}
+.btn.ghost{background:color-mix(in srgb, var(--accent-bg) 70%, transparent);color:var(--accent-ink);border:1.5px solid var(--accent-bg2);box-shadow:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+.btn.ghost:hover{background:var(--accent-bg2);}
+:root[data-theme="dark"] .btn,:root[data-theme="dark"] .subject-btn,:root[data-theme="dark"] #theme-toggle,:root[data-theme="dark"] #menu-toggle,:root[data-theme="dark"] .case-tab{
+  border-color:rgba(255,255,255,.12);box-shadow:
+    inset 1.5px -1.5px 1px -1px rgba(255,255,255,.16),
+    inset -1.5px 1.5px 1px -1px rgba(255,255,255,.16),
+    inset 4px -4px 1px -4px rgba(255,255,255,.08),
+    inset -4px 4px 1px -4px rgba(255,255,255,.08),
+    inset 0 0 2px rgba(0,0,0,.5),
+    0 3px 12px rgba(0,0,0,.35);}
+:root[data-theme="dark"] .btn.ghost{box-shadow:none;}
 .best-score{font-size:.72rem;color:var(--ink-faint);}
 .quiz-breakdown{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px 26px 20px;margin-top:20px;}
 .quiz-breakdown h3{font-size:1.15rem;margin-bottom:16px;}
