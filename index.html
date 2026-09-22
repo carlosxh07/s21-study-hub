@@ -8,19 +8,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#faf9f7; --bg2:#f1efea; --panel:#ffffff; --panel-2:#fbfaf8;
-  --ink:#1f1e1c; --ink-soft:#67635b; --ink-faint:#a7a299; --line:#eae7e0;
-  --side:#17161c; --side-2:#201f27; --side-line:rgba(255,255,255,.07); --side-ink:#a9a6b5; --side-ink-dim:#69667a;
+  --bg:#f7f6f3; --bg2:#eeece6; --panel:rgba(255,255,255,.72); --panel-solid:#ffffff; --panel-2:rgba(255,255,255,.5);
+  --ink:#1f1e1c; --ink-soft:#67635b; --ink-faint:#a7a299; --line:rgba(31,30,28,.09);
+  --side:#151419; --side-2:rgba(255,255,255,.045); --side-line:rgba(255,255,255,.07); --side-ink:#a9a6b5; --side-ink-dim:#69667a;
   --good:#1e7d4f; --good-bg:#eaf6ef; --bad:#b8342c; --bad-bg:#fbebe9; --warn:#b8842c; --warn-bg:#faf1e2;
-  --radius:14px; --radius-sm:10px;
+  --radius:9px; --radius-sm:6px;
+  --glass-blur:blur(20px) saturate(160%);
   --ease:cubic-bezier(.16,1,.3,1);
-  --shadow-sm:0 1px 2px rgba(20,16,8,.04);
-  --shadow-md:0 10px 28px rgba(20,16,8,.07);
-  --shadow-lg:0 24px 56px rgba(20,16,8,.12);
+  --shadow-sm:0 1px 2px rgba(20,16,8,.03);
+  --shadow-md:0 6px 20px rgba(20,16,8,.05);
+  --shadow-lg:0 16px 40px rgba(20,16,8,.09);
   --ob:#5b52c9; --ob-ink:#4a41ab; --ob-bg:#f1f0fb; --ob-bg2:#e3e1f5; --ob-grad:var(--ob);
   --pom:#b8622f; --pom-ink:#94491f; --pom-bg:#faeee3; --pom-bg2:#f2ddc9; --pom-grad:var(--pom);
   --aw:#1c8a72; --aw-ink:#136955; --aw-bg:#e7f4ef; --aw-bg2:#d3ebe2; --aw-grad:var(--aw);
   --accent:var(--ob); --accent-ink:var(--ob-ink); --accent-bg:var(--ob-bg); --accent-bg2:var(--ob-bg2); --accent-grad:var(--ob-grad);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131217; --bg2:#1a1922; --panel:rgba(30,29,37,.6); --panel-solid:#1c1b23; --panel-2:rgba(255,255,255,.03);
+    --ink:#eeece9; --ink-soft:#a6a29c; --ink-faint:#6e6a64; --line:rgba(255,255,255,.08);
+    --side:#0d0c10; --shadow-sm:0 1px 2px rgba(0,0,0,.2); --shadow-md:0 6px 20px rgba(0,0,0,.25); --shadow-lg:0 16px 40px rgba(0,0,0,.4);
+  }
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
@@ -31,6 +39,7 @@ h1,h2,h3,h4{font-family:'Fraunces',serif;letter-spacing:-.01em;font-weight:600;}
 ::-webkit-scrollbar-thumb{background:#00000018;border-radius:8px;}
 ::-webkit-scrollbar-thumb:hover{background:#00000030;}
 #app{display:flex;height:100vh;overflow:hidden;}
+.glass{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);}
 a,button{font-family:inherit;}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important;}}
 
@@ -80,7 +89,7 @@ a,button{font-family:inherit;}
 .hero h1{font-size:2.4rem;margin-bottom:12px;font-weight:600;}
 .hero p{color:var(--ink-soft);font-size:1rem;max-width:560px;margin:0 auto 40px;}
 .subject-cards{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;max-width:1040px;margin:0 auto;}
-.subj-card{width:310px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:0;text-align:left;cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);box-shadow:var(--shadow-sm);overflow:hidden;opacity:0;animation:riseIn .5s var(--ease) forwards;}
+.subj-card{width:310px;background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:10px;padding:0;text-align:left;cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);box-shadow:var(--shadow-sm);overflow:hidden;opacity:0;animation:riseIn .5s var(--ease) forwards;}
 .subj-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--accent-bg2);}
 .subj-card .banner{height:74px;display:flex;align-items:center;padding:0 22px;}
 .subj-card .banner svg{width:34px;height:34px;}
@@ -106,7 +115,7 @@ a,button{font-family:inherit;}
 
 /* ============ TOPIC GRID ============ */
 .topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:8px;}
-.topic-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:19px 20px;cursor:pointer;transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease);box-shadow:var(--shadow-sm);position:relative;opacity:0;animation:riseIn .45s var(--ease) forwards;}
+.topic-card{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:19px 20px;cursor:pointer;transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease);box-shadow:var(--shadow-sm);position:relative;opacity:0;animation:riseIn .45s var(--ease) forwards;}
 .topic-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--accent-bg2);}
 .topic-card .num{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--accent-ink);font-weight:700;margin-bottom:8px;}
 .topic-card h4{font-size:1rem;margin-bottom:6px;font-weight:600;}
@@ -114,7 +123,7 @@ a,button{font-family:inherit;}
 .topic-card .meta{margin-top:12px;font-size:.68rem;color:var(--ink-faint);display:flex;gap:12px;font-weight:600;}
 
 .tool-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:6px;}
-.tool-tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;cursor:pointer;transition:transform .22s var(--ease),box-shadow .22s var(--ease);box-shadow:var(--shadow-sm);opacity:0;animation:riseIn .45s var(--ease) forwards;}
+.tool-tile{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;cursor:pointer;transition:transform .22s var(--ease),box-shadow .22s var(--ease);box-shadow:var(--shadow-sm);opacity:0;animation:riseIn .45s var(--ease) forwards;}
 .tool-tile:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
 .tool-tile .ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:var(--accent-bg);transition:transform .22s var(--ease);}
 .tool-tile:hover .ic{transform:scale(1.06);}
@@ -156,8 +165,8 @@ a,button{font-family:inherit;}
 .flashcard-wrap{perspective:1600px;height:230px;cursor:pointer;margin-bottom:20px;}
 .flashcard-inner{position:relative;width:100%;height:100%;transition:transform .55s var(--ease);transform-style:preserve-3d;}
 .flashcard-inner.flipped{transform:rotateY(180deg);}
-.flashcard-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow-md);border:1px solid var(--line);}
-.flashcard-front{background:var(--panel);}
+.flashcard-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow-md);border:1px solid var(--line);}
+.flashcard-front{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);}
 .flashcard-back{background:var(--accent);transform:rotateY(180deg);color:#fff;border:none;}
 .flashcard-face .fc-label{font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;font-weight:700;opacity:.7;}
 .flashcard-front .fc-label{color:var(--accent-ink);}
@@ -205,7 +214,7 @@ a,button{font-family:inherit;}
 .quiz-progress-fill{height:100%;background:var(--accent);transition:width .4s var(--ease);border-radius:6px;}
 .quiz-meta-row{display:flex;justify-content:space-between;font-size:.76rem;color:var(--ink-soft);margin-bottom:8px;font-weight:600;}
 .quiz-timer{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent-ink);}
-.quiz-q{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 20px;margin-bottom:18px;box-shadow:var(--shadow-sm);}
+.quiz-q{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 20px;margin-bottom:18px;box-shadow:var(--shadow-sm);}
 .quiz-q .qtag{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-ink);background:var(--accent-bg);display:inline-block;padding:3px 9px;border-radius:6px;margin-bottom:10px;}
 .quiz-q .qtitle{font-weight:700;margin-bottom:16px;font-size:1rem;font-family:'Fraunces',serif;line-height:1.4;}
 .quiz-options{display:flex;flex-direction:column;gap:9px;}
@@ -236,7 +245,7 @@ a,button{font-family:inherit;}
 .qb-row .qb-pct{width:44px;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.78rem;}
 
 /* ============ CHEATSHEET ============ */
-.cheat-block{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
+.cheat-block{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
 .cheat-block h4{font-size:1.05rem;margin-bottom:11px;color:var(--accent-ink);display:flex;align-items:center;gap:8px;}
 .cheat-block h4::before{content:'';width:7px;height:7px;background:var(--accent);border-radius:2px;display:inline-block;}
 .cheat-block ul{padding-left:20px;font-size:.85rem;line-height:1.8;}
@@ -268,9 +277,9 @@ a,button{font-family:inherit;}
 .verb-chip{background:var(--accent-bg);color:var(--accent-ink);padding:5px 12px;border-radius:20px;font-size:.78rem;font-weight:600;}
 
 /* ============ SCENARIO LAB ============ */
-.scen-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:18px;box-shadow:var(--shadow-sm);}
+.scen-card{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:18px;box-shadow:var(--shadow-sm);}
 .scen-people{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
-.scen-person{background:var(--panel-2);border-radius:12px;padding:14px 16px;border:1px solid var(--line);}
+.scen-person{background:var(--panel-2);border-radius:8px;padding:14px 16px;border:1px solid var(--line);}
 .scen-person .name{font-weight:700;font-size:.85rem;color:var(--accent-ink);margin-bottom:4px;}
 .scen-person .desc{font-size:.82rem;color:var(--ink-soft);line-height:1.55;}
 .scen-q{font-weight:700;font-family:'Fraunces',serif;font-size:1.02rem;margin-bottom:14px;}
@@ -291,7 +300,7 @@ a,button{font-family:inherit;}
 .timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--accent-bg2);}
 .tl-era{position:relative;margin-bottom:6px;}
 .tl-era .tl-dot{position:absolute;left:-28px;top:14px;width:16px;height:16px;border-radius:50%;background:var(--panel);border:3px solid var(--accent);}
-.tl-era-head{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-sm);}
+.tl-era-head{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:8px;padding:14px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-sm);}
 .tl-era-head .yr{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent-ink);font-weight:700;}
 .tl-era-head h4{font-size:.98rem;}
 .tl-era-body{max-height:0;overflow:hidden;transition:max-height .3s;background:var(--panel-2);border-radius:0 0 12px 12px;margin-top:-1px;}
@@ -299,8 +308,8 @@ a,button{font-family:inherit;}
 .tl-era-body-inner{padding:16px 18px;font-size:.85rem;color:var(--ink-soft);line-height:1.7;}
 
 /* ============ RATIO CALCULATOR ============ */
-.ratio-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-sm);}
-.ratio-statement{display:grid;grid-template-columns:1fr auto;gap:8px 20px;font-size:.87rem;margin-bottom:20px;background:var(--panel-2);padding:16px 18px;border-radius:12px;}
+.ratio-panel{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-sm);}
+.ratio-statement{display:grid;grid-template-columns:1fr auto;gap:8px 20px;font-size:.87rem;margin-bottom:20px;background:var(--panel-2);padding:16px 18px;border-radius:8px;}
 .ratio-statement .lbl{color:var(--ink-soft);}
 .ratio-statement .val{font-family:'JetBrains Mono',monospace;font-weight:700;text-align:right;}
 .ratio-ask{font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;margin-bottom:14px;}
@@ -311,7 +320,7 @@ a,button{font-family:inherit;}
 .ratio-feedback.show{display:block;}
 .ratio-feedback.correct{background:var(--good-bg);color:var(--good);}
 .ratio-feedback.wrong{background:var(--bad-bg);color:var(--bad);}
-.ratio-solution{background:var(--panel-2);border-radius:12px;padding:16px 18px;font-size:.85rem;line-height:1.8;display:none;margin-bottom:14px;}
+.ratio-solution{background:var(--panel-2);border-radius:8px;padding:16px 18px;font-size:.85rem;line-height:1.8;display:none;margin-bottom:14px;}
 .ratio-solution.show{display:block;}
 .ratio-solution code{font-family:'JetBrains Mono',monospace;background:var(--bg2);padding:2px 6px;border-radius:5px;}
 
@@ -319,15 +328,15 @@ a,button{font-family:inherit;}
 .case-tabbar{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
 .case-tab{padding:9px 15px;border-radius:9px;font-size:.78rem;font-weight:700;cursor:pointer;background:var(--panel);border:1.5px solid var(--line);color:var(--ink-soft);}
 .case-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-.case-brief{background:var(--accent-bg);border-radius:14px;padding:18px 20px;font-size:.85rem;color:var(--ink);margin-bottom:20px;line-height:1.7;border-left:4px solid var(--accent);}
+.case-brief{background:var(--accent-bg);border-radius:8px;padding:18px 20px;font-size:.85rem;color:var(--ink);margin-bottom:20px;line-height:1.7;border-left:4px solid var(--accent);}
 .case-q{font-family:'Fraunces',serif;font-weight:700;font-size:1.12rem;margin-bottom:14px;}
-.case-answer-box{width:100%;min-height:110px;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:.87rem;margin-bottom:14px;resize:vertical;}
-.case-model{background:var(--panel-2);border-radius:12px;padding:18px 20px;font-size:.85rem;line-height:1.75;display:none;}
+.case-answer-box{width:100%;min-height:110px;padding:14px 16px;border:1.5px solid var(--line);border-radius:8px;font-family:inherit;font-size:.87rem;margin-bottom:14px;resize:vertical;}
+.case-model{background:var(--panel-2);border-radius:8px;padding:18px 20px;font-size:.85rem;line-height:1.75;display:none;}
 .case-model.show{display:block;animation:fadein .25s;}
 .case-model h5{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-ink);margin-bottom:10px;}
 
 /* ============ CITATION DOCTOR / LOGIC ============ */
-.doc-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
+.doc-card{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
 .doc-broken{font-family:'JetBrains Mono',monospace;font-size:.84rem;background:var(--bad-bg);color:#7a2620;padding:13px 15px;border-radius:10px;margin-bottom:14px;line-height:1.6;}
 .doc-fixed{font-family:'JetBrains Mono',monospace;font-size:.84rem;background:var(--good-bg);color:#1a5c3a;padding:13px 15px;border-radius:10px;margin-bottom:10px;line-height:1.6;display:none;}
 .doc-fixed.show{display:block;}
@@ -340,7 +349,7 @@ a,button{font-family:inherit;}
 .logic-types button.wrong{border-color:var(--bad);background:var(--bad-bg);color:var(--bad);}
 
 /* ============ PEEL ============ */
-.peel-block{border-radius:14px;padding:16px 18px;margin-bottom:10px;font-size:.87rem;line-height:1.65;position:relative;padding-left:52px;}
+.peel-block{border-radius:8px;padding:16px 18px;margin-bottom:10px;font-size:.87rem;line-height:1.65;position:relative;padding-left:52px;}
 .peel-block .peel-tag{position:absolute;left:14px;top:16px;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;color:#fff;}
 .peel-p{background:#efe9fb;}.peel-p .peel-tag{background:#7c5cd6;}
 .peel-e1{background:#e2effb;}.peel-e1 .peel-tag{background:#3d8fd6;}
@@ -1094,6 +1103,136 @@ const AW_PEEL_EXAMPLES = [
 {topic:"Goal-setting and performance",p:"Setting difficult, specific goals produces significantly higher performance than vague or easy goals.",e:"Latham and Locke's (1991) research across multiple field and laboratory studies consistently found higher, more specific goals correlated with higher performance outcomes.",x:"This is because specific, difficult goals focus attention, increase effort and persistence, and encourage the development of task-relevant strategies that vague goals do not require.",l:"Applied to a business context, this implies that a general instruction to \"do your best\" is measurably weaker management practice than a concrete, challenging target."}
 ];
 
+/* ============================================================ AW — SHALINI MOCKUP EXAMS (Sept 2026) ============================================================ */
+const AW_MOCK_MC = [
+{q:"Which criterion for evaluating source quality asks whether a source aims to advance knowledge rather than persuade or sell?",opts:["Currency","Authorship","Purpose","Credibility"],correct:2,exp:"Purpose asks what the source is trying to do — inform/advance knowledge vs. persuade or sell."},
+{q:"According to the distinction between academic and grey literature, which is true?",opts:["Academic journal articles undergo rigorous peer review; grey literature does not","Grey literature is always more current than journal articles","Peer review guarantees a source has no limitations","Grey literature should replace theoretical sources when convenient"],correct:0,exp:"Peer review is the defining difference; grey literature (reports, white papers) is not peer-reviewed."},
+{q:"Before citing a journal article, which resource should you check to confirm the journal is high-quality?",opts:["The journal's own website","The number of Google search results","The article's word count","A journal quality ranking such as the AJG (formerly ABS List) or VHB-JOURQUAL"],correct:3,exp:"Journal rankings (AJG/VHB-JOURQUAL) are the standard way to verify journal quality before citing."},
+{q:"A consulting report from a strategy firm such as BCG or McKinsey is best classified and used as:",opts:["A peer-reviewed source that generates new theoretical knowledge","Grey literature, useful for context and data but not to replace theory","An academic source suitable for citing in place of a journal article","A primary source requiring no evaluation of its methodology"],correct:1,exp:"Consulting reports are grey literature — useful for data/context but not a substitute for peer-reviewed theory."},
+{q:"In the six-step search strategy, what should a student do BEFORE opening any database?",opts:["Filter results to peer-reviewed only","Build a Boolean search string using core concepts and synonyms","Import results into Zotero or Endnote","Read 3–5 accessible sources and sketch your position before opening any database"],correct:3,exp:"The strategy starts with orienting reading and a rough position before formal database search begins."},
+{q:"A student reuses a data-analysis section from an assignment they submitted last term without indicating this. This is an example of:",opts:["Self-plagiarism","Patchwork plagiarism","Verbatim plagiarism","Global plagiarism"],correct:0,exp:"Reusing your own previously submitted work without disclosure is self-plagiarism."},
+{q:"A student paraphrases a source's argument correctly in their own words but forgets to add a citation. This is best classified as:",opts:["Not plagiarism, since the wording is entirely original","Self-plagiarism, because the student reused their own words","Paraphrasing plagiarism, because the idea still belongs to the original author","Global plagiarism, because the whole passage is unattributed"],correct:2,exp:"Original wording doesn't matter — the idea is still someone else's and needs a citation."},
+{q:"In APA 7th edition, how should a source with three or more authors be cited from the first citation onward?",opts:["List all authors' surnames every time they are cited","Cite as Author et al. (Year), using et al. from the very first citation","List the first two authors and 'and colleagues' thereafter","Cite the first author only, with no indication of the others"],correct:1,exp:"APA 7th uses 'et al.' from the first citation for 3+ authors."},
+{q:"How should two authors be cited in a narrative citation (part of the sentence)?",opts:["(Glikson & Woolley, 2020)","Glikson & Woolley (2020)","(Glikson and Woolley, 2020)","Glikson and Woolley (2020)"],correct:3,exp:"Narrative citations spell out 'and' and put the year in its own parentheses after the names."},
+{q:"Which of the following does NOT require a citation under EBS rules?",opts:["Your own original analysis or interpretation","A statistic taken from Statista","A definition borrowed from a textbook","A theory or framework you apply from a source"],correct:0,exp:"Your own analysis/interpretation is your intellectual contribution and needs no citation."},
+{q:"A direct quote under 40 words should be formatted as:",opts:["A block quote, indented, with no quotation marks","In italics with no citation","In quotation marks, in-line, with the full stop after the citation","Paraphrased so no quotation marks are needed"],correct:2,exp:"Short quotes (<40 words) stay in-line, in quotation marks, with the period after the citation."},
+{q:"A direct quotation of 52 words from a journal article should be formatted as:",opts:["An in-line quotation with quotation marks and a page number","A block quotation, indented, without quotation marks, with the period placed before the citation","A block quotation that retains quotation marks for clarity","A paraphrase, since quotations over 40 words are not permitted"],correct:1,exp:"Quotes ≥40 words become an indented block quote, no quotation marks, period before the citation."},
+{q:"Which of the following is considered best practice for using a source in academic writing?",opts:["Direct quotation, because it preserves the author's exact meaning","Patchwriting, because it blends several sources efficiently","Paraphrase, because it avoids repeating the source's wording","Summary, because it condenses the idea concisely while still requiring citation"],correct:3,exp:"Summary is recommended best practice in business/academic writing."},
+{q:"Which statement about the reference list is FALSE?",opts:["Entries are alphabetised by the first author's surname","Every entry uses a hanging indent","Personal communications are included in the reference list","Every in-text citation must correspond to an entry in the list"],correct:2,exp:"Personal communications are cited in-text only — they do NOT appear in the reference list."},
+{q:"Two sources are cited together in one parenthetical citation. Under APA 7th rules, they should be:",opts:["Listed alphabetically and separated by a semicolon","Separated by a comma and listed in the order they were published","Listed in order of relevance to the argument","Combined into a single citation using 'et al.' for both"],correct:0,exp:"Multiple sources in one parenthetical are alphabetised and separated by semicolons."},
+{q:"Two references by the same author, published in the same year, are distinguished in the reference list by:",opts:["Listing the longer title first","Listing them in a footnote instead","Only including the more recent one","Adding \"a\" and \"b\" after the year (2012a, 2012b)"],correct:3,exp:"APA 7th appends a/b/c to the year to distinguish same-author, same-year works."},
+{q:"Which of the following is NOT one of the reasons for citing sources?",opts:["To give credit for the intellectual work of others","A minimum number of citations is required on every page","To demonstrate that your argument is built on evidence","To enable readers to verify your sources and evaluate your logic"],correct:1,exp:"There is no per-page citation quota — citing serves credit, evidence, and verifiability, not a word-count-style rule."},
+{q:"Where does a personal communication (e.g. an interview with a manager) appear?",opts:["In-text only","In the reference list only","In both the text and the reference list","In an appendix only"],correct:0,exp:"Personal communications aren't retrievable by readers, so they're cited in-text only."},
+{q:"Which body-text font, size, and line spacing does the EBS template require?",opts:["Arial, 11pt, single spacing","Calibri, 12pt, double spacing","Times New Roman, 12pt, 1.5 spacing","Times New Roman, 10pt, 1.5 spacing"],correct:2,exp:"EBS template: Times New Roman, 12pt, 1.5 line spacing."},
+{q:"What are the correct EBS margin settings?",opts:["2.5 cm on all sides","Left 4 cm · Right 2 cm · Top 3 cm · Bottom 2 cm","1 inch on all sides","Left 2 cm · Right 4 cm · Top 2 cm · Bottom 3 cm"],correct:1,exp:"EBS margins: Left 4cm (for binding) · Right 2cm · Top 3cm · Bottom 2cm."},
+{q:"Under EBS document structure rules, which numbering system is used for the page numbers of the Table of Contents and List of Figures pages themselves?",opts:["Arabic numerals continuing from the main body","Letters (a, b, c…)","No page numbers are required for ante content","Roman numerals (i, ii, iii…)"],correct:3,exp:"Front matter (ToC, LoF) uses Roman numerals; Arabic numbering starts with the main body."},
+{q:"If a sub-section numbered 3.1 appears in a document, EBS formatting rules require:",opts:["At least a 3.2 must also exist","No further sub-sections are needed","The next section must be numbered 4.1","Section 3 must be at least one full page long"],correct:0,exp:"You can't have a lone sub-section — if there's a 3.1 there must be at least a 3.2."},
+{q:"A figure is reproduced from a source without any modification. The correct source line format is:",opts:["'Source: [Author], [Year]'","'Adapted from: [Author] ([Year])'","'From: [Author] ([Year])'","No source line is needed if the work is credited in the reference list"],correct:2,exp:"Unmodified reproductions use 'From:'; modified/combined figures use 'Adapted from:'."},
+{q:"A table in a bachelor project paper is the third table overall, but appeared as 'Table 1' in its original source. In the assignment, it should be labelled:",opts:["Table 1, matching the original source","Table 3, renumbered according to its position in the assignment","Table 1.3, combining the source and assignment order","Left unlabelled, since it is borrowed from another source"],correct:1,exp:"Tables/figures are renumbered to match their sequence in your own document, not the source."},
+{q:"Figures and tables are numbered:",opts:["In one combined sequence","Restarting from 1 in every chapter","Only if they are longer than half a page","In two separate sequences — Figure 1, 2, 3… and Table 1, 2, 3…"],correct:3,exp:"Figures and tables run in two independent numbering sequences."},
+{q:"A student writes 'the figure below shows a decline in exports' without further reference to a figure number. This violates which rule?",opts:["The call-out rule, which requires each figure to be referred to by number in the text","The numbering rule, because figures and tables must use Arabic numerals","The list-entry rule, which requires every figure to appear in the List of Figures","The copyright rule, which limits use to three figures per source"],correct:0,exp:"Every figure/table must be explicitly called out by its number in the running text."},
+{q:"Under EBS's copyright guidance, reproducing a figure without seeking separate permission is acceptable when:",opts:["The figure is used for commercial purposes and properly credited","The use is scholarly and non-commercial, full credit is given, and no more than three items are taken from one source","More than three figures are taken from a single journal article","The original creator is anonymous"],correct:1,exp:"Scholarly, non-commercial use, full credit, and a max of three items per source is the safe-harbour rule."},
+{q:"In APA-style table formatting, which formatting element is INCORRECT?",opts:["A thin rule above and below the header row","A 'Note.' line below the table for sample size or similar detail","The caption placed above or below the table","Vertical lines separating every column"],correct:3,exp:"APA tables avoid full vertical gridlines — they use horizontal rules only."},
+{q:"According to the 5-step formula for figures and tables, what comes immediately after the source line?",opts:["The list-of-figures entry","The caption","A blank line, then the call-out paragraph","The next figure in the sequence"],correct:2,exp:"Source line → blank line → call-out paragraph referencing the figure by number."},
+{q:"A running header on every page of an EBS document should contain:",opts:["A short title and the page number","Only the page number","The chapter number and section number","The full title and the author's name"],correct:0,exp:"EBS running headers carry a short title plus the page number."},
+{q:"According to the four criteria for a good hypothesis, which property means it must be testable and capable of being proven false with data?",opts:["Connected","Analyzable","Specific","Falsifiable"],correct:3,exp:"Falsifiability = the hypothesis can, in principle, be shown wrong by data."},
+{q:"Why might a researcher choose a qualitative approach instead of testing a hypothesis?",opts:["Qualitative research skips the scientific method entirely","Not enough theory yet exists to derive hypotheses, and the goal is to understand how or why something happens","Qualitative research always produces stronger evidence than quantitative testing","Qualitative research requires random sampling rather than purposeful sampling"],correct:1,exp:"Qualitative work fits early-stage, theory-thin areas where the goal is exploring how/why, not testing a stated hypothesis."},
+{q:"Which academic genre is described as 'mapping what is known and not yet known about a topic', organised by theme rather than by source?",opts:["Academic essay","Case study","Literature review","Project paper"],correct:2,exp:"A literature review maps a field by theme, showing what's known/unknown."},
+{q:"A literature review is best organised:",opts:["By theme, grouping what multiple sources say about each issue","Source by source, summarising each one in turn","Chronologically by publication date only","Alphabetically by author surname"],correct:0,exp:"Thematic organisation (by idea) is correct — never source-by-source."},
+{q:"What distinguishes a project paper from a stand-alone literature review?",opts:["The literature review requires primary data collection; the project paper does not","The project paper combines academic theory with real internship/business data, while a stand-alone review uses literature only","The project paper uses no theoretical framework at all","Both genres are identical in structure and evidence base"],correct:1,exp:"A project paper applies theory to real (e.g. internship) data; a stand-alone review works from literature only."},
+{q:"In the essay structure, where does the refutation of a counter-argument belong?",opts:["In the introduction, before the position is stated","It replaces the counter-argument entirely","In the conclusion, as a new argument","In the body, after the counter-argument is presented"],correct:3,exp:"Refutation always comes in the body, right after the counter-argument it responds to."},
+{q:"A common weakness identified in project papers is a theoretical background section that:",opts:["Is too short relative to the rest of the paper","Cites too many peer-reviewed sources","Summarises frameworks without connecting them to the practical problem","Includes the student's own internship data"],correct:2,exp:"The classic weakness is listing theory without ever linking it back to the practical problem."},
+{q:"Which statement is true of the academic essay, the literature review, and the project paper?",opts:["The project paper relies on internship data alone, without any embedded literature review","The essay argues one position; the literature review maps a field; the project paper applies theory to a real problem","The literature review requires the writer to argue a personal position, just as the essay does","The essay and the project paper are the same length, since both draw on literature and real-world evidence"],correct:1,exp:"Essay = argue one position. Literature review = map a field. Project paper = apply theory to a real problem."}
+];
+
+const AW_MOCK_WRITTEN = [
+{tab:"Exam 2 · Q1", pts:"15 pts", title:"Cohesion", prompt:"Customer loyalty is influenced by many factors. Price is one of them. Service quality also plays a role. Brand trust matters too. Loyalty programmes are widely used by retailers. Amazon Prime has over 200 million subscribers worldwide.\n\n(a) What cohesion problem does this passage have? (5 pts)\n(b) Rewrite it as one cohesive passage of 2–3 sentences, using transition or reference words. Remove anything irrelevant. (10 pts)", model:"(a) The sentences are not linked — no transitions, reference words, or given-to-new order — and the final sentence (Amazon Prime subscriber count) is irrelevant.\n(b) Customer loyalty depends on several factors, including price, service quality, and brand trust. Many retailers try to strengthen this loyalty through structured programmes that reward repeat purchases."},
+{tab:"Exam 2 · Q2", pts:"15 pts", title:"Coherence", prompt:"(1) Supply chains have become more global since the 1990s. (2) The COVID-19 pandemic disrupted shipping routes in 2020. (3) Companies can work more efficiently by keeping very little stock in their warehouses. (4) Some companies are now moving production back closer to home, which costs more but makes supply more reliable. (5) Container ships can carry over 20,000 units. (6) Resilience has become a priority for supply chain managers.\n\n(a) Is this passage coherent? Explain why or why not. (4 pts)\n(b) One sentence does not belong — name it, then order the rest logically. (6 pts)\n(c) Write a topic sentence that holds the paragraph together. (5 pts)", model:"(a) No — the sentences are about related topics but do not build toward a unified whole, and there is no topic sentence.\n(b) Sentence 5 does not belong (ship size, unrelated to the argument). Logical order for the rest: 1, 3, 2, 4, 6 — global/efficient → disruption → response → result.\n(c) Possible topic sentence: 'Recent disruptions have led supply chain managers to value reliability more than pure efficiency.'"},
+{tab:"Exam 2 · Q3", pts:"15 pts", title:"Consistency", prompt:"Open-plan offices are ineffective and should be abandoned by firms seeking to protect employee focus. Studies show that open-plan layouts increase noise and interruption, reducing individual concentration (Kim & de Dear, 2013). Nonetheless, when our firm moved to an open-plan layout last year, nearly every team reported that they felt more connected to colleagues and collaboration increased noticeably.\n\n(a) Where exactly is the inconsistency? (5 pts)\n(b) Propose one way to resolve it — revise the claim or reframe the evidence. (10 pts)", model:"(a) The opening claim (open-plan offices are ineffective and should be abandoned) contradicts the firm's own experience (increased connection and collaboration) presented later.\n(b) Revising the claim: narrow it, e.g. 'Open-plan offices reduce individual focus, so firms whose work depends on concentration should not adopt them' — no longer contradicts the collaboration finding. Reframing the evidence: keep the claim but present the firm's experience as a limited counter-point that measures perceived connection, not concentration or output."},
+{tab:"Exam 2 · Q4", pts:"15 pts", title:"Synthesis", prompt:"Source A — Bloom et al. (2015): staff working from home at a Chinese travel company were 13% more productive; fewer breaks, quieter place.\nSource B — Gibbs et al. (2021): IT staff at an Indian tech company worked longer hours at home during the pandemic but produced less per hour.\nSource C — Choudhury et al. (2021): government office workers allowed to work fully remotely produced more, even far from the office — control over their own time was what helped, not proximity to colleagues.\n\n(a) Map where each source stands (raises / lowers / adds nuance). (4 pts)\n(b) State the tension between the sources in 1–2 sentences. (3 pts)\n(c) Write one ~100–130 word paragraph synthesising the three sources — your own opening claim, evidence both ways, the source that explains the difference, then one sentence on implications. One sentence per source. (8 pts)", model:"(a) Raises productivity: A (fewer distractions at home). Lowers productivity: B (less output per hour). Adds nuance: C, which identifies the condition that matters — control over one's own time rather than distance from colleagues (C's higher output also fits the first row).\n(b) A and C find remote work raises productivity; B finds it lowers it — the sources disagree about whether working away from the office helps or harms output, so something must differ between the situations studied.\n(c) Remote work does not raise or lower productivity by itself; what matters is the conditions under which people work at home. Gibbs et al. (2021) found output per hour fell when staff had no say over when or how long they worked. Bloom et al. (2015) found the opposite where conditions were better: fewer distractions and a quieter workspace. Choudhury et al. (2021) show which condition matters most — control over one's own schedule, not distance from colleagues. Companies should therefore design remote work around the conditions staff work under, above all their control over their own time."},
+{tab:"Exam 2 · Q5", pts:"15 pts", title:"Diagnosing & rebuilding a paragraph", prompt:"Many companies, such as Netflix, now sell their products as a subscription. Netflix has its headquarters in California. Monthly payments give companies a more stable income than single sales. Some customers do not like paying again and again for the same product. This is called subscription fatigue: customers become tired of paying every month for a product they feel they already own.\n\n(a) What's wrong with this passage, and which concept does it violate — cohesion or coherence? (5 pts)\n(b) Rewrite as one clear paragraph with a topic sentence and logical order (60–80 words). (10 pts)", model:"(a) No coherence: the sentences jump between unrelated ideas (company history, income, customer reactions) with no topic sentence unifying them.\n(b) Subscriptions have become popular because they give companies a more stable income than single sales. This is why media and software companies now sell monthly plans instead of single products. For customers, however, the model is less attractive, because they pay again and again for something they feel they already own. As a result, some of them develop subscription fatigue and cancel."},
+{tab:"Exam 2 · Q6", pts:"15 pts", title:"PEEL & counter-argument", prompt:"Fact 1. A 2023 survey of 1,200 employees at a European logistics firm: staff offered hybrid work were 34% less likely to resign within one year than on-site staff.\nFact 2. Exit interviews: commuting time and inflexible scheduling were the two most common reasons given for on-site resignations.\nFact 3. Teams working mainly from home rated cooperation with colleagues 21% lower than on-site teams.\n\n(a) Using only Facts 1 and 2, write one PEEL paragraph (100–120 words) showing remote work can reduce turnover. Mark P/E/E/L. (10 pts)\n(b) Using Fact 3, write a ~50-word counter-argument your paragraph would need to answer. (5 pts)", model:"(a) P: Hybrid and remote work can reduce employee turnover. E: In a 2023 survey of 1,200 employees, staff with a hybrid option were 34% less likely to leave within one year. Exit interviews found long commutes and fixed hours were the main reasons for leaving. E: These facts fit together — hybrid work removes exactly the problems that made people leave. L: Companies losing many employees should see flexible work as a retention tool, not an extra benefit.\n(b) Lower turnover may come at a price: teams working mainly from home rated cooperation with colleagues 21% lower than on-site teams. Keeping staff is of little use if those staff work together less well — flexible work may shift the problem from turnover to team performance rather than solving it."},
+{tab:"Exam 3 · Q1", pts:"10 pts", title:"Identify the logic — I", prompt:"Firms offering fully flexible working hours tend to report lower staff turnover. A study of 60 UK mid-sized firms found this pattern. A separate study of 45 Dutch firms found the same. A third study of 200 tech-sector firms confirmed it again. On this basis, flexible working hours appear to reduce turnover.\n\n(a) Deduction, induction, abduction, or analogy? (3 pts)\n(b) Which feature led you to that answer? (4 pts)\n(c) One weakness in the argument. (3 pts)", model:"(a) Induction.\n(b) The argument moves from multiple specific observations (UK, Dutch, tech-sector firms) to a general conclusion; its strength rests on the number/variety of studies — the hallmark of induction.\n(c) Correlation ≠ causation — a third factor (e.g. more progressive firms offering both flexibility and other perks) could explain the pattern; the conclusion stays probable, not certain."},
+{tab:"Exam 3 · Q2", pts:"10 pts", title:"Identify the logic — II", prompt:"Motivation theory states employees who receive regular recognition are more motivated than those who receive none. In our marketing department, every employee receives written feedback and recognition monthly. The employees in marketing are therefore more motivated than employees who receive no recognition.\n\n(a) Deduction, induction, abduction, or analogy? (3 pts)\n(b) Which feature led you to that answer? (4 pts)\n(c) What would make this argument unreliable in practice, even though the logic is valid? (3 pts)", model:"(a) Deduction.\n(b) A general theory is applied to one specific case, producing a conclusion that must follow if both premises are true — general to particular, typical of deduction.\n(c) A deduction is only as good as its starting theory. Some employees may not care about recognition and are motivated more by pay or interesting work — if the theory doesn't hold for this department, the conclusion is wrong even though the logic is correct."},
+{tab:"Exam 3 · Q3", pts:"10 pts", title:"Identify the logic — III", prompt:"Sales in our online shop fell by 20% last month. In the same month, the website was slow on mobile phones. Our prices did not change and no competitor entered the market. The most likely explanation is that the slow website caused the drop in sales.\n\n(a) Deduction, induction, abduction, or analogy? (3 pts)\n(b) Which feature led you to that answer? (4 pts)\n(c) Give one other explanation that would weaken this conclusion. (3 pts)", model:"(a) Abduction.\n(b) The argument starts from an observation (sales fell) and offers the most likely explanation, having ruled out two alternatives (price, new competitors) — choosing the best available explanation is typical of abduction.\n(c) Other openings remain: a marketing campaign ended, the month is normally weaker, popular items were out of stock, or an existing competitor ran a discount — any could explain the drop, so the conclusion is probable, not proven."},
+{tab:"Exam 3 · Q4", pts:"10 pts", title:"Counter-argument", prompt:"Claim: Employee wellbeing programmes benefit companies, even when the financial return cannot be easily measured.\nEvidence 1. In a 2024 survey of 400 executives, 62% said their wellbeing programme had no measurable effect on performance.\nEvidence 2. Wellbeing programmes used, on average, 3% of the annual HR budget and a large part of middle managers' time.\n\n(a) Write the strongest counter-argument against the claim, using the evidence (60–80 words). State it fairly. (7 pts)\n(b) Why should a writer include a counter-argument at all? One sentence. (3 pts)", model:"(a) Wellbeing programmes may not deliver the benefits companies expect. In a 2024 survey of 400 executives, 62% reported no measurable effect on performance, yet these programmes used 3% of the HR budget and a large part of middle managers' time. In a competitive market, spending money and management attention on something with no visible result is difficult to defend, especially for smaller firms with tight budgets.\n(b) A counter-argument shows the writer knows the other side and has thought about it, which makes the writer's own position more convincing."},
+{tab:"Exam 3 · Q5", pts:"10 pts", title:"Refutation", prompt:"Claim: Employee wellbeing programmes benefit companies, even when the financial return cannot be easily measured.\nCounter-argument: 'In a 2024 survey of 400 executives, 62% said their wellbeing programme had no measurable effect on performance. The money and management time should go to the core business instead.'\nEvidence 1. A 2023 study of 85 companies: teams in shared wellbeing activities reported stronger trust and were 18% more likely to ask colleagues for help.\nEvidence 2. Replacing one employee cost on average six months of that employee's salary once recruitment, training and lost productivity were counted.\n\nWrite a concession, then a refutation (80–100 words total). Accept the true part of the counter-argument first, then show why the claim still stands. Mark the two parts.", model:"Concession: Granted, wellbeing programmes cost money and management time, and most executives see no measurable effect on performance.\nRefutation: However, 'no measurable effect' is not the same as no effect. A 2023 study of 85 companies found stronger trust between colleagues and an 18% higher willingness to ask for help — a benefit standard performance figures don't capture. The same study put the cost of replacing one employee at six months of salary. Wellbeing spending therefore does not distract from the core business; it protects the people who carry it out."},
+{tab:"Exam 3 · Q6", pts:"10 pts", title:"Logic of an argument", prompt:"Label each sentence as Claim, Evidence, or Reason (3 pts):\n1. Structured onboarding reduces early staff turnover.\n2. A 2022 survey of 300 firms found employees who completed structured onboarding were 25% less likely to leave within their first year.\n3. Clear guidance in the first weeks helps new employees understand their role faster, reducing the frustration that often leads to early resignation.\n\n(b) Rewrite the three as one coherent paragraph (70–90 words), ordered so the argument builds logically, linked with transitions — PEEL structure allowed. (7 pts)", model:"(a) Sentence 1: Claim. Sentence 2: Evidence. Sentence 3: Reason.\n(b) Structured onboarding reduces early staff turnover. A 2022 survey of 300 firms found that those who completed such a programme were 25% less likely to leave within their first year. The reason is straightforward: clear guidance in the first weeks helps new employees understand their role faster, which reduces the frustration that often drives early resignations. Structured onboarding is therefore not an administrative formality but one of the more reliable ways of protecting retention."}
+];
+
+/* ============================================================ AW — LEE HAWKINS EXTRA PRACTICE (Sept 2026) ============================================================ */
+const AW_LEE_DRILLS = [
+{topic:"Linking Words 1 — word choice", items:[
+{q:"Because it has above-average sales growth, Glaxo is a favourite on Wall Street. (Which word is closest in meaning to 'Because'?)",opts:["Since","Due to","Therefore"],a:"Since",exp:"'Because' is followed by a clause (subject + verb) — so is 'Since'. 'Due to' takes a noun phrase; 'Therefore' is a conjunctive adverb, not a subordinator."},
+{q:"Because of its above-average sales growth, Glaxo is a favourite on Wall Street. (Which is closest to 'Because of'?)",opts:["Since","Due to","Therefore"],a:"Due to",exp:"'Because of' is followed by a noun phrase (no verb) — like 'due to'."},
+{q:"Apple needs to update its line in order to stay ahead of Sony/Samsung. (Closest to 'in order to'?)",opts:["so that","so as to","owing to"],a:"so as to",exp:"'In order to' + infinitive ≈ 'so as to' + infinitive."},
+{q:"Apple needs to update its line in order that it can stay ahead. (Closest to 'in order that'?)",opts:["so that","so as to","owing to"],a:"so that",exp:"'In order that' is followed by subject + verb, like 'so that'."},
+{q:"Although the core rate of inflation rose only 0.2%, analysts are concerned. (Closest to 'Although'?)",opts:["In spite of the fact that","In spite of","So that"],a:"In spite of the fact that",exp:"'Although' takes a clause — 'in spite of the fact that' also takes a clause; plain 'in spite of' takes a noun phrase."},
+{q:"Despite the low rise in inflation, analysts are concerned. (Closest to 'Despite'?)",opts:["In spite of the fact that","In spite of","So that"],a:"In spite of",exp:"'Despite' + noun phrase ≈ 'in spite of' + noun phrase."},
+{q:"Nokia is strong in Europe, whereas Motorola is strong in the US. (Closest to 'whereas'?)",opts:["as","though","while"],a:"while",exp:"'Whereas' compares two equal facts — so does 'while' (contrast, not concession)."},
+{q:"Nokia is strong in Europe, although Motorola is giving it strong competition. (Closest to 'although'?)",opts:["as","though","while"],a:"though",exp:"'Although' introduces something surprising/conceding — so does 'though'."}
+]},
+{topic:"Linking Words 2 — matching formal ↔ informal", items:[
+{q:"'By the way, ...' matches which formal phrase?",opts:["As far as ... is concerned ...","Admittedly ..., but nevertheless ...","Incidentally"],a:"Incidentally",exp:"'By the way' = 'Incidentally' (introducing a side remark)."},
+{q:"'As regards ...' matches which phrase?",opts:["As far as ... is concerned","On the whole ..., but ...","Firstly ... Secondly ..."],a:"As far as ... is concerned",exp:"'As regards' and 'As far as ... is concerned' both introduce the topic being addressed."},
+{q:"'Admittedly ..., but nevertheless ...' matches which phrase?",opts:["Of course ..., but even so ...","In general ..., although ...","In the first place ..."],a:"Of course ..., but even so ...",exp:"Both concede a point then push back with 'but even so/nevertheless'."},
+{q:"'On the whole ..., but ...' matches which phrase?",opts:["In general ..., although ...","In the first place ... and then on top of that ...","For one thing ... and for another ..."],a:"In general ..., although ...",exp:"Both give a general picture, then qualify it with 'although/but'."},
+{q:"'In the first place ... and then on top of that ...' matches which phrase?",opts:["For one thing ... and for another ...","As far as ... is concerned ...","Of course ..., but even so ..."],a:"For one thing ... and for another ...",exp:"Both list a first reason, then add a second — sequencing connectors."}
+]},
+{topic:"Being Lively & Persuasive — rhetorical devices", items:[
+{q:"'Choose us as your local partner, and watch your business grow!' — replace 'grow' with a more dramatic synonym for repetition-of-sounds effect.",opts:["boom","effective","major"],a:"boom",exp:"'Boom' echoes the vivid, punchy register the exercise is drilling — short, forceful synonyms for dramatic impact."},
+{q:"'You don't want just any knowledge management system — you want a system that is efficient and helpful.' Replace 'helpful' with:",opts:["effective","glorious","variety"],a:"effective",exp:"'Effective' pairs naturally with 'efficient' for a punchy two-word combination."},
+{q:"'Results this year haven't just been good, they've been ___.' (dramatic upgrade of 'good')",opts:["glorious","major","boom"],a:"glorious",exp:"'Glorious' is the deliberately over-the-top synonym used for persuasive dramatic effect."},
+{q:"'You have a lot of information on your databases. But can you mine that ___ to get what's really useful?' (repeat 'information' as a synonym)",opts:["knowledge","data","facts"],a:"knowledge",exp:"The exercise drills replacing a repeated word with a close synonym ('information' → 'knowledge') for stylistic impact."},
+{q:"Rhetorical question drill: 'Our production costs are going up and we're losing market share. ___ do we go ___ here?'",opts:["Where / from","How / do","Why / keep on"],a:"Where / from",exp:"'Where...from' forms the natural rhetorical question about the company's direction/origin of the problem."},
+{q:"Idiom check: 'make a killing' means:",opts:["to make a large profit quickly","to fail completely","to spend money carelessly"],a:"to make a large profit quickly",exp:"Business idiom bank (ex. 15.6): 'make a killing' = earn a large profit."},
+{q:"Idiom check: 'be in the red' means:",opts:["to be losing money / in debt","to be very successful","to take a big risk"],a:"to be losing money / in debt",exp:"'In the red' = financially in deficit (opposite of 'in the black')."},
+{q:"Idiom check: 'cook the books' means:",opts:["to falsify financial records","to plan a business strategy","to close a deal quickly"],a:"to falsify financial records",exp:"'Cook the books' = manipulate accounts fraudulently."}
+]},
+{topic:"Structure & Key Phrases — unscramble the opening", items:[
+{q:"Unscramble: 'Could / please / your attention, / I / have?'",opts:["Could I have your attention, please?","Please have I your attention, could?","I have your attention, could please?"],a:"Could I have your attention, please?",exp:"Standard formal opener to call the room to attention."},
+{q:"Unscramble: 'I'm / here at InfoCom / new product / responsible for / development.'",opts:["I'm responsible for new product development here at InfoCom.","Here at InfoCom I'm new for responsible product development.","I'm here new product at InfoCom responsible for development."],a:"I'm responsible for new product development here at InfoCom.",exp:"States your role/position clearly — one of the fixed 'position' building blocks of an opening."},
+{q:"Unscramble: 'On the company behalf of, to this presentation may I you welcome.'",opts:["On behalf of the company, may I welcome you to this presentation.","May I on behalf welcome the company to you presentation.","On behalf may I welcome you of the company to this presentation."],a:"On behalf of the company, may I welcome you to this presentation.",exp:"Formal welcome/greeting phrase — 'On behalf of X, may I welcome you to Y.'"},
+{q:"Unscramble: 'The aim / of our new product line / is to give / some you / information about my talk.'",opts:["The aim of my talk is to give you some information about our new product line.","The aim of our new product line is to give my talk some information about you.","Some information is the aim to give about my talk of our new product line."],a:"The aim of my talk is to give you some information about our new product line.",exp:"States the presentation's purpose — a core structural building block ('The aim of my talk is...')."},
+{q:"Unscramble: 'Please during the talk feel free me to interrupt if you any have questions.'",opts:["Please feel free to interrupt me during the talk if you have any questions.","Please interrupt feel free me if during the talk any questions you have.","During the talk please feel any free questions to interrupt me if you have."],a:"Please feel free to interrupt me during the talk if you have any questions.",exp:"Standard 'questions' housekeeping phrase placed near the start of a presentation."},
+{q:"Unscramble: 'My forty minutes take presentation will around.'",opts:["My presentation will take around forty minutes.","Around forty minutes my presentation take will.","My forty minutes presentation around will take."],a:"My presentation will take around forty minutes.",exp:"States timing — one of the ten fixed structural elements of a presentation opening (see 14.2: Timing)."}
+]},
+{topic:"Trends, Graphs & Figures — vocabulary", items:[
+{q:"'drop by 50%' is closest in meaning to:",opts:["halve","double","expand"],a:"halve",exp:"A 50% drop = the value is halved."},
+{q:"'rise by 100%' is closest in meaning to:",opts:["double","halve","deteriorate"],a:"double",exp:"A 100% rise = the value doubles."},
+{q:"'bounce back' is closest in meaning to:",opts:["recover","get worse","stay flat"],a:"recover",exp:"'Bounce back' = recover after a fall."},
+{q:"The antonym (opposite) of 'rise' is:",opts:["fall","plummet","bottom out"],a:"fall",exp:"'Rise' ↔ 'fall' is the direct opposite pair; 'plummet' is a much stronger synonym of 'fall', not of 'rise'."},
+{q:"The antonym of 'expand' is:",opts:["shrink","fluctuate","peak"],a:"shrink",exp:"'Expand' ↔ 'shrink' — growing vs. contracting in size."},
+{q:"The antonym of 'take off' (sudden sharp rise) is:",opts:["plummet","be flat","bottom out"],a:"plummet",exp:"'Take off' (sudden sharp rise) is opposite to 'plummet' (sudden sharp fall)."},
+{q:"Which verb pair is transitive AND intransitive? ('We ___ costs by 5%' / 'Costs ___ by 5%')",opts:["cut / cut","raise / raise","rose / rose"],a:"cut / cut",exp:"'Cut' works both ways unchanged: 'We cut costs' (transitive) and 'Costs were cut' — while 'raise' is transitive-only (needs an object) and 'rise' is intransitive-only, so 'We rose prices' is wrong (should be 'raised')."},
+{q:"Adjective from 'shrink' (decreasing in size), e.g. 'a ___ budget':",opts:["shrinking","shrunk","shrinkable"],a:"shrinking",exp:"The -ing form used as an adjective: 'a shrinking budget' (like 'an increasing demand')."},
+{q:"Adverb: 'Sales increased ___ (suddenly and by a large amount)'",opts:["dramatically","gradually","marginally"],a:"dramatically",exp:"'Dramatically' = suddenly and by a large amount (and can describe both good and bad changes, unlike in many other languages)."}
+]}
+];
+
+/* ============================================================ AW — MARIE CLAIRE: STRESS MANAGEMENT (Sept 2026) ============================================================ */
+const AW_MARIE_SUMMARY = `Stress management (Marie-Claire Joyeaux) frames stress through the Latin root "stringere" — to grip, to tighten, to hold tight. Environment produces a Stressor (demand/Belastung); the individual's reaction is Strain (Beanspruchung). The stress response is a non-specific activation of the body (fight, flight, or freeze) that mobilises physiological resources: dilated pupils, faster/flatter breathing, higher adrenaline/blood pressure/heart rate, glucose release, increased muscle tone and blood circulation in large muscles, but reduced peripheral circulation.
+
+Whetten & Cameron's (2011) Process Model of Stress has three stages: (1) Alarm — increase in anxiety, fear, sorrow or loss; (2) Resistance — attempting to control stress with defense mechanisms; (3) Exhaustion — the body stops trying to defend against the stressor. Long-term, unresolved stress produces physiological consequences: headaches, tinnitus, muscle tension, breathing/back problems, cardiovascular disease, gastrointestinal issues, sexual dysfunction, circulatory disorders, and psychological problems (anger, anxiety, depression, sleeping problems).
+
+Coping strategies fall into three groups: (1) eliminate stressors (enactive strategies, e.g. time management, goal setting with a small-wins strategy — identify something under your control, change it, track progress, maintain gains); (2) develop resiliency and well-being (proactive strategies) via increased physical fitness and balanced life activities (the "wheel" of life domains — a lopsided pattern is as much a sign of low resiliency as generally low involvement); and (3) cope with stress short-term (reactive strategies) via physiological relaxation techniques and psychological techniques (imagery, rehearsal, reframing).
+
+Psychological fitness for resiliency has three components: feeling in control of one's life (not powerless), feeling committed to and involved in one's work, and feeling challenged by new experiences rather than threatened by them. Lazarus's (1974) Transactional Theory of Stress holds that it is the cognitive appraisal of a stressor — not the stressor itself — that determines the stress response; positive reframing appraisals include "I've solved similar problems before," "others have made it through," and "I can learn something from this."
+
+In session 2, emotions are defined as unspecific activation (stress) plus cognitive appraisal: if appraisal yields "I am weaker," stress becomes fear (helps identify/avoid threats); if it yields "I am stronger," stress becomes anger (helps with self-assertion). The amygdala triggers a fast, non-specific stress reaction (stress hormones via the pituitary/adrenal axis, e.g. cortisol, plus neurotransmitters via the peripheral nervous system) before slower, more accurate cortical processing turns that activation into a specific feeling. Short-term stress and negative emotions are harmless for healthy people — the body evolved to handle them (e.g. anxiety raises heart rate similarly to climbing stairs).
+
+Gross's (2002) Process Model of Emotion Management distinguishes antecedent-focused strategies (before the emotion is fully activated: situation selection — approaching/avoiding people, places or things; situation modification — changing aspects of the situation, i.e. problem-focused coping; attentional deployment — distracting/focusing attention; cognitive change — selecting which meaning to attach to something) from response-focused strategies (response modulation — things done once the emotion is already underway). Emotion regulation applies to positive emotions too, can be controlled (conscious) or automatic (unconscious), and is neither inherently good nor bad.
+
+WHO's (2020) five-step approach to managing prolonged stress: Grounding, Unhooking, Acting on Your Values, Being Kind, Making Room. The course also draws on Christensen's HBR article "How Will You Measure Your Life?" — arguing that resource-allocation decisions (time/energy/talent) determine your life's actual strategy regardless of stated intentions, that a "just this once" marginal-cost mentality erodes personal integrity over time, and that Herzberg's motivators (learning, growth, responsibility, recognition) — not money — drive lasting career happiness.`;
+
+const AW_MARIE_QUIZ = [
+{q:"Which two statements about balancing life activities are correct?",opts:["The wheel represents the key areas of life, with the centre as zero involvement and the outer edges as maximum involvement.","The more strongly one single area is developed, the higher a person's resiliency.","A lopsided pattern indicates non-resiliency just as much as generally low involvement does.","Only the work and intellectual segments contribute to resiliency.","A balanced pattern matters only for people who already have chronic illness."],correct:[0,2],exp:"A: correct — describes the wheel's centre/edge scale. C: correct — overemphasising one or two areas is as much a sign of non-resiliency as low involvement everywhere. B, D, E misstate the model — resiliency depends on balance across all segments, not single-area strength."},
+{q:"Two weeks before her deadlines, Maya notices her shoulders and jaw are tense all day, and the tension does not ease even when she stops working. Which two statements are correct?",opts:["Because the tension is physical, it cannot influence her emotional state.","The raised muscle tone feeds back to the amygdala and keeps the stress reaction running.","A single session of relaxation should be enough to break the circle permanently.","Muscle relaxation is one of the basal skills that interrupts this particular circle.","The appropriate response here is acceptance, since this circle runs through avoidance goals."],correct:[1,3],exp:"B: correct — raised muscle tone is part of a physiological vicious circle that feeds back to the brain's stress centre. D: correct — muscle relaxation is exactly the basal emotional skill that interrupts this loop. A is false (mind-body link is bidirectional); C overclaims (one session doesn't 'permanently' fix it); E misapplies 'acceptance' to a muscular-tension circle."},
+{q:"Which two statements about the course's approach to dealing with stress are correct?",opts:["Reactive strategies remove the causes of stress.","Resiliency can be developed physically but not psychologically.","Eliminating stressors should be attempted before developing resiliency.","Social isolation has no effect on stress.","Learning at least one relaxation technique and practising it regularly is recommended."],correct:[2,4],exp:"C: correct — the course's order is eliminate stressors first, then build resiliency/well-being. E: correct — a directly stated behavioural guideline. A is wrong (reactive strategies manage symptoms, not causes); B is wrong (resiliency has a psychological component too); D is wrong (isolation increases stress — the guidelines say to overcome it)."},
+{q:"During the same team meeting, Harry becomes anxious and Grace becomes angry and raises her voice. Which two statements are correct?",opts:["Harry's amygdala produces fear directly, without any appraisal being involved.","The initial activation is the same unspecific stress reaction in both of them.","Grace's anger shows that she did not experience a stress reaction.","Anger and fear are produced by two separate physiological systems.","The difference arises in the slower, more accurate appraisal that follows the initial activation."],correct:[1,4],exp:"B: correct — both start from the same fast, unspecific amygdala activation. E: correct — the differentiation into fear vs. anger happens in the slower cortical appraisal ('I am weaker' → fear; 'I am stronger' → anger). A is wrong (appraisal is exactly what turns activation into fear); C and D are wrong — anger IS a stress reaction, and both emotions share the same initial physiological pathway."},
+{q:"Daniel dreads the weekly team meetings. He tries three things: (1) attends the shorter Thursday session instead of the long Monday one; (2) asks the team to circulate the agenda in advance; (3) during the meeting, concentrates on the content of what is said rather than on the tone. Based on Gross's (2002) process model, which two statements are correct?",opts:["(3) is response modulation — it takes place during the meeting.","(1) is situation selection — Daniel determines which situation he enters.","All three are response-focused, as Daniel already dreads the meetings.","(2) is situation modification — Daniel changes the circumstances that generate the emotion.","(2) is cognitive change — Daniel changes the way he thinks about the meeting."],correct:[1,3],exp:"B: correct — choosing the Thursday session over Monday is situation selection (picking which situation to enter). D: correct — asking for the agenda in advance changes the situation itself, i.e. situation modification. A is wrong ((3) is attentional deployment, not response modulation, since it happens during but shifts attention rather than modulating an already-active response). C is wrong (situation selection/modification are antecedent-focused, not response-focused). E is wrong ((2) changes the situation, not Daniel's thinking about it)."}
+];
+
 /* ============================================================ APP STATE / ROUTING ============================================================ */
 let currentSubject = 'ob';
 const dynPages = document.getElementById('dynamic-pages');
@@ -1178,6 +1317,17 @@ const AW_NAV = [
     {id:'aw-citation', label:'Citation Doctor', icon:'doc', tag:'new'},
     {id:'aw-logic', label:'Logic Type Classifier', icon:'logic', tag:'new'},
     {id:'aw-peel', label:'PEEL Paragraph Builder', icon:'peel', tag:'new'}
+  ]},
+  {sec:'Shalini — Mockup Exams', items:[
+    {id:'aw-mockexam-mc', label:'Mockup MCQ (38)', icon:'quiz', tag:'new'},
+    {id:'aw-mockexam-written', label:'Mockup Written Exams', icon:'doc', tag:'new'}
+  ]},
+  {sec:'Lee Hawkins — Extra Practice', items:[
+    {id:'aw-lee-drills', label:'Grammar & Language Drills', icon:'verb', tag:'new'}
+  ]},
+  {sec:'Marie Claire — Stress Management', items:[
+    {id:'aw-marie-summary', label:'Stress Management Summary', icon:'summary', tag:'new'},
+    {id:'aw-marie-quiz', label:'Exam-Prep MCQ', icon:'quiz', tag:'new'}
   ]}
 ];
 
@@ -1808,6 +1958,11 @@ function buildAWHome(){
           <div class="tool-tile" onclick="navTo('aw-citation')"><div class="ic">${icon('doc')}</div><h4>Citation Doctor</h4><p>${AW_CITATIONS.length} flawed citations to fix.</p></div>
           <div class="tool-tile" onclick="navTo('aw-logic')"><div class="ic">${icon('logic')}</div><h4>Logic Type Classifier</h4><p>${AW_LOGIC.length} arguments to classify.</p></div>
           <div class="tool-tile" onclick="navTo('aw-peel')"><div class="ic">${icon('peel')}</div><h4>PEEL Builder</h4><p>Worked, color-coded examples.</p></div>
+          <div class="tool-tile" onclick="navTo('aw-mockexam-mc')"><div class="ic">${icon('quiz')}</div><h4>Mockup MCQ</h4><p>${AW_MOCK_MC.length} exam-style questions (Shalini).</p></div>
+          <div class="tool-tile" onclick="navTo('aw-mockexam-written')"><div class="ic">${icon('doc')}</div><h4>Mockup Written Exams</h4><p>${AW_MOCK_WRITTEN.length} practice questions with model answers.</p></div>
+          <div class="tool-tile" onclick="navTo('aw-lee-drills')"><div class="ic">${icon('verb')}</div><h4>Grammar &amp; Language Drills</h4><p>Linking words, persuasive language, structure.</p></div>
+          <div class="tool-tile" onclick="navTo('aw-marie-summary')"><div class="ic">${icon('summary')}</div><h4>Stress Management</h4><p>Marie Claire's sessions, summarised.</p></div>
+          <div class="tool-tile" onclick="navTo('aw-marie-quiz')"><div class="ic">${icon('quiz')}</div><h4>Stress Mgmt Exam Prep</h4><p>${AW_MARIE_QUIZ.length} two-correct-answer MCQs.</p></div>
         </div>
       </div>`;
   });
@@ -1966,7 +2121,108 @@ function buildAWPeel(){
   });
 }
 
+function buildAWMockExamMC(){
+  registerPage('aw-mockexam-mc', (div)=>{
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('quiz')} Shalini — Mockup Exam</div><h2>Mockup MCQ</h2><p>${AW_MOCK_MC.length} practice multiple-choice questions across all six sessions, from Shalini's Sept 2026 sample exam.</p></div><div class="page-body" id="aw-mockmc-body"></div>`;
+    renderQuiz(div.querySelector('#aw-mockmc-body'), AW_MOCK_MC, 'quiz-aw-mockmc');
+  });
+}
+
+function buildAWMockExamWritten(){
+  registerPage('aw-mockexam-written', (div)=>{
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('doc')} Shalini — Mockup Exams</div><h2>Mockup Written Exams</h2><p>${AW_MOCK_WRITTEN.length} written practice questions (15-pt and 10-pt exam formats) with full model answers — from Shalini's Sept 2026 sample exams.</p></div><div class="page-body" id="aw-mockwr-body"></div>`;
+    const body = div.querySelector('#aw-mockwr-body');
+    body.innerHTML = AW_MOCK_WRITTEN.map((w,i)=>`
+      <div class="case-brief" style="margin-bottom:10px;"><strong>${esc(w.tab)} &middot; ${esc(w.pts)}</strong></div>
+      <div class="doc-card">
+        <div class="case-q">${esc(w.title)}</div>
+        <div style="white-space:pre-line;font-size:.87rem;color:var(--ink-soft);line-height:1.7;margin-bottom:16px;">${esc(w.prompt)}</div>
+        <button class="btn ghost" onclick="window.__mockWrReveal(${i})">Reveal model answer</button>
+        <div class="case-model" id="mockwr-model-${i}" style="white-space:pre-line;margin-top:14px;"><h5>Model Answer</h5>${esc(w.model)}</div>
+      </div>`).join('');
+    window.__mockWrReveal = (i)=>{ document.getElementById('mockwr-model-'+i).classList.add('show'); };
+  });
+}
+
+function buildAWLeeDrills(){
+  registerPage('aw-lee-drills', (div)=>{
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('verb')} Lee Hawkins — Extra Practice</div><h2>Grammar &amp; Language Drills</h2><p>New exercises from Lee Hawkins's sessions — linking words, persuasive language, and presentation structure — with answers to reveal.</p></div><div class="page-body" id="aw-lee-body"></div>`;
+    const body = div.querySelector('#aw-lee-body');
+    body.innerHTML = `<div class="tabbar">${AW_LEE_DRILLS.map((t,i)=>`<button class="tabbtn${i===0?' active':''}" data-i="${i}">${esc(t.topic)}</button>`).join('')}</div>
+      ${AW_LEE_DRILLS.map((t,ti)=>`<div class="tabpanel${ti===0?' active':''}" id="lee-panel-${ti}">
+        ${t.items.map((it,ii)=>`
+          <div class="doc-card">
+            <div style="font-size:.92rem;margin-bottom:12px;line-height:1.6;font-weight:600;">${esc(it.q)}</div>
+            <div class="logic-types" id="lee-btns-${ti}-${ii}">${it.opts.map(o=>`<button onclick="window.__leePick(${ti},${ii},'${esc(o).replace(/'/g,"\\'")}')">${esc(o)}</button>`).join('')}</div>
+            <div class="doc-rule" id="lee-exp-${ti}-${ii}" style="margin-top:10px;">${esc(it.exp)}</div>
+          </div>`).join('')}
+      </div>`).join('')}`;
+    body.querySelectorAll('.tabbtn').forEach(btn=>{
+      btn.onclick=()=>{
+        body.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
+        body.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
+        btn.classList.add('active');
+        body.querySelector(`#lee-panel-${btn.dataset.i}`).classList.add('active');
+      };
+    });
+    window.__leePick = (ti, ii, choice)=>{
+      const it = AW_LEE_DRILLS[ti].items[ii];
+      const wrap = document.getElementById(`lee-btns-${ti}-${ii}`);
+      wrap.querySelectorAll('button').forEach(b=>{
+        b.disabled = true;
+        if(b.textContent===it.a) b.classList.add('correct');
+        else if(b.textContent===choice) b.classList.add('wrong');
+      });
+      document.getElementById(`lee-exp-${ti}-${ii}`).classList.add('show');
+    };
+  });
+}
+
+function buildAWMarieSummary(){
+  registerPage('aw-marie-summary', (div)=>{
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('summary')} Marie Claire — Reference</div><h2>Stress Management Summary</h2><p>Sessions 1 &amp; 2 (stress physiology, coping strategies, emotions) plus the HBR article "How Will You Measure Your Life?".</p></div><div class="page-body" id="aw-marie-sum-body"></div>`;
+    renderSummary(div.querySelector('#aw-marie-sum-body'), 'AW', AW_MARIE_SUMMARY);
+  });
+}
+
+function buildAWMarieQuiz(){
+  registerPage('aw-marie-quiz', (div)=>{
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('quiz')} Marie Claire — Exam Prep</div><h2>Stress Management Exam-Prep MCQ</h2><p>${AW_MARIE_QUIZ.length} official exam-format questions — each has exactly two correct options out of five. Select two, then check.</p></div><div class="page-body" id="aw-marie-quiz-body"></div>`;
+    const body = div.querySelector('#aw-marie-quiz-body');
+    body.innerHTML = AW_MARIE_QUIZ.map((q,i)=>`
+      <div class="doc-card">
+        <div class="case-q" style="font-size:.98rem;">${esc(q.q)}</div>
+        <div class="quiz-options" id="marie-opts-${i}">
+          ${q.opts.map((o,oi)=>`<div class="quiz-option" data-oi="${oi}" onclick="window.__marieToggle(${i},${oi})"><span class="letter">${String.fromCharCode(65+oi)}</span><span>${esc(o)}</span></div>`).join('')}
+        </div>
+        <button class="btn ghost" style="margin-top:12px;" onclick="window.__marieCheck(${i})">Check answer</button>
+        <div class="quiz-exp" id="marie-exp-${i}">${esc(q.exp)}</div>
+      </div>`).join('');
+    const picks = AW_MARIE_QUIZ.map(()=>new Set());
+    window.__marieToggle = (qi, oi)=>{
+      if(document.getElementById(`marie-opts-${qi}`).classList.contains('locked')) return;
+      const set = picks[qi];
+      const el = body.querySelector(`#marie-opts-${qi} [data-oi="${oi}"]`);
+      if(set.has(oi)){ set.delete(oi); el.style.background=''; el.style.borderColor=''; }
+      else { if(set.size>=2){ const first=[...set][0]; set.delete(first); const firstEl=body.querySelector(`#marie-opts-${qi} [data-oi="${first}"]`); firstEl.style.background=''; firstEl.style.borderColor=''; } set.add(oi); el.style.background='var(--accent-bg)'; el.style.borderColor='var(--accent)'; }
+    };
+    window.__marieCheck = (qi)=>{
+      const q = AW_MARIE_QUIZ[qi];
+      const wrap = document.getElementById(`marie-opts-${qi}`);
+      wrap.classList.add('locked');
+      wrap.querySelectorAll('.quiz-option').forEach(el=>{
+        const oi = +el.dataset.oi;
+        el.classList.add('disabled');
+        if(q.correct.includes(oi)) el.classList.add('correct');
+        else if(picks[qi].has(oi)) el.classList.add('wrong');
+      });
+      document.getElementById(`marie-exp-${qi}`).classList.add('show');
+    };
+  });
+}
+
 buildAWHome(); buildAWSummary(); buildAWFlash(); buildAWQuiz(); buildAWVerbs(); buildAWRules(); buildAWPresent(); buildAWChecklists(); buildAWCitation(); buildAWLogic(); buildAWPeel();
+buildAWMockExamMC(); buildAWMockExamWritten(); buildAWLeeDrills(); buildAWMarieSummary(); buildAWMarieQuiz();
 
 /* ============================================================ INIT ============================================================ */
 buildSubjectSwitch();
