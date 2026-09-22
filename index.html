@@ -18,9 +18,7 @@
   --shadow-sm:inset 0 1px 0 rgba(255,255,255,.55), 0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
   --shadow-md:inset 0 1px 0 rgba(255,255,255,.6), 0 10px 30px rgba(0,0,0,.07), 0 2px 8px rgba(0,0,0,.04);
   --shadow-lg:inset 0 1px 0 rgba(255,255,255,.65), 0 24px 60px rgba(0,0,0,.12), 0 4px 16px rgba(0,0,0,.06);
-  --ob:#726fa0; --ob-ink:#5c5987; --ob-bg:#f0f0f4; --ob-bg2:#e3e3ea; --ob-grad:var(--ob);
-  --pom:#9c7c66; --pom-ink:#7d6250; --pom-bg:#f3efec; --pom-bg2:#e8e0da; --pom-grad:var(--pom);
-  --aw:#4f8577; --aw-ink:#3d6b5f; --aw-bg:#eef2f0; --aw-bg2:#dfe6e3; --aw-grad:var(--aw);
+  --tile-banner:#2c2c2e;
   --accent:#0071e3; --accent-ink:#0071e3; --accent-bg:#e8f2fe; --accent-bg2:#d3e7fd; --accent-grad:#0071e3;
   --blob-1:#b3a9d6; --blob-2:#9fb8d9; --blob-3:#9fc9b6;
   --btn-dark:#1d1d1f; --btn-dark-text:#fff;
@@ -182,7 +180,7 @@ a,button{font-family:inherit;}
 .tool-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:6px;}
 .tool-tile{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;cursor:pointer;transition:transform .22s var(--ease),box-shadow .22s var(--ease);box-shadow:var(--shadow-sm);opacity:0;animation:riseIn .45s var(--ease) forwards;}
 .tool-tile:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
-.tool-tile .ic{width:38px;height:38px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:var(--accent-bg);transition:transform .22s var(--ease);}
+.tool-tile .ic{width:38px;height:38px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:var(--accent-bg);color:var(--accent-ink);transition:transform .22s var(--ease);}
 .tool-tile:hover .ic{transform:scale(1.06);}
 .tool-tile .ic svg{width:20px;height:20px;}
 .tool-tile h4{font-size:.96rem;margin-bottom:5px;font-weight:600;}
@@ -1340,7 +1338,7 @@ let currentSubject = 'ob';
 const dynPages = document.getElementById('dynamic-pages');
 const registeredPages = {};
 
-function setAccent(color){document.documentElement.style.setProperty('--accent',`var(--${color})`);document.documentElement.style.setProperty('--accent-ink',`var(--${color}-ink)`);document.documentElement.style.setProperty('--accent-bg',`var(--${color}-bg)`);document.documentElement.style.setProperty('--accent-bg2',`var(--${color}-bg2)`);document.documentElement.style.setProperty('--accent-grad',`var(--${color}-grad)`);}
+function setAccent(color){/* subjects no longer carry distinct accent colors — single neutral accent used everywhere, in both themes */}
 
 function navTo(pageId){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1379,7 +1377,7 @@ function buildSubjectSwitch(){
   const wrap = document.getElementById('subject-switch');
   wrap.innerHTML = SUBJECTS.map(s=>`
     <button class="subject-btn" data-subj="${s.id}" onclick="selectSubject('${s.id}',true)">
-      <span class="dot" style="background:var(--${s.color})"></span>
+      <span class="dot" style="background:var(--ink-soft)"></span>
       <span><span>${s.label}</span><span class="sub">${s.short}</span></span>
     </button>`).join('');
 }
@@ -1458,16 +1456,16 @@ function buildSidebarNav(subjId){
 function buildHomeCards(){
   const wrap = document.getElementById('home-cards');
   const meta = {
-    ob:{banner:'var(--ob-grad)', stat1:'9 topics', stat2:'4 tools'},
-    pom:{banner:'var(--pom-grad)', stat1:'4 topics', stat2:'3 tools'},
-    aw:{banner:'var(--aw-grad)', stat1:'reference + drills', stat2:'3 tools'}
+    ob:{banner:'var(--tile-banner)', stat1:'9 topics', stat2:'4 tools'},
+    pom:{banner:'var(--tile-banner)', stat1:'4 topics', stat2:'3 tools'},
+    aw:{banner:'var(--tile-banner)', stat1:'reference + drills', stat2:'3 tools'}
   };
   wrap.innerHTML = SUBJECTS.map(s=>{
     const m = meta[s.id];
     return `<div class="subj-card" onclick="selectSubject('${s.id}',true)">
       <div class="banner" style="background:${m.banner}">${homeIcon(s.id)}</div>
       <div class="body">
-        <span class="tag" style="background:var(--${s.color}-bg);color:var(--${s.color}-ink)">${s.id.toUpperCase()}</span>
+        <span class="tag" style="background:var(--bg2);color:var(--ink-soft)">${s.id.toUpperCase()}</span>
         <h3>${s.label}</h3>
         <p>${s.short}</p>
         <div class="stats"><span>${m.stat1}</span><span>${m.stat2}</span></div>
