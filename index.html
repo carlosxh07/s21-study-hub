@@ -18,11 +18,11 @@
   --shadow-sm:0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
   --shadow-md:0 10px 30px rgba(0,0,0,.07), 0 2px 8px rgba(0,0,0,.04);
   --shadow-lg:0 24px 60px rgba(0,0,0,.12), 0 4px 16px rgba(0,0,0,.06);
-  --ob:#5b52c9; --ob-ink:#4a41ab; --ob-bg:#f1f0fb; --ob-bg2:#e3e1f5; --ob-grad:var(--ob);
-  --pom:#b8622f; --pom-ink:#94491f; --pom-bg:#faeee3; --pom-bg2:#f2ddc9; --pom-grad:var(--pom);
-  --aw:#1c8a72; --aw-ink:#136955; --aw-bg:#e7f4ef; --aw-bg2:#d3ebe2; --aw-grad:var(--aw);
+  --ob:#726fa0; --ob-ink:#5c5987; --ob-bg:#f0f0f4; --ob-bg2:#e3e3ea; --ob-grad:var(--ob);
+  --pom:#9c7c66; --pom-ink:#7d6250; --pom-bg:#f3efec; --pom-bg2:#e8e0da; --pom-grad:var(--pom);
+  --aw:#4f8577; --aw-ink:#3d6b5f; --aw-bg:#eef2f0; --aw-bg2:#dfe6e3; --aw-grad:var(--aw);
   --accent:#0071e3; --accent-ink:#0071e3; --accent-bg:#e8f2fe; --accent-bg2:#d3e7fd; --accent-grad:#0071e3;
-  --blob-1:#a78bfa; --blob-2:#60a5fa; --blob-3:#34d399;
+  --blob-1:#b3a9d6; --blob-2:#9fb8d9; --blob-3:#9fc9b6;
   --btn-dark:#1d1d1f; --btn-dark-text:#fff;
 }
 :root[data-theme="dark"]{
@@ -32,7 +32,7 @@
   --good:#32d74b; --good-bg:rgba(50,215,75,.14); --bad:#ff453a; --bad-bg:rgba(255,69,58,.14); --warn:#ffd60a; --warn-bg:rgba(255,214,10,.14);
   --shadow-sm:0 1px 3px rgba(0,0,0,.4); --shadow-md:0 10px 30px rgba(0,0,0,.45); --shadow-lg:0 24px 60px rgba(0,0,0,.6);
   --accent:#0a84ff; --accent-ink:#4fa2ff; --accent-bg:rgba(10,132,255,.16); --accent-bg2:rgba(10,132,255,.26); --accent-grad:#0a84ff;
-  --blob-1:#6d5bd0; --blob-2:#2f6fd6; --blob-3:#1c9c6e;
+  --blob-1:#5c5480; --blob-2:#3f5a7a; --blob-3:#3d6e5c;
   --btn-dark:#f5f5f7; --btn-dark-text:#1d1d1f;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -47,9 +47,9 @@ h1,h2,h3,h4{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Fraun
 :root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover{background:#ffffff30;}
 #app{display:flex;height:100vh;overflow:hidden;position:relative;}
 #app::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:
-  radial-gradient(circle at 8% 12%, color-mix(in srgb, var(--blob-1) 38%, transparent) 0%, transparent 42%),
-  radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--blob-2) 34%, transparent) 0%, transparent 45%),
-  radial-gradient(circle at 30% 92%, color-mix(in srgb, var(--blob-3) 26%, transparent) 0%, transparent 48%);
+  radial-gradient(circle at 8% 12%, color-mix(in srgb, var(--blob-1) 22%, transparent) 0%, transparent 42%),
+  radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--blob-2) 20%, transparent) 0%, transparent 45%),
+  radial-gradient(circle at 30% 92%, color-mix(in srgb, var(--blob-3) 14%, transparent) 0%, transparent 48%);
   filter:blur(60px);opacity:.55;transition:opacity .35s var(--ease);}
 .glass{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);}
 a,button{font-family:inherit;}
@@ -87,8 +87,6 @@ a,button{font-family:inherit;}
 .nav-item svg{flex-shrink:0;opacity:.75;transition:opacity .15s var(--ease);}
 .nav-item.active svg,.nav-item:hover svg{opacity:1;}
 .nav-item .prog{margin-left:auto;font-size:.62rem;color:var(--side-ink-dim);font-weight:600;font-family:'JetBrains Mono',monospace;}
-.nav-item.new::after{content:'NEW';font-size:.52rem;font-weight:800;letter-spacing:.06em;background:var(--accent);color:#fff;padding:2px 6px;border-radius:var(--radius-pill);margin-left:auto;}
-.nav-item.new .prog{display:none;}
 
 #sidebar-footer{margin-top:auto;padding:16px 22px;font-size:.66rem;color:var(--side-ink-dim);border-top:1px solid var(--side-line);}
 #menu-toggle{display:none;}
@@ -1392,18 +1390,18 @@ const OB_NAV = [
   {sec:'Overview', items:[{id:'ob-home', label:'OB Home', icon:'home'}]},
   {sec:'Cross-Topic Tools', items:[
     {id:'ob-cheat', label:'Cheat Sheet', icon:'cheat'},
-    {id:'ob-scenario', label:'Scenario Lab', icon:'scenario', tag:'new'},
-    {id:'ob-match', label:'Framework Matcher', icon:'match', tag:'new'},
-    {id:'ob-sim', label:'Exam Simulator', icon:'timer', tag:'new'}
+    {id:'ob-scenario', label:'Scenario Lab', icon:'scenario'},
+    {id:'ob-match', label:'Framework Matcher', icon:'match'},
+    {id:'ob-sim', label:'Exam Simulator', icon:'timer'}
   ]}
 ];
 const POM_NAV = [
   {sec:'Overview', items:[{id:'pom-home', label:'POM Home', icon:'home'}]},
   {sec:'Cross-Topic Tools', items:[
     {id:'pom-cheat', label:'Cheat Sheet & Ratios', icon:'cheat'},
-    {id:'pom-case', label:'Growth Case Studio', icon:'case', tag:'new'},
-    {id:'pom-ratio', label:'Ratio Practice', icon:'calc', tag:'new'},
-    {id:'pom-timeline', label:'Theory Timeline', icon:'clock', tag:'new'}
+    {id:'pom-case', label:'Growth Case Studio', icon:'case'},
+    {id:'pom-ratio', label:'Ratio Practice', icon:'calc'},
+    {id:'pom-timeline', label:'Theory Timeline', icon:'clock'}
   ]}
 ];
 const AW_NAV = [
@@ -1419,21 +1417,21 @@ const AW_NAV = [
   {sec:'Checklists', items:[
     {id:'aw-checklists', label:'Interactive Checklists', icon:'check'}
   ]},
-  {sec:'New Tools', items:[
-    {id:'aw-citation', label:'Citation Doctor', icon:'doc', tag:'new'},
-    {id:'aw-logic', label:'Logic Type Classifier', icon:'logic', tag:'new'},
-    {id:'aw-peel', label:'PEEL Paragraph Builder', icon:'peel', tag:'new'}
+  {sec:'Tools', items:[
+    {id:'aw-citation', label:'Citation Doctor', icon:'doc'},
+    {id:'aw-logic', label:'Logic Type Classifier', icon:'logic'},
+    {id:'aw-peel', label:'PEEL Paragraph Builder', icon:'peel'}
   ]},
   {sec:'Shalini — Mockup Exams', items:[
-    {id:'aw-mockexam-mc', label:'Mockup MCQ (38)', icon:'quiz', tag:'new'},
-    {id:'aw-mockexam-written', label:'Mockup Written Exams', icon:'doc', tag:'new'}
+    {id:'aw-mockexam-mc', label:'Mockup MCQ (38)', icon:'quiz'},
+    {id:'aw-mockexam-written', label:'Mockup Written Exams', icon:'doc'}
   ]},
   {sec:'Lee Hawkins — Extra Practice', items:[
-    {id:'aw-lee-drills', label:'Grammar & Language Drills', icon:'verb', tag:'new'}
+    {id:'aw-lee-drills', label:'Grammar & Language Drills', icon:'verb'}
   ]},
   {sec:'Marie Claire — Stress Management', items:[
-    {id:'aw-marie-summary', label:'Stress Management Summary', icon:'summary', tag:'new'},
-    {id:'aw-marie-quiz', label:'Exam-Prep MCQ', icon:'quiz', tag:'new'}
+    {id:'aw-marie-summary', label:'Stress Management Summary', icon:'summary'},
+    {id:'aw-marie-quiz', label:'Exam-Prep MCQ', icon:'quiz'}
   ]}
 ];
 
@@ -1444,7 +1442,7 @@ function buildSidebarNav(subjId){
   structure.forEach(section=>{
     html += `<div class="nav-section-label">${section.sec}</div>`;
     section.items.forEach(it=>{
-      html += `<div class="nav-item${it.tag==='new'?' new':''}" data-page="${it.id}" onclick="navTo('${it.id}')">${icon(it.icon)}<span>${it.label}</span></div>`;
+      html += `<div class="nav-item" data-page="${it.id}" onclick="navTo('${it.id}')">${icon(it.icon)}<span>${it.label}</span></div>`;
     });
   });
   if(subjId==='ob' || subjId==='pom'){
@@ -1462,9 +1460,9 @@ function buildSidebarNav(subjId){
 function buildHomeCards(){
   const wrap = document.getElementById('home-cards');
   const meta = {
-    ob:{banner:'var(--ob-grad)', stat1:'9 topics', stat2:'4 new tools'},
-    pom:{banner:'var(--pom-grad)', stat1:'4 topics', stat2:'3 new tools'},
-    aw:{banner:'var(--aw-grad)', stat1:'reference + drills', stat2:'3 new tools'}
+    ob:{banner:'var(--ob-grad)', stat1:'9 topics', stat2:'4 tools'},
+    pom:{banner:'var(--pom-grad)', stat1:'4 topics', stat2:'3 tools'},
+    aw:{banner:'var(--aw-grad)', stat1:'reference + drills', stat2:'3 tools'}
   };
   wrap.innerHTML = SUBJECTS.map(s=>{
     const m = meta[s.id];
@@ -1780,7 +1778,7 @@ function buildOBCheat(){
 
 function buildOBScenario(){
   registerPage('ob-scenario', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('scenario')} New Tool</div><h2>Scenario Lab</h2><p>Real "Alex vs. Ben" exam-style scenario questions — pick which framework applies and why.</p></div><div class="page-body" id="ob-scen-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('scenario')}</div><h2>Scenario Lab</h2><p>Real "Alex vs. Ben" exam-style scenario questions — pick which framework applies and why.</p></div><div class="page-body" id="ob-scen-body"></div>`;
     const body = div.querySelector('#ob-scen-body');
     let order = shuffle(OB_SCENARIOS.map((_,i)=>i));
     let idx = 0, score=0;
@@ -1825,7 +1823,7 @@ function buildOBScenario(){
 
 function buildOBMatch(){
   registerPage('ob-match', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('match')} New Tool</div><h2>Framework Matcher</h2><p>Click a framework, then click its matching definition. ${OB_MATCH_PAIRS.length} pairs total, 8 shown per round.</p></div><div class="page-body" id="ob-match-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('match')}</div><h2>Framework Matcher</h2><p>Click a framework, then click its matching definition. ${OB_MATCH_PAIRS.length} pairs total, 8 shown per round.</p></div><div class="page-body" id="ob-match-body"></div>`;
     const body = div.querySelector('#ob-match-body');
     let roundPairs, leftOrder, rightOrder, selLeft=null, matched=0, wrong=0;
     function newRound(){
@@ -1874,7 +1872,7 @@ function buildOBMatch(){
 
 function buildOBSim(){
   registerPage('ob-sim', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('timer')} New Tool</div><h2>Exam Simulator</h2><p>20 random questions across all 9 topics, 20-minute countdown, topic breakdown at the end.</p></div><div class="page-body" id="ob-sim-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('timer')}</div><h2>Exam Simulator</h2><p>20 random questions across all 9 topics, 20-minute countdown, topic breakdown at the end.</p></div><div class="page-body" id="ob-sim-body"></div>`;
     const body = div.querySelector('#ob-sim-body');
     body.innerHTML = `<div style="text-align:center;padding:50px 20px;"><h3 style="font-size:1.3rem;margin-bottom:10px;">Ready when you are</h3><p style="color:var(--ink-soft);margin-bottom:22px;max-width:440px;margin-left:auto;margin-right:auto;">20 questions pulled at random from all 9 OB topics. A 20-minute countdown starts the moment you begin — the simulator auto-submits when time runs out.</p><button class="btn" onclick="window.__simStart()">Start Exam Simulator</button></div>`;
     window.__simStart = ()=>{
@@ -1925,7 +1923,7 @@ function buildPOMCheat(){
 
 function buildPOMCase(){
   registerPage('pom-case', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('case')} New Tool</div><h2>Growth Scenario Case Studio</h2><p>One running case, four applied parts — one per management function.</p></div><div class="page-body" id="pom-case-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('case')}</div><h2>Growth Scenario Case Studio</h2><p>One running case, four applied parts — one per management function.</p></div><div class="page-body" id="pom-case-body"></div>`;
     const body = div.querySelector('#pom-case-body');
     let active = 0;
     function render(){
@@ -1946,7 +1944,7 @@ function buildPOMCase(){
 
 function buildPOMRatio(){
   registerPage('pom-ratio', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('calc')} New Tool</div><h2>Financial Ratio Practice</h2><p>A fresh randomized mini balance-sheet/income-statement problem every time — genuinely new numbers via Math.random().</p></div><div class="page-body" id="pom-ratio-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('calc')}</div><h2>Financial Ratio Practice</h2><p>A fresh randomized mini balance-sheet/income-statement problem every time — genuinely new numbers via Math.random().</p></div><div class="page-body" id="pom-ratio-body"></div>`;
     const body = div.querySelector('#pom-ratio-body');
     const TYPES = ['current','quick','debt','turnover','roi'];
     let cur;
@@ -2029,7 +2027,7 @@ function buildPOMRatio(){
 
 function buildPOMTimeline(){
   registerPage('pom-timeline', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('clock')} New Tool</div><h2>Management Theory Timeline</h2><p>Click any era to expand its key ideas — Taylor through Contingency Theory.</p></div><div class="page-body"><div class="timeline" id="pom-tl-body"></div></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('clock')}</div><h2>Management Theory Timeline</h2><p>Click any era to expand its key ideas — Taylor through Contingency Theory.</p></div><div class="page-body"><div class="timeline" id="pom-tl-body"></div></div>`;
     const body = div.querySelector('#pom-tl-body');
     body.innerHTML = POM_TIMELINE.map((e,i)=>`
       <div class="tl-era" id="tl-${i}"><div class="tl-dot"></div>
@@ -2167,7 +2165,7 @@ function buildAWChecklists(){
 
 function buildAWCitation(){
   registerPage('aw-citation', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('doc')} New Tool</div><h2>Citation Doctor</h2><p>${AW_CITATIONS.length} flawed APA citations — identify the flaw, then reveal the fix and the rule.</p></div><div class="page-body" id="aw-doc-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('doc')}</div><h2>Citation Doctor</h2><p>${AW_CITATIONS.length} flawed APA citations — identify the flaw, then reveal the fix and the rule.</p></div><div class="page-body" id="aw-doc-body"></div>`;
     const body = div.querySelector('#aw-doc-body');
     body.innerHTML = AW_CITATIONS.map((c,i)=>`
       <div class="doc-card">
@@ -2186,7 +2184,7 @@ function buildAWCitation(){
 
 function buildAWLogic(){
   registerPage('aw-logic', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('logic')} New Tool</div><h2>Logic Type Classifier</h2><p>Classify each argument as Deduction, Induction, Abduction, or Analogy.</p></div><div class="page-body" id="aw-logic-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('logic')}</div><h2>Logic Type Classifier</h2><p>Classify each argument as Deduction, Induction, Abduction, or Analogy.</p></div><div class="page-body" id="aw-logic-body"></div>`;
     const body = div.querySelector('#aw-logic-body');
     const TYPES = ['Deduction','Induction','Abduction','Analogy'];
     body.innerHTML = AW_LOGIC.map((l,i)=>`
@@ -2210,7 +2208,7 @@ function buildAWLogic(){
 
 function buildAWPeel(){
   registerPage('aw-peel', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('peel')} New Tool</div><h2>PEEL Paragraph Builder</h2><p>Point, Evidence, Explanation, Link — fully worked, color-coded examples.</p></div><div class="page-body" id="aw-peel-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('peel')}</div><h2>PEEL Paragraph Builder</h2><p>Point, Evidence, Explanation, Link — fully worked, color-coded examples.</p></div><div class="page-body" id="aw-peel-body"></div>`;
     const body = div.querySelector('#aw-peel-body');
     let active = 0;
     function render(){
