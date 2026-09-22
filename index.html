@@ -270,6 +270,11 @@ a,button{font-family:inherit;}
 .fc-revise-opt.partial{color:var(--warn);}
 .fc-revise-opt.dontknow{color:var(--bad);}
 #fc-revise-btn:disabled{opacity:.4;cursor:default;}
+.topic-mastery,.tool-mastery{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.topic-mastery .mbar,.tool-mastery .mbar{flex:1;height:5px;background:var(--bg2);border-radius:16px;overflow:hidden;}
+.topic-mastery .mfill,.tool-mastery .mfill{height:100%;background:var(--good);border-radius:16px;transition:width .5s var(--ease);}
+.topic-mastery .mlabel,.tool-mastery .mlabel{font-size:.66rem;font-weight:700;color:var(--ink-faint);font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+.fc-toolbar .reset-btn{padding:7px 12px !important;font-size:.72rem !important;}
 
 /* ============ QUIZ ============ */
 .quiz-progress-bar{height:7px;background:var(--bg2);border-radius:16px;overflow:hidden;margin-bottom:22px;}
@@ -1499,6 +1504,17 @@ function renderSummary(container, title, text){
   container.innerHTML = `<div class="summary-text">${paras}</div>`;
 }
 
+function fcMastery(storeKey, total){
+  const known = ls(storeKey, {});
+  const gotit = Object.values(known).filter(v=>v==='gotit').length;
+  return { gotit, total, pct: total? Math.round(gotit/total*100) : 0 };
+}
+function fcMasteryHtml(storeKey, total){
+  if(!total) return '';
+  const m = fcMastery(storeKey, total);
+  return `<div class="topic-mastery"><div class="mbar"><div class="mfill" style="width:${m.pct}%"></div></div><span class="mlabel">${m.gotit}/${m.total} known</span></div>`;
+}
+
 const FC_STATUS = {
   dontknow: {label:"Don't know", short:"Don't know", icon:'&#10007;', cls:'dontknow'},
   partial:  {label:'Partially',  short:'Partially',  icon:'&#8776;',  cls:'partial'},
@@ -1586,7 +1602,7 @@ function renderFlashcards(container, cards, storeKey){
     const t = tally(cards.map((_,i)=>i));
     container.innerHTML = `
       <div class="fc-toolbar">
-        <div class="left"><button id="fc-shuffle-btn">&#8635; Shuffle</button><span>Space to flip · &larr;&rarr; to move</span></div>
+        <div class="left"><button id="fc-shuffle-btn">&#8635; Shuffle</button><button class="reset-btn" id="fc-reset-btn">&#8634; Reset progress</button><span>Space to flip · &larr;&rarr; to move</span></div>
         <div style="display:flex;align-items:center;gap:12px;">${tallyChipsHtml(t)}<span class="fc-counter">${idx+1} / ${order.length}</span></div>
       </div>
       <div class="fc-dots">${dotsHtml()}</div>
@@ -1606,6 +1622,7 @@ function renderFlashcards(container, cards, storeKey){
         <button id="fc-next-btn">Next &rarr;</button>
       </div>`;
     container.querySelector('#fc-shuffle-btn').addEventListener('click', doShuffle);
+    container.querySelector('#fc-reset-btn').addEventListener('click', (e)=>{e.stopPropagation(); if(confirm('Reset all progress for this deck?')) restart();});
     container.querySelector('#fc-wrap').addEventListener('click', flip);
     container.querySelector('#fc-dontknow-btn').addEventListener('click', (e)=>{e.stopPropagation();rate('dontknow');});
     container.querySelector('#fc-partial-btn').addEventListener('click', (e)=>{e.stopPropagation();rate('partial');});
@@ -1766,7 +1783,7 @@ function buildOBHome(){
       </div>
       <div class="page-body">
         <div class="topic-grid">
-          ${OB_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div></div>`).join('')}
+          ${OB_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
         </div>
         <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Cross-topic tools</div>
         <div class="tool-tiles">
@@ -1910,7 +1927,7 @@ function buildPOMHome(){
       </div>
       <div class="page-body">
         <div class="topic-grid">
-          ${POM_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div></div>`).join('')}
+          ${POM_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
         </div>
         <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Cross-topic tools</div>
         <div class="tool-tiles">
@@ -2063,7 +2080,7 @@ function buildAWHome(){
       <div class="page-body">
         <div class="tool-tiles">
           <div class="tool-tile" onclick="navTo('aw-summary')"><div class="ic">${icon('summary')}</div><h4>Summary</h4><p>The full reference in prose.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-flash')"><div class="ic">${icon('flash')}</div><h4>Flashcards</h4><p>${AW_CARDS.length} cards, spaced repetition.</p></div>
+          <div class="tool-tile" onclick="navTo('aw-flash')"><div class="ic">${icon('flash')}</div><h4>Flashcards</h4><p>${AW_CARDS.length} cards, spaced repetition.</p>${fcMasteryHtml('fc-aw', AW_CARDS.length)}</div>
           <div class="tool-tile" onclick="navTo('aw-quiz')"><div class="ic">${icon('quiz')}</div><h4>Quiz</h4><p>${AW_QUIZ.length} exam-style questions.</p></div>
           <div class="tool-tile" onclick="navTo('aw-verbs')"><div class="ic">${icon('verb')}</div><h4>Action Verbs</h4><p>Searchable CV verb bank.</p></div>
           <div class="tool-tile" onclick="navTo('aw-rules')"><div class="ic">${icon('rules')}</div><h4>Writing Rules</h4><p>Argument structure &amp; citation rules.</p></div>
