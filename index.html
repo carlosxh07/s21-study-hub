@@ -240,19 +240,25 @@ em.hl-fmt{font-style:italic;cursor:pointer;}
 #hl-island{position:fixed;top:50%;right:18px;transform:translateY(-50%);z-index:120;display:none;flex-direction:column;align-items:center;gap:10px;padding:14px 9px;border-radius:var(--radius-pill);background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-edge);box-shadow:var(--shadow-lg);transition:opacity .25s var(--ease),transform .25s var(--ease);opacity:.55;}
 #hl-island:hover{opacity:1;}
 #hl-island.show{display:flex;}
-#hl-island .hl-i-swatch{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);cursor:pointer;padding:0;transition:transform .15s var(--ease);}
+#hl-island .hl-i-swatch{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);cursor:pointer;padding:0;transition:transform .15s var(--ease),box-shadow .15s var(--ease);}
 #hl-island .hl-i-swatch:hover{transform:scale(1.15);}
 #hl-island .hl-i-swatch.hl-yellow{background:#ffd60a;}
 #hl-island .hl-i-swatch.hl-green{background:#34c759;}
 #hl-island .hl-i-swatch.hl-blue{background:#0a84ff;}
 #hl-island .hl-i-swatch.hl-pink{background:#ff375f;}
+#hl-island .hl-i-swatch.active,#hl-island .hl-i-eraser.active,#hl-island .hl-i-fmt.active{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--accent);transform:scale(1.1);}
+#hl-island .hl-i-eraser{width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;padding:0;transition:transform .15s var(--ease),background .15s var(--ease);}
+#hl-island .hl-i-eraser:hover{transform:scale(1.12);color:var(--bad);}
 #hl-island .hl-i-divider{width:22px;height:1px;background:var(--line);margin:2px 0;}
 #hl-island .hl-i-fmt{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.78rem;padding:0;transition:transform .15s var(--ease),background .15s var(--ease);}
 #hl-island .hl-i-fmt:hover{transform:scale(1.12);background:var(--panel-2);}
 #hl-island .hl-i-fmt.b{font-weight:800;}
 #hl-island .hl-i-fmt.i{font-style:italic;}
 #hl-island .hl-i-hint{font-size:.6rem;color:var(--ink-faint);text-align:center;line-height:1.3;max-width:60px;}
-@media(max-width:900px){#hl-island{right:10px;padding:10px 7px;gap:8px;}#hl-island .hl-i-swatch{width:19px;height:19px;}#hl-island .hl-i-fmt{width:23px;height:23px;}#hl-island .hl-i-hint{display:none;}}
+#hl-island .hl-i-reset{font-size:.6rem;color:var(--ink-faint);text-align:center;line-height:1.25;max-width:64px;background:none;border:none;cursor:pointer;padding:2px 0;text-decoration:underline;text-underline-offset:2px;}
+#hl-island .hl-i-reset:hover{color:var(--bad);}
+body.hl-armed .hl-container{cursor:crosshair;}
+@media(max-width:900px){#hl-island{right:10px;padding:10px 7px;gap:8px;}#hl-island .hl-i-swatch{width:19px;height:19px;}#hl-island .hl-i-fmt,#hl-island .hl-i-eraser{width:23px;height:23px;}#hl-island .hl-i-hint,#hl-island .hl-i-reset{display:none;}}
 @media(max-width:640px){#hl-island{top:auto;bottom:18px;right:14px;transform:none;flex-direction:row;border-radius:var(--radius-pill);padding:9px 12px;}}
 
 /* ============ FLASHCARDS ============ */
@@ -1591,34 +1597,97 @@ function positionHlPopover(pop, rect){
   pop.style.top = (rect.top + window.scrollY - 10) + 'px';
   pop.classList.add('show');
 }
+window.__hlTool = null; // {type:'color',color:'yellow'} | {type:'eraser'} | {type:'fmt',fmt:'bold'} | null
+function hlSetTool(tool){
+  window.__hlTool = tool;
+  document.body.classList.toggle('hl-armed', !!tool);
+  const island = document.getElementById('hl-island');
+  if(island){
+    island.querySelectorAll('.hl-i-swatch,.hl-i-eraser,.hl-i-fmt').forEach(b=>b.classList.remove('active'));
+    if(tool){
+      let sel;
+      if(tool.type==='color') sel = island.querySelector(`.hl-i-swatch.hl-${tool.color}`);
+      else if(tool.type==='eraser') sel = island.querySelector('.hl-i-eraser');
+      else if(tool.type==='fmt') sel = island.querySelector(`.hl-i-fmt.${tool.fmt==='bold'?'b':'i'}`);
+      if(sel) sel.classList.add('active');
+    }
+  }
+}
 function hlIslandEl(){
   let el = document.getElementById('hl-island');
   if(!el){
     el = document.createElement('div');
     el.id = 'hl-island';
-    el.innerHTML = `<div class="hl-i-hint">Select text</div>` +
+    el.innerHTML = `<div class="hl-i-hint">Pick a tool, then drag over text</div>` +
       HL_COLORS.map(c=>`<button type="button" class="hl-i-swatch hl-${c}" data-color="${c}" title="Highlight ${c}"></button>`).join('') +
+      `<button type="button" class="hl-i-eraser" title="Eraser — click to arm, then click/drag over highlights to remove them">&#9003;</button>` +
       `<div class="hl-i-divider"></div>` +
       `<button type="button" class="hl-i-fmt b" data-fmt="bold" title="Bold">B</button>` +
-      `<button type="button" class="hl-i-fmt i" data-fmt="italic" title="Italic">I</button>`;
+      `<button type="button" class="hl-i-fmt i" data-fmt="italic" title="Italic">I</button>` +
+      `<div class="hl-i-divider"></div>` +
+      `<button type="button" class="hl-i-reset" title="Clear all highlights/formatting on this topic">Reset here</button>`;
     document.body.appendChild(el);
     el.addEventListener('mousedown', e=>e.preventDefault()); // keep text selection alive when clicking the dock
     el.addEventListener('click', (e)=>{
       const swatch = e.target.closest('.hl-i-swatch');
+      const eraser = e.target.closest('.hl-i-eraser');
       const fmt = e.target.closest('.hl-i-fmt');
+      const reset = e.target.closest('.hl-i-reset');
+
+      if(reset){
+        const activePage = document.querySelector('.page.active');
+        const containers = activePage ? [...activePage.querySelectorAll('.hl-container')] : [];
+        if(containers.length && confirm('Clear all highlights and formatting on this topic?')){
+          containers.forEach(c=>{
+            if(c.dataset.hlKey) lsSet(hlStorageKey(c.dataset.hlKey), null);
+            c.querySelectorAll('mark.hl').forEach(m=>{ const p=m.parentNode; while(m.firstChild) p.insertBefore(m.firstChild,m); p.removeChild(m); p.normalize(); });
+            c.querySelectorAll('strong.hl-fmt,em.hl-fmt').forEach(m=>{ const p=m.parentNode; while(m.firstChild) p.insertBefore(m.firstChild,m); p.removeChild(m); p.normalize(); });
+          });
+        }
+        return;
+      }
+
+      // toolbar swatch/eraser/fmt now ARMS a persistent tool for drag-highlighting,
+      // rather than only applying to a selection made before the click.
+      let tool = null;
+      if(swatch) tool = {type:'color', color:swatch.dataset.color};
+      else if(eraser) tool = {type:'eraser'};
+      else if(fmt) tool = {type:'fmt', fmt:fmt.dataset.fmt};
+      if(!tool) return;
+
+      const already = window.__hlTool && window.__hlTool.type===tool.type &&
+        window.__hlTool.color===tool.color && window.__hlTool.fmt===tool.fmt;
+      hlSetTool(already ? null : tool);
+
+      // if there's already a live selection when the tool is armed, apply immediately too
       const sel = window.__hlLastSel;
-      if(!sel || !sel.range) return;
-      if(swatch){
-        wrapRange(sel.range, 'mark', 'hl hl-'+swatch.dataset.color);
-      } else if(fmt){
-        wrapRange(sel.range, fmt.dataset.fmt==='bold'?'strong':'em', 'hl-fmt');
-      } else return;
-      hlSave(sel.container);
-      window.__hlLastSel = null;
-      window.getSelection().removeAllRanges();
+      if(!already && sel && sel.range && !sel.range.collapsed){
+        hlApplyTool(tool, sel.range, sel.container);
+        window.__hlLastSel = null;
+        window.getSelection().removeAllRanges();
+      }
     });
   }
   return el;
+}
+function hlApplyTool(tool, range, container){
+  if(!tool || !range) return;
+  if(tool.type==='color') wrapRange(range, 'mark', 'hl hl-'+tool.color);
+  else if(tool.type==='fmt') wrapRange(range, tool.fmt==='bold'?'strong':'em', 'hl-fmt');
+  else if(tool.type==='eraser') hlEraseRange(range, container);
+  hlSave(container);
+}
+function hlEraseRange(range, container){
+  if(!container) return;
+  // remove any highlight/format marks that intersect the dragged range
+  const marks = [...container.querySelectorAll('mark.hl, strong.hl-fmt, em.hl-fmt')];
+  marks.forEach(m=>{
+    if(range.intersectsNode ? range.intersectsNode(m) : true){
+      const p = m.parentNode; if(!p) return;
+      while(m.firstChild) p.insertBefore(m.firstChild, m);
+      p.removeChild(m); p.normalize();
+    }
+  });
 }
 function wrapRange(range, tag, className){
   try{
@@ -1643,13 +1712,36 @@ function updateHlIslandVisibility(){
 }
 function initHighlighting(){
   document.addEventListener('mouseup', (e)=>{
-    if(e.target.closest('.hl-popover') || e.target.closest('#hl-island') || e.target.closest('mark.hl')) return;
+    if(e.target.closest('.hl-popover') || e.target.closest('#hl-island')) return;
+
+    // eraser tool: a plain click (no drag) directly on an existing mark removes it
+    if(window.__hlTool && window.__hlTool.type==='eraser'){
+      const mark = e.target.closest('mark.hl, strong.hl-fmt, em.hl-fmt');
+      if(mark){
+        const container = mark.closest('.hl-container');
+        const p = mark.parentNode;
+        while(mark.firstChild) p.insertBefore(mark.firstChild, mark);
+        p.removeChild(mark); p.normalize();
+        hlSave(container);
+        window.getSelection().removeAllRanges();
+        return;
+      }
+    } else if(e.target.closest('mark.hl')) return;
+
     const sel = window.getSelection();
     if(!sel || sel.isCollapsed || sel.rangeCount===0 || sel.toString().trim()===''){ return; }
     const range = sel.getRangeAt(0);
     const anchor = range.commonAncestorContainer.nodeType===1 ? range.commonAncestorContainer : range.commonAncestorContainer.parentElement;
     const hlContainer = anchor && anchor.closest ? anchor.closest('.hl-container') : null;
     if(!hlContainer){ return; }
+
+    // a tool is armed (picked in the island first) — apply it straight to this drag-selection, no popover needed
+    if(window.__hlTool){
+      hlApplyTool(window.__hlTool, range.cloneRange(), hlContainer);
+      window.getSelection().removeAllRanges();
+      return;
+    }
+
     window.__hlLastSel = { range: range.cloneRange(), container: hlContainer };
     const pop = hlPopoverEl();
     positionHlPopover(pop, range.getBoundingClientRect());
@@ -1999,7 +2091,13 @@ function renderQuiz(container, questions, storeKey, opts){
   render();
 }
 
-function renderCheat(container, blocks, extraHtml){
+function renderCheat(container, blocks, extraHtml, key){
+  container.classList.add('hl-container');
+  if(key){
+    container.dataset.hlKey = key;
+    const saved = ls(hlStorageKey(key), null);
+    if(saved){ container.innerHTML = saved; return; }
+  }
   container.innerHTML = blocks.map(b=>`
     <div class="cheat-block"><h4>${esc(b.h)}</h4><ul>${b.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>
   `).join('') + (extraHtml||'');
@@ -2067,7 +2165,7 @@ function buildOBHome(){
 function buildOBCheat(){
   registerPage('ob-cheat', (div)=>{
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('cheat')} Reference</div><h2>OB Cheat Sheet</h2><p>All exam-critical models across all 9 topics.</p></div><div class="page-body" id="ob-cheat-body"></div>`;
-    renderCheat(div.querySelector('#ob-cheat-body'), OB_CHEAT);
+    renderCheat(div.querySelector('#ob-cheat-body'), OB_CHEAT, null, 'cheat-ob');
   });
 }
 
@@ -2213,7 +2311,7 @@ function buildPOMCheat(){
   registerPage('pom-cheat', (div)=>{
     const ratioTable = `<div class="cheat-block"><h4>Key Financial Ratios (Output Control)</h4><table class="cheat-table"><thead><tr><th>Ratio</th><th>Formula</th></tr></thead><tbody>${POM_RATIOS_TABLE.map(r=>`<tr><td>${esc(r[0])}</td><td><code>${esc(r[1])}</code></td></tr>`).join('')}</tbody></table></div>`;
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('cheat')} Reference</div><h2>POM Cheat Sheet &amp; Ratios</h2><p>All frameworks across all 4 topics, plus the full financial-ratio table.</p></div><div class="page-body" id="pom-cheat-body"></div>`;
-    renderCheat(div.querySelector('#pom-cheat-body'), POM_CHEAT, ratioTable);
+    renderCheat(div.querySelector('#pom-cheat-body'), POM_CHEAT, ratioTable, 'cheat-pom');
   });
 }
 
@@ -2410,13 +2508,13 @@ function buildAWVerbs(){
 function buildAWRules(){
   registerPage('aw-rules', (div)=>{
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('rules')} Reference</div><h2>Writing Rules</h2><p>Argument structure, citation rules, and the research-assignment template.</p></div><div class="page-body" id="aw-rules-body"></div>`;
-    renderCheat(div.querySelector('#aw-rules-body'), AW_RULES);
+    renderCheat(div.querySelector('#aw-rules-body'), AW_RULES, null, 'cheat-aw-rules');
   });
 }
 function buildAWPresent(){
   registerPage('aw-present', (div)=>{
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('present')} Reference</div><h2>Presentation Skills</h2><p>The Glance Test, delivery tactics, and the EBS grading rubric.</p></div><div class="page-body" id="aw-present-body"></div>`;
-    renderCheat(div.querySelector('#aw-present-body'), AW_PRESENT_REF);
+    renderCheat(div.querySelector('#aw-present-body'), AW_PRESENT_REF, null, 'cheat-aw-present');
   });
 }
 function buildAWChecklists(){
