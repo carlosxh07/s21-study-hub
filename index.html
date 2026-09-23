@@ -233,6 +233,27 @@ mark.hl-pink{background:rgba(255,55,95,.26);}
 .hl-swatch.hl-pink{background:#ff375f;}
 .hl-remove{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--ink-soft);cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;padding:0;}
 .hl-remove:hover{color:var(--bad);border-color:var(--bad);}
+strong.hl-fmt{font-weight:700;cursor:pointer;}
+em.hl-fmt{font-style:italic;cursor:pointer;}
+
+/* ============ HIGHLIGHT ISLAND (vertical dynamic-island formatting dock) ============ */
+#hl-island{position:fixed;top:50%;right:18px;transform:translateY(-50%);z-index:120;display:none;flex-direction:column;align-items:center;gap:10px;padding:14px 9px;border-radius:var(--radius-pill);background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-edge);box-shadow:var(--shadow-lg);transition:opacity .25s var(--ease),transform .25s var(--ease);opacity:.55;}
+#hl-island:hover{opacity:1;}
+#hl-island.show{display:flex;}
+#hl-island .hl-i-swatch{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);cursor:pointer;padding:0;transition:transform .15s var(--ease);}
+#hl-island .hl-i-swatch:hover{transform:scale(1.15);}
+#hl-island .hl-i-swatch.hl-yellow{background:#ffd60a;}
+#hl-island .hl-i-swatch.hl-green{background:#34c759;}
+#hl-island .hl-i-swatch.hl-blue{background:#0a84ff;}
+#hl-island .hl-i-swatch.hl-pink{background:#ff375f;}
+#hl-island .hl-i-divider{width:22px;height:1px;background:var(--line);margin:2px 0;}
+#hl-island .hl-i-fmt{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.78rem;padding:0;transition:transform .15s var(--ease),background .15s var(--ease);}
+#hl-island .hl-i-fmt:hover{transform:scale(1.12);background:var(--panel-2);}
+#hl-island .hl-i-fmt.b{font-weight:800;}
+#hl-island .hl-i-fmt.i{font-style:italic;}
+#hl-island .hl-i-hint{font-size:.6rem;color:var(--ink-faint);text-align:center;line-height:1.3;max-width:60px;}
+@media(max-width:900px){#hl-island{right:10px;padding:10px 7px;gap:8px;}#hl-island .hl-i-swatch{width:19px;height:19px;}#hl-island .hl-i-fmt{width:23px;height:23px;}#hl-island .hl-i-hint{display:none;}}
+@media(max-width:640px){#hl-island{top:auto;bottom:18px;right:14px;transform:none;flex-direction:row;border-radius:var(--radius-pill);padding:9px 12px;}}
 
 /* ============ FLASHCARDS ============ */
 .fc-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:18px;font-size:.8rem;color:var(--ink-soft);flex-wrap:wrap;justify-content:space-between;}
@@ -1406,6 +1427,7 @@ function navTo(pageId){
     const subj = pageId.split('-')[0];
     if(SUBJECTS.find(s=>s.id===subj)) selectSubject(subj, false);
   }
+  requestAnimationFrame(updateHlIslandVisibility);
 }
 
 function registerPage(id, buildFn){
@@ -1569,21 +1591,83 @@ function positionHlPopover(pop, rect){
   pop.style.top = (rect.top + window.scrollY - 10) + 'px';
   pop.classList.add('show');
 }
+function hlIslandEl(){
+  let el = document.getElementById('hl-island');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'hl-island';
+    el.innerHTML = `<div class="hl-i-hint">Select text</div>` +
+      HL_COLORS.map(c=>`<button type="button" class="hl-i-swatch hl-${c}" data-color="${c}" title="Highlight ${c}"></button>`).join('') +
+      `<div class="hl-i-divider"></div>` +
+      `<button type="button" class="hl-i-fmt b" data-fmt="bold" title="Bold">B</button>` +
+      `<button type="button" class="hl-i-fmt i" data-fmt="italic" title="Italic">I</button>`;
+    document.body.appendChild(el);
+    el.addEventListener('mousedown', e=>e.preventDefault()); // keep text selection alive when clicking the dock
+    el.addEventListener('click', (e)=>{
+      const swatch = e.target.closest('.hl-i-swatch');
+      const fmt = e.target.closest('.hl-i-fmt');
+      const sel = window.__hlLastSel;
+      if(!sel || !sel.range) return;
+      if(swatch){
+        wrapRange(sel.range, 'mark', 'hl hl-'+swatch.dataset.color);
+      } else if(fmt){
+        wrapRange(sel.range, fmt.dataset.fmt==='bold'?'strong':'em', 'hl-fmt');
+      } else return;
+      hlSave(sel.container);
+      window.__hlLastSel = null;
+      window.getSelection().removeAllRanges();
+    });
+  }
+  return el;
+}
+function wrapRange(range, tag, className){
+  try{
+    const m = document.createElement(tag);
+    m.className = className;
+    range.surroundContents(m);
+  }catch(err){
+    try{
+      const frag = range.extractContents();
+      const m = document.createElement(tag);
+      m.className = className;
+      m.appendChild(frag);
+      range.insertNode(m);
+    }catch(err2){ /* selection crossed an unsupported boundary — skip */ }
+  }
+}
+function updateHlIslandVisibility(){
+  const island = hlIslandEl();
+  const activePage = document.querySelector('.page.active');
+  const hasText = activePage && activePage.querySelector('.hl-container');
+  island.classList.toggle('show', !!hasText);
+}
 function initHighlighting(){
   document.addEventListener('mouseup', (e)=>{
-    if(e.target.closest('.hl-popover') || e.target.closest('mark.hl')) return;
+    if(e.target.closest('.hl-popover') || e.target.closest('#hl-island') || e.target.closest('mark.hl')) return;
     const sel = window.getSelection();
     if(!sel || sel.isCollapsed || sel.rangeCount===0 || sel.toString().trim()===''){ return; }
     const range = sel.getRangeAt(0);
     const anchor = range.commonAncestorContainer.nodeType===1 ? range.commonAncestorContainer : range.commonAncestorContainer.parentElement;
     const hlContainer = anchor && anchor.closest ? anchor.closest('.hl-container') : null;
     if(!hlContainer){ return; }
+    window.__hlLastSel = { range: range.cloneRange(), container: hlContainer };
     const pop = hlPopoverEl();
     positionHlPopover(pop, range.getBoundingClientRect());
     pop.dataset.mode = 'create';
     pop.__range = range.cloneRange();
     pop.__container = hlContainer;
     pop.__mark = null;
+  });
+
+  document.addEventListener('dblclick', (e)=>{
+    const fmt = e.target.closest('strong.hl-fmt, em.hl-fmt');
+    if(!fmt) return;
+    const container = fmt.closest('.hl-container');
+    const parent = fmt.parentNode;
+    while(fmt.firstChild) parent.insertBefore(fmt.firstChild, fmt);
+    parent.removeChild(fmt); parent.normalize();
+    hlSave(container);
+    window.getSelection().removeAllRanges();
   });
 
   document.addEventListener('click', (e)=>{
@@ -2545,6 +2629,8 @@ buildAWMockExamMC(); buildAWMockExamWritten(); buildAWLeeDrills(); buildAWMarieS
 buildSubjectSwitch();
 buildHomeCards();
 initHighlighting();
+hlIslandEl();
+updateHlIslandVisibility();
 selectSubject('ob', false);
 navTo('home');
 </script>
