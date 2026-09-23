@@ -146,7 +146,14 @@ a,button{font-family:inherit;}
 .subject-cards{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;max-width:1040px;margin:0 auto;}
 .subj-card{width:310px;background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:16px;padding:0;text-align:left;cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);box-shadow:var(--shadow-sm);overflow:hidden;opacity:0;animation:riseIn .5s var(--ease) forwards;}
 .subj-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--accent-bg2);}
-.subj-card .banner{height:74px;display:flex;align-items:center;padding:0 22px;}
+.subj-card .banner{height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;}
+.mastery-ring{position:relative;width:40px;height:40px;flex-shrink:0;}
+.mastery-ring svg{width:100%;height:100%;transform:rotate(-90deg);}
+.mastery-ring .ring-track{fill:none;stroke:rgba(255,255,255,.22);stroke-width:4;}
+.mastery-ring .ring-fill{fill:none;stroke:#fff;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .6s var(--ease);}
+.mastery-ring .ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace;}
+.mastery-ring.empty .ring-track{stroke:rgba(255,255,255,.18);}
+.mastery-ring.empty .ring-label{color:rgba(255,255,255,.6);}
 .subj-card .banner svg{width:34px;height:34px;}
 .subj-card .body{padding:20px 22px 24px;}
 .subj-card .tag{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:20px;display:inline-block;margin-bottom:12px;}
@@ -1366,7 +1373,9 @@ function navTo(pageId){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.page===pageId));
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('main').scrollTop = 0;
-  if(pageId!=='home'){
+  if(pageId==='home'){
+    buildHomeCards();
+  } else {
     const subj = pageId.split('-')[0];
     if(SUBJECTS.find(s=>s.id===subj)) selectSubject(subj, false);
   }
@@ -1482,7 +1491,7 @@ function buildHomeCards(){
   wrap.innerHTML = SUBJECTS.map(s=>{
     const m = meta[s.id];
     return `<div class="subj-card" onclick="selectSubject('${s.id}',true)">
-      <div class="banner" style="background:${m.banner}">${homeIcon(s.id)}</div>
+      <div class="banner" style="background:${m.banner}">${homeIcon(s.id)}${ringHtml(s.id)}</div>
       <div class="body">
         <span class="tag" style="background:var(--bg2);color:var(--ink-soft)">${s.id.toUpperCase()}</span>
         <h3>${s.label}</h3>
@@ -1513,6 +1522,29 @@ function fcMasteryHtml(storeKey, total){
   if(!total) return '';
   const m = fcMastery(storeKey, total);
   return `<div class="topic-mastery"><div class="mbar"><div class="mfill" style="width:${m.pct}%"></div></div><span class="mlabel">${m.gotit}/${m.total} known</span></div>`;
+}
+
+function fcMasteryLecture(subjId){
+  let entries = [];
+  if(subjId==='ob') entries = OB_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
+  else if(subjId==='pom') entries = POM_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
+  else if(subjId==='aw') entries = [['fc-aw', AW_CARDS.length]];
+  let gotit=0, total=0;
+  entries.forEach(([key,n])=>{ gotit += fcMastery(key,n).gotit; total += n; });
+  return { gotit, total, pct: total? Math.round(gotit/total*100) : 0 };
+}
+function ringHtml(subjId){
+  const m = fcMasteryLecture(subjId);
+  const R = 20, C = 2*Math.PI*R;
+  if(!m.total) return `<div class="mastery-ring empty" title="No flashcards yet"><svg viewBox="0 0 48 48"><circle class="ring-track" cx="24" cy="24" r="${R}"/></svg><span class="ring-label">—</span></div>`;
+  const off = C - (m.pct/100)*C;
+  return `<div class="mastery-ring" title="${m.gotit}/${m.total} cards known">
+    <svg viewBox="0 0 48 48">
+      <circle class="ring-track" cx="24" cy="24" r="${R}"/>
+      <circle class="ring-fill" cx="24" cy="24" r="${R}" style="stroke-dasharray:${C};stroke-dashoffset:${off}"/>
+    </svg>
+    <span class="ring-label">${m.pct}%</span>
+  </div>`;
 }
 
 const FC_STATUS = {
