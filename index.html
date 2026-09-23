@@ -1898,6 +1898,7 @@ function lectureMasteryHtml(subjId){
 
 /* ============================================================ STUDY PLAN ============================================================ */
 const PLAN_EXAM_AW = new Date(2026,9,6); // confirmed Klausur date 06.10.2026
+const PLAN_EXAM_OBPOM = new Date(2026,9,5); // confirmed Klausur date 05.10.2026 (OB & POM)
 
 function planItemPool(){
   const items = [];
@@ -1919,9 +1920,12 @@ function planItemPool(){
 }
 
 function planDaysLeft(subj){
+  const today = new Date(); today.setHours(0,0,0,0);
   if(subj==='aw'){
-    const today = new Date(); today.setHours(0,0,0,0);
     return Math.max(1, Math.ceil((PLAN_EXAM_AW - today)/86400000));
+  }
+  if(subj==='ob'||subj==='pom'){
+    return Math.max(1, Math.ceil((PLAN_EXAM_OBPOM - today)/86400000));
   }
   const saved = ls('plan-days-'+subj, null);
   return (saved && saved>0) ? saved : 14;
@@ -1958,11 +1962,11 @@ function buildStudyPlan(){
       <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Study Plan</h2><p>A day-by-day revision plan built from your real flashcard progress — weak topics show up more often, mastered ones fade out, and everything gets denser as each exam gets closer.</p></div>
       <div class="page-body">
         <div class="plan-settings glass" style="padding:18px 22px;border-radius:var(--radius);">
-          <label>OB — days until exam
-            <input type="number" min="1" max="90" id="plan-days-ob-input" value="${planDaysLeft('ob')}">
+          <label>OB — exam date
+            <span style="padding:8px 0;font-weight:700;color:var(--ink);">5 Oct 2026 · ${planDaysLeft('ob')}d</span>
           </label>
-          <label>POM — days until exam
-            <input type="number" min="1" max="90" id="plan-days-pom-input" value="${planDaysLeft('pom')}">
+          <label>POM — exam date
+            <span style="padding:8px 0;font-weight:700;color:var(--ink);">5 Oct 2026 · ${planDaysLeft('pom')}d</span>
           </label>
           <label>AW — exam date
             <span style="padding:8px 0;font-weight:700;color:var(--ink);">6 Oct 2026 · ${planDaysLeft('aw')}d</span>
@@ -1971,8 +1975,6 @@ function buildStudyPlan(){
         </div>
         <div id="plan-days-list"></div>
       </div>`;
-    div.querySelector('#plan-days-ob-input').addEventListener('change', e=>{ lsSet('plan-days-ob', Math.max(1,+e.target.value||14)); renderPlanDays(div); });
-    div.querySelector('#plan-days-pom-input').addEventListener('change', e=>{ lsSet('plan-days-pom', Math.max(1,+e.target.value||14)); renderPlanDays(div); });
     window.__planRegenerate = ()=> renderPlanDays(div);
     window.__planToggle = (key)=>{
       const state = ls('plan-checks', {});
