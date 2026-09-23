@@ -147,13 +147,6 @@ a,button{font-family:inherit;}
 .subj-card{width:310px;background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:16px;padding:0;text-align:left;cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);box-shadow:var(--shadow-sm);overflow:hidden;opacity:0;animation:riseIn .5s var(--ease) forwards;}
 .subj-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--accent-bg2);}
 .subj-card .banner{height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;}
-.mastery-ring{position:relative;width:40px;height:40px;flex-shrink:0;}
-.mastery-ring svg{width:100%;height:100%;transform:rotate(-90deg);}
-.mastery-ring .ring-track{fill:none;stroke:rgba(255,255,255,.22);stroke-width:4;}
-.mastery-ring .ring-fill{fill:none;stroke:#fff;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .6s var(--ease);}
-.mastery-ring .ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace;}
-.mastery-ring.empty .ring-track{stroke:rgba(255,255,255,.18);}
-.mastery-ring.empty .ring-label{color:rgba(255,255,255,.6);}
 .subj-card .banner svg{width:34px;height:34px;}
 .subj-card .body{padding:20px 22px 24px;}
 .subj-card .tag{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:20px;display:inline-block;margin-bottom:12px;}
@@ -174,6 +167,19 @@ a,button{font-family:inherit;}
 .topic-card:nth-child(9),.tool-tile:nth-child(9){animation-delay:360ms}
 .topic-card:nth-child(10),.tool-tile:nth-child(10){animation-delay:405ms}
 .topic-card:nth-child(n+11),.tool-tile:nth-child(n+11){animation-delay:440ms}
+
+/* ============ LECTURE MASTERY ============ */
+.lecture-mastery{display:flex;align-items:center;gap:26px;padding:24px 28px;border-radius:var(--radius);box-shadow:var(--shadow-md);margin-bottom:26px;opacity:0;animation:riseIn .45s var(--ease) forwards;}
+.lm-ring{position:relative;width:84px;height:84px;flex-shrink:0;}
+.lm-ring svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 0 5px var(--accent-bg2));}
+.lm-track{fill:none;stroke:var(--bg2);stroke-width:7;}
+.lm-fill{fill:none;stroke:var(--accent);stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset .7s var(--ease);}
+.lm-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:1.28rem;font-weight:700;color:var(--ink);}
+.lm-pct span{font-size:.62rem;font-weight:700;color:var(--ink-faint);margin-left:1px;align-self:flex-start;margin-top:5px;}
+.lm-body{flex:1;min-width:0;}
+.lm-title{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--accent-ink);}
+.lm-sub{font-size:.78rem;color:var(--ink-soft);margin-top:10px;}
+@media(max-width:640px){.lecture-mastery{flex-direction:column;align-items:flex-start;gap:16px;}}
 
 /* ============ TOPIC GRID ============ */
 .topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:8px;}
@@ -206,6 +212,27 @@ a,button{font-family:inherit;}
 .summary-text{font-size:.97rem;line-height:1.85;color:var(--ink);}
 .summary-text p{margin-bottom:16px;}
 .summary-text p:first-of-type::first-letter{font-family:'Inter',-apple-system,sans-serif;font-size:2.6em;font-weight:700;float:left;line-height:.85;padding-right:8px;padding-top:4px;color:var(--accent-ink);}
+
+/* ============ HIGHLIGHTING ============ */
+mark.hl{border-radius:3px;padding:.05em 0;cursor:pointer;color:inherit;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+mark.hl-yellow{background:rgba(255,214,10,.38);}
+mark.hl-green{background:rgba(52,199,89,.32);}
+mark.hl-blue{background:rgba(10,132,255,.28);}
+mark.hl-pink{background:rgba(255,55,95,.26);}
+:root[data-theme="dark"] mark.hl-yellow{background:rgba(255,214,10,.3);}
+:root[data-theme="dark"] mark.hl-green{background:rgba(52,199,89,.28);}
+:root[data-theme="dark"] mark.hl-blue{background:rgba(10,132,255,.34);}
+:root[data-theme="dark"] mark.hl-pink{background:rgba(255,55,95,.3);}
+.hl-popover{position:absolute;z-index:200;display:none;gap:6px;align-items:center;padding:7px 8px;border-radius:var(--radius-pill);background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-edge);box-shadow:var(--shadow-lg);transform:translate(-50%,-100%);}
+.hl-popover.show{display:flex;}
+.hl-swatch{width:20px;height:20px;border-radius:50%;border:1px solid var(--line);cursor:pointer;padding:0;transition:transform .15s var(--ease);}
+.hl-swatch:hover{transform:scale(1.15);}
+.hl-swatch.hl-yellow{background:#ffd60a;}
+.hl-swatch.hl-green{background:#34c759;}
+.hl-swatch.hl-blue{background:#0a84ff;}
+.hl-swatch.hl-pink{background:#ff375f;}
+.hl-remove{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--ink-soft);cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;padding:0;}
+.hl-remove:hover{color:var(--bad);border-color:var(--bad);}
 
 /* ============ FLASHCARDS ============ */
 .fc-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:18px;font-size:.8rem;color:var(--ink-soft);flex-wrap:wrap;justify-content:space-between;}
@@ -1491,7 +1518,7 @@ function buildHomeCards(){
   wrap.innerHTML = SUBJECTS.map(s=>{
     const m = meta[s.id];
     return `<div class="subj-card" onclick="selectSubject('${s.id}',true)">
-      <div class="banner" style="background:${m.banner}">${homeIcon(s.id)}${ringHtml(s.id)}</div>
+      <div class="banner" style="background:${m.banner}">${homeIcon(s.id)}</div>
       <div class="body">
         <span class="tag" style="background:var(--bg2);color:var(--ink-soft)">${s.id.toUpperCase()}</span>
         <h3>${s.label}</h3>
@@ -1508,9 +1535,105 @@ function homeIcon(id){
 }
 
 /* ============================================================ GENERIC: SUMMARY / FLASHCARDS / QUIZ / CHEAT ============================================================ */
-function renderSummary(container, title, text){
+function renderSummary(container, title, text, key){
+  container.classList.add('hl-container');
+  if(key){
+    container.dataset.hlKey = key;
+    const saved = ls(hlStorageKey(key), null);
+    if(saved){ container.innerHTML = saved; return; }
+  }
   const paras = text.trim().split(/\n\n+/).map(p=>`<p>${esc(p)}</p>`).join('');
   container.innerHTML = `<div class="summary-text">${paras}</div>`;
+}
+
+/* ============================================================ HIGHLIGHTING ============================================================ */
+const HL_COLORS = ['yellow','green','blue','pink'];
+function hlStorageKey(key){ return 'hl:'+key; }
+function hlSave(hlContainer){
+  if(hlContainer && hlContainer.dataset.hlKey) lsSet(hlStorageKey(hlContainer.dataset.hlKey), hlContainer.innerHTML);
+}
+function hlPopoverEl(){
+  let el = document.getElementById('hl-popover');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'hl-popover';
+    el.className = 'hl-popover';
+    el.innerHTML = HL_COLORS.map(c=>`<button type="button" class="hl-swatch hl-${c}" data-color="${c}" title="${c}"></button>`).join('') + `<button type="button" class="hl-remove" title="Remove highlight">&#10005;</button>`;
+    document.body.appendChild(el);
+  }
+  return el;
+}
+function hideHlPopover(){ const el=document.getElementById('hl-popover'); if(el) el.classList.remove('show'); }
+function positionHlPopover(pop, rect){
+  pop.style.left = (rect.left + rect.width/2 + window.scrollX) + 'px';
+  pop.style.top = (rect.top + window.scrollY - 10) + 'px';
+  pop.classList.add('show');
+}
+function initHighlighting(){
+  document.addEventListener('mouseup', (e)=>{
+    if(e.target.closest('.hl-popover') || e.target.closest('mark.hl')) return;
+    const sel = window.getSelection();
+    if(!sel || sel.isCollapsed || sel.rangeCount===0 || sel.toString().trim()===''){ return; }
+    const range = sel.getRangeAt(0);
+    const anchor = range.commonAncestorContainer.nodeType===1 ? range.commonAncestorContainer : range.commonAncestorContainer.parentElement;
+    const hlContainer = anchor && anchor.closest ? anchor.closest('.hl-container') : null;
+    if(!hlContainer){ return; }
+    const pop = hlPopoverEl();
+    positionHlPopover(pop, range.getBoundingClientRect());
+    pop.dataset.mode = 'create';
+    pop.__range = range.cloneRange();
+    pop.__container = hlContainer;
+    pop.__mark = null;
+  });
+
+  document.addEventListener('click', (e)=>{
+    const mark = e.target.closest('mark.hl');
+    if(mark){
+      e.stopPropagation();
+      const pop = hlPopoverEl();
+      positionHlPopover(pop, mark.getBoundingClientRect());
+      pop.dataset.mode = 'edit';
+      pop.__mark = mark;
+      pop.__container = mark.closest('.hl-container');
+      return;
+    }
+    const btn = e.target.closest('.hl-swatch, .hl-remove');
+    if(btn){
+      const pop = hlPopoverEl();
+      const hlContainer = pop.__container;
+      if(btn.classList.contains('hl-remove')){
+        if(pop.__mark){
+          const m = pop.__mark; const parent = m.parentNode;
+          while(m.firstChild) parent.insertBefore(m.firstChild, m);
+          parent.removeChild(m); parent.normalize();
+        }
+      } else {
+        const color = btn.dataset.color;
+        if(pop.dataset.mode==='edit' && pop.__mark){
+          pop.__mark.className = 'hl hl-'+color;
+        } else if(pop.__range){
+          try{
+            const m = document.createElement('mark');
+            m.className = 'hl hl-'+color;
+            pop.__range.surroundContents(m);
+          }catch(err){
+            try{
+              const frag = pop.__range.extractContents();
+              const m = document.createElement('mark');
+              m.className = 'hl hl-'+color;
+              m.appendChild(frag);
+              pop.__range.insertNode(m);
+            }catch(err2){ /* selection crossed an unsupported boundary — skip */ }
+          }
+        }
+      }
+      hlSave(hlContainer);
+      hideHlPopover();
+      window.getSelection().removeAllRanges();
+      return;
+    }
+    if(!e.target.closest('.hl-popover')) hideHlPopover();
+  });
 }
 
 function fcMastery(storeKey, total){
@@ -1529,21 +1652,44 @@ function fcMasteryLecture(subjId){
   if(subjId==='ob') entries = OB_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
   else if(subjId==='pom') entries = POM_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
   else if(subjId==='aw') entries = [['fc-aw', AW_CARDS.length]];
-  let gotit=0, total=0;
-  entries.forEach(([key,n])=>{ gotit += fcMastery(key,n).gotit; total += n; });
-  return { gotit, total, pct: total? Math.round(gotit/total*100) : 0 };
+  let gotit=0, partial=0, dontknow=0, total=0;
+  entries.forEach(([key,n])=>{
+    const known = ls(key, {});
+    Object.values(known).forEach(v=>{
+      if(v==='gotit') gotit++;
+      else if(v==='partial') partial++;
+      else if(v==='dontknow') dontknow++;
+    });
+    total += n;
+  });
+  const unrated = total - gotit - partial - dontknow;
+  return { gotit, partial, dontknow: dontknow+unrated, total, pct: total? Math.round(gotit/total*100) : 0 };
 }
-function ringHtml(subjId){
+function lectureMasteryHtml(subjId){
   const m = fcMasteryLecture(subjId);
-  const R = 20, C = 2*Math.PI*R;
-  if(!m.total) return `<div class="mastery-ring empty" title="No flashcards yet"><svg viewBox="0 0 48 48"><circle class="ring-track" cx="24" cy="24" r="${R}"/></svg><span class="ring-label">—</span></div>`;
+  if(!m.total) return '';
+  const R = 34, C = 2*Math.PI*R;
   const off = C - (m.pct/100)*C;
-  return `<div class="mastery-ring" title="${m.gotit}/${m.total} cards known">
-    <svg viewBox="0 0 48 48">
-      <circle class="ring-track" cx="24" cy="24" r="${R}"/>
-      <circle class="ring-fill" cx="24" cy="24" r="${R}" style="stroke-dasharray:${C};stroke-dashoffset:${off}"/>
-    </svg>
-    <span class="ring-label">${m.pct}%</span>
+  const rows = [
+    ['gotit','Got it', m.gotit],
+    ['partial','Partially', m.partial],
+    ['dontknow','Not yet', m.dontknow]
+  ];
+  return `<div class="lecture-mastery glass">
+    <div class="lm-ring">
+      <svg viewBox="0 0 84 84">
+        <circle class="lm-track" cx="42" cy="42" r="${R}"/>
+        <circle class="lm-fill" cx="42" cy="42" r="${R}" style="stroke-dasharray:${C};stroke-dashoffset:${off}"/>
+      </svg>
+      <div class="lm-pct">${m.pct}<span>%</span></div>
+    </div>
+    <div class="lm-body">
+      <div class="lm-title">Flashcard mastery</div>
+      <div class="fc-breakdown" style="margin:10px 0 0;max-width:none;">
+        ${rows.map(([cls,label,n])=>`<div class="fc-breakdown-row"><span class="fc-breakdown-label ${cls}">${label}</span><div class="fc-breakdown-bar"><div class="fc-breakdown-fill ${cls}" style="width:${m.total?Math.round(n/m.total*100):0}%"></div></div><span class="fc-breakdown-pct">${n}</span></div>`).join('')}
+      </div>
+      <div class="lm-sub">${m.gotit} of ${m.total} cards mastered</div>
+    </div>
   </div>`;
 }
 
@@ -1575,7 +1721,12 @@ function renderFlashcards(container, cards, storeKey){
   function tallyChipsHtml(t){
     return `<span class="fc-tally"><span class="fc-tally-chip dontknow">${t.dontknow}</span><span class="fc-tally-chip partial">${t.partial}</span><span class="fc-tally-chip gotit">${t.gotit}</span></span>`;
   }
-  function flip(){flipped=!flipped;render();}
+  function flip(){
+    flipped=!flipped;
+    const inner = container.querySelector('.flashcard-inner');
+    if(inner){ inner.classList.toggle('flipped', flipped); }
+    else render();
+  }
   function nav(d){idx=Math.max(0,Math.min(order.length,idx+d));flipped=false;render();}
   function doShuffle(){order=shuffle(cards.map((_,i)=>i));idx=0;flipped=false;render();}
   function rate(status){
@@ -1800,7 +1951,7 @@ function buildTopicPage(t, subjColor){
         if(btn.dataset.tab==='qz' && !panel.dataset.loaded){ panel.dataset.loaded='1'; renderQuiz(panel, t.quiz, 'quiz-'+t.id); }
       };
     });
-    renderSummary(div.querySelector(`#${t.id}-sum`), t.title, t.summary);
+    renderSummary(div.querySelector(`#${t.id}-sum`), t.title, t.summary, t.id);
   });
 }
 
@@ -1814,6 +1965,7 @@ function buildOBHome(){
         <p>Behavioural science covering individuals, groups, leadership and power. Pick a topic, or jump into a cross-topic tool below.</p>
       </div>
       <div class="page-body">
+        ${lectureMasteryHtml('ob')}
         <div class="topic-grid">
           ${OB_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
         </div>
@@ -1958,6 +2110,7 @@ function buildPOMHome(){
         <p>History, planning &amp; strategy, organizing, and control &amp; change — the management canon, plus the running Growth Scenario case.</p>
       </div>
       <div class="page-body">
+        ${lectureMasteryHtml('pom')}
         <div class="topic-grid">
           ${POM_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
         </div>
@@ -2110,6 +2263,7 @@ function buildAWHome(){
         <p>Argumentation, citation, structure, presentation delivery, and CV writing — plus three new applied drills.</p>
       </div>
       <div class="page-body">
+        ${lectureMasteryHtml('aw')}
         <div class="tool-tiles">
           <div class="tool-tile" onclick="navTo('aw-summary')"><div class="ic">${icon('summary')}</div><h4>Summary</h4><p>The full reference in prose.</p></div>
           <div class="tool-tile" onclick="navTo('aw-flash')"><div class="ic">${icon('flash')}</div><h4>Flashcards</h4><p>${AW_CARDS.length} cards, spaced repetition.</p>${fcMasteryHtml('fc-aw', AW_CARDS.length)}</div>
@@ -2138,7 +2292,7 @@ On the presentation side, Nancy Duarte's Glance Test says a slide should land it
 function buildAWSummary(){
   registerPage('aw-summary', (div)=>{
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('summary')} Reference</div><h2>AW Summary</h2><p>The full module in prose.</p></div><div class="page-body" id="aw-sum-body"></div>`;
-    renderSummary(div.querySelector('#aw-sum-body'), 'AW', AW_SUMMARY_TEXT);
+    renderSummary(div.querySelector('#aw-sum-body'), 'AW', AW_SUMMARY_TEXT, 'aw-summary');
   });
 }
 function buildAWFlash(){
@@ -2344,7 +2498,7 @@ function buildAWLeeDrills(){
 function buildAWMarieSummary(){
   registerPage('aw-marie-summary', (div)=>{
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('summary')} Marie Claire — Reference</div><h2>Stress Management Summary</h2><p>Sessions 1 &amp; 2 (stress physiology, coping strategies, emotions) plus the HBR article "How Will You Measure Your Life?".</p></div><div class="page-body" id="aw-marie-sum-body"></div>`;
-    renderSummary(div.querySelector('#aw-marie-sum-body'), 'AW', AW_MARIE_SUMMARY);
+    renderSummary(div.querySelector('#aw-marie-sum-body'), 'AW', AW_MARIE_SUMMARY, 'aw-marie-summary');
   });
 }
 
@@ -2390,6 +2544,7 @@ buildAWMockExamMC(); buildAWMockExamWritten(); buildAWLeeDrills(); buildAWMarieS
 /* ============================================================ INIT ============================================================ */
 buildSubjectSwitch();
 buildHomeCards();
+initHighlighting();
 selectSubject('ob', false);
 navTo('home');
 </script>
