@@ -545,7 +545,7 @@ body.hl-armed .hl-container{cursor:crosshair;}
 #support-btn{display:none;width:calc(100% - 28px);margin:0 14px 12px;padding:9px 12px;border-radius:12px;border:1px solid rgba(255,196,110,.55);background:linear-gradient(135deg,#ffd58a 0%,#f6a93b 55%,#e8892a 100%);color:#2a1602;font:inherit;font-size:.76rem;font-weight:700;cursor:pointer;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 14px rgba(246,169,59,.3),inset 0 1px 0 rgba(255,255,255,.5);transition:transform .2s var(--ease),box-shadow .2s var(--ease);}
 #support-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(246,169,59,.5),inset 0 1px 0 rgba(255,255,255,.55);}
 .home-support{display:none;position:relative;overflow:hidden;margin:-18px auto 34px;padding:12px 24px;border-radius:999px;border:1px solid rgba(255,196,110,.55);background:linear-gradient(135deg,#ffd58a 0%,#f6a93b 55%,#e8892a 100%);color:#3b2105;font:inherit;font-size:.92rem;font-weight:500;cursor:pointer;align-items:center;gap:9px;box-shadow:0 6px 22px rgba(246,169,59,.38),inset 0 1px 0 rgba(255,255,255,.55);transition:transform .25s var(--ease),box-shadow .25s var(--ease);animation:hs-pulse 3.2s ease-in-out infinite;}
-.hero p.home-support-note{display:none;max-width:420px;margin:-22px auto 34px;font-size:.78rem;line-height:1.5;color:var(--ink-soft);}
+.hero p.home-support-note{display:none;max-width:500px;text-wrap:balance;margin:-22px auto 34px;font-size:.78rem;line-height:1.5;color:var(--ink-soft);}
 .home-support b{color:#2a1602;font-weight:700;}
 .home-support .hs-cup{font-size:1.15rem;line-height:1;}
 .home-support:after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:hs-shine 4.5s ease-in-out infinite;pointer-events:none;}
@@ -581,7 +581,7 @@ body.hl-armed .hl-container{cursor:crosshair;}
     </div>
     <p>EBS Business School</p>
   </div>
-  <button id="support-btn" class="support-open" type="button">☕ <span>Buy me a coffee</span></button>
+  <button id="support-btn" class="support-open" type="button">☕ <span>Buy me a coffee at the Cafta</span></button>
   <div class="subject-switch" id="subject-switch"></div>
   <button class="subject-btn" id="plan-nav-btn" onclick="navTo('plan')">
     <span class="dot" style="background:var(--ink-soft)"></span>
@@ -604,8 +604,8 @@ body.hl-armed .hl-container{cursor:crosshair;}
           </div>
           <div class="sh-overlay"></div>
         </div>
-        <button class="support-open home-support" type="button"><span class="hs-cup">☕</span><span>Hub helped you? <b>Buy me a coffee</b></span></button>
-        <p class="home-support-note">Free, ad-free, built by a fellow EBS student.</p>
+        <button class="support-open home-support" type="button"><span class="hs-cup">☕</span><span>Hub helped you? <b>Buy me a coffee at the Cafta</b></span></button>
+        <p class="home-support-note">Free for all of EBS. Got you through an exam? Your next Cafta coffee is on you.</p>
         <div class="subject-cards" id="home-cards"></div>
         <a href="#plan" onclick="navTo('plan');return false;" class="btn ghost" style="margin:18px auto 0;display:inline-flex;gap:8px;align-items:center;">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
@@ -2959,9 +2959,9 @@ navTo('home');
 <div id="support-modal" role="dialog" aria-modal="true" aria-labelledby="sm-title">
   <div class="sm-card">
     <button class="sm-close" type="button" aria-label="Close">×</button>
-    <h3 id="sm-title">☕ Buy me a coffee</h3>
-    <p>Saved you hours of studying? A coffee is a fair trade — and keeps new content coming.</p>
-    <p class="sm-hint">Scan → PayPal opens. 5 € = one coffee.</p>
+    <h3 id="sm-title">☕ Buy me a coffee at the Cafta</h3>
+    <p>Hours of summaries, flashcards and mock exams — for the price of one Cafta coffee. Best deal on campus. Every coffee = more content before the next exams.</p>
+    <p class="sm-hint">Scan → PayPal opens. 5 € = one Cafta coffee.</p>
     <div class="sm-qr" id="sm-qr"></div><br>
     <a class="sm-link" id="sm-link" target="_blank" rel="noopener">or open the link here</a>
   </div>
