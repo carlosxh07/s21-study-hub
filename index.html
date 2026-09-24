@@ -2974,14 +2974,14 @@ navTo('home');
     <h3 id="sm-title">Buy me a Cafta coffee ☕</h3>
     <p class="sm-sub">Pick your order</p>
     <div class="sm-menu" id="sm-menu">
-      <button type="button" data-amt="3"><span class="e">☕</span><span class="n">Espresso</span><span class="pr">3 €</span></button>
-      <button type="button" data-amt="5" class="on"><span class="e">🥛</span><span class="n">Cappuccino</span><span class="pr">5 €</span></button>
-      <button type="button" data-amt="8"><span class="e">🥐</span><span class="n">Coffee + Croissant</span><span class="pr">8 €</span></button>
-      <button type="button" data-amt="15"><span class="e">🎓</span><span class="n">Exam Survival Pack</span><span class="pr">15 €</span></button>
+      <button type="button" data-amt="2.50"><span class="e">☕</span><span class="n">Espresso</span><span class="pr">2,50 €</span></button>
+      <button type="button" data-amt="3.50" class="on"><span class="e">🥛</span><span class="n">Cappuccino</span><span class="pr">3,50 €</span></button>
+      <button type="button" data-amt="6"><span class="e">🥐</span><span class="n">Latte + Croissant</span><span class="pr">6 €</span></button>
+      <button type="button" data-amt="12"><span class="e">🎓</span><span class="n">Exam Survival Pack</span><span class="pr">12 €</span></button>
     </div>
     <button type="button" class="sm-custom" data-amt="">Own amount</button>
     <div class="sm-qr" id="sm-qr"></div>
-    <p class="sm-hint" id="sm-hint">📱 Scan → PayPal opens with <b>5 €</b></p>
+    <p class="sm-hint" id="sm-hint">📱 Scan → PayPal opens with <b>3,50 €</b></p>
     <a class="sm-link" id="sm-link" target="_blank" rel="noopener">or pay on this device →</a>
   </div>
 </div>
@@ -3000,14 +3000,14 @@ const DONATE_URL = 'https://paypal.me/CarloSchmidt07';
     const url=amt?DONATE_URL.replace(/\/$/,'')+'/'+amt+'EUR':DONATE_URL;
     choices.forEach(c=>c.classList.toggle('on',c.dataset.amt===amt));
     link.href=url;
-    hint.innerHTML=amt?'📱 Scan → PayPal opens with <b>'+amt+' €</b>':'📱 Scan → PayPal opens, <b>you choose</b> the amount';
+    hint.innerHTML=amt?'📱 Scan → PayPal opens with <b>'+amt.replace('.',',')+' €</b>':'📱 Scan → PayPal opens, <b>you choose</b> the amount';
     try{ const qr=qrcode(0,'M'); qr.addData(url); qr.make(); box.innerHTML=qr.createSvgTag({cellSize:4,margin:0,scalable:true}); box.style.display=''; }
     catch(e){ box.style.display='none'; }
   };
   choices.forEach(c=>c.addEventListener('click',()=>select(c.dataset.amt)));
   let drawn=false;
   const open=()=>{
-    if(!drawn){ select('5'); drawn=true; }
+    if(!drawn){ select('3.50'); drawn=true; }
     modal.classList.add('open');
   };
   const close=()=>modal.classList.remove('open');
