@@ -560,10 +560,22 @@ body.hl-armed .hl-container{cursor:crosshair;}
 #support-modal .sm-card{position:relative;width:min(360px,100%);max-height:calc(100vh - 32px);overflow-y:auto;padding:28px 24px 22px;border-radius:24px;text-align:center;background:var(--panel);backdrop-filter:blur(28px) saturate(170%);-webkit-backdrop-filter:blur(28px) saturate(170%);border:1px solid var(--side-line);box-shadow:0 20px 60px rgba(0,0,0,.3);color:var(--ink);}
 #support-modal h3{margin:0 0 6px;font-size:1.15rem;}
 #support-modal p{margin:0 0 10px;font-size:.84rem;color:var(--ink-soft);line-height:1.45;}
-#support-modal .sm-hint{margin:6px 0 14px;font-size:.76rem;font-weight:600;color:var(--ink);}
+#support-modal h3{font-size:1.3rem;letter-spacing:-.01em;}
+#support-modal .sm-sub{margin:0 0 14px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);}
+#support-modal .sm-menu{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+#support-modal .sm-menu button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 8px 10px;border-radius:16px;border:1.5px solid var(--line);background:var(--side-2);color:var(--ink);font:inherit;cursor:pointer;transition:transform .15s var(--ease),border-color .15s var(--ease),background .15s var(--ease);}
+#support-modal .sm-menu button:hover{transform:translateY(-1px);border-color:rgba(246,169,59,.6);}
+#support-modal .sm-menu .e{font-size:1.4rem;line-height:1.1;}
+#support-modal .sm-menu .n{font-size:.74rem;font-weight:600;line-height:1.2;}
+#support-modal .sm-menu .pr{font-size:.9rem;font-weight:800;}
+#support-modal .sm-menu button.on{border-color:#f6a93b;background:linear-gradient(135deg,rgba(255,213,138,.28),rgba(232,137,42,.22));box-shadow:0 0 0 3px rgba(246,169,59,.18);}
+#support-modal .sm-custom{display:block;margin:0 auto 14px;padding:4px 10px;border:0;border-radius:999px;background:none;color:var(--ink-soft);font:inherit;font-size:.74rem;text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+#support-modal .sm-custom.on{color:#e8892a;font-weight:700;}
+#support-modal .sm-hint{margin:12px 0 2px;font-size:.84rem;color:var(--ink-soft);}
+#support-modal .sm-hint b{color:var(--ink);}
 #support-modal .sm-qr{display:inline-block;padding:12px;background:#fff;border-radius:16px;line-height:0;}
-#support-modal .sm-qr svg{width:200px;height:200px;}
-#support-modal .sm-link{display:inline-block;margin-top:14px;font-size:.78rem;color:var(--accent-ink);text-decoration:none;}
+#support-modal .sm-qr svg{width:170px;height:170px;}
+#support-modal .sm-link{display:inline-block;margin-top:6px;font-size:.78rem;color:var(--accent-ink);text-decoration:none;}
 #support-modal .sm-close{position:absolute;top:10px;right:12px;width:32px;height:32px;border:0;border-radius:50%;background:var(--side-2);color:var(--ink);font-size:1.1rem;cursor:pointer;}
 </style>
 </head>
@@ -2959,11 +2971,18 @@ navTo('home');
 <div id="support-modal" role="dialog" aria-modal="true" aria-labelledby="sm-title">
   <div class="sm-card">
     <button class="sm-close" type="button" aria-label="Close">×</button>
-    <h3 id="sm-title">☕ Buy me a coffee at the Cafta</h3>
-    <p>Hours of summaries, flashcards and mock exams — for the price of one Cafta coffee. Best deal on campus. Every coffee = more content before the next exams.</p>
-    <p class="sm-hint">Scan → PayPal opens. 5 € = one Cafta coffee.</p>
-    <div class="sm-qr" id="sm-qr"></div><br>
-    <a class="sm-link" id="sm-link" target="_blank" rel="noopener">or open the link here</a>
+    <h3 id="sm-title">Buy me a Cafta coffee ☕</h3>
+    <p class="sm-sub">Pick your order</p>
+    <div class="sm-menu" id="sm-menu">
+      <button type="button" data-amt="3"><span class="e">☕</span><span class="n">Espresso</span><span class="pr">3 €</span></button>
+      <button type="button" data-amt="5" class="on"><span class="e">🥛</span><span class="n">Cappuccino</span><span class="pr">5 €</span></button>
+      <button type="button" data-amt="8"><span class="e">🥐</span><span class="n">Coffee + Croissant</span><span class="pr">8 €</span></button>
+      <button type="button" data-amt="15"><span class="e">🎓</span><span class="n">Exam Survival Pack</span><span class="pr">15 €</span></button>
+    </div>
+    <button type="button" class="sm-custom" data-amt="">Own amount</button>
+    <div class="sm-qr" id="sm-qr"></div>
+    <p class="sm-hint" id="sm-hint">📱 Scan → PayPal opens with <b>5 €</b></p>
+    <a class="sm-link" id="sm-link" target="_blank" rel="noopener">or pay on this device →</a>
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
@@ -2975,15 +2994,20 @@ const DONATE_URL = 'https://paypal.me/CarloSchmidt07';
   if(!DONATE_URL) return;
   btns.forEach(b=>b.style.display=b.classList.contains('home-support')?'inline-flex':'flex');
   document.querySelectorAll('.home-support-note').forEach(n=>n.style.display='block');
-  document.getElementById('sm-link').href=DONATE_URL;
+  const box=document.getElementById('sm-qr'), hint=document.getElementById('sm-hint'), link=document.getElementById('sm-link');
+  const choices=modal.querySelectorAll('[data-amt]');
+  const select=(amt)=>{
+    const url=amt?DONATE_URL.replace(/\/$/,'')+'/'+amt+'EUR':DONATE_URL;
+    choices.forEach(c=>c.classList.toggle('on',c.dataset.amt===amt));
+    link.href=url;
+    hint.innerHTML=amt?'📱 Scan → PayPal opens with <b>'+amt+' €</b>':'📱 Scan → PayPal opens, <b>you choose</b> the amount';
+    try{ const qr=qrcode(0,'M'); qr.addData(url); qr.make(); box.innerHTML=qr.createSvgTag({cellSize:4,margin:0,scalable:true}); box.style.display=''; }
+    catch(e){ box.style.display='none'; }
+  };
+  choices.forEach(c=>c.addEventListener('click',()=>select(c.dataset.amt)));
   let drawn=false;
   const open=()=>{
-    if(!drawn){
-      const box=document.getElementById('sm-qr');
-      try{ const qr=qrcode(0,'M'); qr.addData(DONATE_URL); qr.make(); box.innerHTML=qr.createSvgTag({cellSize:4,margin:0,scalable:true}); }
-      catch(e){ box.style.display='none'; }
-      drawn=true;
-    }
+    if(!drawn){ select('5'); drawn=true; }
     modal.classList.add('open');
   };
   const close=()=>modal.classList.remove('open');
