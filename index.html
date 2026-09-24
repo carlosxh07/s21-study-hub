@@ -541,6 +541,18 @@ body.hl-armed .hl-container{cursor:crosshair;}
   .hero{padding:60px 20px 30px;}
   .hero h1{font-size:1.9rem;}
 }
+/* ============ SUPPORT / DONATE ============ */
+#support-btn{display:none;width:100%;margin:0 0 10px;padding:9px 12px;border-radius:12px;border:1px solid var(--side-line);background:var(--side-2);color:var(--side-text);font:inherit;font-size:.74rem;font-weight:600;cursor:pointer;align-items:center;justify-content:center;gap:7px;transition:transform .2s var(--ease),background .2s var(--ease);}
+#support-btn:hover{transform:translateY(-1px);background:var(--accent-bg);}
+#support-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.38);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+#support-modal.open{display:flex;}
+#support-modal .sm-card{position:relative;width:min(360px,100%);padding:28px 24px 22px;border-radius:24px;text-align:center;background:var(--panel);backdrop-filter:blur(28px) saturate(170%);-webkit-backdrop-filter:blur(28px) saturate(170%);border:1px solid var(--side-line);box-shadow:0 20px 60px rgba(0,0,0,.3);color:var(--ink);}
+#support-modal h3{margin:0 0 6px;font-size:1.15rem;}
+#support-modal p{margin:0 0 16px;font-size:.84rem;color:var(--ink-soft);line-height:1.45;}
+#support-modal .sm-qr{display:inline-block;padding:12px;background:#fff;border-radius:16px;line-height:0;}
+#support-modal .sm-qr svg{width:200px;height:200px;}
+#support-modal .sm-link{display:inline-block;margin-top:14px;font-size:.78rem;color:var(--accent-ink);text-decoration:none;}
+#support-modal .sm-close{position:absolute;top:10px;right:12px;width:32px;height:32px;border:0;border-radius:50%;background:var(--side-2);color:var(--ink);font-size:1.1rem;cursor:pointer;}
 </style>
 </head>
 <body>
@@ -563,7 +575,10 @@ body.hl-armed .hl-container{cursor:crosshair;}
     <span><span>Study Plan</span><span class="sub">Days to exam, weighted review</span></span>
   </button>
   <div id="sidebar-nav"></div>
-  <div id="sidebar-footer">Progress &amp; scores saved locally in this browser.</div>
+  <div id="sidebar-footer">
+    <button id="support-btn" type="button">☕ <span>Hub helped you? Buy me a coffee</span></button>
+    Progress &amp; scores saved locally in this browser.
+  </div>
 </nav>
 <main id="main">
   <div class="page active" id="page-home">
@@ -2928,6 +2943,40 @@ hlIslandEl();
 updateHlIslandVisibility();
 selectSubject('ob', false);
 navTo('home');
+</script>
+<div id="support-modal" role="dialog" aria-modal="true" aria-labelledby="sm-title">
+  <div class="sm-card">
+    <button class="sm-close" type="button" aria-label="Close">×</button>
+    <h3 id="sm-title">☕ Buy me a coffee</h3>
+    <p>If the hub saved you some study time: scan with your phone camera to open PayPal. Totally optional — the hub stays free.</p>
+    <div class="sm-qr" id="sm-qr"></div><br>
+    <a class="sm-link" id="sm-link" target="_blank" rel="noopener">or open the link here</a>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+/* Donation link (e.g. https://paypal.me/NAME). Button stays hidden while empty. */
+const DONATE_URL = 'https://paypal.me/CarloSchmidt07';
+(function(){
+  const btn=document.getElementById('support-btn'), modal=document.getElementById('support-modal');
+  if(!DONATE_URL) return;
+  btn.style.display='flex';
+  document.getElementById('sm-link').href=DONATE_URL;
+  let drawn=false;
+  const open=()=>{
+    if(!drawn){
+      const box=document.getElementById('sm-qr');
+      try{ const qr=qrcode(0,'M'); qr.addData(DONATE_URL); qr.make(); box.innerHTML=qr.createSvgTag({cellSize:4,margin:0,scalable:true}); }
+      catch(e){ box.style.display='none'; }
+      drawn=true;
+    }
+    modal.classList.add('open');
+  };
+  const close=()=>modal.classList.remove('open');
+  btn.addEventListener('click',open);
+  modal.addEventListener('click',e=>{ if(e.target===modal||e.target.classList.contains('sm-close')) close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+})();
 </script>
 </body>
 </html>
