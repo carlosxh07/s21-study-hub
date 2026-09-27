@@ -445,6 +445,45 @@ body.hl-armed .hl-container{cursor:crosshair;}
 .plan-item input{width:17px;height:17px;flex-shrink:0;cursor:pointer;accent-color:var(--accent);}
 .plan-item.done label{text-decoration:line-through;color:var(--ink-faint);}
 .plan-subj-tag{font-size:.66rem;font-weight:700;letter-spacing:.04em;color:var(--ink-soft);background:var(--bg2);padding:2px 7px;border-radius:var(--radius-pill);flex-shrink:0;}
+.plan-start-row{display:flex;gap:8px;align-items:center;}
+.plan-settings input[type=date]{padding:7px 10px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--panel-2);color:var(--ink);font:inherit;color-scheme:light dark;}
+.plan-start-row .btn{padding:7px 14px;}
+.plan-exam-val{padding:8px 0;font-weight:700;color:var(--ink);}
+.plan-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.78rem;color:var(--ink-soft);margin:-12px 0 18px;}
+.plan-legend .plan-badge.large{margin-left:10px;}
+.plan-badge{font-size:.66rem;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:var(--radius-pill);flex-shrink:0;white-space:nowrap;}
+.plan-badge.prio{background:var(--accent-bg);color:var(--accent-ink);}
+.plan-badge.large{background:var(--bg2);color:var(--ink-soft);border:1px dashed var(--line);}
+.plan-item.prio{box-shadow:inset 3px 0 0 var(--accent);padding-left:10px;margin-left:-10px;}
+.plan-day.past{opacity:.55;}
+.plan-day.today{border-color:var(--accent);}
+.plan-today-chip{font-size:.66rem;font-weight:700;color:#fff;background:var(--accent);padding:2px 8px;border-radius:var(--radius-pill);}
+.radar-card{padding:20px 22px;border-radius:var(--radius);margin-bottom:22px;}
+.radar-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px;}
+.radar-head h3{font-size:1.05rem;}
+.radar-tabs{margin-bottom:0;border-bottom:none;}
+.radar-wrap{display:flex;gap:26px;flex-wrap:wrap;align-items:center;}
+.radar-svg-wrap{flex:0 0 300px;max-width:100%;}
+.radar-svg{width:100%;height:auto;display:block;}
+.radar-ring{fill:none;stroke:var(--line);stroke-width:1;}
+.radar-spoke{stroke:var(--line);stroke-width:1;}
+.radar-shape{fill:var(--accent);fill-opacity:.2;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;}
+.radar-dot{stroke:var(--panel);stroke-width:1.5;}
+.radar-dot.none{fill:var(--ink-faint);}.radar-dot.low{fill:var(--bad);}.radar-dot.mid{fill:var(--warn);}.radar-dot.high{fill:var(--good);}
+.radar-num{font-size:12px;font-weight:700;fill:var(--ink-soft);font-family:inherit;}
+.radar-side{flex:1;min-width:240px;}
+.radar-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:.84rem;cursor:pointer;}
+.radar-row:last-child{border-bottom:none;}
+.radar-row:hover .radar-row-label{color:var(--accent-ink);}
+.radar-row-num{width:20px;height:20px;border-radius:50%;background:var(--bg2);color:var(--ink-soft);font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.radar-row-label{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.radar-bar{flex:0 0 90px;height:6px;border-radius:4px;background:var(--bg2);overflow:hidden;}
+.radar-bar i{display:block;height:100%;border-radius:4px;}
+.radar-bar i.low{background:var(--bad);}.radar-bar i.mid{background:var(--warn);}.radar-bar i.high{background:var(--good);}
+.radar-val{width:74px;text-align:right;font-size:.75rem;font-weight:600;color:var(--ink-faint);flex-shrink:0;}
+.radar-reco{margin-top:14px;padding:11px 14px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:var(--radius-sm);font-size:.83rem;line-height:1.55;color:var(--ink-soft);}
+.radar-reco a{color:var(--accent-ink);font-weight:600;}
+@media(max-width:640px){.radar-svg-wrap{flex-basis:100%;max-width:300px;margin:0 auto;}.radar-bar{flex-basis:56px;}.radar-val{width:64px;}.plan-item{flex-wrap:wrap;}}
 
 /* ============ ACTION VERBS / REFERENCE ============ */
 .verb-search{width:100%;padding:11px 15px;border:1.5px solid var(--line);border-radius:16px;font-size:.88rem;margin-bottom:18px;font-family:inherit;}
@@ -2047,45 +2086,77 @@ function lectureMasteryHtml(subjId){
 const PLAN_EXAM_AW = new Date(2026,9,6); // confirmed Klausur date 06.10.2026
 const PLAN_EXAM_OBPOM = new Date(2026,9,5); // confirmed Klausur date 05.10.2026 (OB & POM)
 
+// knowledge 0..1 from flashcard ratings (got it = 1, partially = .5) and best quiz score; null = nothing practised yet
+function knowledgeScore(fcKey, nCards, quizKey, nQuiz){
+  const parts = [];
+  if(fcKey && nCards){
+    const vals = Object.values(ls(fcKey, {}));
+    if(vals.length) parts.push((vals.filter(v=>v==='gotit').length + vals.filter(v=>v==='partial').length*.5) / nCards);
+  }
+  if(quizKey && nQuiz){
+    const best = ls(quizKey+'-best', null);
+    if(best!=null) parts.push(Math.min(1, best/nQuiz));
+  }
+  return parts.length ? parts.reduce((a,b)=>a+b,0)/parts.length : null;
+}
+function topicKnowledge(t){ return knowledgeScore('fc-'+t.id, t.cards.length, 'quiz-'+t.id, t.quiz.length); }
+function topicSize(t){ return t.cards.length + t.quiz.length + Math.round(t.summary.split(/\s+/).length/120); }
+
+function radarAxes(subj){
+  if(subj==='ob' || subj==='pom'){
+    return (subj==='ob'?OB_TOPICS:POM_TOPICS).map(t=>({label:t.title, page:t.id, score:topicKnowledge(t)}));
+  }
+  return [
+    {label:'Flashcards', page:'aw-flash', score:knowledgeScore('fc-aw', AW_CARDS.length)},
+    {label:'Quiz', page:'aw-quiz', score:knowledgeScore(null, 0, 'quiz-aw', AW_QUIZ.length)},
+    {label:'Mockup MCQ (Shalini)', page:'aw-mockexam-mc', score:knowledgeScore(null, 0, 'quiz-aw-mockmc', AW_MOCK_MC.length)}
+  ];
+}
+
 function planItemPool(){
   const items = [];
-  OB_TOPICS.forEach(t=>{
-    const m = fcMastery('fc-'+t.id, t.cards.length);
-    items.push({subj:'ob', label:t.title, page:t.id, weight: 1-(m.pct/100)});
-  });
-  POM_TOPICS.forEach(t=>{
-    const m = fcMastery('fc-'+t.id, t.cards.length);
-    items.push({subj:'pom', label:t.title, page:t.id, weight: 1-(m.pct/100)});
-  });
-  const awM = fcMastery('fc-aw', AW_CARDS.length);
-  items.push({subj:'aw', label:'AW Flashcards (all sessions)', page:'aw-flash', weight: 1-(awM.pct/100)});
-  items.push({subj:'aw', label:'Mockup MCQ Exam', page:'aw-mockexam-mc', weight:.8});
-  items.push({subj:'aw', label:'Mockup Written Exam', page:'aw-mockexam-written', weight:.8});
-  items.push({subj:'aw', label:'Lee Hawkins — Grammar & Language Drills', page:'aw-lee-drills', weight:.55});
-  items.push({subj:'aw', label:'Marie Claire — Exam-Prep MCQ', page:'aw-marie-quiz', weight:.55});
+  const weightOf = s => s==null ? 1 : 1-s;
+  OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
+  POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
+  const aw = radarAxes('aw');
+  const leeItems = AW_LEE_DRILLS.reduce((n,d)=>n+d.items.length, 0);
+  items.push({subj:'aw', label:'AW Flashcards (all sessions)', page:'aw-flash', weight:weightOf(aw[0].score), size:AW_CARDS.length});
+  items.push({subj:'aw', label:'Mockup MCQ Exam', page:'aw-mockexam-mc', weight:aw[2].score==null ? .8 : 1-aw[2].score, size:AW_MOCK_MC.length});
+  items.push({subj:'aw', label:'Mockup Written Exam', page:'aw-mockexam-written', weight:.8, size:AW_MOCK_WRITTEN.length*8});
+  items.push({subj:'aw', label:'Lee Hawkins — Grammar & Language Drills', page:'aw-lee-drills', weight:.55, size:leeItems});
+  items.push({subj:'aw', label:'Marie Claire — Exam-Prep MCQ', page:'aw-marie-quiz', weight:.55, size:AW_MARIE_QUIZ.length});
+  // "lots of content" = largest ~third; "priority" = weakest ~third (ties broken by size)
+  const bySize = items.map(i=>i.size).sort((a,b)=>b-a);
+  const sizeCut = bySize[Math.floor(items.length/3)-1];
+  items.forEach(i=>{ i.large = i.size>=sizeCut; });
+  const ranked = items.slice().sort((a,b)=> b.weight-a.weight || b.size-a.size);
+  ranked.slice(0, Math.ceil(items.length/3)).forEach(i=>{ if(i.weight>=.4) i.prio = true; });
   return items;
 }
 
-function planDaysLeft(subj){
+function planIso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function planStart(){
   const today = new Date(); today.setHours(0,0,0,0);
-  if(subj==='aw'){
-    return Math.max(1, Math.ceil((PLAN_EXAM_AW - today)/86400000));
-  }
-  if(subj==='ob'||subj==='pom'){
-    return Math.max(1, Math.ceil((PLAN_EXAM_OBPOM - today)/86400000));
-  }
-  const saved = ls('plan-days-'+subj, null);
-  return (saved && saved>0) ? saved : 14;
+  const saved = ls('plan-start', null);
+  if(!saved) return today;
+  const [y,m,d] = saved.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+function planDaysLeft(subj){
+  const exam = subj==='aw' ? PLAN_EXAM_AW : PLAN_EXAM_OBPOM;
+  return Math.max(1, Math.ceil((exam - planStart())/86400000));
 }
 
-function planSchedule(item){
+// reviews spread from the start date to the day before the exam, denser towards the exam;
+// the first review is staggered per item so day 1 isn't everything at once
+function planSchedule(item, idx){
   const horizon = planDaysLeft(item.subj);
-  const reps = Math.max(1, Math.min(4, Math.round(item.weight*3)+1));
+  const reps = Math.max(1, Math.min(4, Math.round(item.weight*3)+1 + (item.large?1:0)));
+  const off = (idx % 3) * .35;
   const days = [];
-  for(let k=1;k<=reps;k++){
-    const t = k/reps;
-    const day = Math.max(1, Math.min(horizon, Math.round(horizon - (horizon-1)*Math.pow(1-t,1.6))));
-    days.push(day);
+  for(let k=0;k<reps;k++){
+    const t = reps===1 ? .6 : (k+off)/(reps-1+off);
+    days.push(Math.max(1, Math.min(horizon, 1 + Math.round((horizon-1)*Math.pow(t,.75)))));
   }
   return Array.from(new Set(days));
 }
@@ -2094,73 +2165,139 @@ function buildStudyPlanData(){
   const items = planItemPool();
   const byDay = {};
   let maxDay = 1;
-  items.forEach(item=>{
-    planSchedule(item).forEach(day=>{
+  items.forEach((item,idx)=>{
+    planSchedule(item, idx).forEach(day=>{
       maxDay = Math.max(maxDay, day);
       (byDay[day] = byDay[day] || []).push(item);
     });
   });
+  Object.values(byDay).forEach(list=>list.sort((a,b)=> (b.prio?1:0)-(a.prio?1:0) || (b.large?1:0)-(a.large?1:0)));
   return { byDay, maxDay };
 }
 
 function buildStudyPlan(){
   registerPage('plan', (div)=>{
     div.innerHTML = `
-      <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Study Plan</h2><p>A day-by-day revision plan built from your real flashcard progress — weak topics show up more often, mastered ones fade out, and everything gets denser as each exam gets closer.</p></div>
+      <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Study Plan</h2><p>See where your knowledge is weak, then follow a day-by-day revision plan built from your real flashcard and quiz progress. Weak topics show up more often, mastered ones fade out, and everything gets denser as each exam gets closer.</p></div>
       <div class="page-body">
+        <div class="radar-card glass">
+          <div class="radar-head"><h3>Weak-Spot Radar</h3>
+            <div class="tabbar radar-tabs">${SUBJECTS.map(s=>`<button class="tabbtn" data-subj="${s.id}">${s.id.toUpperCase()}</button>`).join('')}</div>
+          </div>
+          <div class="radar-wrap"><div class="radar-svg-wrap"></div><div class="radar-side"><div class="radar-list"></div><div class="radar-reco"></div></div></div>
+        </div>
         <div class="plan-settings glass" style="padding:18px 22px;border-radius:var(--radius);">
+          <label>Plan starts on
+            <span class="plan-start-row"><input type="date" class="plan-start-input" max="${planIso(PLAN_EXAM_AW)}"><button type="button" class="btn ghost plan-start-today">Today</button></span>
+          </label>
           <label>OB — exam date
-            <span style="padding:8px 0;font-weight:700;color:var(--ink);">5 Oct 2026 · ${planDaysLeft('ob')}d</span>
+            <span class="plan-exam-val" data-subj="ob"></span>
           </label>
           <label>POM — exam date
-            <span style="padding:8px 0;font-weight:700;color:var(--ink);">5 Oct 2026 · ${planDaysLeft('pom')}d</span>
+            <span class="plan-exam-val" data-subj="pom"></span>
           </label>
           <label>AW — exam date
-            <span style="padding:8px 0;font-weight:700;color:var(--ink);">6 Oct 2026 · ${planDaysLeft('aw')}d</span>
+            <span class="plan-exam-val" data-subj="aw"></span>
           </label>
-          <button class="btn ghost" onclick="window.__planRegenerate()">Regenerate plan</button>
+          <button class="btn ghost plan-regen">Regenerate plan</button>
         </div>
+        <div class="plan-legend"><span class="plan-badge prio">Priority</span> weakest topics, do these first <span class="plan-badge large">Lots of content</span> big topic, plan extra time</div>
         <div id="plan-days-list"></div>
       </div>`;
-    window.__planRegenerate = ()=> renderPlanDays(div);
-    window.__planToggle = (key)=>{
+    const startInput = div.querySelector('.plan-start-input');
+    startInput.value = planIso(planStart());
+    startInput.addEventListener('change', ()=>{
+      if(!startInput.value) return;
+      lsSet('plan-start', startInput.value);
+      renderPlanDays(div);
+    });
+    div.querySelector('.plan-start-today').addEventListener('click', ()=>{
+      lsSet('plan-start', null);
+      startInput.value = planIso(planStart());
+      renderPlanDays(div);
+    });
+    div.querySelector('.plan-regen').addEventListener('click', ()=>renderPlanDays(div));
+    div.querySelector('.radar-tabs').addEventListener('click', e=>{
+      const b = e.target.closest('.tabbtn'); if(!b) return;
+      div.dataset.radarSubj = b.dataset.subj;
+      renderRadar(div);
+    });
+    div.querySelector('#plan-days-list').addEventListener('change', e=>{
+      const cb = e.target.closest('input[type=checkbox][data-key]'); if(!cb) return;
       const state = ls('plan-checks', {});
-      state[key] = !state[key];
+      state[cb.dataset.key] = cb.checked;
       lsSet('plan-checks', state);
       renderPlanDays(div);
-    };
+    });
     renderPlanDays(div);
   });
 }
 
 function renderPlanDays(div){
+  renderRadar(div);
+  const fmt = {day:'numeric', month:'short', year:'numeric'};
+  div.querySelectorAll('.plan-exam-val').forEach(el=>{
+    const s = el.dataset.subj;
+    el.textContent = `${(s==='aw'?PLAN_EXAM_AW:PLAN_EXAM_OBPOM).toLocaleDateString('en-GB', fmt)} · ${planDaysLeft(s)}d`;
+  });
   const { byDay, maxDay } = buildStudyPlanData();
   const checks = ls('plan-checks', {});
-  const today = new Date();
+  const start = planStart();
+  const todayIso = planIso(new Date());
   let html = '';
   let anyDay = false;
   for(let day=1; day<=maxDay; day++){
     const items = byDay[day];
     if(!items || !items.length) continue;
     anyDay = true;
-    const date = new Date(today); date.setDate(date.getDate() + day - 1);
+    const date = new Date(start); date.setDate(date.getDate() + day - 1);
+    const iso = planIso(date);
     const dateLabel = date.toLocaleDateString(undefined, {weekday:'short', day:'numeric', month:'short'});
-    html += `<div class="plan-day">
-      <div class="plan-day-head"><span class="plan-day-num">Day ${day}</span><span class="plan-day-date">${dateLabel}</span></div>
+    html += `<div class="plan-day${iso<todayIso?' past':''}${iso===todayIso?' today':''}">
+      <div class="plan-day-head"><span class="plan-day-num">Day ${day}</span><span class="plan-day-date">${dateLabel}</span>${iso===todayIso?'<span class="plan-today-chip">Today</span>':''}</div>
       ${items.map(it=>{
-        const key = day+'_'+it.page;
+        const key = iso+'_'+it.page;
         const done = !!checks[key];
-        return `<div class="plan-item ${done?'done':''}">
-          <input type="checkbox" id="pc-${key}" ${done?'checked':''} onchange="window.__planToggle('${key}')">
+        return `<div class="plan-item ${done?'done':''}${it.prio?' prio':''}">
+          <input type="checkbox" id="pc-${key}" data-key="${key}" ${done?'checked':''}>
           <span class="plan-subj-tag">${it.subj.toUpperCase()}</span>
           <label for="pc-${key}" onclick="event.preventDefault();navTo('${it.page}')" style="cursor:pointer;flex:1;">${esc(it.label)}</label>
+          ${it.prio?'<span class="plan-badge prio">Priority</span>':''}${it.large?'<span class="plan-badge large">Lots of content</span>':''}
         </div>`;
       }).join('')}
     </div>`;
   }
-  if(!anyDay) html = `<p style="color:var(--ink-soft);">No plan yet — set the days above.</p>`;
+  if(!anyDay) html = `<p style="color:var(--ink-soft);">No plan yet — pick a start date before the exams.</p>`;
   const list = div.querySelector('#plan-days-list');
   if(list) list.innerHTML = html;
+}
+
+/* ---------- Weak-Spot Radar ---------- */
+function radarLevel(s){ return s==null ? 'none' : s<.5 ? 'low' : s<.75 ? 'mid' : 'high'; }
+function radarSvg(axes){
+  const size=300, cx=150, cy=150, r=108, n=axes.length;
+  const ang = i => Math.PI*2*i/n - Math.PI/2;
+  const pt = (i,f) => `${(cx+Math.cos(ang(i))*r*f).toFixed(1)},${(cy+Math.sin(ang(i))*r*f).toFixed(1)}`;
+  const rings = [.25,.5,.75,1].map(f=>`<polygon class="radar-ring" points="${axes.map((_,i)=>pt(i,f)).join(' ')}"/>`).join('');
+  const spokes = axes.map((_,i)=>`<line class="radar-spoke" x1="${cx}" y1="${cy}" x2="${pt(i,1).split(',')[0]}" y2="${pt(i,1).split(',')[1]}"/>`).join('');
+  const shape = `<polygon class="radar-shape" points="${axes.map((a,i)=>pt(i, a.score||0)).join(' ')}"/>`;
+  const dots = axes.map((a,i)=>{ const [x,y]=pt(i, a.score||0).split(','); return `<circle class="radar-dot ${radarLevel(a.score)}" cx="${x}" cy="${y}" r="4.5"/>`; }).join('');
+  const labels = axes.map((a,i)=>{ const [x,y]=pt(i,1.17).split(','); return `<text class="radar-num" x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle">${i+1}</text>`; }).join('');
+  return `<svg class="radar-svg" viewBox="-12 -12 ${size+24} ${size+24}" role="img" aria-label="Knowledge per topic">${rings}${spokes}${shape}${dots}${labels}</svg>`;
+}
+function renderRadar(div){
+  const subj = div.dataset.radarSubj || currentSubject || 'ob';
+  div.querySelectorAll('.radar-tabs .tabbtn').forEach(b=>b.classList.toggle('active', b.dataset.subj===subj));
+  const axes = radarAxes(subj);
+  div.querySelector('.radar-svg-wrap').innerHTML = radarSvg(axes);
+  const pct = s => s==null ? 'not started' : Math.round(s*100)+'%';
+  div.querySelector('.radar-list').innerHTML = axes.map((a,i)=>({...a, n:i+1}))
+    .sort((a,b)=>(a.score??-1)-(b.score??-1))
+    .map(a=>`<div class="radar-row" onclick="navTo('${a.page}')"><span class="radar-row-num">${a.n}</span><span class="radar-row-label">${esc(a.label)}</span><span class="radar-bar"><i class="${radarLevel(a.score)}" style="width:${Math.round((a.score||0)*100)}%"></i></span><span class="radar-val">${pct(a.score)}</span></div>`).join('');
+  const weakest = axes.filter(a=>a.score==null || a.score<.75).sort((a,b)=>(a.score??-1)-(b.score??-1)).slice(0,2);
+  div.querySelector('.radar-reco').innerHTML = weakest.length
+    ? `<b>Focus next:</b> ${weakest.map(a=>`<a href="#${a.page}" onclick="navTo('${a.page}');return false;">${esc(a.label)}</a> (${pct(a.score)})`).join(' and ')}. Rate flashcards and finish quizzes to keep the radar accurate.`
+    : `<b>Looking strong.</b> Everything is above 75% — keep reviewing to hold it there.`;
 }
 
 const FC_STATUS = {
