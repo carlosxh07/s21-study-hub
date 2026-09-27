@@ -1803,20 +1803,29 @@ function hlEraseRange(range, container){
     }
   });
 }
+// wraps each selected text node separately (never moves element structure), so selections
+// spanning paragraphs/bold labels don't shift the layout like extractContents() did
 function wrapRange(range, tag, className){
-  try{
+  const root = range.commonAncestorContainer;
+  const segs = [];
+  const addSeg = n=>{
+    const start = n===range.startContainer ? range.startOffset : 0;
+    const end = n===range.endContainer ? range.endOffset : n.length;
+    if(end>start && n.data.slice(start,end).trim()!=='') segs.push([n,start,end]);
+  };
+  if(root.nodeType===3) addSeg(root);
+  else {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let n; while((n = walker.nextNode())) if(range.intersectsNode(n)) addSeg(n);
+  }
+  segs.forEach(([n,start,end])=>{
+    if(end < n.length) n.splitText(end);
+    const target = start>0 ? n.splitText(start) : n;
     const m = document.createElement(tag);
     m.className = className;
-    range.surroundContents(m);
-  }catch(err){
-    try{
-      const frag = range.extractContents();
-      const m = document.createElement(tag);
-      m.className = className;
-      m.appendChild(frag);
-      range.insertNode(m);
-    }catch(err2){ /* selection crossed an unsupported boundary — skip */ }
-  }
+    target.parentNode.insertBefore(m, target);
+    m.appendChild(target);
+  });
 }
 function updateHlIslandVisibility(){
   const island = hlIslandEl();
@@ -1902,19 +1911,7 @@ function initHighlighting(){
         if(pop.dataset.mode==='edit' && pop.__mark){
           pop.__mark.className = 'hl hl-'+color;
         } else if(pop.__range){
-          try{
-            const m = document.createElement('mark');
-            m.className = 'hl hl-'+color;
-            pop.__range.surroundContents(m);
-          }catch(err){
-            try{
-              const frag = pop.__range.extractContents();
-              const m = document.createElement('mark');
-              m.className = 'hl hl-'+color;
-              m.appendChild(frag);
-              pop.__range.insertNode(m);
-            }catch(err2){ /* selection crossed an unsupported boundary — skip */ }
-          }
+          wrapRange(pop.__range, 'mark', 'hl hl-'+color);
         }
       }
       hlSave(hlContainer);
