@@ -213,6 +213,11 @@ a,button{font-family:inherit;}
 /* ============ SUMMARY ============ */
 .summary-text{font-size:.97rem;line-height:1.85;color:var(--ink);}
 .summary-text p{margin-bottom:16px;}
+.summary-text .sum-vocab-title{margin-bottom:8px;font-weight:600;}
+.summary-text .sum-vocab{display:grid;grid-template-columns:max-content 1fr;gap:8px 22px;margin:0 0 16px;padding:14px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg2);line-height:1.55;}
+.summary-text .sum-vocab dt{font-weight:700;color:var(--ink);}
+.summary-text .sum-vocab dd{margin:0;color:var(--ink-soft);}
+@media(max-width:640px){.summary-text .sum-vocab{grid-template-columns:1fr;gap:2px;}.summary-text .sum-vocab dd{margin-bottom:8px;}}
 .summary-text p:first-of-type::first-letter{font-family:'Inter',-apple-system,sans-serif;font-size:2.6em;font-weight:700;float:left;line-height:.85;padding-right:8px;padding-top:4px;color:var(--accent-ink);}
 
 /* ============ HIGHLIGHTING ============ */
@@ -815,7 +820,13 @@ Emotions are sharp/event-triggered; moods are longer-lasting and diffuse. Affect
 
 Lecture slides "Workplace Emotions" frame emotions as a process: WORK EVENT (feedback, success/failure, delays) → APPRAISAL ("How do I interpret what happened?") → EMOTIONAL RESPONSE (anger, relief, anxiety, pride) → MOOD / ongoing state → BEHAVIOUR (speak up, withdraw, cooperate, react). The same event can be experienced differently because emotional responses are shaped by the PERSON (personality, values, past experience, current energy/stress, emotional skills), the SITUATION (workload, deadlines, feedback, uncertainty, working conditions) and the SOCIAL/ORGANIZATIONAL CONTEXT (manager behaviour, team norms, relationships, culture, rules). OB asks "What may be shaping the emotional response?" rather than "What is wrong with this person?"
 
-Emotional labour vocabulary: Felt emotion (what I actually feel), Display rules (what emotion the job expects me to show), Surface acting (change expression, not feeling) and Deep acting (try to change the feeling so the expression is genuine). AET is presented as Work environment (demands, autonomy, relationships) → Daily events (hassles, conflicts, praise, progress) → Emotional reaction → Attitudes/behaviour (satisfaction, effort, helping, withdrawal), with personal dispositions moderating how strongly people react. EI is simplified to three steps: PERCEIVE (notice emotions in self and others) → UNDERSTAND (what it means and what causes it) → REGULATE/USE (manage the response) — note that how EI should be defined and measured, and how distinct it is from personality and cognitive ability, remains debated. Emotions connect to motivation, leadership, teams, decision making, customer service and well-being. Emotions are specific responses; moods are broader and longer-lasting.`,
+Emotional labour vocabulary:
+Felt emotion :: what I actually feel
+Display rules :: what emotion the job expects me to show
+Surface acting :: change expression, not feeling
+Deep acting :: try to change the feeling so the expression is genuine
+
+AET is presented as Work environment (demands, autonomy, relationships) → Daily events (hassles, conflicts, praise, progress) → Emotional reaction → Attitudes/behaviour (satisfaction, effort, helping, withdrawal), with personal dispositions moderating how strongly people react. EI is simplified to three steps: PERCEIVE (notice emotions in self and others) → UNDERSTAND (what it means and what causes it) → REGULATE/USE (manage the response) — note that how EI should be defined and measured, and how distinct it is from personality and cognitive ability, remains debated. Emotions connect to motivation, leadership, teams, decision making, customer service and well-being. Emotions are specific responses; moods are broader and longer-lasting.`,
 cards:[
 {q:"What is Emotional Intelligence (EI)?",a:"The ability to understand and manage your own and others' emotions to navigate relationships, make decisions, and achieve goals."},
 {q:"What are Goleman's four core components of EI?",a:"Self-Awareness, Self-Management, Social Awareness, Relationship Management."},
@@ -1682,10 +1693,21 @@ function renderSummary(container, title, text, key){
   if(key){
     container.dataset.hlKey = key;
     const saved = ls(hlStorageKey(key), null);
-    if(saved){ container.innerHTML = saved; hlStripSources(container); return; }
+    if(saved){ container.innerHTML = saved; hlStripSources(container); hlMigrateVocab(container, text); return; }
   }
-  const paras = text.trim().split(/\n\n+/).map(p=>`<p>${esc(p)}</p>`).join('');
-  container.innerHTML = `<div class="summary-text">${paras}</div>`;
+  container.innerHTML = `<div class="summary-text">${summaryParasHtml(text)}</div>`;
+}
+// paragraphs split on blank lines; a paragraph with "Term :: Description" lines renders as a two-column
+// vocab list (any other line in it becomes the list's title)
+function summaryParasHtml(text){
+  return text.trim().split(/\n\n+/).map(p=>{
+    const lines = p.split('\n');
+    const defs = lines.filter(l=>l.includes(' :: '));
+    if(!defs.length) return `<p>${esc(p)}</p>`;
+    const head = lines.filter(l=>!l.includes(' :: ')).join(' ');
+    return (head ? `<p class="sum-vocab-title">${esc(head)}</p>` : '') +
+      `<dl class="sum-vocab">${defs.map(l=>{ const [t,...d]=l.split(' :: '); return `<dt>${esc(t)}</dt><dd>${esc(d.join(' :: '))}</dd>`; }).join('')}</dl>`;
+  }).join('');
 }
 
 /* ============================================================ HIGHLIGHTING ============================================================ */
@@ -1702,6 +1724,23 @@ const HL_SRC_RX = [
   / ?\(Bilqees Ghani, Fall Term 2026\)/g,
   / ?\((?:Ghani|Shemla|Kristof-Brown|Paulhus & Williams|Barnes et al\.)\)/g
 ];
+// saved highlight HTML predates the vocab-list layout: swap the old run-on vocab paragraph for the new
+// list, but only if nothing inside that paragraph is highlighted (otherwise keep it as-is so no highlight is lost)
+function hlMigrateVocab(container, text){
+  const fresh = document.createElement('div');
+  fresh.innerHTML = summaryParasHtml(text);
+  fresh.querySelectorAll('.sum-vocab-title').forEach(title=>{
+    const label = title.textContent.trim();
+    const old = [...container.querySelectorAll('.summary-text > p:not(.sum-vocab-title)')].find(p=>p.textContent.startsWith(label+' '));
+    if(!old || old.querySelector('mark,strong,em')) return;
+    const list = title.nextElementSibling, rest = list && list.nextElementSibling;
+    const nodes = [title, list];
+    if(rest && rest.tagName==='P' && old.textContent.includes(rest.textContent.slice(0,40))) nodes.push(rest);
+    nodes.forEach(n=>old.parentNode.insertBefore(n, old));
+    old.remove();
+    hlSave(container);
+  });
+}
 function hlStripSources(container){
   const key = container.dataset.hlKey || '';
   if(key.startsWith('aw') || key.startsWith('cheat-aw')) return;
