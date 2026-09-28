@@ -64,7 +64,9 @@ a,button{font-family:inherit;}
 
 /* ============ SIDEBAR ============ */
 #sidebar{width:272px;min-width:272px;background:var(--side);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);color:var(--side-ink);display:flex;flex-direction:column;overflow-y:auto;border-right:1px solid var(--side-line);position:relative;z-index:2;}
-#sidebar-logo{padding:26px 22px 18px;border-bottom:1px solid var(--side-line);}
+#sidebar-logo{padding:26px 22px 18px;border-bottom:1px solid var(--side-line);cursor:pointer;transition:opacity .15s var(--ease);}
+#sidebar-logo:hover{opacity:.75;}
+#sidebar-logo:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:12px;}
 #sidebar-logo .mark{display:flex;align-items:center;gap:10px;margin-bottom:2px;}
 #sidebar-logo .mark svg{flex-shrink:0;}
 #sidebar-logo h1{font-size:1.12rem;font-weight:700;color:var(--side-text);line-height:1.25;}
@@ -692,7 +694,7 @@ body.hl-armed .hl-container{cursor:text;}
 </button>
 <button id="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776;</button>
 <nav id="sidebar">
-  <div id="sidebar-logo">
+  <div id="sidebar-logo" role="link" tabindex="0" title="Back to the dashboard" onclick="navTo('home')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navTo('home')}">
     <div class="mark">
       <h1>S2/1 Study Hub</h1>
     </div>
