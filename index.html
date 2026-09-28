@@ -491,6 +491,10 @@ body.hl-armed .hl-container{cursor:text;}
 .plan-item.done label{text-decoration:line-through;color:var(--ink-faint);}
 .plan-subj-tag{font-size:.66rem;font-weight:700;letter-spacing:.04em;color:var(--ink-soft);background:var(--bg2);padding:2px 7px;border-radius:var(--radius-pill);flex-shrink:0;}
 .plan-start-row{display:flex;gap:8px;align-items:center;}
+.plan-toggle-row{display:flex;gap:8px;align-items:center;padding:6px 0;}
+.plan-toggle-row input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;}
+.plan-toggle-row small{font-weight:400;color:var(--ink-faint);font-size:.74rem;max-width:210px;line-height:1.35;}
+.radar-basis{display:block;font-size:.74rem;color:var(--ink-faint);margin-top:2px;}
 .plan-settings input[type=date]{padding:7px 10px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--panel-2);color:var(--ink);font:inherit;color-scheme:light dark;}
 .plan-start-row .btn{padding:7px 14px;}
 .plan-exam-val{padding:8px 0;font-weight:700;color:var(--ink);}
@@ -704,23 +708,7 @@ body.hl-armed .hl-container{cursor:text;}
 .exam-example summary{cursor:pointer;font-weight:600;color:var(--accent-ink);}
 .exam-example p{margin-top:8px;color:var(--ink-soft);line-height:1.55;}
 .exam-example .exam-opts{color:var(--ink);}
-.exam-note{margin-bottom:20px;padding:11px 14px;border-left:3px solid var(--warn);background:var(--warn-bg);border-radius:var(--radius-sm);font-size:.84rem;line-height:1.55;color:var(--ink-soft);}
-.exam-note b{color:var(--ink);}
-.tool-tiles.extra .tool-tile{opacity:.72;}
-.tool-tiles.extra .tool-tile:hover{opacity:1;}
 @media(max-width:760px){.exam-grid{grid-template-columns:1fr;gap:8px;}}
-.not-exam-area{margin-top:44px;padding:22px;border:1px dashed var(--line);border-radius:var(--radius);background:var(--bg2);}
-.not-exam-head h3{font-size:1rem;color:var(--ink-soft);}
-.not-exam-head p{font-size:.82rem;color:var(--ink-faint);margin:4px 0 16px;line-height:1.5;}
-.not-exam-area .topic-card,.not-exam-area .tool-tile{opacity:.7;}
-.not-exam-area .topic-card:hover,.not-exam-area .tool-tile:hover{opacity:1;}
-.not-exam-area .topic-grid{margin-bottom:14px;}
-.not-exam-divider{display:flex;align-items:center;gap:12px;margin:34px 0 16px;color:var(--ink-faint);font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
-.not-exam-divider::before,.not-exam-divider::after{content:'';flex:1;border-top:1px dashed var(--line);}
-.cheat-block.not-exam{opacity:.7;}
-.nav-not-exam-label{margin-top:18px;border-top:1px dashed var(--side-line);padding-top:14px;}
-.nav-item.nav-not-exam{opacity:.6;}
-.nav-item.nav-not-exam:hover,.nav-item.nav-not-exam.active{opacity:1;}
 </style>
 </head>
 <body>
@@ -1424,38 +1412,6 @@ quiz:[
 {q:"A manager who scans competitor strategies and collects market information is performing which Mintzberg role?",opts:["Disseminator","Spokesperson","Monitor","Liaison"],correct:2,exp:"The Monitor role involves collecting and analyzing information from the environment."},
 {q:"A manager brainstorming a new marketing campaign that emotionally connects with customers is primarily using:",opts:["Left-brain thinking","Right-brain thinking","Neither side","Only technical skills"],correct:1,exp:"Right-brain thinking is creative/intuitive — imaginative, holistic, connecting ideas into new strategies."}
 ]},
-{id:'pom-1',title:'History of Management & Management Approaches',summary:`Modern management theory emerged with the Industrial Revolution (~1800), which brought division of labour, specialist workers replacing craftsmen, and separation of ownership from control.
-
-Between 1900 and today, four broad schools developed.
-- Classical approaches (1900s–1910s): Scientific Management (Taylor), Administrative Theory (Fayol), and Bureaucracy (Weber) — rational efficiency and formal structure, but neglecting human factors and the environment
-- Behavioural approaches (1930s–1940s): early advocates (Owen, Follett, Münsterberg, Barnard), the Hawthorne Studies (Mayo, 1924–1932, revealing the "Hawthorne effect"), the Human Relations Movement, and McGregor's Theory X/Y — corrected the mechanical bias but are complex and hard to predict
-- Quantitative approaches (1950s): management science, operations research, TQM
-- Contemporary approaches (1960s–1970s): Systems Theory (organizations as open systems: input–conversion–output) and Contingency Theory (no single best way to manage — depends on internal/external circumstances)
-
-Each approach contributes a different, partial lens on management.`,
-cards:[
-{q:"What historical development triggered the birth of modern management?",a:"The Industrial Revolution (~1800) — division of labour, specialization, separation of ownership from control."},
-{q:"What are Taylor's 4 Principles of Scientific Management?",a:"(1) Scientifically study tasks; (2) codify methods into rules/SOPs; (3) select and train workers matching tasks; (4) set a fair performance level and reward system."},
-{q:"What is the focus of Fayol's Administrative Theory?",a:"Management from the whole-organization perspective, with functions (Planning, Organizing, Leading, Control) and 14 principles."},
-{q:"Name Fayol's 6 functions of management.",a:"Forecasting, Planning, Organizing, Commanding, Coordinating, Controlling."},
-{q:"What are the core ideas of Weber's Bureaucracy?",a:"Formal authority tied to position, merit-based appointment, specified authority/responsibility, hierarchy, consistent rule enforcement."},
-{q:"What is the Hawthorne Effect?",a:"Workers change/improve performance simply because they know they are being observed, not because of the actual physical change tested."},
-{q:"What is Theory X vs Theory Y (McGregor)?",a:"Theory X = employees lazy, need close control. Theory Y = employees motivated, should be given autonomy."},
-{q:"What is Systems Theory's key idea?",a:"Organizations are open systems taking inputs, converting them, releasing outputs back to the environment in a continuous cycle."},
-{q:"What is Contingency Theory's key claim?",a:"No single best way to manage — the best approach depends on internal/external circumstances."},
-{q:"What are the 4 major management approaches and their era?",a:"Classic (1900s/1910s), Behavioural (1930s/1940s), Quantitative (1950s), Contemporary (1960s/1970s)."}
-],
-quiz:[
-{q:"Which factor most directly triggered modern management practices?",opts:["Ancient military campaigns","The Industrial Revolution","World War II","The invention of the internet"],correct:1,exp:"Division of labour and separation of ownership/control created the need for formal management principles."},
-{q:"Taylor's scientific management is primarily concerned with:",opts:["Employee emotional wellbeing","Maximizing productivity through rational, standardized task design","Corporate social responsibility","Organic, flexible team structures"],correct:1,exp:"Scientific management focuses on studying and standardizing tasks."},
-{q:"Fayol's approach differs from Taylor's mainly because Fayol:",opts:["Focused on individual motion studies","Analyzed management from a whole-organization perspective","Invented the Hawthorne effect","Studied bureaucracy exclusively"],correct:1,exp:"Fayol's Administrative Theory looks at management at the organizational level, unlike Taylor's task-level focus."},
-{q:"According to Weber, authority in a bureaucracy should derive from:",opts:["Personal charisma","Family lineage","One's official position in the organization","Seniority alone"],correct:2,exp:"Formal authority derives from one's position inside the organization."},
-{q:"The Hawthorne studies are best known for revealing that:",opts:["Lighting has no effect on productivity whatsoever","Workers' performance can improve simply because they feel observed","Bureaucracy is the ideal organizational form","Pay is the only motivator of performance"],correct:1,exp:"The \"Hawthorne effect\" — social attention influenced productivity."},
-{q:"A manager who assumes employees are lazy and need close control applies:",opts:["Theory Y","Theory X","Systems theory","Contingency theory"],correct:1,exp:"Theory X holds negative assumptions justifying close supervision."},
-{q:"Systems theory views an organization primarily as:",opts:["A closed, isolated machine","An open system interacting via input-conversion-output","A bureaucracy governed only by rules","A purely financial entity"],correct:1,exp:"Systems theory frames organizations as open systems."},
-{q:"Contingency theory's central message for managers is:",opts:["Always use a mechanistic structure","Always centralize decision-making","The best approach depends on the specific situation","Bureaucracy is universally optimal"],correct:2,exp:"Contingency theory rejects \"one best way\" thinking."},
-{q:"A major criticism of the classical management approach is that it:",opts:["Is too focused on human emotions","Neglects human factors and the external environment","Overemphasizes creativity","Is too decentralized"],correct:1,exp:"Classical approaches are efficient but mechanical, ignoring people and context."}
-]},
 {id:'pom-2',title:'Planning & Strategy',summary:`Planning is identifying and selecting appropriate goals and courses of action:
 - Goals ("what?")
 - Strategies ("how?")
@@ -1559,42 +1515,6 @@ quiz:[
 {q:"Long-term plans (>5 years) such as vision and mission rest mainly on…",opts:["a forecast", "foresight", "hope", "a budget"],correct:2,exp:"Forecast = short term, foresight = intermediate, hope = long term."},
 {q:"Which of these is NOT one of the course's focus tools for strategy?",opts:["Porter's Five Forces", "Cost leadership", "SWOT analysis", "Differentiation"],correct:2,exp:"The slides say the course only focuses on Porter's Five Forces and the generic strategies."}
 ]},
-{id:'pom-3',title:'Organizing — Organizational Design & Structure',summary:`Organizing creates a formal structure of task and reporting relationships. Structural forms include:
-- Simple (startups)
-- Functional (grouped by task — efficient but silos)
-- Divisional (self-contained units by region/product/customer — accountable but duplicated resources)
-- Matrix (dual chain of command — flexible but power struggles)
-- Product Team (matrix variant, single chain of command)
-- Holacracy (self-organizing circles, e.g. Zappos)
-
-Structure choice depends on three contingency factors:
-- Strategy (efficiency→mechanistic; innovation→organic)
-- Size (large→mechanistic; small→organic)
-- Environment (stable→mechanistic; unstable→organic)
-
-Six design parameters: work specialization, departmentalization, chain of command, span of control, centralization, formalization. Differentiation (horizontal/vertical) must be balanced against Integration (hierarchy, liaison roles, task forces, teams). Extreme positions yield Mechanistic (high specialization, centralized, formal) vs. Organic (cross-functional, decentralized, low formalization) structures.`,
-cards:[
-{q:"What is Organizing as a management function?",a:"Identifying and arranging work; creating structure and formal relationships among members."},
-{q:"What is Organizational Structure?",a:"The formal system of task and reporting relationships that controls cooperation and resource use to achieve goals."},
-{q:"Name the three traditional organizational forms.",a:"Functional, Divisional, Matrix."},
-{q:"What defines a matrix structure?",a:"Simultaneous grouping by function and product/division — a dual chain of command."},
-{q:"What is Holacracy?",a:"Brian Robertson's design replacing hierarchy with self-organizing \"circles\" and roles (e.g., Zappos)."},
-{q:"What are the three contingency factors of structure?",a:"Strategy, Size, Organizational Environment."},
-{q:"List the six design parameters of organizational structure.",a:"Work specialization, Departmentalization, Chain of command, Span of control, Centralization, Formalization."},
-{q:"Distinguish horizontal and vertical differentiation.",a:"Horizontal = how tasks are grouped into roles/functions; Vertical = the hierarchy of authority."},
-{q:"What is span of control?",a:"The max number of subordinates a manager can effectively supervise, determining tall vs. flat hierarchies."},
-{q:"List the six characteristics of a mechanistic structure.",a:"High specialization, rigid departmentalization, clear chain of command, narrow span, centralization, high formalization."}
-],
-quiz:[
-{q:"A company organized around Finance, R&D, IT, Production, Sales, HR uses a:",opts:["Divisional structure","Functional structure","Matrix structure","Holacracy"],correct:1,exp:"Grouping by similar tasks (functions) defines a functional structure."},
-{q:"The main disadvantage of divisional vs. functional structure is:",opts:["Poor specialization","Duplication of resources, increasing costs","Lack of accountability","Inability to serve diverse markets"],correct:1,exp:"Each division duplicates its own functions."},
-{q:"A \"two-boss employee\" reporting to both a functional and product manager works in a:",opts:["Simple structure","Functional structure","Matrix structure","Bureaucracy"],correct:2,exp:"The matrix structure's defining feature is a dual chain of command."},
-{q:"A large company in a stable environment with an efficiency strategy should adopt a:",opts:["Organic structure","Mechanistic structure","Holacracy","Product team structure"],correct:1,exp:"Large size, stable environment, and efficiency strategy all favor mechanistic structure."},
-{q:"Which design parameter refers to dividing a task into parts assigned to separate people?",opts:["Departmentalization","Chain of command","Work specialization","Formalization"],correct:2,exp:"Work specialization divides labor into specific jobs."},
-{q:"A \"narrow span of control\" typically results in:",opts:["A flat organization","A tall organization with more hierarchical levels","Full decentralization","High organic structure"],correct:1,exp:"Fewer subordinates per manager requires more management levels."},
-{q:"High formalization in an organization means:",opts:["Employees have high discretion","Jobs are standardized with explicit rules, limiting discretion","No rules at all","The company uses an organic structure"],correct:1,exp:"High formalization implies extensive rules constraining discretion."},
-{q:"A startup in a fast-changing tech market would choose an organic structure because:",opts:["Small size and unstable environment favor organic structure","Large size always requires organic structure","Stable environments always favor organic structure","Efficiency strategy always requires organic structure"],correct:0,exp:"Both small size and unstable environment are contingency factors favoring organic structures."}
-]},
 {id:'pom-4',title:'Organizational Control & Change',summary:`Controlling monitors/evaluates performance and takes corrective action via a three-step cycle:
 => Establish standards → Compare actual vs. planned → Take corrective action
 Controls span Feedforward (before), Concurrent (during), Feedback (after).
@@ -1611,6 +1531,8 @@ Key financial ratios:
 - debt-to-asset = total debt / total assets
 - times-covered = profit before interest & taxes / total interest
 - inventory turnover = COGS / inventory
+- operating margin = total operating margin / sales revenue (profit earned on sales)
+- days sales outstanding = accounts receivable / sales for period × days (how quickly revenue is collected from customers)
 
 MBO is a 3-step joint goal-setting/review cycle.
 
@@ -1649,7 +1571,8 @@ cards:[
 {q:"What is an operating budget?",a:"A blueprint of how managers intend to use organizational resources to achieve goals efficiently; each division is evaluated on its budget for cost, revenue or profit (output control)."},
 {q:"Direct supervision vs. bureaucratic control: pros and cons?",a:"Direct supervision: most immediate and potent, can motivate, but very expensive (low span of control) and demotivating through close scrutiny. Bureaucratic control (rules/SOPs): red tape, people stop thinking for themselves, incompatible with innovation."},
 {q:"Why can't output and behavior control be used everywhere?",a:"Work like that of doctors, scientists or engineers can't be judged by watching behaviour or by rules/SOPs, and output measures are crude. Clan control (shared values and norms) is needed."},
-{q:"Describe the technology S-curve.",a:"A technology's improvement and market diffusion follow an S-shape: low impact/low integration → high impact/low integration → high impact/high integration → loses impact and is replaced by a new technology."}
+{q:"Describe the technology S-curve.",a:"A technology's improvement and market diffusion follow an S-shape: low impact/low integration → high impact/low integration → high impact/high integration → loses impact and is replaced by a new technology."},
+{q:"What do operating margin and days sales outstanding measure?",a:"Operating margin = total operating margin / sales revenue: how much profit the company earns on its sales. Days sales outstanding = accounts receivable / sales for period \u00d7 days: how efficiently managers collect revenue from customers."}
 ],
 quiz:[
 {q:"Which control type anticipates and prevents problems before they occur?",opts:["Concurrent control","Feedback control","Feedforward control","Clan control"],correct:2,exp:"Feedforward control anticipates problems before they occur."},
@@ -1670,8 +1593,6 @@ const POM_CHEAT = [
 {h:"Foundations — Organizations & Managers",items:["Organization: people deliberately structured to achieve goals, using human/financial/physical/information resources","Manager skills: Conceptual (top), Human (all levels), Technical (first-line)","3 levels: Top (long-term direction) → Middle (implement strategy) → First-line (day-to-day execution)","Efficiency = doing things right (resource use) vs. Effectiveness = doing the right things (right goals)","Efficiency×Effectiveness matrix: best case = both high; worst case = both low","Mintzberg's roles: Decisional (Entrepreneur, Disturbance Handler, Resource Allocator, Negotiator), Interpersonal (Figurehead, Leader, Liaison), Informational (Monitor, Disseminator, Spokesperson)","Left brain (logical/analytical) vs. Right brain (creative/intuitive) vs. Whole brain (balanced)"]},
 {h:"Planning",items:["Planning: Goals (\"what\") → Strategies (\"how\") → Implementation (\"how exactly\")","Three planning levels: Corporate, Business, Functional","Time horizons: Short-term (<1yr) → Intermediate (1–5yr) → Long-term (>5yr)","Vision / Mission / Goals; SMART goals","Porter's Five Forces; Porter's 3 generic strategies (Cost Leadership, Differentiation, Focus)","Internal consistency: value proposition + target market fit + fit of activities + trade-offs","Dynamic consistency threats: imitation, substitution, holdup, organizational slack","Implementation (planned → realized strategy): allocate responsibility → action plan → timetable → allocate resources → hold accountability","Why plan: direction & purpose, participation, coordination, controlling managers","Planning process: Situational analysis → Alternatives → Evaluate → Choose → Implement → Evaluate outcome","Forecast (<1yr, tactics) · Foresight (1–5yr, strategy) · Hope (>5yr, vision/mission/values)","Scenario (contingency) planning: several possible futures + a response for each","Goals: financial / strategic / social; strategic (top) → tactical (mid) → operational (lower); S.M.A.R.T. = Specific, Measurable, Attainable, Realistic, Timely","Competitive advantage = superior performance vs. competitors / industry average","Business models: razor & blade, freemium, peer-to-peer, self-service, subscription","Only Porter's 5 Forces + generic strategies (no SWOT/PESTLE)"]},
 {h:"Control & Change",items:["Controlling Cycle: Monitor → Compare → Correct","Three control timings: Feedforward, Concurrent, Feedback","Three control systems: Output, Behavior, Clan","Lewin's Force-Field Model; Evolutionary vs. Revolutionary change","4 steps to manage change: Assess → Decide → Implement → Evaluate","KPIs: must reflect goals; understandable, meaningful, measurable, influenceable","Traditional indicator systems: simple & comparable, but short-term, monetary, backward-looking, not tied to strategy","Output control tools: financial ratios, cascading goals, operating budgets","Direct supervision (potent but expensive) vs. Bureaucratic control (rules/SOPs, red tape, anti-innovation)","Clan control where output/behavior control fail (doctors, scientists, engineers)","Technology S-curve: Low impact → High impact, low integration → High impact, high integration → Replaced"]},
-{notExam:true,h:"History / Approaches (4 schools & eras)",items:["Classic (1900s–1910s): Scientific Management (Taylor), Administrative Theory (Fayol), Bureaucracy (Weber)","Behavioural (1930s–1940s): Hawthorne Studies, Human Relations, Theory X/Y, OB","Quantitative (1950s): Management science, Operations research, TQM","Contemporary (1960s–1970s): Systems theory, Contingency theory"]},
-{notExam:true,h:"Organizing",items:["Six design parameters: specialization, departmentalization, chain of command, span of control, centralization, formalization","Structures: Simple, Functional, Divisional, Matrix, Product Team, Holacracy","Contingency factors: Strategy, Size, Environment","Mechanistic vs. Organic structure"]}
 ];
 
 const POM_RATIOS_TABLE = [
@@ -1683,25 +1604,6 @@ const POM_RATIOS_TABLE = [
 ["Times-covered ratio","Profit before interest & taxes / Total interest charges"],
 ["Inventory turnover","Cost of goods sold / Inventory"],
 ["Days sales outstanding","Accounts receivable / Sales for period (× days)"]
-];
-
-/* ---- Growth Scenario Case Studio ---- */
-const POM_CASE_BRIEF = "The Case: a startup that found product-market fit two years ago has just closed a $5M Series A and hired 50 new people in six months — tripling headcount. Founders who once knew every employee personally can no longer track who reports to whom, budgets are informally approved over Slack, and two competing feature roadmaps are being built by different teams without anyone noticing the overlap.";
-const POM_CASES = [
-{tab:"History & Approaches",q:"Early on, the founders ran the company almost entirely through informal, personal relationships (Human Relations-style). At 50+ new hires in six months, which classical-approach elements should the founders now formally introduce, and why?",model:"Apply Fayol's Administrative Theory: the founders need explicit management functions (Planning, Organizing, Commanding, Coordinating, Controlling) rather than relying on personal rapport. A light dose of Weber's Bureaucracy is appropriate too — formal authority tied to position (so new hires know who to ask), merit-based promotion criteria, and a basic hierarchy — without over-formalizing, since Contingency Theory says a young, fast-changing firm in an uncertain market still needs some organic flexibility. The lesson: classical structure solves the coordination problem of scale, but must be blended with organic elements given the volatile environment."},
-{tab:"Planning & Strategy",q:"Apply Porter's Five Forces to this startup's market now that it has scaled. Which forces are most likely to intensify as competitors notice its $5M raise and rapid growth, and what generic strategy should it commit to avoid being \"stuck in the middle\"?",model:"The raise signals success, likely increasing the Threat of New Entrants (competitors and copycats attracted by the visible traction) and Rivalry among existing competitors (who now see the firm as a credible threat worth reacting to). Buyer power may also rise if customers gain more switching options as more entrants appear. The firm should commit clearly to either Cost Leadership or Differentiation — given a startup fresh off product-market fit, Differentiation (continuing to sharpen the unique value proposition that earned PMF) is usually more defensible than competing on cost against better-capitalized entrants. Trying to be the cheapest AND the most innovative at once risks the \"stuck in the middle\" trap of pleasing no one."},
-{tab:"Organizing",q:"Which organizational structure best fits this growth stage — tripled headcount, overlapping roadmaps, unclear reporting lines — and why would a matrix or product-team structure make sense here rather than staying simple/functional?",model:"At this stage a pure Simple structure (informal, founder-centric) has broken down — decision bottlenecks and role ambiguity are already visible symptoms. A Functional structure (Engineering, Product, Sales, etc.) would restore basic order and specialization, but the case shows two teams duplicating roadmap work without visibility — a sign of poor cross-functional coordination, the classic Functional-structure weakness (silos). A Product Team structure (cross-functional teams assigned to specific product areas under a single chain of command) directly fixes the roadmap-overlap problem by giving each product area clear ownership while keeping a single reporting line, avoiding the dual-boss confusion of a full Matrix. Contingency factors support this: small-to-medium size and an unstable, fast-changing market both favor a more organic structure over a rigid mechanistic one."},
-{tab:"Control & Change",q:"Design an MBO-based control system for this scenario, and explain which control system (output, behavior, or clan) should anchor day-to-day coordination while the company is still this informal.",model:"An MBO system should cascade goals top-down/bottom-up: mission → corporate objectives (e.g., \"expand into two new markets this year\") → departmental objectives (e.g., Engineering: ship the roadmap without further overlap) → individual/team targets, jointly set and reviewed on a regular cadence (e.g., quarterly OKRs) rather than ad hoc Slack approvals. This directly targets the case's core problem: no one currently knows who owns what. Because the company is still small and culturally tight-knit, Clan control (shared values and norms from the founding culture) should continue to anchor daily coordination alongside MBO — pure Output control (rigid financial-ratio targets) or heavy Behavior control (strict SOPs) would be premature and could stifle the agility that produced product-market fit in the first place. As the firm scales further, Output control (budgets, ROI targets) should be layered in incrementally."}
-];
-
-/* ---- Management Theory Timeline ---- */
-const POM_TIMELINE = [
-{yr:"~1900s–1910s",name:"Taylor — Scientific Management",body:"Studied tasks scientifically, codified rules/SOPs, selected/trained workers to match tasks, and tied pay to performance. Treated the organization as a rational, mechanical system to be optimized for efficiency."},
-{yr:"~1910s–1920s",name:"Fayol — Administrative Theory",body:"Shifted the lens from the shop floor to the whole organization: defined management as a distinct practice with functions (Forecasting, Planning, Organizing, Commanding, Coordinating, Controlling) and 14 general principles, plus 4 qualities of good plans."},
-{yr:"~1920s",name:"Weber — Bureaucracy",body:"Proposed an idealized organizational form for efficiency: authority tied to position (not personality), merit-based appointment, clearly specified authority/responsibility, hierarchical arrangement, and consistent rule enforcement."},
-{yr:"1924–1932",name:"Mayo — Hawthorne Studies / Human Relations",body:"Studies at Western Electric's Hawthorne Works found that social attention and morale — not just physical work conditions — drove productivity (the \"Hawthorne effect\"), launching the Human Relations Movement and correcting classical theory's neglect of human factors."},
-{yr:"1930s–1960s",name:"Behavioral Science Approach",body:"Applied rigorous scientific methods to study motivation, leadership, and group dynamics (e.g., McGregor's Theory X/Y), and gave rise to Organizational Behaviour as a field studying macro (environment, organizations) and micro (groups, individuals) levels."},
-{yr:"1960s–1970s",name:"Systems & Contingency Theory",body:"Systems Theory frames organizations as open systems (input → conversion → output) interacting continuously with their environment. Contingency Theory rejects \"one best way\": the right structure depends on strategy, size, and environment — stable conditions favor mechanistic structures, unstable/changing conditions favor organic ones."}
 ];
 
 /* ============================================================ AW DATA ============================================================ */
@@ -2060,21 +1962,13 @@ const OB_NAV = [
     {id:'ob-sim', label:'Exam Simulator', icon:'timer'}
   ]}
 ];
-// per "Principles of Management_Slides for written exam" (24 Sep 2026): History and Organizing are not exam content
-const POM_NOT_EXAM = ['pom-1','pom-3'];
-const pomExamTopics = () => POM_TOPICS.filter(t=>!POM_NOT_EXAM.includes(t.id));
-const pomExtraTopics = () => POM_TOPICS.filter(t=>POM_NOT_EXAM.includes(t.id));
+// POM contains only what is in "Principles of Management_Slides for written exam" (History and Organizing removed)
 const POM_NAV = [
   {sec:'Overview', items:[{id:'pom-home', label:'POM Home & Exam Info', icon:'home'}]},
   {sec:'Exam Prep', items:[
     {id:'pom-sim', label:'Exam Simulator', icon:'timer'},
     {id:'pom-cheat', label:'Cheat Sheet & Ratios', icon:'cheat'}
   ]}
-];
-const POM_EXTRA_TOOLS = [
-  {id:'pom-case', label:'Growth Case Studio', icon:'case'},
-  {id:'pom-ratio', label:'Ratio Practice', icon:'calc'},
-  {id:'pom-timeline', label:'Theory Timeline', icon:'clock'}
 ];
 const AW_NAV = [
   {sec:'Overview', items:[{id:'aw-home', label:'AW Home', icon:'home'}]},
@@ -2119,15 +2013,9 @@ function buildSidebarNav(subjId){
   });
   if(subjId==='ob' || subjId==='pom'){
     html += `<div class="nav-section-label">Topics</div>`;
-    const topics = subjId==='ob'?OB_TOPICS:pomExamTopics();
+    const topics = subjId==='ob'?OB_TOPICS:POM_TOPICS;
     topics.forEach((t,i)=>{
       html += `<div class="nav-item" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${i+1}. ${t.title}</span></div>`;
-    });
-  }
-  if(subjId==='pom'){
-    html += `<div class="nav-section-label nav-not-exam-label">Not in the written exam</div>`;
-    [...pomExtraTopics().map(t=>({id:t.id, label:t.title, icon:'summary'})), ...POM_EXTRA_TOOLS].forEach(it=>{
-      html += `<div class="nav-item nav-not-exam" data-page="${it.id}" onclick="navTo('${it.id}')">${icon(it.icon)}<span>${it.label}</span></div>`;
     });
   }
   nav.innerHTML = html;
@@ -2145,7 +2033,7 @@ function buildSearchIndex(){
   const subjLabel = id => id.toUpperCase();
   [['ob',OB_TOPICS],['pom',POM_TOPICS]].forEach(([subj,topics])=>{
     topics.forEach((t,i)=>{
-      const where = subj==='pom' ? (POM_NOT_EXAM.includes(t.id) ? 'POM · not in exam' : `POM · Topic ${pomExamTopics().indexOf(t)+1}`) : `${subjLabel(subj)} · Topic ${i+1}`;
+      const where = `${subjLabel(subj)} · Topic ${i+1}`;
       add({type:'Topic', rank:0, title:t.title, text:'', where, page:t.id, tab:'sum'});
       t.summary.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:t.title, text:searchFlat(p), where, page:t.id, tab:'sum'}));
       t.cards.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:`${where} · ${t.title}`, page:t.id, tab:'fc'}));
@@ -2722,7 +2610,7 @@ function fcMasteryHtml(storeKey, total){
 function fcMasteryLecture(subjId){
   let entries = [];
   if(subjId==='ob') entries = OB_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
-  else if(subjId==='pom') entries = pomExamTopics().map(t=>['fc-'+t.id, t.cards.length]);
+  else if(subjId==='pom') entries = POM_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
   else if(subjId==='aw') entries = [['fc-aw', AW_CARDS.length]];
   let gotit=0, partial=0, dontknow=0, total=0;
   entries.forEach(([key,n])=>{
@@ -2770,9 +2658,11 @@ const PLAN_EXAM_AW = new Date(2026,9,6); // confirmed Klausur date 06.10.2026
 const PLAN_EXAM_OBPOM = new Date(2026,9,5); // confirmed Klausur date 05.10.2026 (OB & POM)
 
 // knowledge 0..1 from flashcard ratings (got it = 1, partially = .5) and best quiz score; null = nothing practised yet
+// flashcard ratings only count towards plan + radar if the user opts in on the Study Plan page (default: off)
+function planUsesFc(){ return ls('plan-use-fc', false)===true; }
 function knowledgeScore(fcKey, nCards, quizKey, nQuiz){
   const parts = [];
-  if(fcKey && nCards){
+  if(fcKey && nCards && planUsesFc()){
     const vals = Object.values(ls(fcKey, {}));
     if(vals.length) parts.push((vals.filter(v=>v==='gotit').length + vals.filter(v=>v==='partial').length*.5) / nCards);
   }
@@ -2787,10 +2677,10 @@ function topicSize(t){ return t.cards.length + t.quiz.length + Math.round(t.summ
 
 function radarAxes(subj){
   if(subj==='ob' || subj==='pom'){
-    return (subj==='ob'?OB_TOPICS:pomExamTopics()).map(t=>({label:t.title, page:t.id, score:topicKnowledge(t)}));
+    return (subj==='ob'?OB_TOPICS:POM_TOPICS).map(t=>({label:t.title, page:t.id, score:topicKnowledge(t)}));
   }
   return [
-    {label:'Flashcards', page:'aw-flash', score:knowledgeScore('fc-aw', AW_CARDS.length)},
+    ...(planUsesFc() ? [{label:'Flashcards', page:'aw-flash', score:knowledgeScore('fc-aw', AW_CARDS.length)}] : []),
     {label:'Quiz', page:'aw-quiz', score:knowledgeScore(null, 0, 'quiz-aw', AW_QUIZ.length)},
     {label:'Mockup MCQ (Shalini)', page:'aw-mockexam-mc', score:knowledgeScore(null, 0, 'quiz-aw-mockmc', AW_MOCK_MC.length)}
   ];
@@ -2800,13 +2690,14 @@ function planItemPool(){
   const items = [];
   const weightOf = s => s==null ? 1 : 1-s;
   OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
-  pomExamTopics().forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
+  POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   const pomSim = knowledgeScore(null, 0, 'pom-exam-sim', 20);
   items.push({subj:'pom', label:'POM Exam Simulator (single choice)', page:'pom-sim', weight:pomSim==null ? .8 : 1-pomSim, size:POM_EXAM_SCENARIOS.length});
   const aw = radarAxes('aw');
   const leeItems = AW_LEE_DRILLS.reduce((n,d)=>n+d.items.length, 0);
-  items.push({subj:'aw', label:'AW Flashcards (all sessions)', page:'aw-flash', weight:weightOf(aw[0].score), size:AW_CARDS.length});
-  items.push({subj:'aw', label:'Mockup MCQ Exam', page:'aw-mockexam-mc', weight:aw[2].score==null ? .8 : 1-aw[2].score, size:AW_MOCK_MC.length});
+  const awScore = page => (aw.find(a=>a.page===page)||{}).score;
+  items.push({subj:'aw', label:'AW Flashcards (all sessions)', page:'aw-flash', weight:planUsesFc() ? weightOf(awScore('aw-flash')) : .6, size:AW_CARDS.length});
+  items.push({subj:'aw', label:'Mockup MCQ Exam', page:'aw-mockexam-mc', weight:awScore('aw-mockexam-mc')==null ? .8 : 1-awScore('aw-mockexam-mc'), size:AW_MOCK_MC.length});
   items.push({subj:'aw', label:'Mockup Written Exam', page:'aw-mockexam-written', weight:.8, size:AW_MOCK_WRITTEN.length*8});
   items.push({subj:'aw', label:'Lee Hawkins — Grammar & Language Drills', page:'aw-lee-drills', weight:.55, size:leeItems});
   items.push({subj:'aw', label:'Marie Claire — Exam-Prep MCQ', page:'aw-marie-quiz', weight:.55, size:AW_MARIE_QUIZ.length});
@@ -2863,15 +2754,18 @@ function buildStudyPlanData(){
 function buildStudyPlan(){
   registerPage('plan', (div)=>{
     div.innerHTML = `
-      <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Study Plan</h2><p>See where your knowledge is weak, then follow a day-by-day revision plan built from your real flashcard and quiz progress. Weak topics show up more often, mastered ones fade out, and everything gets denser as each exam gets closer.</p></div>
+      <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Study Plan</h2><p>See where your knowledge is weak, then follow a day-by-day revision plan built from your quiz and exam-simulator results (flashcard ratings only if you switch them on). Weak topics show up more often, mastered ones fade out, and everything gets denser as each exam gets closer.</p></div>
       <div class="page-body">
         <div class="radar-card glass">
-          <div class="radar-head"><h3>Weak-Spot Radar</h3>
+          <div class="radar-head"><div><h3>Weak-Spot Radar</h3><span class="radar-basis"></span></div>
             <div class="tabbar radar-tabs">${SUBJECTS.map(s=>`<button class="tabbtn" data-subj="${s.id}">${s.id.toUpperCase()}</button>`).join('')}</div>
           </div>
           <div class="radar-wrap"><div class="radar-svg-wrap"></div><div class="radar-side"><div class="radar-list"></div><div class="radar-reco"></div></div></div>
         </div>
         <div class="plan-settings glass" style="padding:18px 22px;border-radius:var(--radius);">
+          <label class="plan-toggle"><span>Count flashcard ratings</span>
+            <span class="plan-toggle-row"><input type="checkbox" class="plan-use-fc"><small>Off: plan + radar use only quiz &amp; exam-simulator results</small></span>
+          </label>
           <label>Plan starts on
             <span class="plan-start-row"><input type="date" class="plan-start-input" max="${planIso(PLAN_EXAM_AW)}"><button type="button" class="btn ghost plan-start-today">Today</button></span>
           </label>
@@ -2889,6 +2783,9 @@ function buildStudyPlan(){
         <div class="plan-legend"><span class="plan-badge prio">Priority</span> weakest topics, do these first <span class="plan-badge large">Lots of content</span> big topic, plan extra time</div>
         <div id="plan-days-list"></div>
       </div>`;
+    const fcToggle = div.querySelector('.plan-use-fc');
+    fcToggle.checked = planUsesFc();
+    fcToggle.addEventListener('change', ()=>{ lsSet('plan-use-fc', fcToggle.checked); renderPlanDays(div); });
     const startInput = div.querySelector('.plan-start-input');
     startInput.value = planIso(planStart());
     startInput.addEventListener('change', ()=>{
@@ -2974,7 +2871,11 @@ function renderRadar(div){
   const subj = div.dataset.radarSubj || currentSubject || 'ob';
   div.querySelectorAll('.radar-tabs .tabbtn').forEach(b=>b.classList.toggle('active', b.dataset.subj===subj));
   const axes = radarAxes(subj);
-  div.querySelector('.radar-svg-wrap').innerHTML = radarSvg(axes);
+  div.querySelector('.radar-basis').textContent = planUsesFc() ? 'Based on quiz results + flashcard ratings' : 'Based on quiz & exam-simulator results';
+  // a radar needs 3+ axes; with fewer (e.g. AW without flashcards) show only the list
+  const svgWrap = div.querySelector('.radar-svg-wrap');
+  svgWrap.style.display = axes.length>=3 ? '' : 'none';
+  svgWrap.innerHTML = axes.length>=3 ? radarSvg(axes) : '';
   const pct = s => s==null ? 'not started' : Math.round(s*100)+'%';
   div.querySelector('.radar-list').innerHTML = axes.map((a,i)=>({...a, n:i+1}))
     .sort((a,b)=>(a.score??-1)-(b.score??-1))
@@ -3328,11 +3229,9 @@ function renderCheat(container, blocks, extraHtml, key){
   container.innerHTML = cheatHtml(blocks, extraHtml);
 }
 function cheatHtml(blocks, extraHtml){
-  // extra HTML (e.g. the ratio table) is exam content, so it goes before the "not in the written exam" part
-  const hasNotExam = blocks.some(b=>b.notExam);
-  return blocks.map((b,i)=>(b.notExam && !(blocks[i-1]||{}).notExam ? (extraHtml||'') + `<div class="not-exam-divider"><span>Not in the written exam</span></div>` : '') + `
-    <div class="cheat-block${b.notExam?' not-exam':''}"><h4>${esc(b.h)}</h4><ul>${b.items.map(i=>`<li${i.includes(' → ')?' class="has-flow"':''}>${cheatItemHtml(i)}</li>`).join('')}</ul></div>
-  `).join('') + (hasNotExam ? '' : (extraHtml||''));
+  return blocks.map(b=>`
+    <div class="cheat-block"><h4>${esc(b.h)}</h4><ul>${b.items.map(i=>`<li${i.includes(' → ')?' class="has-flow"':''}>${cheatItemHtml(i)}</li>`).join('')}</ul></div>
+  `).join('') + (extraHtml||'');
 }
 
 /* ============================================================ TOPIC PAGE BUILDER (OB / POM) ============================================================ */
@@ -3345,7 +3244,6 @@ function buildTopicPage(t, subjColor){
         <p>Summary, spaced-repetition flashcards, and an applied quiz for this topic.</p>
       </div>
       <div class="page-body">
-        ${POM_NOT_EXAM.includes(t.id) ? notInExamNote('This block is in the complete slide deck but not in the "Slides for written exam" (92 slides). Keep it for reference only. Exception: Mintzberg\'s <i>Liaison</i> role, Fayol\'s plan qualities and bureaucratic control are exam content, but they live in the other topics.') : ''}
         <div class="tabbar">
           <button class="tabbtn active" data-tab="sum">Summary</button>
           <button class="tabbtn" data-tab="fc">Flashcards</button>
@@ -3526,13 +3424,6 @@ const POM_EXAM_SCENARIOS = [
 {topic:'pom-0',q:"Maria has just been promoted to foreman on an assembly line, where she directly supervises 12 non-managerial workers. Which type of managerial skill is most important at her level?",opts:["Conceptual skills","Human skills","Technical skills","Political skills","Strategic skills"],correct:2,exp:"Technical (job-specific) skills are most needed by first-line managers; conceptual skills matter most at the top; human skills at all levels."},
 {topic:'pom-0',q:"PhoneCo produces its new smartphone at the lowest cost in the industry, but hardly any customers want to buy it. How would you classify PhoneCo's performance?",opts:["High efficiency + high effectiveness","Low efficiency + high effectiveness","High efficiency + low effectiveness","Low efficiency + low effectiveness","It cannot be classified without financial ratios"],correct:2,exp:"Resources are used well (efficient = doing things right) but the goal is wrong (not effective = not doing the right things): a great product nobody wants."},
 {topic:'pom-0',q:"A regional manager supervises several first-line managers and translates top management's strategy into concrete departmental plans. She is a _____.",opts:["Top manager","Middle manager","First-line manager","Non-managerial employee","Board member"],correct:1,exp:"Middle managers supervise first-line managers and implement top-management strategy into departmental plans."},
-{topic:'pom-1',q:"A consultant times every movement of warehouse workers, writes the fastest method down as a standard procedure and links pay to the number of parcels packed. Which management approach is he applying?",opts:["Scientific Management","Administrative Theory","Bureaucracy","Human Relations","Contingency Theory"],correct:0,exp:"Studying tasks scientifically, codifying rules/SOPs and tying pay to performance is Taylor's Scientific Management."},
-{topic:'pom-1',q:"In a factory study, productivity rose in both the test group and the control group — workers performed better simply because they felt observed and valued. This finding is known as the _____.",opts:["Hawthorne effect","Theory X","Scientific Management","Bureaucratic control","Open-system effect"],correct:0,exp:"The Hawthorne Studies (Mayo) showed that social attention and morale drive productivity — the Hawthorne effect."},
-{topic:'pom-1',q:"A public agency assigns authority strictly to positions (not persons), appoints staff based on merit and follows clearly specified written rules. Which classical approach does this reflect?",opts:["Fayol's Administrative Theory","Weber's Bureaucracy","Taylor's Scientific Management","Systems Theory","Mayo's Human Relations"],correct:1,exp:"Authority tied to position, merit-based appointment and formal rules are Weber's idealized bureaucracy."},
-{topic:'pom-1',q:"The new CEO says: \"There is no single best way to organize. Our structure has to fit our environment and our technology.\" Which approach is she following?",opts:["Scientific Management","Human Relations Movement","Contingency Theory","Quantitative approach","Bureaucracy"],correct:2,exp:"Contingency Theory: no single best way to manage — it depends on internal and external circumstances."},
-{topic:'pom-1',q:"A consultant analyzes a hospital as a set of inputs (staff, equipment, patients) that are transformed into outputs (treated patients) while constantly interacting with its environment. Which approach is this?",opts:["Systems Theory","Theory X","Scientific Management","Total Quality Management","Administrative Theory"],correct:0,exp:"Systems Theory sees organizations as open systems: input → conversion → output, interacting with the environment."},
-{topic:'pom-1',q:"A manager believes his employees dislike work, avoid responsibility and therefore have to be closely supervised and controlled. According to McGregor, he holds _____.",opts:["Theory Y","Theory X","the Hawthorne view","a contingency view","a systems view"],correct:1,exp:"Theory X assumes people dislike work and need control; Theory Y assumes people are self-motivated."},
-{topic:'pom-1',q:"A textbook describes management as a universal set of functions: forecasting, planning, organizing, commanding, coordinating and controlling. Which approach does this come from?",opts:["Administrative Theory (Fayol)","Scientific Management (Taylor)","Bureaucracy (Weber)","Human Relations (Mayo)","Operations research"],correct:0,exp:"Fayol's Administrative Theory defined management as a distinct practice with these functions and 14 principles."},
 {topic:'pom-2',q:"An online shop handles every refund request with the same written step-by-step procedure. What type of plan is this?",opts:["Single-use plan","Standing plan","Vision statement","Business-level strategy","Project plan"],correct:1,exp:"Standing plans (policies, rules, SOPs) address recurring decisions; single-use plans (programs, projects) address unique situations."},
 {topic:'pom-2',q:"A budget airline offers no-frills flights at the lowest possible prices to as many travellers as possible. Which of Porter's generic strategies is it pursuing?",opts:["Differentiation","Cost leadership","Focus","Stuck in the middle","Vertical integration"],correct:1,exp:"Lowest cost for a broad (mass) market = Cost Leadership."},
 {topic:'pom-2',q:"A Swiss watchmaker produces only a few hundred unique, hand-made watches a year for a small group of wealthy collectors. Which of Porter's generic strategies fits best?",opts:["Cost leadership","Differentiation","Focus","Related diversification","Horizontal integration"],correct:2,exp:"Serving a narrow niche segment = Focus strategy (here a differentiation focus)."},
@@ -3543,12 +3434,6 @@ const POM_EXAM_SCENARIOS = [
 {topic:'pom-2',q:"Cinemas are losing customers because more and more people watch new films on streaming platforms at home. Which of Porter's Five Forces does this describe?",opts:["Threat of new entrants","Bargaining power of suppliers","Bargaining power of buyers","Threat of substitutes","Rivalry among existing competitors"],correct:3,exp:"A different product that fulfils the same need (streaming instead of cinema) = threat of substitutes."},
 {topic:'pom-2',q:"A firm planned to expand to Spain, but supply problems forced it to adapt, and it ended up expanding to Portugal instead. What is the Portugal expansion called?",opts:["Planned strategy","Realized strategy","Vision","Standing plan","Functional-level strategy"],correct:1,exp:"Planned strategy = what managers intend; realized strategy = what actually happens after execution, including adjustments to unforeseen events."},
 {topic:'pom-2',q:"Which of the following goals meets the SMART criteria?",opts:["Become better at marketing","Increase online sales by 15% by 31 December 2026","Be the best company in Europe","Improve employee happiness","Grow as fast as possible"],correct:1,exp:"Only this goal is Specific, Measurable, Achievable, Relevant and Time-bound."},
-{topic:'pom-3',q:"At MetalWorks, employees are grouped into marketing, finance and production departments. Each department is very efficient at its own task, but the departments barely talk to each other. Which structure does MetalWorks have?",opts:["Functional structure","Divisional structure","Matrix structure","Product team structure","Holacracy"],correct:0,exp:"Grouping by task (function) is efficient but tends to create silos."},
-{topic:'pom-3',q:"At a consulting firm, every consultant reports both to a project manager and to the head of their functional department. Which structure is this?",opts:["Functional structure","Divisional structure","Matrix structure","Simple structure","Bureaucracy"],correct:2,exp:"A dual chain of command is the defining feature of the matrix structure: flexible, but prone to power struggles."},
-{topic:'pom-3',q:"A small start-up pursues an innovation strategy in a fast-changing, unstable market. Which type of structure fits best?",opts:["Mechanistic structure","Organic structure","Functional structure with high formalization","Centralized bureaucracy","Tall hierarchy with narrow spans of control"],correct:1,exp:"Innovation strategy, small size and an unstable environment all point to an organic (decentralized, low-formalization) structure."},
-{topic:'pom-3',q:"A company is split into self-contained units for Europe, Asia and the Americas, each with its own marketing, finance and production. What is a typical disadvantage of this structure?",opts:["Dual chain of command","Duplicated resources","No accountability for results","Silos between functions within one unit","It only works for start-ups"],correct:1,exp:"Divisional structures make units accountable, but duplicate resources across divisions."},
-{topic:'pom-3',q:"After a restructuring, one supervisor now has 25 employees reporting directly to her instead of 8. Which design parameter has changed?",opts:["Chain of command","Span of control","Centralization","Formalization","Departmentalization"],correct:1,exp:"Span of control = the number of subordinates a manager directly supervises."},
-{topic:'pom-3',q:"An online retailer abolishes traditional managers; instead, work is organized in self-organizing circles that redefine their roles regularly. Which organizational form is this?",opts:["Matrix structure","Holacracy","Divisional structure","Simple structure","Product team structure"],correct:1,exp:"Holacracy = self-organizing circles (e.g. Zappos)."},
 {topic:'pom-4',q:"A production supervisor walks the shop floor and corrects mistakes while the work is being done. Which type of control is this?",opts:["Feedforward control","Concurrent control","Feedback control","Clan control","Output control"],correct:1,exp:"Control during the process = concurrent. Feedforward happens before, feedback after."},
 {topic:'pom-4',q:"A bakery inspects every delivery of flour for quality before it is used in production. Which type of control is this?",opts:["Feedforward control","Concurrent control","Feedback control","Clan control","Behavior control"],correct:0,exp:"Control before the process starts = feedforward control."},
 {topic:'pom-4',q:"A creative agency has almost no written rules; employees regulate their own behaviour through strong shared values and norms. Which control system is dominant?",opts:["Output control","Behavior control","Clan control","Feedforward control","Budget control"],correct:2,exp:"Clan control relies on shared values and norms rather than rules or targets."},
@@ -3570,13 +3455,12 @@ function buildPOMSim(){
     const body = div.querySelector('#pom-sim-body');
     const topicTitle = id => (POM_TOPICS.find(t=>t.id===id)||{}).title || 'General';
     const start = (mode)=>{
-      // only exam topics (History and Organizing are not in the "Slides for written exam")
-      const cases = POM_EXAM_SCENARIOS.filter(q=>!POM_NOT_EXAM.includes(q.topic)).map(q=>({...q, topic:topicTitle(q.topic)}));
+      const cases = POM_EXAM_SCENARIOS.map(q=>({...q, topic:topicTitle(q.topic)}));
       // exam mode: 20 random questions, 12 scenario cases + 8 topic-quiz questions; practice: all scenario cases
       let questions;
       if(mode==='exam'){
         const quizPool = [];
-        pomExamTopics().forEach(t=>t.quiz.forEach(q=>quizPool.push({...q, topic:t.title})));
+        POM_TOPICS.forEach(t=>t.quiz.forEach(q=>quizPool.push({...q, topic:t.title})));
         const pickCases = shuffle(cases).slice(0,12);
         const rest = shuffle(quizPool).slice(0,8);
         questions = shuffle([...pickCases, ...rest]);
@@ -3590,24 +3474,20 @@ function buildPOMSim(){
       <p style="color:var(--ink-soft);margin:0 auto 22px;max-width:480px;">The PoM part of the written exam is <b>single choice only</b>. Train exactly that: apply a concept to a short business case.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <button class="btn pom-sim-exam">Timed exam · 20 questions · 20 min</button>
-        <button class="btn ghost pom-sim-practice">Practice all ${POM_EXAM_SCENARIOS.filter(q=>!POM_NOT_EXAM.includes(q.topic)).length} cases · no timer</button>
+        <button class="btn ghost pom-sim-practice">Practice all ${POM_EXAM_SCENARIOS.length} cases · no timer</button>
       </div></div>`;
     body.querySelector('.pom-sim-exam').addEventListener('click', ()=>start('exam'));
     body.querySelector('.pom-sim-practice').addEventListener('click', ()=>start('practice'));
   });
 }
 
-// small banner for tools that are useful but not part of the single-choice written exam
-function notInExamNote(why){
-  return `<div class="exam-note"><b>Not part of the written exam.</b> ${why}</div>`;
-}
 
 function buildPOMHome(){
   registerPage('pom-home', (div)=>{
     div.innerHTML = `
       <div class="page-header">
         <div class="eyebrow">${icon('home')} Principles of Management</div>
-        <h2>3 Exam Topics</h2>
+        <h2>3 Topics</h2>
         <p>Managers &amp; managing, planning &amp; strategy, and control &amp; change: exactly what the "Slides for written exam" cover (Jones &amp; George, Ch. 8 and 11).</p>
       </div>
       <div class="page-body">
@@ -3624,7 +3504,7 @@ function buildPOMHome(){
             <div class="exam-col">
               <ul class="exam-facts">
                 <li><b>Format:</b> single-choice questions only (5 options), usually a short business case.</li>
-                <li><b>Content</b> (per the "Slides for written exam", 92 slides): managers &amp; managing (incl. Mintzberg), planning &amp; strategy, organizational control &amp; change. <b>Not included:</b> History of Management, Organizational Design &amp; Structure, SWOT/PESTLE, Leading (that is OB). Worth confirming once in the exam debrief.</li>
+                <li><b>Content:</b> exactly the "Slides for written exam" (92 slides): managers &amp; managing (incl. Mintzberg), planning &amp; strategy (only Porter's Five Forces + generic strategies, no SWOT/PESTLE), organizational control &amp; change. <i>Leading</i> is OB.</li>
                 <li><b>Growth Scenarios:</b> in-class group work. Slides due <b>30 Sep 2026, 5:00 PM</b>, one submission per group on Canvas.</li>
               </ul>
             </div>
@@ -3638,24 +3518,13 @@ function buildPOMHome(){
         </div>
         ${lectureMasteryHtml('pom')}
         <div class="topic-grid">
-          ${pomExamTopics().map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
+          ${POM_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
         </div>
         <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Exam prep</div>
         <div class="tool-tiles">
-          <div class="tool-tile" onclick="navTo('pom-sim')"><div class="ic">${icon('timer')}</div><h4>Exam Simulator</h4><p>${POM_EXAM_SCENARIOS.filter(q=>!POM_NOT_EXAM.includes(q.topic)).length} single-choice cases in the real exam style.</p></div>
+          <div class="tool-tile" onclick="navTo('pom-sim')"><div class="ic">${icon('timer')}</div><h4>Exam Simulator</h4><p>${POM_EXAM_SCENARIOS.length} single-choice cases in the real exam style.</p></div>
           <div class="tool-tile" onclick="navTo('pom-cheat')"><div class="ic">${icon('cheat')}</div><h4>Cheat Sheet &amp; Ratios</h4><p>Every framework + financial ratio table.</p></div>
         </div>
-        <section class="not-exam-area">
-          <div class="not-exam-head"><h3>Not in the written exam</h3><p>These blocks are in the complete slide deck but not in the "Slides for written exam". Kept here for reference, the group work, or in case the debrief says otherwise.</p></div>
-          <div class="topic-grid">
-            ${pomExtraTopics().map(t=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">NOT IN EXAM</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p></div>`).join('')}
-          </div>
-          <div class="tool-tiles">
-            <div class="tool-tile" onclick="navTo('pom-case')"><div class="ic">${icon('case')}</div><h4>Growth Case Studio</h4><p>For the Growth Scenario group work.</p></div>
-            <div class="tool-tile" onclick="navTo('pom-ratio')"><div class="ic">${icon('calc')}</div><h4>Ratio Practice</h4><p>Calculating ratios, beyond exam level.</p></div>
-            <div class="tool-tile" onclick="navTo('pom-timeline')"><div class="ic">${icon('clock')}</div><h4>Theory Timeline</h4><p>Taylor to Contingency Theory.</p></div>
-          </div>
-        </section>
       </div>`;
   });
 }
@@ -3663,130 +3532,13 @@ function buildPOMHome(){
 function buildPOMCheat(){
   registerPage('pom-cheat', (div)=>{
     const ratioTable = `<div class="cheat-block"><h4>Key Financial Ratios (Output Control)</h4><table class="cheat-table"><thead><tr><th>Ratio</th><th>Formula</th></tr></thead><tbody>${POM_RATIOS_TABLE.map(r=>`<tr><td>${esc(r[0])}</td><td><code>${esc(r[1])}</code></td></tr>`).join('')}</tbody></table></div>`;
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('cheat')} Reference</div><h2>POM Cheat Sheet &amp; Ratios</h2><p>All frameworks across all 4 topics, plus the full financial-ratio table.</p></div><div class="page-body" id="pom-cheat-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('cheat')} Reference</div><h2>POM Cheat Sheet &amp; Ratios</h2><p>All frameworks across the 3 exam topics, plus the full financial-ratio table.</p></div><div class="page-body" id="pom-cheat-body"></div>`;
     renderCheat(div.querySelector('#pom-cheat-body'), POM_CHEAT, ratioTable, 'cheat-pom');
   });
 }
 
-function buildPOMCase(){
-  registerPage('pom-case', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('case')}</div><h2>Growth Scenario Case Studio</h2><p>One running case, four applied parts — one per management function.</p></div><div class="page-body">${notInExamNote('The Growth Scenarios are in-class group work with a slide deck (due 30 Sep 2026, 5:00 PM, one submission per group on Canvas). Useful for that and for applying concepts — the written exam itself is single choice.')}<div id="pom-case-body"></div></div>`;
-    const body = div.querySelector('#pom-case-body');
-    let active = 0;
-    function render(){
-      const c = POM_CASES[active];
-      body.innerHTML = `
-        <div class="case-brief"><strong>The Case:</strong> ${esc(POM_CASE_BRIEF)}</div>
-        <div class="case-tabbar">${POM_CASES.map((cc,i)=>`<div class="case-tab${i===active?' active':''}" onclick="window.__caseTab(${i})">${esc(cc.tab)}</div>`).join('')}</div>
-        <div class="case-q">${esc(c.q)}</div>
-        <textarea class="case-answer-box" placeholder="Draft your own answer here first, then reveal the model answer to compare..."></textarea>
-        <button class="btn" onclick="window.__caseReveal()">Reveal model answer</button>
-        <div class="case-model" id="case-model"><h5>Model Answer</h5>${esc(c.model)}</div>`;
-    }
-    window.__caseTab = (i)=>{ active=i; render(); };
-    window.__caseReveal = ()=>{ document.getElementById('case-model').classList.add('show'); };
-    render();
-  });
-}
-
-function buildPOMRatio(){
-  registerPage('pom-ratio', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('calc')}</div><h2>Financial Ratio Practice</h2><p>A fresh randomized mini balance-sheet/income-statement problem every time — genuinely new numbers via Math.random().</p></div><div class="page-body">${notInExamNote('Calculating ratios is unlikely in a single-choice exam. Know what each ratio measures (e.g. quick ratio = liquidity without inventory) — see the Cheat Sheet.')}<div id="pom-ratio-body"></div></div>`;
-    const body = div.querySelector('#pom-ratio-body');
-    const TYPES = ['current','quick','debt','turnover','roi'];
-    let cur;
-    function gen(){
-      const type = TYPES[rnd(0,TYPES.length-1)];
-      const currentAssets = rnd(80,400)*1000;
-      const inventory = rnd(10,Math.floor(currentAssets/2000))*1000;
-      const currentLiabilities = rnd(40,250)*1000;
-      const totalAssets = currentAssets + rnd(200,900)*1000;
-      const totalDebt = rnd(100,Math.floor(totalAssets*0.7/1000))*1000;
-      const cogs = rnd(200,900)*1000;
-      const netProfit = rnd(20,180)*1000;
-      let statement, ask, answer, formula, working;
-      if(type==='current'){
-        statement = [["Current assets", currentAssets],["Current liabilities", currentLiabilities]];
-        ask = "Calculate the Current Ratio.";
-        formula = "Current Ratio = Current assets / Current liabilities";
-        answer = currentAssets/currentLiabilities;
-        working = `${currentAssets.toLocaleString()} / ${currentLiabilities.toLocaleString()} = ${answer.toFixed(2)}`;
-      } else if(type==='quick'){
-        statement = [["Current assets", currentAssets],["Inventory", inventory],["Current liabilities", currentLiabilities]];
-        ask = "Calculate the Quick Ratio.";
-        formula = "Quick Ratio = (Current assets − Inventory) / Current liabilities";
-        answer = (currentAssets-inventory)/currentLiabilities;
-        working = `(${currentAssets.toLocaleString()} − ${inventory.toLocaleString()}) / ${currentLiabilities.toLocaleString()} = ${answer.toFixed(2)}`;
-      } else if(type==='debt'){
-        statement = [["Total debt", totalDebt],["Total assets", totalAssets]];
-        ask = "Calculate the Debt-to-Asset Ratio.";
-        formula = "Debt-to-Asset Ratio = Total debt / Total assets";
-        answer = totalDebt/totalAssets;
-        working = `${totalDebt.toLocaleString()} / ${totalAssets.toLocaleString()} = ${answer.toFixed(2)}`;
-      } else if(type==='turnover'){
-        statement = [["Cost of goods sold", cogs],["Inventory", inventory]];
-        ask = "Calculate Inventory Turnover.";
-        formula = "Inventory Turnover = Cost of goods sold / Inventory";
-        answer = cogs/inventory;
-        working = `${cogs.toLocaleString()} / ${inventory.toLocaleString()} = ${answer.toFixed(2)}`;
-      } else {
-        statement = [["Net profit before taxes", netProfit],["Total assets", totalAssets]];
-        ask = "Calculate ROI (Return on Investment).";
-        formula = "ROI = Net profit before taxes / Total assets";
-        answer = netProfit/totalAssets;
-        working = `${netProfit.toLocaleString()} / ${totalAssets.toLocaleString()} = ${answer.toFixed(3)} (${(answer*100).toFixed(1)}%)`;
-      }
-      cur = {statement, ask, formula, answer, working, type};
-      render();
-    }
-    function render(){
-      body.innerHTML = `
-        <div class="ratio-panel">
-          <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);font-weight:700;margin-bottom:10px;">Randomized problem</div>
-          <div class="ratio-statement">${cur.statement.map(r=>`<div class="lbl">${esc(r[0])}</div><div class="val">€ ${r[1].toLocaleString()}</div>`).join('')}</div>
-          <div class="ratio-ask">${esc(cur.ask)}</div>
-          <div class="ratio-input"><input type="text" id="ratio-input-el" placeholder="Your answer (e.g. 1.45)" onkeydown="if(event.key==='Enter')window.__ratioCheck()"><button class="btn" onclick="window.__ratioCheck()">Check</button></div>
-          <div class="ratio-feedback" id="ratio-fb"></div>
-          <div class="ratio-solution" id="ratio-sol"><strong>Formula:</strong> <code>${esc(cur.formula)}</code><br><strong>Worked solution:</strong> ${esc(cur.working)}</div>
-          <div style="display:flex;gap:10px;">
-            <button class="btn secondary" onclick="window.__ratioSolve()">Show solution</button>
-            <button class="btn ghost" onclick="window.__ratioNew()">New problem</button>
-          </div>
-        </div>`;
-    }
-    window.__ratioCheck = ()=>{
-      const val = parseFloat(document.getElementById('ratio-input-el').value);
-      const fb = document.getElementById('ratio-fb');
-      fb.classList.add('show');
-      if(!isNaN(val) && Math.abs(val-cur.answer)<0.03){
-        fb.className='ratio-feedback show correct';
-        fb.textContent = `Correct — ${cur.answer.toFixed(2)}. Nicely done.`;
-      } else {
-        fb.className='ratio-feedback show wrong';
-        fb.textContent = `Not quite. Try again, or reveal the worked solution below.`;
-      }
-    };
-    window.__ratioSolve = ()=>{ document.getElementById('ratio-sol').classList.add('show'); };
-    window.__ratioNew = gen;
-    gen();
-  });
-}
-
-function buildPOMTimeline(){
-  registerPage('pom-timeline', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('clock')}</div><h2>Management Theory Timeline</h2><p>Click any era to expand its key ideas — Taylor through Contingency Theory.</p></div><div class="page-body">${notInExamNote('The exam is single choice, so ordering eras by date is unlikely to be asked. Knowing what each approach says (e.g. Taylor vs. Weber vs. Contingency) is what matters — that is covered in the Exam Simulator.')}<div class="timeline" id="pom-tl-body"></div></div>`;
-    const body = div.querySelector('#pom-tl-body');
-    body.innerHTML = POM_TIMELINE.map((e,i)=>`
-      <div class="tl-era" id="tl-${i}"><div class="tl-dot"></div>
-        <div class="tl-era-head" onclick="window.__tlToggle(${i})"><div><div class="yr">${esc(e.yr)}</div><h4>${esc(e.name)}</h4></div><span>&#9662;</span></div>
-        <div class="tl-era-body"><div class="tl-era-body-inner">${esc(e.body)}</div></div>
-      </div>`).join('');
-    window.__tlToggle = (i)=>{ document.getElementById('tl-'+i).classList.toggle('open'); };
-  });
-}
-
 POM_TOPICS.forEach(t=>buildTopicPage(t,'pom'));
-buildPOMHome(); buildPOMCheat(); buildPOMSim(); buildPOMCase(); buildPOMRatio(); buildPOMTimeline();
+buildPOMHome(); buildPOMCheat(); buildPOMSim();
 
 /* ============================================================ AW PAGES ============================================================ */
 function buildAWHome(){
