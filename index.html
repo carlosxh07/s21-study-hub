@@ -217,6 +217,20 @@ a,button{font-family:inherit;}
 .summary-text .sum-list{margin:0 0 16px;padding-left:22px;}
 .summary-text .sum-list li{margin:3px 0;padding-left:2px;}
 .summary-text .sum-list li::marker{color:var(--accent-ink);}
+.flow{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px 8px;margin:6px 0 18px;}
+.flow-step{flex:1 1 110px;max-width:230px;display:flex;flex-direction:column;gap:6px;}
+.flow-key{display:block;padding:8px 10px;border-radius:12px;border:1px solid var(--accent-bg2);background:var(--accent-bg);color:var(--ink);font-weight:700;font-size:.84rem;line-height:1.3;text-align:center;}
+.flow-desc{display:block;font-size:.77rem;line-height:1.45;color:var(--ink-soft);text-align:center;padding:0 2px;}
+.flow-arrow{flex:0 0 auto;margin-top:7px;color:var(--accent-ink);font-weight:700;font-size:1.05rem;line-height:1.3;}
+.cheat-block li.has-flow{list-style:none;margin-left:-20px;padding:4px 0;}
+.cheat-block .flow{margin:6px 0 4px;gap:8px 6px;}
+.cheat-block .flow-step{flex-basis:70px;}
+.cheat-block .flow-key{padding:6px 8px;font-size:.78rem;border-radius:10px;}
+.cheat-block .flow-desc{font-size:.72rem;}
+.cheat-block .flow-arrow{margin-top:5px;font-size:.95rem;}
+.flow-label{display:block;font-weight:600;color:var(--ink);}
+.flow-rest{display:block;font-size:.8rem;color:var(--ink-soft);}
+@media(max-width:640px){.flow{flex-direction:column;align-items:stretch;gap:6px;}.flow-step{max-width:none;flex-basis:auto;}.flow-arrow{align-self:center;margin:0;transform:rotate(90deg);}}
 .summary-text .sum-vocab-title{margin-bottom:8px;font-weight:600;}
 .summary-text .sum-vocab{display:grid;grid-template-columns:max-content 1fr;gap:8px 22px;margin:0 0 16px;padding:14px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg2);line-height:1.55;}
 .summary-text .sum-vocab dt{font-weight:700;color:var(--ink);}
@@ -810,7 +824,8 @@ OB is not only for managers — it matters whenever you work in a team, communic
 
 Common sense is not enough: statements like "quiet people are not interested", "people paid more will always work harder" or "a good team should agree most of the time" sound plausible but evidence challenges them. Perspective-taking asks "What else could explain this behaviour?" Contingency thinking — the central OB answer is "IT DEPENDS" (e.g. more feedback does not always improve performance).
 
-Simple framework: PERSON (personality, values, experience, motivation) → SITUATION (task, team, leadership, expectations, environment) → BEHAVIOUR → OUTCOME (performance, satisfaction, teamwork, relationships).
+Simple framework:
+=> PERSON (personality, values, experience, motivation) → SITUATION (task, team, leadership, expectations, environment) → BEHAVIOUR → OUTCOME (performance, satisfaction, teamwork, relationships)
 
 Why OB matters today: diverse teams, hybrid/digital work, well-being, AI and changing work, ethics & fairness, leadership & teamwork.
 
@@ -866,7 +881,8 @@ Classic theories:
 - Latham & Locke's goal-setting theory (difficult, specific goals raise performance)
 - Hackman & Oldham's Job Characteristics Model (skill variety, task identity, task significance, autonomy, feedback → meaningfulness, responsibility, knowledge of results)
 
-Pay-for-motivation has limited/mixed effects; organizational change reactions move denial → resistance → valley of tears → adaptation → commitment.`,
+Pay-for-motivation has limited/mixed effects; organizational change reactions move:
+=> denial → resistance → valley of tears → adaptation → commitment`,
 cards:[
 {q:"How does the module define motivation?",a:"The force that energizes, directs, and sustains behavior."},
 {q:"What is the difference between intrinsic and extrinsic motivators?",a:"Intrinsic = inner influences (personality, emotions, needs, goals, values); extrinsic = external influences (rewards, punishments, empowerment, recognition)."},
@@ -934,7 +950,8 @@ Emotions are sharp/event-triggered; moods are longer-lasting and diffuse. Affect
 
 Emotional Labor: Surface Acting (faking, draining) vs. Deep Acting (genuine, sustainable). Emotional Contagion spreads moods through mimicry and convergence. EI is measured via EQ-i 2.0, EQ 360, and MSCEIT.
 
-Lecture slides "Workplace Emotions" frame emotions as a process: WORK EVENT (feedback, success/failure, delays) → APPRAISAL ("How do I interpret what happened?") → EMOTIONAL RESPONSE (anger, relief, anxiety, pride) → MOOD / ongoing state → BEHAVIOUR (speak up, withdraw, cooperate, react).
+Lecture slides "Workplace Emotions" frame emotions as a process:
+=> WORK EVENT (feedback, success/failure, delays) → APPRAISAL ("How do I interpret what happened?") → EMOTIONAL RESPONSE (anger, relief, anxiety, pride) → MOOD / ongoing state → BEHAVIOUR (speak up, withdraw, cooperate, react)
 
 The same event can be experienced differently because emotional responses are shaped by:
 - the PERSON (personality, values, past experience, current energy/stress, emotional skills)
@@ -949,9 +966,13 @@ Display rules :: what emotion the job expects me to show
 Surface acting :: change expression, not feeling
 Deep acting :: try to change the feeling so the expression is genuine
 
-AET is presented as Work environment (demands, autonomy, relationships) → Daily events (hassles, conflicts, praise, progress) → Emotional reaction → Attitudes/behaviour (satisfaction, effort, helping, withdrawal), with personal dispositions moderating how strongly people react.
+AET is presented as:
+=> Work environment (demands, autonomy, relationships) → Daily events (hassles, conflicts, praise, progress) → Emotional reaction → Attitudes/behaviour (satisfaction, effort, helping, withdrawal)
+with personal dispositions moderating how strongly people react.
 
-EI is simplified to three steps: PERCEIVE (notice emotions in self and others) → UNDERSTAND (what it means and what causes it) → REGULATE/USE (manage the response) — note that how EI should be defined and measured, and how distinct it is from personality and cognitive ability, remains debated.
+EI is simplified to three steps:
+=> PERCEIVE (notice emotions in self and others) → UNDERSTAND (what it means and what causes it) → REGULATE/USE (manage the response)
+Note that how EI should be defined and measured, and how distinct it is from personality and cognitive ability, remains debated.
 
 Emotions connect to motivation, leadership, teams, decision making, customer service and well-being. Emotions are specific responses; moods are broader and longer-lasting.`,
 cards:[
@@ -1034,7 +1055,8 @@ Leadership styles:
 - Democratic (innovation)
 - Laissez-faire (creative experts)
 
-Leadership theory evolution: Trait (1930s-40s) → Behavioral (1940s-60s) → Contingency (1960s-80s; Fiedler, Hersey-Blanchard, Path-Goal) → Full-Range Leadership Model (Laissez-Faire → Transactional → Transformational) → Modern Era (ethics, authenticity, Servant/Greenleaf, Charismatic/Conger & Kanungo).
+Leadership theory evolution:
+=> Trait (1930s-40s) → Behavioral (1940s-60s) → Contingency (1960s-80s; Fiedler, Hersey-Blanchard, Path-Goal) → Full-Range Leadership Model (Laissez-Faire → Transactional → Transformational) → Modern Era (ethics, authenticity, Servant/Greenleaf, Charismatic/Conger & Kanungo)
 
 Trust: Integrity, Benevolence, Ability. Power: formal bases (Legitimate, Coercive, Reward) and personal bases (Expert, Referent). Authority vs. Power vs. Politics. Influence tactics range from Rational Persuasion to Pressure (least effective). Power's dark side: self-interest, objectification, overconfidence.`,
 cards:[
@@ -1114,7 +1136,9 @@ Where conflict happens:
 - intragroup (within a team)
 - intergroup (between groups, e.g. sales vs. operations)
 
-Five stages: Potential opposition → Cognition → Intentions → Behaviour → Outcomes (what happens early affects what happens later). Five handling styles: Competing, Collaborating, Compromising, Avoiding, Accommodating — the situation determines which is useful.
+Five stages:
+=> Potential opposition → Cognition → Intentions → Behaviour → Outcomes
+What happens early affects what happens later. Five handling styles: Competing, Collaborating, Compromising, Avoiding, Accommodating — the situation determines which is useful.
 
 Conflict intensity ranges from low (small disagreement/misunderstanding) through moderate (open disagreement or challenge) to high (aggressive words, threats, personal attacks); the more personal and aggressive, the higher the risk of harm.
 
@@ -1464,7 +1488,9 @@ quiz:[
 {q:"High formalization in an organization means:",opts:["Employees have high discretion","Jobs are standardized with explicit rules, limiting discretion","No rules at all","The company uses an organic structure"],correct:1,exp:"High formalization implies extensive rules constraining discretion."},
 {q:"A startup in a fast-changing tech market would choose an organic structure because:",opts:["Small size and unstable environment favor organic structure","Large size always requires organic structure","Stable environments always favor organic structure","Efficiency strategy always requires organic structure"],correct:0,exp:"Both small size and unstable environment are contingency factors favoring organic structures."}
 ]},
-{id:'pom-4',title:'Organizational Control & Change',summary:`Controlling monitors/evaluates performance and takes corrective action via a three-step cycle: Establish standards → Compare actual vs. planned → Take corrective action. Controls span Feedforward (before), Concurrent (during), Feedback (after).
+{id:'pom-4',title:'Organizational Control & Change',summary:`Controlling monitors/evaluates performance and takes corrective action via a three-step cycle:
+=> Establish standards → Compare actual vs. planned → Take corrective action
+Controls span Feedforward (before), Concurrent (during), Feedback (after).
 
 Three organizational control systems:
 - Output control (financial ratios, goals, budgets)
@@ -1481,7 +1507,8 @@ Key financial ratios:
 
 MBO is a 3-step joint goal-setting/review cycle.
 
-Organizational Change moves toward a desired future state; Lewin's Force-Field Model explains resistance as driving vs. resisting forces. Evolutionary (gradual) vs. Revolutionary (rapid, dramatic) change. Four steps to manage change: assess need → decide → implement → evaluate.`,
+Organizational Change moves toward a desired future state; Lewin's Force-Field Model explains resistance as driving vs. resisting forces. Evolutionary (gradual) vs. Revolutionary (rapid, dramatic) change. Four steps to manage change:
+=> assess need → decide → implement → evaluate`,
 cards:[
 {q:"Define Controlling.",a:"Monitoring/evaluating how well an organization achieves its goals, and taking corrective action."},
 {q:"What are the three steps of the controlling cycle?",a:"Monitor, Compare, Correct."},
@@ -1967,7 +1994,7 @@ function buildSidebarNav(subjId){
 /* ============================================================ DASHBOARD SEARCH ============================================================ */
 // flat index over all static content; each entry knows the page (+ tab) to open
 let searchIndex = null;
-function searchFlat(p){ return p.replace(/ :: /g,' — ').replace(/\n(- )?/g,' · '); }
+function searchFlat(p){ return p.replace(/ :: /g,' — ').replace(/\n(- |=> )?/g,' · ').replace(/^=> /,''); }
 function searchNorm(s){ return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
 function buildSearchIndex(){
   const idx = [];
@@ -2165,11 +2192,12 @@ function renderSummary(container, title, text, key){
 function summaryParasHtml(text){
   return text.trim().split(/\n\n+/).map(p=>{
     const lines = p.split('\n');
-    const kind = l => l.includes(' :: ') ? 'def' : /^- /.test(l) ? 'li' : 'text';
+    const kind = l => /^=> /.test(l) ? 'flow' : l.includes(' :: ') ? 'def' : /^- /.test(l) ? 'li' : 'text';
     if(lines.every(l=>kind(l)==='text')) return `<p>${esc(p)}</p>`;
     const groups = [];
-    lines.forEach(l=>{ const k = kind(l); const g = groups[groups.length-1]; if(g && g.k===k) g.lines.push(l); else groups.push({k, lines:[l]}); });
+    lines.forEach(l=>{ const k = kind(l); const g = groups[groups.length-1]; if(g && g.k===k && k!=='flow') g.lines.push(l); else groups.push({k, lines:[l]}); });
     return groups.map((g,i)=>{
+      if(g.k==='flow') return flowHtml(flowSplit(g.lines[0].slice(3)));
       if(g.k==='def') return `<dl class="sum-vocab">${g.lines.map(l=>{ const [t,...d]=l.split(' :: '); return `<dt>${esc(t)}</dt><dd>${esc(d.join(' :: '))}</dd>`; }).join('')}</dl>`;
       if(g.k==='li') return `<ul class="sum-list">${g.lines.map(l=>`<li>${esc(l.slice(2))}</li>`).join('')}</ul>`;
       const next = groups[i+1];
@@ -2177,6 +2205,50 @@ function summaryParasHtml(text){
       return `<p${cls?` class="${cls}"`:''}>${esc(g.lines.join(' '))}</p>`;
     }).join('');
   }).join('');
+}
+
+// "A (explanation) → B → C (explanation)" → [{key, desc}]; arrows inside brackets stay part of their step
+function flowSplit(chain){
+  const parts = []; let depth = 0, cur = '';
+  for(let i=0;i<chain.length;i++){
+    const ch = chain[i];
+    if(ch==='(') depth++; else if(ch===')') depth = Math.max(0, depth-1);
+    if(depth===0 && chain.startsWith(' → ', i)){ parts.push(cur); cur=''; i += 2; continue; }
+    cur += ch;
+  }
+  parts.push(cur);
+  return parts.map(p=>{
+    p = p.trim().replace(/\.$/, '');
+    if(p.endsWith(')')){
+      let d = 0;
+      for(let i=p.length-1;i>=0;i--){
+        if(p[i]===')') d++; else if(p[i]==='(' && --d===0){
+          if(i>0) return {key:p.slice(0,i).trim(), desc:p.slice(i+1,-1).trim()};
+          break;
+        }
+      }
+    }
+    return {key:p, desc:''};
+  });
+}
+function flowHtml(steps){
+  return `<div class="flow">${steps.map((st,i)=>(i?'<span class="flow-arrow" aria-hidden="true">→</span>':'') +
+    `<div class="flow-step"><span class="flow-key">${esc(st.key)}</span>${st.desc?`<span class="flow-desc">${esc(st.desc)}</span>`:''}</div>`).join('')}</div>`;
+}
+// cheat-sheet item with a chain of 3+ steps → "label" + flow + optional "; remark"
+function cheatItemHtml(item){
+  let depth = 0; const arrows = [];
+  for(let i=0;i<item.length;i++){ const ch=item[i]; if(ch==='(') depth++; else if(ch===')') depth=Math.max(0,depth-1); else if(depth===0 && item.startsWith(' → ', i)) arrows.push(i); }
+  if(arrows.length<2) return esc(item);
+  const head = item.slice(0, arrows[0]);
+  let cut = -1, sepLen = 0;
+  [': ', ' · ', ' as '].forEach(sep=>{ const i = head.lastIndexOf(sep); if(i>cut){ cut=i; sepLen=sep.length; } });
+  const label = cut>=0 ? item.slice(0, cut+sepLen).trim() : '';
+  let chain = item.slice(cut>=0 ? cut+sepLen : 0), rest = '';
+  const lastArrow = arrows[arrows.length-1];
+  const semi = item.indexOf('; ', lastArrow);
+  if(semi>=0){ rest = item.slice(semi+2); chain = item.slice(cut>=0 ? cut+sepLen : 0, semi); }
+  return (label ? `<span class="flow-label">${esc(label)}</span>` : '') + flowHtml(flowSplit(chain)) + (rest ? `<span class="flow-rest">${esc(rest)}</span>` : '');
 }
 
 /* ============================================================ HIGHLIGHTING ============================================================ */
@@ -2994,10 +3066,13 @@ function renderCheat(container, blocks, extraHtml, key){
   if(key){
     container.dataset.hlKey = key;
     const saved = ls(hlStorageKey(key), null);
-    if(saved){ container.innerHTML = saved; hlStripSources(container); return; }
+    if(saved){ container.innerHTML = saved; hlStripSources(container); hlRebase(container, cheatHtml(blocks, extraHtml)); return; }
   }
-  container.innerHTML = blocks.map(b=>`
-    <div class="cheat-block"><h4>${esc(b.h)}</h4><ul>${b.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>
+  container.innerHTML = cheatHtml(blocks, extraHtml);
+}
+function cheatHtml(blocks, extraHtml){
+  return blocks.map(b=>`
+    <div class="cheat-block"><h4>${esc(b.h)}</h4><ul>${b.items.map(i=>`<li${i.includes(' → ')?' class="has-flow"':''}>${cheatItemHtml(i)}</li>`).join('')}</ul></div>
   `).join('') + (extraHtml||'');
 }
 
@@ -3370,7 +3445,9 @@ Sources are cited via direct quote, paraphrase, or summary (APA 7th; summary is 
 
 Cohesion (sentence-to-sentence linking via the given-to-new principle, signposting, and reference words) is distinct from coherence (paragraph-level logical organisation around one clear topic) and from internal consistency (no contradiction between claims and evidence).
 
-The PEEL structure (Point, Evidence, Explanation, Link) organizes paragraphs, with counter-arguments following concession → counter-argument → refutation (refutation always last). Synthesising multiple sources means putting them "in conversation," organizing a literature review paragraph by idea rather than source.
+The PEEL structure (Point, Evidence, Explanation, Link) organizes paragraphs, with counter-arguments following:
+=> concession → counter-argument → refutation (always last)
+Synthesising multiple sources means putting them "in conversation," organizing a literature review paragraph by idea rather than source.
 
 On the presentation side, Nancy Duarte's Glance Test says a slide should land its point in about three seconds; anxiety is best managed by reframing it as energy, preparing without over-scripting, and accepting minor stumbles. The EBS rubric weighs Language and Presentation Skills most heavily (4 points each of 15).
 
