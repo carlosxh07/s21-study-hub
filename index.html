@@ -213,6 +213,10 @@ a,button{font-family:inherit;}
 /* ============ SUMMARY ============ */
 .summary-text{font-size:.97rem;line-height:1.85;color:var(--ink);}
 .summary-text p{margin-bottom:16px;}
+.summary-text .sum-lead{margin-bottom:6px;}
+.summary-text .sum-list{margin:0 0 16px;padding-left:22px;}
+.summary-text .sum-list li{margin:3px 0;padding-left:2px;}
+.summary-text .sum-list li::marker{color:var(--accent-ink);}
 .summary-text .sum-vocab-title{margin-bottom:8px;font-weight:600;}
 .summary-text .sum-vocab{display:grid;grid-template-columns:max-content 1fr;gap:8px 22px;margin:0 0 16px;padding:14px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg2);line-height:1.55;}
 .summary-text .sum-vocab dt{font-weight:700;color:var(--ink);}
@@ -264,7 +268,7 @@ em.hl-fmt{font-style:italic;cursor:pointer;}
 #hl-island .hl-i-hint{font-size:.6rem;color:var(--ink-faint);text-align:center;line-height:1.3;max-width:60px;}
 #hl-island .hl-i-reset{font-size:.6rem;color:var(--ink-faint);text-align:center;line-height:1.25;max-width:64px;background:none;border:none;cursor:pointer;padding:2px 0;text-decoration:underline;text-underline-offset:2px;}
 #hl-island .hl-i-reset:hover{color:var(--bad);}
-body.hl-armed .hl-container{cursor:crosshair;}
+body.hl-armed .hl-container{cursor:text;}
 @media(max-width:900px){#hl-island{right:10px;padding:10px 7px;gap:8px;}#hl-island .hl-i-swatch{width:19px;height:19px;}#hl-island .hl-i-fmt,#hl-island .hl-i-eraser{width:23px;height:23px;}#hl-island .hl-i-hint,#hl-island .hl-i-reset{display:none;}}
 @media(max-width:640px){#hl-island{top:auto;bottom:18px;right:14px;transform:none;flex-direction:row;border-radius:var(--radius-pill);padding:9px 12px;}}
 
@@ -772,17 +776,45 @@ const SUBJECTS = [
 
 /* ============================================================ OB DATA ============================================================ */
 const OB_TOPICS = [
-{id:'ob-1',title:'Organizational Behavior',summary:`Organizational Behavior (OB) is the systematic, interdisciplinary study of human behavior within organizational contexts, operating at three levels: individuals (personality, perception, motivation), groups (dynamics, communication, team collaboration), and organizational systems (structure, culture, policies). OB matters because it enhances productivity (engaged employees show 73% higher productivity/customer ratings, 2.3x revenue growth correlation, 40% reduced turnover) and fosters organizational culture.
+{id:'ob-1',title:'Organizational Behavior',summary:`Organizational Behavior (OB) is the systematic, interdisciplinary study of human behavior within organizational contexts, operating at three levels:
+- individuals (personality, perception, motivation)
+- groups (dynamics, communication, team collaboration)
+- organizational systems (structure, culture, policies)
 
-Historically, OB evolved through four phases: (1) Early 20th century Scientific Management/Efficiency Era, led by Frederick Taylor, which treated organizations as mechanical systems; (2) 1930s Human Relations Movement, driven by the Hawthorne Studies, showing morale and social dynamics affect productivity; (3) 1960s Behavioral Science Approaches, using rigorous scientific methods to study motivation, leadership, and group dynamics; (4) Contemporary OB, an interdisciplinary, globally-focused field addressing ethics, diversity, and technology.
+OB matters because it enhances productivity (engaged employees show 73% higher productivity/customer ratings, 2.3x revenue growth correlation, 40% reduced turnover) and fosters organizational culture.
+
+Historically, OB evolved through four phases:
+- (1) Early 20th century Scientific Management/Efficiency Era, led by Frederick Taylor, which treated organizations as mechanical systems
+- (2) 1930s Human Relations Movement, driven by the Hawthorne Studies, showing morale and social dynamics affect productivity
+- (3) 1960s Behavioral Science Approaches, using rigorous scientific methods to study motivation, leadership, and group dynamics
+- (4) Contemporary OB, an interdisciplinary, globally-focused field addressing ethics, diversity, and technology
 
 Key individual-level concepts include the Big Five personality traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism) and the three components of attitude: cognitive (beliefs), affective (feelings), and behavioral (actions/intentions).
 
 At the interpersonal/group level, communication barriers include information overload, filtering, and selective perception. Conflict resolution is modeled by the Thomas-Kilmann Conflict Mode Instrument (TKI), mapping five styles along assertiveness/cooperation: Competing, Avoiding, Accommodating, Compromising, and Collaborating. Group development follows Tuckman's four stages: Forming, Storming, Norming, and Performing. Effective leadership involves visioning, inspiring, executing, and learning.
 
-Lecture slides "Understanding Organizational Behaviour" add a practical lens. OB is defined simply as the study of how people behave in organizations and how the organization influences their behaviour: PEOPLE + INTERACTIONS + WORK ENVIRONMENT. Three connected levels: Individual (personality, motivation, emotions, values), Group/Team (communication, teamwork, conflict, decision making) and Organization (culture, structure, leadership, systems). OB is not only for managers — it matters whenever you work in a team, communicate, decide, handle disagreement, or give/receive feedback. OB is interdisciplinary, drawing on six disciplines: Psychology (the individual), Social Psychology (people interacting), Sociology (groups & organizations), Anthropology (culture), Political Science (power & influence) and Neuroscience (brain & behaviour).
+Lecture slides "Understanding Organizational Behaviour" add a practical lens. OB is defined simply as the study of how people behave in organizations and how the organization influences their behaviour: PEOPLE + INTERACTIONS + WORK ENVIRONMENT.
 
-Common sense is not enough: statements like "quiet people are not interested", "people paid more will always work harder" or "a good team should agree most of the time" sound plausible but evidence challenges them. Perspective-taking asks "What else could explain this behaviour?" Contingency thinking — the central OB answer is "IT DEPENDS" (e.g. more feedback does not always improve performance). Simple framework: PERSON (personality, values, experience, motivation) → SITUATION (task, team, leadership, expectations, environment) → BEHAVIOUR → OUTCOME (performance, satisfaction, teamwork, relationships). Why OB matters today: diverse teams, hybrid/digital work, well-being, AI and changing work, ethics & fairness, leadership & teamwork. Key message: move from "What is wrong with this person?" to "What might be influencing this behaviour?" — good OB thinking starts with curiosity, not quick judgment.`,
+Three connected levels:
+- Individual (personality, motivation, emotions, values)
+- Group/Team (communication, teamwork, conflict, decision making)
+- Organization (culture, structure, leadership, systems)
+
+OB is not only for managers — it matters whenever you work in a team, communicate, decide, handle disagreement, or give/receive feedback. OB is interdisciplinary, drawing on six disciplines:
+- Psychology (the individual)
+- Social Psychology (people interacting)
+- Sociology (groups & organizations)
+- Anthropology (culture)
+- Political Science (power & influence)
+- Neuroscience (brain & behaviour)
+
+Common sense is not enough: statements like "quiet people are not interested", "people paid more will always work harder" or "a good team should agree most of the time" sound plausible but evidence challenges them. Perspective-taking asks "What else could explain this behaviour?" Contingency thinking — the central OB answer is "IT DEPENDS" (e.g. more feedback does not always improve performance).
+
+Simple framework: PERSON (personality, values, experience, motivation) → SITUATION (task, team, leadership, expectations, environment) → BEHAVIOUR → OUTCOME (performance, satisfaction, teamwork, relationships).
+
+Why OB matters today: diverse teams, hybrid/digital work, well-being, AI and changing work, ethics & fairness, leadership & teamwork.
+
+Key message: move from "What is wrong with this person?" to "What might be influencing this behaviour?" — good OB thinking starts with curiosity, not quick judgment.`,
 cards:[
 {q:"What is Organizational Behavior (OB)?",a:"The systematic, interdisciplinary study of human behavior within organizational contexts, focusing on individuals, groups, and organizational systems."},
 {q:"What are the three levels of analysis in OB?",a:"Individual level, Group/interpersonal level, and Organizational systems level."},
@@ -822,9 +854,19 @@ quiz:[
 ]},
 {id:'ob-2',title:'Motivation',summary:`Motivation is the force that energizes, directs, and sustains behavior, arising from intrinsic sources (personality, emotions, needs, goals, values) and extrinsic sources (rewards, punishments, empowerment, recognition, work characteristics). Locus of control (internal vs. external) affects responsiveness to change; self-efficacy relates to effort, persistence, and resilience. Promotion focus ("playing to win") vs. prevention focus ("playing not to lose") shape goal framing.
 
-The module's core framework is the "four drives" model: the drive to acquire (reward system), the drive to bond (culture), the drive to comprehend (job design), and the drive to defend (resource allocation).
+The module's core framework is the "four drives" model:
+- the drive to acquire (reward system)
+- the drive to bond (culture)
+- the drive to comprehend (job design)
+- the drive to defend (resource allocation)
 
-Classic theories: Herzberg's two-factor theory (hygiene factors prevent dissatisfaction; motivators drive performance), Vroom's expectancy theory (effort → performance → reward), Latham & Locke's goal-setting theory (difficult, specific goals raise performance), and Hackman & Oldham's Job Characteristics Model (skill variety, task identity, task significance, autonomy, feedback → meaningfulness, responsibility, knowledge of results). Pay-for-motivation has limited/mixed effects; organizational change reactions move denial → resistance → valley of tears → adaptation → commitment.`,
+Classic theories:
+- Herzberg's two-factor theory (hygiene factors prevent dissatisfaction; motivators drive performance)
+- Vroom's expectancy theory (effort → performance → reward)
+- Latham & Locke's goal-setting theory (difficult, specific goals raise performance)
+- Hackman & Oldham's Job Characteristics Model (skill variety, task identity, task significance, autonomy, feedback → meaningfulness, responsibility, knowledge of results)
+
+Pay-for-motivation has limited/mixed effects; organizational change reactions move denial → resistance → valley of tears → adaptation → commitment.`,
 cards:[
 {q:"How does the module define motivation?",a:"The force that energizes, directs, and sustains behavior."},
 {q:"What is the difference between intrinsic and extrinsic motivators?",a:"Intrinsic = inner influences (personality, emotions, needs, goals, values); extrinsic = external influences (rewards, punishments, empowerment, recognition)."},
@@ -855,7 +897,9 @@ quiz:[
 
 Values split into Terminal (desired end-states) and Instrumental (preferred behaviors), per Rokeach. Person-Job Fit predicts performance; Person-Organization Fit predicts satisfaction/retention. Holland's RIASEC model links six types (Realistic, Investigative, Artistic, Social, Enterprising, Conventional) to matching careers.
 
-The "Dark Triad" — Narcissism, Machiavellianism, Psychopathy — describes toxic traits requiring documentation and HR involvement. Personality can evolve via growth mindset. Hofstede's cultural dimensions (Power Distance, Individualism vs. Collectivism, Masculinity vs. Femininity, Uncertainty Avoidance, Long- vs. Short-Term Orientation, Indulgence vs. Restraint) explain how culture shapes workplace behavior, tied to Cultural Intelligence (CQ).`,
+The "Dark Triad" — Narcissism, Machiavellianism, Psychopathy — describes toxic traits requiring documentation and HR involvement. Personality can evolve via growth mindset.
+
+Hofstede's cultural dimensions (Power Distance, Individualism vs. Collectivism, Masculinity vs. Femininity, Uncertainty Avoidance, Long- vs. Short-Term Orientation, Indulgence vs. Restraint) explain how culture shapes workplace behavior, tied to Cultural Intelligence (CQ).`,
 cards:[
 {q:"What are the five traits in the Big Five (OCEAN) model?",a:"Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Stability."},
 {q:"Which Big Five trait is the #1 predictor of job performance?",a:"Conscientiousness."},
@@ -882,11 +926,22 @@ quiz:[
 {q:"Google's Project Aristotle found the strongest predictor of team performance was:",opts:["Individual technical skill","Personality composition","Psychological safety","High Conscientiousness scores"],correct:2,exp:"Psychological safety outweighed personality composition or technical skills."},
 {q:"Cultural Intelligence (CQ) includes which components?",opts:["Cultural knowledge, mindfulness, behavioral adaptability, motivation/curiosity","Extraversion, Agreeableness, Openness only","MBTI type and RIASEC code","Terminal and instrumental values only"],correct:0,exp:"CQ is built through knowledge, mindfulness, adaptability, and curiosity."}
 ]},
-{id:'ob-4',title:'Emotional Intelligence',summary:`Emotional Intelligence (EI) is the ability to understand and manage emotions — one's own and others' — to navigate relationships and make better decisions. The module frames EI around four components (Goleman): Self-Awareness, Self-Management, Social Awareness, Relationship Management. The amygdala triggers fight-or-flight in milliseconds; the prefrontal cortex is slower — giving the "6-Second Rule" for emotional chemicals to clear.
+{id:'ob-4',title:'Emotional Intelligence',summary:`Emotional Intelligence (EI) is the ability to understand and manage emotions — one's own and others' — to navigate relationships and make better decisions. The module frames EI around four components (Goleman): Self-Awareness, Self-Management, Social Awareness, Relationship Management.
 
-Emotions are sharp/event-triggered; moods are longer-lasting and diffuse. Affective Events Theory explains how events trigger emotions that shape long-term attitudes. Emotional Labor: Surface Acting (faking, draining) vs. Deep Acting (genuine, sustainable). Emotional Contagion spreads moods through mimicry and convergence. EI is measured via EQ-i 2.0, EQ 360, and MSCEIT.
+The amygdala triggers fight-or-flight in milliseconds; the prefrontal cortex is slower — giving the "6-Second Rule" for emotional chemicals to clear.
 
-Lecture slides "Workplace Emotions" frame emotions as a process: WORK EVENT (feedback, success/failure, delays) → APPRAISAL ("How do I interpret what happened?") → EMOTIONAL RESPONSE (anger, relief, anxiety, pride) → MOOD / ongoing state → BEHAVIOUR (speak up, withdraw, cooperate, react). The same event can be experienced differently because emotional responses are shaped by the PERSON (personality, values, past experience, current energy/stress, emotional skills), the SITUATION (workload, deadlines, feedback, uncertainty, working conditions) and the SOCIAL/ORGANIZATIONAL CONTEXT (manager behaviour, team norms, relationships, culture, rules). OB asks "What may be shaping the emotional response?" rather than "What is wrong with this person?"
+Emotions are sharp/event-triggered; moods are longer-lasting and diffuse. Affective Events Theory explains how events trigger emotions that shape long-term attitudes.
+
+Emotional Labor: Surface Acting (faking, draining) vs. Deep Acting (genuine, sustainable). Emotional Contagion spreads moods through mimicry and convergence. EI is measured via EQ-i 2.0, EQ 360, and MSCEIT.
+
+Lecture slides "Workplace Emotions" frame emotions as a process: WORK EVENT (feedback, success/failure, delays) → APPRAISAL ("How do I interpret what happened?") → EMOTIONAL RESPONSE (anger, relief, anxiety, pride) → MOOD / ongoing state → BEHAVIOUR (speak up, withdraw, cooperate, react).
+
+The same event can be experienced differently because emotional responses are shaped by:
+- the PERSON (personality, values, past experience, current energy/stress, emotional skills)
+- the SITUATION (workload, deadlines, feedback, uncertainty, working conditions)
+- the SOCIAL/ORGANIZATIONAL CONTEXT (manager behaviour, team norms, relationships, culture, rules)
+
+OB asks "What may be shaping the emotional response?" rather than "What is wrong with this person?"
 
 Emotional labour vocabulary:
 Felt emotion :: what I actually feel
@@ -894,7 +949,11 @@ Display rules :: what emotion the job expects me to show
 Surface acting :: change expression, not feeling
 Deep acting :: try to change the feeling so the expression is genuine
 
-AET is presented as Work environment (demands, autonomy, relationships) → Daily events (hassles, conflicts, praise, progress) → Emotional reaction → Attitudes/behaviour (satisfaction, effort, helping, withdrawal), with personal dispositions moderating how strongly people react. EI is simplified to three steps: PERCEIVE (notice emotions in self and others) → UNDERSTAND (what it means and what causes it) → REGULATE/USE (manage the response) — note that how EI should be defined and measured, and how distinct it is from personality and cognitive ability, remains debated. Emotions connect to motivation, leadership, teams, decision making, customer service and well-being. Emotions are specific responses; moods are broader and longer-lasting.`,
+AET is presented as Work environment (demands, autonomy, relationships) → Daily events (hassles, conflicts, praise, progress) → Emotional reaction → Attitudes/behaviour (satisfaction, effort, helping, withdrawal), with personal dispositions moderating how strongly people react.
+
+EI is simplified to three steps: PERCEIVE (notice emotions in self and others) → UNDERSTAND (what it means and what causes it) → REGULATE/USE (manage the response) — note that how EI should be defined and measured, and how distinct it is from personality and cognitive ability, remains debated.
+
+Emotions connect to motivation, leadership, teams, decision making, customer service and well-being. Emotions are specific responses; moods are broader and longer-lasting.`,
 cards:[
 {q:"What is Emotional Intelligence (EI)?",a:"The ability to understand and manage your own and others' emotions to navigate relationships, make decisions, and achieve goals."},
 {q:"What are Goleman's four core components of EI?",a:"Self-Awareness, Self-Management, Social Awareness, Relationship Management."},
@@ -932,7 +991,18 @@ quiz:[
 ]},
 {id:'ob-5',title:'Self-Leadership',summary:`Self-leadership sits at the center of Shemla's leadership model (alongside task-, relation-, change-, ethics-oriented leadership), grounded in self-awareness. It entails managing behavior toward standards, intrinsic motivation, skill development, and self-discipline.
 
-Sleep: inadequate sleep raises risk of infection, hypertension, depression; Barnes et al. show sleep-deprived leaders show less self-discipline, poorer judgment, are less charismatic. Attitudes/Motivation/Goals: built on Mischel & Shoda's CAPS model — mindsets encode situational cues to activate behavior; fixed vs. growth mindset shapes response to failure; promotion vs. prevention focus shape goal reactions. Five techniques to change mindsets: map current mindsets, be present, change language, be specific about goals, fixed daily reflection. Expanding skills: systematic exposure approach (decide, design experiment, reflect) and cultural meta-cognition (awareness of "cultural cruise control" and stereotypes via perspective-taking).`,
+Sleep: inadequate sleep raises risk of infection, hypertension, depression; Barnes et al. show sleep-deprived leaders show less self-discipline, poorer judgment, are less charismatic.
+
+Attitudes/Motivation/Goals: built on Mischel & Shoda's CAPS model — mindsets encode situational cues to activate behavior; fixed vs. growth mindset shapes response to failure; promotion vs. prevention focus shape goal reactions.
+
+Five techniques to change mindsets:
+- map current mindsets
+- be present
+- change language
+- be specific about goals
+- fixed daily reflection
+
+Expanding skills: systematic exposure approach (decide, design experiment, reflect) and cultural meta-cognition (awareness of "cultural cruise control" and stereotypes via perspective-taking).`,
 cards:[
 {q:"What sits at the center of Shemla's leadership model?",a:"Self-awareness, with self-, task-, relation-, change-, and ethics-oriented leadership arranged around it."},
 {q:"What duties does self-leadership entail?",a:"Managing behavior toward standards, evaluating/setting standards, intrinsic motivation, skill development, growth-oriented attitudes, self-discipline."},
@@ -957,7 +1027,12 @@ quiz:[
 {q:"Behaving on built-in cultural assumptions while ignoring other signals is:",opts:["Cultural meta-cognition","Perspective taking","Cultural cruise control","Growth mindset"],correct:2,exp:"Cultural cruise control relies on ingrained mental programming."},
 {q:"10 minutes a day equals roughly how many hours per year?",opts:["10","30","60","100"],correct:2,exp:"About 70 minutes a week, ~60 hours a year."}
 ]},
-{id:'ob-6',title:'Leadership and Power',summary:`Leadership inspires toward shared goals ("what/why"); Management plans/organizes/coordinates ("how/when"); Power is the capacity to influence via control of resources ("who controls what"). Leadership styles: Autocratic (crisis), Democratic (innovation), Laissez-faire (creative experts).
+{id:'ob-6',title:'Leadership and Power',summary:`Leadership inspires toward shared goals ("what/why"); Management plans/organizes/coordinates ("how/when"); Power is the capacity to influence via control of resources ("who controls what").
+
+Leadership styles:
+- Autocratic (crisis)
+- Democratic (innovation)
+- Laissez-faire (creative experts)
 
 Leadership theory evolution: Trait (1930s-40s) → Behavioral (1940s-60s) → Contingency (1960s-80s; Fiedler, Hersey-Blanchard, Path-Goal) → Full-Range Leadership Model (Laissez-Faire → Transactional → Transformational) → Modern Era (ethics, authenticity, Servant/Greenleaf, Charismatic/Conger & Kanungo).
 
@@ -986,9 +1061,13 @@ quiz:[
 {q:"Which leadership approach puts followers' needs first?",opts:["Charismatic","Transactional","Servant","Autocratic"],correct:2,exp:"Servant leadership."},
 {q:"The \"Dark Side of Power\" produces which three effects?",opts:["Self-interest, objectification, overconfidence","Trust, transparency, reduced politics","Delegation, reduced hierarchy, networks","Ethics, accountability, stakeholder focus"],correct:0,exp:"Self-interest, objectifying others, overconfidence."}
 ]},
-{id:'ob-7',title:'Group Behaviour and Teams',summary:`A group shares information with neutral/individual synergy; a team's cooperation produces collective performance greater than the sum of contributions. Social Identity Theory explains ingroup favoritism. Tuckman's Model: Forming, Storming, Norming, Performing, Adjourning (Gersick's Punctuated-Equilibrium Model as alternative). Key group properties: roles, norms, status, size, cohesion.
+{id:'ob-7',title:'Group Behaviour and Teams',summary:`A group shares information with neutral/individual synergy; a team's cooperation produces collective performance greater than the sum of contributions. Social Identity Theory explains ingroup favoritism.
 
-Asch's conformity experiments showed group-pressure influence on judgment. Groupthink, groupshift, social loafing are common pitfalls. The Team Effectiveness Model rests on Context, Composition, and Processes & States. Teams are problem-solving, cross-functional, self-managed, or virtual; best for complex, interdependent tasks.`,
+Tuckman's Model: Forming, Storming, Norming, Performing, Adjourning (Gersick's Punctuated-Equilibrium Model as alternative). Key group properties: roles, norms, status, size, cohesion.
+
+Asch's conformity experiments showed group-pressure influence on judgment. Groupthink, groupshift, social loafing are common pitfalls.
+
+The Team Effectiveness Model rests on Context, Composition, and Processes & States. Teams are problem-solving, cross-functional, self-managed, or virtual; best for complex, interdependent tasks.`,
 cards:[
 {q:"Key difference between a group and a team?",a:"A group has individual accountability/neutral synergy; a team has mutual accountability and positive synergy exceeding the sum of contributions."},
 {q:"What are Tuckman's five stages?",a:"Forming, Storming, Norming, Performing, Adjourning."},
@@ -1013,13 +1092,35 @@ quiz:[
 {q:"Groups making more extreme decisions than individuals is:",opts:["Groupthink","Groupshift (risky shift)","Social loafing","Ingroup favoritism"],correct:1,exp:"Diffusion of responsibility drives groupshift."},
 {q:"Who identified \"groupthink\"?",opts:["Janis","Tuckman","Gersick","Asch"],correct:0,exp:"Janis."}
 ]},
-{id:'ob-8',title:'Communication and Conflict',summary:`Communication transmits information and meaning via encoding, sending, interpreting. Conflict begins when one party perceives another has negatively affected something they care about. The Shannon-Weaver Model: sender, encoding, channel, noise, decoding, receiver, feedback. Mehrabian's 55/38/7 rule: body language 55%, vocal 38%, words 7%. Media Richness Theory matches rich channels to complex messages, lean channels to routine ones.
+{id:'ob-8',title:'Communication and Conflict',summary:`Communication transmits information and meaning via encoding, sending, interpreting. Conflict begins when one party perceives another has negatively affected something they care about.
 
-The Conflict Process (five stages: opposition, cognition/personalization, intentions, behavior, outcomes). Conflict types: task, relationship, process. The Thomas-Kilmann model: competing, collaborating, compromising, avoiding, accommodating. Psychological safety underpins performance. Individualist (direct, low-context) vs. collectivist (indirect, high-context) communication. Principled negotiation focuses on interests, not positions.
+The Shannon-Weaver Model: sender, encoding, channel, noise, decoding, receiver, feedback. Mehrabian's 55/38/7 rule: body language 55%, vocal 38%, words 7%. Media Richness Theory matches rich channels to complex messages, lean channels to routine ones.
 
-Lecture slides "Conflict — When People, Tasks and Goals Collide". Conflict involves perceived incompatibility or opposition between people or groups; a difference of opinion does not always become conflict — perception is key. Earlier view: conflict as a problem to reduce or remove; more recent view: some conflict can be useful, but conflict that becomes personal, intense or poorly managed harms people and performance. Three types: Task (about the work itself), Process (how work is done — who does what, when) and Relationship (personal tension, e.g. "You never listen to me"); a task conflict can turn into a relationship conflict once people attack each other personally. Where conflict happens: dyadic (between two people), intragroup (within a team), intergroup (between groups, e.g. sales vs. operations).
+The Conflict Process (five stages: opposition, cognition/personalization, intentions, behavior, outcomes). Conflict types: task, relationship, process. The Thomas-Kilmann model: competing, collaborating, compromising, avoiding, accommodating.
 
-Five stages: Potential opposition → Cognition → Intentions → Behaviour → Outcomes (what happens early affects what happens later). Five handling styles: Competing, Collaborating, Compromising, Avoiding, Accommodating — the situation determines which is useful. Conflict intensity ranges from low (small disagreement/misunderstanding) through moderate (open disagreement or challenge) to high (aggressive words, threats, personal attacks); the more personal and aggressive, the higher the risk of harm. Case Oscar & Brittany: a bonus-criteria issue (task/process) became a relationship conflict when Brittany shared Oscar's grievance threat with the committee and he felt his trust was broken. Remember: before asking "Who is the problem?", ask "What is happening, and what is causing the conflict?"`,
+Psychological safety underpins performance. Individualist (direct, low-context) vs. collectivist (indirect, high-context) communication. Principled negotiation focuses on interests, not positions.
+
+Lecture slides "Conflict — When People, Tasks and Goals Collide". Conflict involves perceived incompatibility or opposition between people or groups; a difference of opinion does not always become conflict — perception is key.
+
+Earlier view: conflict as a problem to reduce or remove; more recent view: some conflict can be useful, but conflict that becomes personal, intense or poorly managed harms people and performance.
+
+Three types:
+- Task (about the work itself)
+- Process (how work is done — who does what, when)
+- Relationship (personal tension, e.g. "You never listen to me"); a task conflict can turn into a relationship conflict once people attack each other personally.
+
+Where conflict happens:
+- dyadic (between two people)
+- intragroup (within a team)
+- intergroup (between groups, e.g. sales vs. operations)
+
+Five stages: Potential opposition → Cognition → Intentions → Behaviour → Outcomes (what happens early affects what happens later). Five handling styles: Competing, Collaborating, Compromising, Avoiding, Accommodating — the situation determines which is useful.
+
+Conflict intensity ranges from low (small disagreement/misunderstanding) through moderate (open disagreement or challenge) to high (aggressive words, threats, personal attacks); the more personal and aggressive, the higher the risk of harm.
+
+Case Oscar & Brittany: a bonus-criteria issue (task/process) became a relationship conflict when Brittany shared Oscar's grievance threat with the committee and he felt his trust was broken.
+
+Remember: before asking "Who is the problem?", ask "What is happening, and what is causing the conflict?"`,
 cards:[
 {q:"Definition of communication used in this module?",a:"The process transmitting information and meaning via encoding, sending, interpreting to build common understanding."},
 {q:"Definition of conflict?",a:"Begins when one party perceives another has negatively affected something they care about; driven by perception."},
@@ -1057,9 +1158,26 @@ quiz:[
 ]},
 {id:'ob-9',title:'Evidence-Based Management',summary:`This module teaches critical evaluation of claims before using them for decisions. Confirmation bias — searching for/favoring/recalling belief-confirming information — manifests via naïve acceptance, blinkered scepticism, biased search, and selective recall. Black-and-white thinking ignores moderation, granularity, and double-edgedness.
 
-The "ladder of inference" (statement → fact → data → evidence → proof) shows each level may fail at the next: statements may be inaccurate, facts unrepresentative, data biased/correlational (not causal — confounds), and evidence may lack external validity. Question phrasing, scale design, anchoring, and ordering all bias data collection.
+The "ladder of inference" (statement → fact → data → evidence → proof) shows each level may fail at the next:
+- statements may be inaccurate
+- facts unrepresentative
+- data biased/correlational (not causal — confounds)
+- evidence may lack external validity
 
-Solutions for individuals: seek opposing views, rely on aggregated research over single studies, be wary of non-top-journal publications. Solutions for groups: leverage diversity, avoid informational cascades (collect opinions privately first), reduce hierarchy, run a pre-mortem. Soeters & Boer: higher power distance correlates with higher aviation accident rates. Three principles for leveraging team differences: shared reality, encouraged dissent, shared identity.`,
+Question phrasing, scale design, anchoring, and ordering all bias data collection.
+
+Solutions for individuals:
+- seek opposing views
+- rely on aggregated research over single studies
+- be wary of non-top-journal publications
+
+Solutions for groups:
+- leverage diversity
+- avoid informational cascades (collect opinions privately first)
+- reduce hierarchy
+- run a pre-mortem
+
+Soeters & Boer: higher power distance correlates with higher aviation accident rates. Three principles for leveraging team differences: shared reality, encouraged dissent, shared identity.`,
 cards:[
 {q:"What is confirmation bias?",a:"The tendency to search for, favor, and recall information confirming existing beliefs."},
 {q:"What are the four manifestations of confirmation bias?",a:"Naïve acceptance, blinkered scepticism (motivated reasoning), biased search, selective recall."},
@@ -1146,13 +1264,48 @@ const OB_MATCH_PAIRS = [
 const POM_TOPICS = [
 {id:'pom-0',title:'Foundations — Organizations, Managers & Managerial Roles',summary:`An organization is a collection of people deliberately structured within identifiable boundaries to achieve predetermined goals. Individuals coordinate their actions to reach desired outcomes, relying on four resource types: human, financial, physical, and information. A manager is a person responsible for supervising the use of an organization's resources to meet its goals, ensuring both efficiency and effectiveness.
 
-Managers need three key skill types, whose mix shifts by level: Conceptual skills (analyzing, diagnosing, understanding cause-effect relationships — most needed by top managers), Human skills (leading, motivating, communicating, building teams — needed at all levels), and Technical skills (job-specific knowledge/expertise — most needed by first-line managers). The three management levels: Top Managers (CEO, CFO, COO, VP — set overall goals, decide how departments interact, monitor middle managers, focus on long-term direction/survival), Middle Managers (regional managers, plant managers, division heads — supervise first-line managers, find the best ways to use resources, focus on implementing top-management strategy into departmental plans), and First-Line Managers (team leaders, assistant managers, foremen — supervise non-managerial employees directly, handle day-to-day operations, focus on short-term task execution).
+Managers need three key skill types, whose mix shifts by level:
+- Conceptual skills (analyzing, diagnosing, understanding cause-effect relationships — most needed by top managers)
+- Human skills (leading, motivating, communicating, building teams — needed at all levels)
+- Technical skills (job-specific knowledge/expertise — most needed by first-line managers)
 
-Efficiency vs. Effectiveness is a classic management principle. Efficiency measures how well resources are used to achieve a goal — "doing things right," minimizing waste, cost, and time (e.g., producing 100 chairs with fewer materials and less time than competitors). Effectiveness measures the appropriateness of the goals pursued and the degree to which they are achieved — "doing the right things," choosing the correct goals and strategies (e.g., producing chairs customers actually want and are willing to buy). Four scenarios result: (1) High efficiency + high effectiveness = best case (affordable product customers want); (2) Low efficiency + high effectiveness = right product but too expensive; (3) High efficiency + low effectiveness = resources well used but wrong goals — a great product nobody wants; (4) Low efficiency + low effectiveness = worst case, waste of resources and wrong goals — failure.
+The three management levels:
+- Top Managers (CEO, CFO, COO, VP — set overall goals, decide how departments interact, monitor middle managers, focus on long-term direction/survival)
+- Middle Managers (regional managers, plant managers, division heads — supervise first-line managers, find the best ways to use resources, focus on implementing top-management strategy into departmental plans)
+- First-Line Managers (team leaders, assistant managers, foremen — supervise non-managerial employees directly, handle day-to-day operations, focus on short-term task execution)
 
-Mintzberg's Typology of Managerial Roles groups what managers actually do into three categories. Decisional roles (making choices): Entrepreneur (initiates new projects/innovates), Disturbance Handler (deals with crises/unexpected problems), Resource Allocator (distributes money, staff, time), Negotiator (represents the organization in agreements). Interpersonal roles (working with people): Figurehead (symbolic leader performing ceremonial duties), Leader (directing, motivating, guiding employees), Liaison (building networks/relationships outside the unit). Informational roles (handling information): Monitor (collects/analyzes information), Disseminator (shares important information within the organization), Spokesperson (represents the organization to outsiders).
+Efficiency vs. Effectiveness is a classic management principle.
+- Efficiency measures how well resources are used to achieve a goal — "doing things right," minimizing waste, cost, and time (e.g., producing 100 chairs with fewer materials and less time than competitors)
+- Effectiveness measures the appropriateness of the goals pursued and the degree to which they are achieved — "doing the right things," choosing the correct goals and strategies (e.g., producing chairs customers actually want and are willing to buy)
 
-Managers also draw on different modes of thinking: Left brain (logical/analytical) focuses on facts, data, logic and structure — objective, systematic, breaks problems into smaller parts (e.g., analyzing financial reports to decide where to cut costs). Right brain (creative/intuitive) focuses on creativity, intuition, and the big picture — imaginative, holistic, integrative, connects ideas into new strategies (e.g., brainstorming a marketing campaign that emotionally connects with customers). Whole brain (balanced) integrates both sides — effective managers use left-brain logic to analyze facts and right-brain creativity to innovate under uncertainty.`,
+Four scenarios result:
+- (1) High efficiency + high effectiveness = best case (affordable product customers want)
+- (2) Low efficiency + high effectiveness = right product but too expensive
+- (3) High efficiency + low effectiveness = resources well used but wrong goals — a great product nobody wants
+- (4) Low efficiency + low effectiveness = worst case, waste of resources and wrong goals — failure
+
+Mintzberg's Typology of Managerial Roles groups what managers actually do into three categories.
+
+Decisional roles (making choices):
+- Entrepreneur (initiates new projects/innovates)
+- Disturbance Handler (deals with crises/unexpected problems)
+- Resource Allocator (distributes money, staff, time)
+- Negotiator (represents the organization in agreements)
+
+Interpersonal roles (working with people):
+- Figurehead (symbolic leader performing ceremonial duties)
+- Leader (directing, motivating, guiding employees)
+- Liaison (building networks/relationships outside the unit)
+
+Informational roles (handling information):
+- Monitor (collects/analyzes information)
+- Disseminator (shares important information within the organization)
+- Spokesperson (represents the organization to outsiders)
+
+Managers also draw on different modes of thinking:
+- Left brain (logical/analytical) focuses on facts, data, logic and structure — objective, systematic, breaks problems into smaller parts (e.g., analyzing financial reports to decide where to cut costs)
+- Right brain (creative/intuitive) focuses on creativity, intuition, and the big picture — imaginative, holistic, integrative, connects ideas into new strategies (e.g., brainstorming a marketing campaign that emotionally connects with customers)
+- Whole brain (balanced) integrates both sides — effective managers use left-brain logic to analyze facts and right-brain creativity to innovate under uncertainty`,
 cards:[
 {q:"What is an organization?",a:"A collection of people deliberately structured within identifiable boundaries to achieve predetermined goals, coordinating actions using human, financial, physical, and information resources."},
 {q:"What is a manager, and what is management's goal?",a:"A manager supervises an organization's resources (human, financial, physical, informational) to meet its goals; management's goal is high organizational performance — resources used efficiently (doing things right) and effectively (doing the right things)."},
@@ -1179,9 +1332,15 @@ quiz:[
 {q:"A manager who scans competitor strategies and collects market information is performing which Mintzberg role?",opts:["Disseminator","Spokesperson","Monitor","Liaison"],correct:2,exp:"The Monitor role involves collecting and analyzing information from the environment."},
 {q:"A manager brainstorming a new marketing campaign that emotionally connects with customers is primarily using:",opts:["Left-brain thinking","Right-brain thinking","Neither side","Only technical skills"],correct:1,exp:"Right-brain thinking is creative/intuitive — imaginative, holistic, connecting ideas into new strategies."}
 ]},
-{id:'pom-1',title:'History of Management & Management Approaches',summary:`Modern management theory emerged with the Industrial Revolution (~1800), which brought division of labour, specialist workers replacing craftsmen, and separation of ownership from control. Between 1900 and today, four broad schools developed. Classical approaches (1900s–1910s): Scientific Management (Taylor), Administrative Theory (Fayol), and Bureaucracy (Weber) — rational efficiency and formal structure, but neglecting human factors and the environment. Behavioural approaches (1930s–1940s): early advocates (Owen, Follett, Münsterberg, Barnard), the Hawthorne Studies (Mayo, 1924–1932, revealing the "Hawthorne effect"), the Human Relations Movement, and McGregor's Theory X/Y — corrected the mechanical bias but are complex and hard to predict.
+{id:'pom-1',title:'History of Management & Management Approaches',summary:`Modern management theory emerged with the Industrial Revolution (~1800), which brought division of labour, specialist workers replacing craftsmen, and separation of ownership from control.
 
-Quantitative approaches (1950s): management science, operations research, TQM. Contemporary approaches (1960s–1970s): Systems Theory (organizations as open systems: input–conversion–output) and Contingency Theory (no single best way to manage — depends on internal/external circumstances). Each approach contributes a different, partial lens on management.`,
+Between 1900 and today, four broad schools developed.
+- Classical approaches (1900s–1910s): Scientific Management (Taylor), Administrative Theory (Fayol), and Bureaucracy (Weber) — rational efficiency and formal structure, but neglecting human factors and the environment
+- Behavioural approaches (1930s–1940s): early advocates (Owen, Follett, Münsterberg, Barnard), the Hawthorne Studies (Mayo, 1924–1932, revealing the "Hawthorne effect"), the Human Relations Movement, and McGregor's Theory X/Y — corrected the mechanical bias but are complex and hard to predict
+- Quantitative approaches (1950s): management science, operations research, TQM
+- Contemporary approaches (1960s–1970s): Systems Theory (organizations as open systems: input–conversion–output) and Contingency Theory (no single best way to manage — depends on internal/external circumstances)
+
+Each approach contributes a different, partial lens on management.`,
 cards:[
 {q:"What historical development triggered the birth of modern management?",a:"The Industrial Revolution (~1800) — division of labour, specialization, separation of ownership from control."},
 {q:"What are Taylor's 4 Principles of Scientific Management?",a:"(1) Scientifically study tasks; (2) codify methods into rules/SOPs; (3) select and train workers matching tasks; (4) set a fair performance level and reward system."},
@@ -1205,11 +1364,38 @@ quiz:[
 {q:"Contingency theory's central message for managers is:",opts:["Always use a mechanistic structure","Always centralize decision-making","The best approach depends on the specific situation","Bureaucracy is universally optimal"],correct:2,exp:"Contingency theory rejects \"one best way\" thinking."},
 {q:"A major criticism of the classical management approach is that it:",opts:["Is too focused on human emotions","Neglects human factors and the external environment","Overemphasizes creativity","Is too decentralized"],correct:1,exp:"Classical approaches are efficient but mechanical, ignoring people and context."}
 ]},
-{id:'pom-2',title:'Planning & Strategy',summary:`Planning is identifying and selecting appropriate goals and courses of action: Goals ("what?"), Strategies ("how?"), Implementation ("how exactly?"). Effective plans, per Fayol, need Unity in Action, Accuracy, Flexibility, Continuity. Planning occurs at corporate, business, and functional levels, and across time horizons: short-term tactics (<1yr), intermediate strategy (1–5yr), long-term vision (>5yr). Standing plans (policies, rules, SOPs) address recurring decisions; single-use plans (programs, projects) address unique situations.
+{id:'pom-2',title:'Planning & Strategy',summary:`Planning is identifying and selecting appropriate goals and courses of action:
+- Goals ("what?")
+- Strategies ("how?")
+- Implementation ("how exactly?")
 
-Vision ("why we exist"), Mission (what/why), and Goals (SMART) cascade downward. Strategy answers "where to compete" (Porter's Five Forces: entrants, suppliers, buyers, substitutes, rivalry) and "how to compete" (business model). Porter's three generic strategies: Cost Leadership, Differentiation, Focus — mixing risks being "stuck in the middle." Corporate-level options: single industry, related/unrelated diversification, horizontal/vertical integration, international expansion (export → license → alliance/JV → wholly owned subsidiary, increasing investment/risk). A strategy achieves internal consistency through four elements: a clear value proposition (cost or differentiation), target market alignment (mass vs. niche), fit of activities (simple consistency, mutually reinforcing, collective optimization), and deliberate trade-offs (choosing what NOT to do, preventing mixed signals, building barriers to imitation). Dynamic consistency (long-run performance) is threatened by imitation, substitution, holdup, and organizational slack — countered respectively by barriers to imitation, differentiation/innovation, broadening or vertically integrating supply/distribution, and continuous performance monitoring.
+Effective plans, per Fayol, need Unity in Action, Accuracy, Flexibility, Continuity. Planning occurs at corporate, business, and functional levels, and across time horizons:
+- short-term tactics (<1yr)
+- intermediate strategy (1–5yr)
+- long-term vision (>5yr)
 
-Strategy implementation transitions "planned strategy" (what managers intend, developed through formal analysis) into "realized strategy" (what actually happens after execution, including adjustments to unforeseen events) via five steps: allocate responsibility (assign tasks to individuals/groups), draft a detailed action plan (break the strategy into specific actions/steps), establish a timetable (set deadlines and milestones), allocate resources (assign financial, human, and physical resources), and hold accountability (ensure individuals/departments are held responsible for their part).`,
+Standing plans (policies, rules, SOPs) address recurring decisions; single-use plans (programs, projects) address unique situations.
+
+Vision ("why we exist"), Mission (what/why), and Goals (SMART) cascade downward.
+
+Strategy answers "where to compete" (Porter's Five Forces: entrants, suppliers, buyers, substitutes, rivalry) and "how to compete" (business model). Porter's three generic strategies: Cost Leadership, Differentiation, Focus — mixing risks being "stuck in the middle."
+
+Corporate-level options: single industry, related/unrelated diversification, horizontal/vertical integration, international expansion (export → license → alliance/JV → wholly owned subsidiary, increasing investment/risk).
+
+A strategy achieves internal consistency through four elements:
+- a clear value proposition (cost or differentiation)
+- target market alignment (mass vs. niche)
+- fit of activities (simple consistency, mutually reinforcing, collective optimization)
+- deliberate trade-offs (choosing what NOT to do, preventing mixed signals, building barriers to imitation)
+
+Dynamic consistency (long-run performance) is threatened by imitation, substitution, holdup, and organizational slack — countered respectively by barriers to imitation, differentiation/innovation, broadening or vertically integrating supply/distribution, and continuous performance monitoring.
+
+Strategy implementation transitions "planned strategy" (what managers intend, developed through formal analysis) into "realized strategy" (what actually happens after execution, including adjustments to unforeseen events) via five steps:
+- allocate responsibility (assign tasks to individuals/groups)
+- draft a detailed action plan (break the strategy into specific actions/steps)
+- establish a timetable (set deadlines and milestones)
+- allocate resources (assign financial, human, and physical resources)
+- hold accountability (ensure individuals/departments are held responsible for their part)`,
 cards:[
 {q:"What four elements achieve internal consistency of a strategy?",a:"Clear value proposition, target market alignment, fit of activities, and deliberate trade-offs."},
 {q:"What are the three types of \"fit of activities\"?",a:"Simple consistency (all activities align with strategy), mutually reinforcing (activities strengthen one another), and collective optimization (the whole system creates synergy)."},
@@ -1242,9 +1428,20 @@ quiz:[
 {q:"The strategy that \"actually happens\" after execution, including adjustments to unforeseen events, is called:",opts:["Planned strategy","Realized strategy","Standing plan","Single-use plan"],correct:1,exp:"Realized strategy is what is actually executed, as opposed to the originally intended planned strategy."},
 {q:"In the five-step strategy implementation process, which step comes right before \"hold accountability\"?",opts:["Allocate responsibility","Draft detailed action plan","Establish timetable","Allocate resources"],correct:3,exp:"The sequence is: allocate responsibility → draft action plan → establish timetable → allocate resources → hold accountability."}
 ]},
-{id:'pom-3',title:'Organizing — Organizational Design & Structure',summary:`Organizing creates a formal structure of task and reporting relationships. Structural forms include Simple (startups), Functional (grouped by task — efficient but silos), Divisional (self-contained units by region/product/customer — accountable but duplicated resources), Matrix (dual chain of command — flexible but power struggles), Product Team (matrix variant, single chain of command), and Holacracy (self-organizing circles, e.g. Zappos).
+{id:'pom-3',title:'Organizing — Organizational Design & Structure',summary:`Organizing creates a formal structure of task and reporting relationships. Structural forms include:
+- Simple (startups)
+- Functional (grouped by task — efficient but silos)
+- Divisional (self-contained units by region/product/customer — accountable but duplicated resources)
+- Matrix (dual chain of command — flexible but power struggles)
+- Product Team (matrix variant, single chain of command)
+- Holacracy (self-organizing circles, e.g. Zappos)
 
-Structure choice depends on three contingency factors: Strategy (efficiency→mechanistic; innovation→organic), Size (large→mechanistic; small→organic), and Environment (stable→mechanistic; unstable→organic). Six design parameters: work specialization, departmentalization, chain of command, span of control, centralization, formalization. Differentiation (horizontal/vertical) must be balanced against Integration (hierarchy, liaison roles, task forces, teams). Extreme positions yield Mechanistic (high specialization, centralized, formal) vs. Organic (cross-functional, decentralized, low formalization) structures.`,
+Structure choice depends on three contingency factors:
+- Strategy (efficiency→mechanistic; innovation→organic)
+- Size (large→mechanistic; small→organic)
+- Environment (stable→mechanistic; unstable→organic)
+
+Six design parameters: work specialization, departmentalization, chain of command, span of control, centralization, formalization. Differentiation (horizontal/vertical) must be balanced against Integration (hierarchy, liaison roles, task forces, teams). Extreme positions yield Mechanistic (high specialization, centralized, formal) vs. Organic (cross-functional, decentralized, low formalization) structures.`,
 cards:[
 {q:"What is Organizing as a management function?",a:"Identifying and arranging work; creating structure and formal relationships among members."},
 {q:"What is Organizational Structure?",a:"The formal system of task and reporting relationships that controls cooperation and resource use to achieve goals."},
@@ -1267,9 +1464,24 @@ quiz:[
 {q:"High formalization in an organization means:",opts:["Employees have high discretion","Jobs are standardized with explicit rules, limiting discretion","No rules at all","The company uses an organic structure"],correct:1,exp:"High formalization implies extensive rules constraining discretion."},
 {q:"A startup in a fast-changing tech market would choose an organic structure because:",opts:["Small size and unstable environment favor organic structure","Large size always requires organic structure","Stable environments always favor organic structure","Efficiency strategy always requires organic structure"],correct:0,exp:"Both small size and unstable environment are contingency factors favoring organic structures."}
 ]},
-{id:'pom-4',title:'Organizational Control & Change',summary:`Controlling monitors/evaluates performance and takes corrective action via a three-step cycle: Establish standards → Compare actual vs. planned → Take corrective action. Controls span Feedforward (before), Concurrent (during), Feedback (after). Three organizational control systems: Output control (financial ratios, goals, budgets), Behavior control (direct supervision, bureaucratic control, MBO), and Clan control (shared values/norms).
+{id:'pom-4',title:'Organizational Control & Change',summary:`Controlling monitors/evaluates performance and takes corrective action via a three-step cycle: Establish standards → Compare actual vs. planned → Take corrective action. Controls span Feedforward (before), Concurrent (during), Feedback (after).
 
-Key financial ratios: ROI = net profit before taxes / total assets; current ratio = current assets / current liabilities; quick ratio = (current assets − inventory) / current liabilities; debt-to-asset = total debt / total assets; times-covered = profit before interest & taxes / total interest; inventory turnover = COGS / inventory. MBO is a 3-step joint goal-setting/review cycle. Organizational Change moves toward a desired future state; Lewin's Force-Field Model explains resistance as driving vs. resisting forces. Evolutionary (gradual) vs. Revolutionary (rapid, dramatic) change. Four steps to manage change: assess need → decide → implement → evaluate.`,
+Three organizational control systems:
+- Output control (financial ratios, goals, budgets)
+- Behavior control (direct supervision, bureaucratic control, MBO)
+- Clan control (shared values/norms)
+
+Key financial ratios:
+- ROI = net profit before taxes / total assets
+- current ratio = current assets / current liabilities
+- quick ratio = (current assets − inventory) / current liabilities
+- debt-to-asset = total debt / total assets
+- times-covered = profit before interest & taxes / total interest
+- inventory turnover = COGS / inventory
+
+MBO is a 3-step joint goal-setting/review cycle.
+
+Organizational Change moves toward a desired future state; Lewin's Force-Field Model explains resistance as driving vs. resisting forces. Evolutionary (gradual) vs. Revolutionary (rapid, dramatic) change. Four steps to manage change: assess need → decide → implement → evaluate.`,
 cards:[
 {q:"Define Controlling.",a:"Monitoring/evaluating how well an organization achieves its goals, and taking corrective action."},
 {q:"What are the three steps of the controlling cycle?",a:"Monitor, Compare, Correct."},
@@ -1579,19 +1791,43 @@ const AW_LEE_DRILLS = [
 ];
 
 /* ============================================================ AW — MARIE CLAIRE: STRESS MANAGEMENT (Sept 2026) ============================================================ */
-const AW_MARIE_SUMMARY = `Stress management (Marie-Claire Joyeaux) frames stress through the Latin root "stringere" — to grip, to tighten, to hold tight. Environment produces a Stressor (demand/Belastung); the individual's reaction is Strain (Beanspruchung). The stress response is a non-specific activation of the body (fight, flight, or freeze) that mobilises physiological resources: dilated pupils, faster/flatter breathing, higher adrenaline/blood pressure/heart rate, glucose release, increased muscle tone and blood circulation in large muscles, but reduced peripheral circulation.
+const AW_MARIE_SUMMARY = `Stress management (Marie-Claire Joyeaux) frames stress through the Latin root "stringere" — to grip, to tighten, to hold tight. Environment produces a Stressor (demand/Belastung); the individual's reaction is Strain (Beanspruchung).
 
-Whetten & Cameron's (2011) Process Model of Stress has three stages: (1) Alarm — increase in anxiety, fear, sorrow or loss; (2) Resistance — attempting to control stress with defense mechanisms; (3) Exhaustion — the body stops trying to defend against the stressor. Long-term, unresolved stress produces physiological consequences: headaches, tinnitus, muscle tension, breathing/back problems, cardiovascular disease, gastrointestinal issues, sexual dysfunction, circulatory disorders, and psychological problems (anger, anxiety, depression, sleeping problems).
+The stress response is a non-specific activation of the body (fight, flight, or freeze) that mobilises physiological resources: dilated pupils, faster/flatter breathing, higher adrenaline/blood pressure/heart rate, glucose release, increased muscle tone and blood circulation in large muscles, but reduced peripheral circulation.
 
-Coping strategies fall into three groups: (1) eliminate stressors (enactive strategies, e.g. time management, goal setting with a small-wins strategy — identify something under your control, change it, track progress, maintain gains); (2) develop resiliency and well-being (proactive strategies) via increased physical fitness and balanced life activities (the "wheel" of life domains — a lopsided pattern is as much a sign of low resiliency as generally low involvement); and (3) cope with stress short-term (reactive strategies) via physiological relaxation techniques and psychological techniques (imagery, rehearsal, reframing).
+Whetten & Cameron's (2011) Process Model of Stress has three stages:
+- (1) Alarm — increase in anxiety, fear, sorrow or loss
+- (2) Resistance — attempting to control stress with defense mechanisms
+- (3) Exhaustion — the body stops trying to defend against the stressor
 
-Psychological fitness for resiliency has three components: feeling in control of one's life (not powerless), feeling committed to and involved in one's work, and feeling challenged by new experiences rather than threatened by them. Lazarus's (1974) Transactional Theory of Stress holds that it is the cognitive appraisal of a stressor — not the stressor itself — that determines the stress response; positive reframing appraisals include "I've solved similar problems before," "others have made it through," and "I can learn something from this."
+Long-term, unresolved stress produces physiological consequences: headaches, tinnitus, muscle tension, breathing/back problems, cardiovascular disease, gastrointestinal issues, sexual dysfunction, circulatory disorders, and psychological problems (anger, anxiety, depression, sleeping problems).
 
-In session 2, emotions are defined as unspecific activation (stress) plus cognitive appraisal: if appraisal yields "I am weaker," stress becomes fear (helps identify/avoid threats); if it yields "I am stronger," stress becomes anger (helps with self-assertion). The amygdala triggers a fast, non-specific stress reaction (stress hormones via the pituitary/adrenal axis, e.g. cortisol, plus neurotransmitters via the peripheral nervous system) before slower, more accurate cortical processing turns that activation into a specific feeling. Short-term stress and negative emotions are harmless for healthy people — the body evolved to handle them (e.g. anxiety raises heart rate similarly to climbing stairs).
+Coping strategies fall into three groups:
+- (1) eliminate stressors (enactive strategies, e.g. time management, goal setting with a small-wins strategy — identify something under your control, change it, track progress, maintain gains)
+- (2) develop resiliency and well-being (proactive strategies) via increased physical fitness and balanced life activities (the "wheel" of life domains — a lopsided pattern is as much a sign of low resiliency as generally low involvement)
+- (3) cope with stress short-term (reactive strategies) via physiological relaxation techniques and psychological techniques (imagery, rehearsal, reframing)
 
-Gross's (2002) Process Model of Emotion Management distinguishes antecedent-focused strategies (before the emotion is fully activated: situation selection — approaching/avoiding people, places or things; situation modification — changing aspects of the situation, i.e. problem-focused coping; attentional deployment — distracting/focusing attention; cognitive change — selecting which meaning to attach to something) from response-focused strategies (response modulation — things done once the emotion is already underway). Emotion regulation applies to positive emotions too, can be controlled (conscious) or automatic (unconscious), and is neither inherently good nor bad.
+Psychological fitness for resiliency has three components:
+- feeling in control of one's life (not powerless)
+- feeling committed to and involved in one's work
+- feeling challenged by new experiences rather than threatened by them
 
-WHO's (2020) five-step approach to managing prolonged stress: Grounding, Unhooking, Acting on Your Values, Being Kind, Making Room. The course also draws on Christensen's HBR article "How Will You Measure Your Life?" — arguing that resource-allocation decisions (time/energy/talent) determine your life's actual strategy regardless of stated intentions, that a "just this once" marginal-cost mentality erodes personal integrity over time, and that Herzberg's motivators (learning, growth, responsibility, recognition) — not money — drive lasting career happiness.`;
+Lazarus's (1974) Transactional Theory of Stress holds that it is the cognitive appraisal of a stressor — not the stressor itself — that determines the stress response; positive reframing appraisals include "I've solved similar problems before," "others have made it through," and "I can learn something from this."
+
+In session 2, emotions are defined as unspecific activation (stress) plus cognitive appraisal: if appraisal yields "I am weaker," stress becomes fear (helps identify/avoid threats); if it yields "I am stronger," stress becomes anger (helps with self-assertion).
+
+The amygdala triggers a fast, non-specific stress reaction (stress hormones via the pituitary/adrenal axis, e.g. cortisol, plus neurotransmitters via the peripheral nervous system) before slower, more accurate cortical processing turns that activation into a specific feeling. Short-term stress and negative emotions are harmless for healthy people — the body evolved to handle them (e.g. anxiety raises heart rate similarly to climbing stairs).
+
+Gross's (2002) Process Model of Emotion Management distinguishes antecedent-focused strategies (before the emotion is fully activated: situation selection — approaching/avoiding people, places or things; situation modification — changing aspects of the situation, i.e. problem-focused coping; attentional deployment — distracting/focusing attention; cognitive change — selecting which meaning to attach to something) from response-focused strategies (response modulation — things done once the emotion is already underway).
+
+Emotion regulation applies to positive emotions too, can be controlled (conscious) or automatic (unconscious), and is neither inherently good nor bad.
+
+WHO's (2020) five-step approach to managing prolonged stress: Grounding, Unhooking, Acting on Your Values, Being Kind, Making Room.
+
+The course also draws on Christensen's HBR article "How Will You Measure Your Life?" — arguing:
+- that resource-allocation decisions (time/energy/talent) determine your life's actual strategy regardless of stated intentions
+- that a "just this once" marginal-cost mentality erodes personal integrity over time
+- that Herzberg's motivators (learning, growth, responsibility, recognition) — not money — drive lasting career happiness`;
 
 const AW_MARIE_QUIZ = [
 {q:"Which two statements about balancing life activities are correct?",opts:["The wheel represents the key areas of life, with the centre as zero involvement and the outer edges as maximum involvement.","The more strongly one single area is developed, the higher a person's resiliency.","A lopsided pattern indicates non-resiliency just as much as generally low involvement does.","Only the work and intellectual segments contribute to resiliency.","A balanced pattern matters only for people who already have chronic illness."],correct:[0,2],exp:"A: correct — describes the wheel's centre/edge scale. C: correct — overemphasising one or two areas is as much a sign of non-resiliency as low involvement everywhere. B, D, E misstate the model — resiliency depends on balance across all segments, not single-area strength."},
@@ -1731,6 +1967,7 @@ function buildSidebarNav(subjId){
 /* ============================================================ DASHBOARD SEARCH ============================================================ */
 // flat index over all static content; each entry knows the page (+ tab) to open
 let searchIndex = null;
+function searchFlat(p){ return p.replace(/ :: /g,' — ').replace(/\n(- )?/g,' · '); }
 function searchNorm(s){ return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
 function buildSearchIndex(){
   const idx = [];
@@ -1740,15 +1977,15 @@ function buildSearchIndex(){
     topics.forEach((t,i)=>{
       const where = `${subjLabel(subj)} · Topic ${i+1}`;
       add({type:'Topic', rank:0, title:t.title, text:'', where, page:t.id, tab:'sum'});
-      t.summary.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:t.title, text:p.replace(/ :: /g,' — ').replace(/\n/g,' · '), where, page:t.id, tab:'sum'}));
+      t.summary.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:t.title, text:searchFlat(p), where, page:t.id, tab:'sum'}));
       t.cards.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:`${where} · ${t.title}`, page:t.id, tab:'fc'}));
       t.quiz.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:`${where} · ${t.title}`, page:t.id, tab:'qz'}));
     });
   });
   [['ob','ob-cheat',OB_CHEAT,'Cheat Sheet'],['pom','pom-cheat',POM_CHEAT,'Cheat Sheet'],['aw','aw-rules',AW_RULES,'Writing Rules'],['aw','aw-present',AW_PRESENT_REF,'Presentation Skills']]
     .forEach(([subj,page,blocks,name])=>blocks.forEach(b=>b.items.forEach(it=>add({type:'Cheat sheet', rank:2, title:b.h, text:it, where:`${subjLabel(subj)} · ${name}`, page}))));
-  AW_SUMMARY_TEXT.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:'AW Summary', text:p, where:'AW · Summary', page:'aw-summary'}));
-  AW_MARIE_SUMMARY.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:'Stress Management', text:p, where:'AW · Marie Claire', page:'aw-marie-summary'}));
+  AW_SUMMARY_TEXT.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:'AW Summary', text:searchFlat(p), where:'AW · Summary', page:'aw-summary'}));
+  AW_MARIE_SUMMARY.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:'Stress Management', text:searchFlat(p), where:'AW · Marie Claire', page:'aw-marie-summary'}));
   AW_CARDS.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:'AW · Flashcards', page:'aw-flash'}));
   AW_QUIZ.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:'AW · Quiz', page:'aw-quiz'}));
   AW_VERBS.forEach(v=>add({type:'Action verbs', rank:2, title:v.cat, text:v.verbs.join(', '), where:'AW · Action Verbs', page:'aw-verbs'}));
@@ -1914,20 +2151,31 @@ function renderSummary(container, title, text, key){
   if(key){
     container.dataset.hlKey = key;
     const saved = ls(hlStorageKey(key), null);
-    if(saved){ container.innerHTML = saved; hlStripSources(container); hlMigrateVocab(container, text); return; }
+    if(saved){
+      container.innerHTML = saved;
+      hlStripSources(container);
+      if(!hlRebase(container, `<div class="summary-text">${summaryParasHtml(text)}</div>`)) hlMigrateVocab(container, text);
+      return;
+    }
   }
   container.innerHTML = `<div class="summary-text">${summaryParasHtml(text)}</div>`;
 }
-// paragraphs split on blank lines; a paragraph with "Term :: Description" lines renders as a two-column
-// vocab list (any other line in it becomes the list's title)
+// paragraphs split on blank lines. Inside a paragraph: "- item" lines → bullet list, "Term :: Description"
+// lines → two-column vocab list; plain lines before a list become its lead-in
 function summaryParasHtml(text){
   return text.trim().split(/\n\n+/).map(p=>{
     const lines = p.split('\n');
-    const defs = lines.filter(l=>l.includes(' :: '));
-    if(!defs.length) return `<p>${esc(p)}</p>`;
-    const head = lines.filter(l=>!l.includes(' :: ')).join(' ');
-    return (head ? `<p class="sum-vocab-title">${esc(head)}</p>` : '') +
-      `<dl class="sum-vocab">${defs.map(l=>{ const [t,...d]=l.split(' :: '); return `<dt>${esc(t)}</dt><dd>${esc(d.join(' :: '))}</dd>`; }).join('')}</dl>`;
+    const kind = l => l.includes(' :: ') ? 'def' : /^- /.test(l) ? 'li' : 'text';
+    if(lines.every(l=>kind(l)==='text')) return `<p>${esc(p)}</p>`;
+    const groups = [];
+    lines.forEach(l=>{ const k = kind(l); const g = groups[groups.length-1]; if(g && g.k===k) g.lines.push(l); else groups.push({k, lines:[l]}); });
+    return groups.map((g,i)=>{
+      if(g.k==='def') return `<dl class="sum-vocab">${g.lines.map(l=>{ const [t,...d]=l.split(' :: '); return `<dt>${esc(t)}</dt><dd>${esc(d.join(' :: '))}</dd>`; }).join('')}</dl>`;
+      if(g.k==='li') return `<ul class="sum-list">${g.lines.map(l=>`<li>${esc(l.slice(2))}</li>`).join('')}</ul>`;
+      const next = groups[i+1];
+      const cls = next ? (next.k==='def' ? 'sum-vocab-title' : 'sum-lead') : '';
+      return `<p${cls?` class="${cls}"`:''}>${esc(g.lines.join(' '))}</p>`;
+    }).join('');
   }).join('');
 }
 
@@ -1961,6 +2209,43 @@ function hlMigrateVocab(container, text){
     old.remove();
     hlSave(container);
   });
+}
+// generic safety net for content changes: if the saved highlight HTML no longer matches the current content
+// structure, render the fresh content and re-attach every saved highlight/format by its exact text (nearest
+// occurrence to its old relative position). Returns false — leaving the saved HTML untouched — if any
+// highlight can't be placed, so a highlight is never lost.
+function hlRebase(container, freshHtml){
+  const MARKS = 'mark.hl, strong.hl-fmt, em.hl-fmt';
+  const bare = document.createElement('div');
+  bare.innerHTML = container.innerHTML;
+  bare.querySelectorAll(MARKS).forEach(m=>{ const p=m.parentNode; while(m.firstChild) p.insertBefore(m.firstChild,m); p.removeChild(m); });
+  bare.normalize();
+  const fresh = document.createElement('div');
+  fresh.innerHTML = freshHtml;
+  if(bare.innerHTML===fresh.innerHTML) return true;
+  const textOf = root=>{ const nodes=[]; let str=''; const w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; while((n=w.nextNode())){ nodes.push([n,str.length]); str+=n.data; } return {nodes,str}; };
+  const oldT = textOf(container), oldLen = Math.max(1, oldT.str.length);
+  const marks = [...container.querySelectorAll(MARKS)].filter(m=>!m.parentElement.closest(MARKS)).map(m=>{
+    let start = 0; const first = document.createTreeWalker(m, NodeFilter.SHOW_TEXT).nextNode();
+    const hit = first && oldT.nodes.find(([n])=>n===first); if(hit) start = hit[1];
+    return {tag:m.tagName.toLowerCase(), cls:m.className, text:m.textContent, rel:start/oldLen};
+  }).filter(m=>m.text.trim());
+  if(!marks.length){ container.innerHTML = freshHtml; hlSave(container); return true; }
+  const newT = textOf(fresh);
+  const placed = [];
+  for(const m of marks){
+    let best=-1, bestD=Infinity, i=-1;
+    while((i = newT.str.indexOf(m.text, i+1))>=0){ const d=Math.abs(i/Math.max(1,newT.str.length) - m.rel); if(d<bestD){ bestD=d; best=i; } }
+    if(best<0) return false;
+    placed.push({...m, at:best});
+  }
+  const locate = off=>{ for(let k=newT.nodes.length-1;k>=0;k--){ const [n,s]=newT.nodes[k]; if(off>=s) return [n, off-s]; } return null; };
+  const ranges = placed.map(m=>{ const r=document.createRange(); const a=locate(m.at), b=locate(m.at+m.text.length); if(b[1]===0 && b[0]!==a[0]){ /* end at node start → end of previous node */ const k=newT.nodes.findIndex(([n])=>n===b[0]); const [pn]=newT.nodes[k-1]; r.setEnd(pn, pn.length); } else r.setEnd(b[0], b[1]); r.setStart(a[0], a[1]); return {m, r}; });
+  // wrap last-to-first so earlier offsets stay valid
+  ranges.sort((x,y)=>y.m.at-x.m.at).forEach(({m,r})=>wrapRange(r, m.tag, m.cls));
+  container.innerHTML = fresh.innerHTML;
+  hlSave(container);
+  return true;
 }
 function hlStripSources(container){
   const key = container.dataset.hlKey || '';
@@ -3079,11 +3364,17 @@ function buildAWHome(){
       </div>`;
   });
 }
-const AW_SUMMARY_TEXT = `Academic writing rests on a claim, backed by evidence, connected by an explicit reason — evidence never speaks for itself. Arguments combine deduction, induction, abduction and analogy, and academic writing stays argumentative (impartial, evidence-driven) rather than persuasive (rhetorical, emotional). Sources are cited via direct quote, paraphrase, or summary (APA 7th; summary is best practice), and every common citation error — missing years, wrong et al. usage, unquoted direct quotes, mismatched reference lists — is avoidable with care.
+const AW_SUMMARY_TEXT = `Academic writing rests on a claim, backed by evidence, connected by an explicit reason — evidence never speaks for itself. Arguments combine deduction, induction, abduction and analogy, and academic writing stays argumentative (impartial, evidence-driven) rather than persuasive (rhetorical, emotional).
 
-Cohesion (sentence-to-sentence linking via the given-to-new principle, signposting, and reference words) is distinct from coherence (paragraph-level logical organisation around one clear topic) and from internal consistency (no contradiction between claims and evidence). The PEEL structure (Point, Evidence, Explanation, Link) organizes paragraphs, with counter-arguments following concession → counter-argument → refutation (refutation always last). Synthesising multiple sources means putting them "in conversation," organizing a literature review paragraph by idea rather than source.
+Sources are cited via direct quote, paraphrase, or summary (APA 7th; summary is best practice), and every common citation error — missing years, wrong et al. usage, unquoted direct quotes, mismatched reference lists — is avoidable with care.
 
-On the presentation side, Nancy Duarte's Glance Test says a slide should land its point in about three seconds; anxiety is best managed by reframing it as energy, preparing without over-scripting, and accepting minor stumbles. The EBS rubric weighs Language and Presentation Skills most heavily (4 points each of 15). For job applications, the CAR Principle (Challenge, Action, Result) turns experience into evidence-based stories, escalating in detail across CV (brief), cover letter (more detail), and interview (full depth) — always backed by strong action verbs and measurable results.`;
+Cohesion (sentence-to-sentence linking via the given-to-new principle, signposting, and reference words) is distinct from coherence (paragraph-level logical organisation around one clear topic) and from internal consistency (no contradiction between claims and evidence).
+
+The PEEL structure (Point, Evidence, Explanation, Link) organizes paragraphs, with counter-arguments following concession → counter-argument → refutation (refutation always last). Synthesising multiple sources means putting them "in conversation," organizing a literature review paragraph by idea rather than source.
+
+On the presentation side, Nancy Duarte's Glance Test says a slide should land its point in about three seconds; anxiety is best managed by reframing it as energy, preparing without over-scripting, and accepting minor stumbles. The EBS rubric weighs Language and Presentation Skills most heavily (4 points each of 15).
+
+For job applications, the CAR Principle (Challenge, Action, Result) turns experience into evidence-based stories, escalating in detail across CV (brief), cover letter (more detail), and interview (full depth) — always backed by strong action verbs and measurable results.`;
 function buildAWSummary(){
   registerPage('aw-summary', (div)=>{
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('summary')} Reference</div><h2>AW Summary</h2><p>The full module in prose.</p></div><div class="page-body" id="aw-sum-body"></div>`;
