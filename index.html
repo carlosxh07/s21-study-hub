@@ -246,10 +246,18 @@ mark.hl-yellow{background:rgba(255,214,10,.38);}
 mark.hl-green{background:rgba(52,199,89,.32);}
 mark.hl-blue{background:rgba(10,132,255,.28);}
 mark.hl-pink{background:rgba(255,55,95,.26);}
+mark.hl-orange{background:rgba(255,159,10,.32);}
+mark.hl-purple{background:rgba(175,82,222,.24);}
+mark.hl-grey{background:rgba(142,142,147,.26);}
+mark.hl-sand{background:rgba(200,178,140,.38);}
 :root[data-theme="dark"] mark.hl-yellow{background:rgba(255,214,10,.3);}
 :root[data-theme="dark"] mark.hl-green{background:rgba(52,199,89,.28);}
 :root[data-theme="dark"] mark.hl-blue{background:rgba(10,132,255,.34);}
 :root[data-theme="dark"] mark.hl-pink{background:rgba(255,55,95,.3);}
+:root[data-theme="dark"] mark.hl-orange{background:rgba(255,159,10,.3);}
+:root[data-theme="dark"] mark.hl-purple{background:rgba(191,90,242,.32);}
+:root[data-theme="dark"] mark.hl-grey{background:rgba(174,174,178,.26);}
+:root[data-theme="dark"] mark.hl-sand{background:rgba(200,178,140,.26);}
 .hl-popover{position:absolute;z-index:200;display:none;gap:6px;align-items:center;padding:7px 8px;border-radius:var(--radius-pill);background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-edge);box-shadow:var(--shadow-lg);transform:translate(-50%,-100%);}
 .hl-popover.show{display:flex;}
 .hl-swatch{width:20px;height:20px;border-radius:50%;border:1px solid var(--line);cursor:pointer;padding:0;transition:transform .15s var(--ease);}
@@ -258,6 +266,10 @@ mark.hl-pink{background:rgba(255,55,95,.26);}
 .hl-swatch.hl-green{background:#34c759;}
 .hl-swatch.hl-blue{background:#0a84ff;}
 .hl-swatch.hl-pink{background:#ff375f;}
+.hl-swatch.hl-orange{background:#ff9f0a;}
+.hl-swatch.hl-purple{background:#bf5af2;}
+.hl-swatch.hl-grey{background:#8e8e93;}
+.hl-swatch.hl-sand{background:#c8b28c;}
 .hl-remove{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--ink-soft);cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;padding:0;}
 .hl-remove:hover{color:var(--bad);border-color:var(--bad);}
 strong.hl-fmt{font-weight:700;cursor:pointer;}
@@ -273,6 +285,10 @@ em.hl-fmt{font-style:italic;cursor:pointer;}
 #hl-island .hl-i-swatch.hl-green{background:#34c759;}
 #hl-island .hl-i-swatch.hl-blue{background:#0a84ff;}
 #hl-island .hl-i-swatch.hl-pink{background:#ff375f;}
+#hl-island .hl-i-swatch.hl-orange{background:#ff9f0a;}
+#hl-island .hl-i-swatch.hl-purple{background:#bf5af2;}
+#hl-island .hl-i-swatch.hl-grey{background:#8e8e93;}
+#hl-island .hl-i-swatch.hl-sand{background:#c8b28c;}
 #hl-island .hl-i-swatch.active,#hl-island .hl-i-eraser.active,#hl-island .hl-i-fmt.active{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--accent);transform:scale(1.1);}
 #hl-island .hl-i-eraser{width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;padding:0;transition:transform .15s var(--ease),background .15s var(--ease);}
 #hl-island .hl-i-eraser:hover{transform:scale(1.12);color:var(--bad);}
@@ -286,7 +302,7 @@ em.hl-fmt{font-style:italic;cursor:pointer;}
 #hl-island .hl-i-reset:hover{color:var(--bad);}
 body.hl-armed .hl-container{cursor:text;}
 @media(max-width:900px){#hl-island{right:10px;padding:10px 7px;gap:8px;}#hl-island .hl-i-swatch{width:19px;height:19px;}#hl-island .hl-i-fmt,#hl-island .hl-i-eraser{width:23px;height:23px;}#hl-island .hl-i-hint,#hl-island .hl-i-reset{display:none;}}
-@media(max-width:640px){#hl-island{top:auto;bottom:18px;right:14px;transform:none;flex-direction:row;border-radius:var(--radius-pill);padding:9px 12px;}}
+@media(max-width:640px){#hl-island{top:auto;bottom:18px;left:10px;right:10px;transform:none;flex-direction:row;justify-content:center;gap:7px;border-radius:var(--radius-pill);padding:9px 10px;}#hl-island .hl-i-swatch{width:21px;height:21px;}#hl-island .hl-i-divider{width:1px;height:18px;margin:0 1px;}}
 
 /* ============ FLASHCARDS ============ */
 .fc-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:18px;font-size:.8rem;color:var(--ink-soft);flex-wrap:wrap;justify-content:space-between;}
@@ -2371,7 +2387,7 @@ function cheatItemHtml(item){
 }
 
 /* ============================================================ HIGHLIGHTING ============================================================ */
-const HL_COLORS = ['yellow','green','blue','pink'];
+const HL_COLORS = ['yellow','orange','green','blue','purple','pink','grey','sand'];
 function hlStorageKey(key){ return 'hl:'+key; }
 // OB/POM source citations were removed from the data; saved highlight HTML still holds the old text,
 // so strip the same citations from its text nodes on load (keeps the highlights, AW left untouched)
