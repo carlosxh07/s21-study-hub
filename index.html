@@ -684,6 +684,18 @@ body.hl-armed .hl-container{cursor:text;}
 .tool-tiles.extra .tool-tile{opacity:.72;}
 .tool-tiles.extra .tool-tile:hover{opacity:1;}
 @media(max-width:760px){.exam-grid{grid-template-columns:1fr;gap:8px;}}
+.not-exam-area{margin-top:44px;padding:22px;border:1px dashed var(--line);border-radius:var(--radius);background:var(--bg2);}
+.not-exam-head h3{font-size:1rem;color:var(--ink-soft);}
+.not-exam-head p{font-size:.82rem;color:var(--ink-faint);margin:4px 0 16px;line-height:1.5;}
+.not-exam-area .topic-card,.not-exam-area .tool-tile{opacity:.7;}
+.not-exam-area .topic-card:hover,.not-exam-area .tool-tile:hover{opacity:1;}
+.not-exam-area .topic-grid{margin-bottom:14px;}
+.not-exam-divider{display:flex;align-items:center;gap:12px;margin:34px 0 16px;color:var(--ink-faint);font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.not-exam-divider::before,.not-exam-divider::after{content:'';flex:1;border-top:1px dashed var(--line);}
+.cheat-block.not-exam{opacity:.7;}
+.nav-not-exam-label{margin-top:18px;border-top:1px dashed var(--side-line);padding-top:14px;}
+.nav-item.nav-not-exam{opacity:.6;}
+.nav-item.nav-not-exam:hover,.nav-item.nav-not-exam.active{opacity:1;}
 </style>
 </head>
 <body>
@@ -808,7 +820,7 @@ function rnd(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 /* ============================================================ SUBJECT META ============================================================ */
 const SUBJECTS = [
   {id:'ob', label:'Organizational Theory & Behaviour', short:'Behavioural science of individuals, groups & leadership at work.', color:'ob'},
-  {id:'pom', label:'Principles of Management', short:'History, planning, organizing and control — the management canon.', color:'pom'},
+  {id:'pom', label:'Principles of Management', short:'Managers, planning & strategy, control & change — what the exam covers.', color:'pom'},
   {id:'aw', label:'Academic Writing & Presentations', short:'Argumentation, citation, structure, delivery and CVs.', color:'aw'}
 ];
 
@@ -1353,7 +1365,13 @@ Informational roles (handling information):
 Managers also draw on different modes of thinking:
 - Left brain (logical/analytical) focuses on facts, data, logic and structure — objective, systematic, breaks problems into smaller parts (e.g., analyzing financial reports to decide where to cut costs)
 - Right brain (creative/intuitive) focuses on creativity, intuition, and the big picture — imaginative, holistic, integrative, connects ideas into new strategies (e.g., brainstorming a marketing campaign that emotionally connects with customers)
-- Whole brain (balanced) integrates both sides — effective managers use left-brain logic to analyze facts and right-brain creativity to innovate under uncertainty`,
+- Whole brain (balanced) integrates both sides — effective managers use left-brain logic to analyze facts and right-brain creativity to innovate under uncertainty
+
+Managers perform four management functions to achieve the organization's goals efficiently and effectively:
+- Planning (define goals, establish strategies to achieve them, develop plans to coordinate activities)
+- Organizing (identify and arrange the work to be done, create structure and formal relationships between organizational members)
+- Leading (work with and through people to accomplish goals; motivate, coordinate and guide people to work together)
+- Controlling (monitor and measure completed work, check whether the desired goals have been achieved, take corrective action)`,
 cards:[
 {q:"What is an organization?",a:"A collection of people deliberately structured within identifiable boundaries to achieve predetermined goals, coordinating actions using human, financial, physical, and information resources."},
 {q:"What is a manager, and what is management's goal?",a:"A manager supervises an organization's resources (human, financial, physical, informational) to meet its goals; management's goal is high organizational performance — resources used efficiently (doing things right) and effectively (doing the right things)."},
@@ -1368,7 +1386,8 @@ cards:[
 {q:"List the four Decisional roles.",a:"Entrepreneur, Disturbance Handler, Resource Allocator, Negotiator."},
 {q:"List the three Interpersonal roles.",a:"Figurehead, Leader, Liaison."},
 {q:"List the three Informational roles.",a:"Monitor, Disseminator, Spokesperson."},
-{q:"Distinguish left-brain, right-brain, and whole-brain thinking in management.",a:"Left brain = logical/analytical (facts, data, structure); right brain = creative/intuitive (vision, big picture, innovation); whole brain = effective managers balance both."}
+{q:"Distinguish left-brain, right-brain, and whole-brain thinking in management.",a:"Left brain = logical/analytical (facts, data, structure); right brain = creative/intuitive (vision, big picture, innovation); whole brain = effective managers balance both."},
+{q:"What are the four management functions?",a:"Planning (goals, strategies, plans), Organizing (arrange work, create structure), Leading (work with and through people, motivate and guide), Controlling (monitor, measure, correct)."}
 ],
 quiz:[
 {q:"An organization is best defined as:",opts:["Any group of people in the same building","A collection of people deliberately structured within identifiable boundaries to achieve predetermined goals","A single manager's personal network","A legal entity with no shared goals"],correct:1,exp:"Organizations deliberately structure people to coordinate action toward predetermined goals."},
@@ -1443,7 +1462,34 @@ Strategy implementation transitions "planned strategy" (what managers intend, de
 - draft a detailed action plan (break the strategy into specific actions/steps)
 - establish a timetable (set deadlines and milestones)
 - allocate resources (assign financial, human, and physical resources)
-- hold accountability (ensure individuals/departments are held responsible for their part)`,
+- hold accountability (ensure individuals/departments are held responsible for their part)
+
+Why plan at all? Planning gives the organization a sense of direction and purpose, gets managers to participate in decisions about appropriate goals and strategies, helps coordinate managers of different functions and divisions, and can be used as a device for controlling managers.
+
+The planning process follows the same pattern as the decision-making process:
+=> Situational analysis → Alternative goals/strategies/plans → Evaluating alternatives → Making the choice → Implementing the choice → Evaluating the outcome
+
+The further ahead a plan reaches, the less predictable the future: short-term tactics (<1 year) rest on a forecast, intermediate strategy (1–5 years) on foresight, and long-term vision/mission/values (>5 years) on hope. How long plans should apply depends on the environment the organization operates in.
+
+Scenario planning (contingency planning) helps to handle future uncertainty. It generates multiple forecasts of future conditions and then analyses how to respond effectively to each. Planning tries to predict the future, but the future is unpredictable. By generating several possible "futures" (built from trends, megatrends, weak signals, wild cards and discontinuities), a firm can see how its plans would work in each and prepare for the possible outcomes. Scenario planning is a learning tool that improves strategic planning results.
+
+Organizations pursue several goals at the same time, and these goals have to be consistent. A goal is a desired future state that the organization is supposed to achieve. Goals can be classified:
+- by type: financial, strategic and social goals
+- by time horizon: short-term vs. long-term
+- by organizational level: strategic goals (top level), tactical goals (mid level), operational goals (lower level)
+
+Goals can be set in the traditional way or through management by objectives (MBO). Either way they should be S.M.A.R.T.: Specific, Measurable, Attainable, Realistic, Timely.
+
+Strategy is the integrated set of choices that positions the firm to compete successfully in an industry and to generate superior financial returns over the long run. It answers three questions: where do we compete, how do we compete, and how do we execute? A firm whose strategy leads to superior performance relative to its competitors or the industry average has a competitive advantage. Effective strategies are consistent with the realities of the external environment, with internal activities, and with the longer-term dynamics of industry and organization. Inconsistent, ill-conceived strategies destroy value.
+
+Where to compete matters: 10–20% of the variation in businesses' profitability is driven by their industry. Of the many strategy tools (e.g. SWOT, PESTLE), this course only focuses on Porter's Five Forces and the generic strategies.
+
+The business model is the underlying logic of the firm: how it operates and how it creates and captures value. Its choices have to fit together (internal consistency), and it should be robust and difficult to replicate. Examples:
+- Razor & blade
+- Freemium
+- Peer-to-peer
+- Self-service
+- Subscription`,
 cards:[
 {q:"What four elements achieve internal consistency of a strategy?",a:"Clear value proposition, target market alignment, fit of activities, and deliberate trade-offs."},
 {q:"What are the three types of \"fit of activities\"?",a:"Simple consistency (all activities align with strategy), mutually reinforcing (activities strengthen one another), and collective optimization (the whole system creates synergy)."},
@@ -1460,7 +1506,16 @@ cards:[
 {q:"What are Porter's three generic strategies?",a:"Cost Leadership, Differentiation, Focus."},
 {q:"What does \"stuck in the middle\" mean?",a:"A firm failing to commit clearly to either cost leadership or differentiation, lacking any competitive advantage."},
 {q:"List the four modes of international expansion by increasing investment/risk.",a:"Importing/exporting → licensing/franchising → alliances/JVs → wholly owned foreign subsidiary."},
-{q:"What are the four threats to \"dynamic consistency\"?",a:"Imitation, substitution, holdup, organizational slack."}
+{q:"What are the four threats to \"dynamic consistency\"?",a:"Imitation, substitution, holdup, organizational slack."},
+{q:"Name the four reasons why planning is important.",a:"1) Gives a sense of direction and purpose; 2) gets managers to participate in deciding goals and strategies; 3) coordinates managers across functions and divisions; 4) can be used as a device for controlling managers."},
+{q:"What are the six steps of the planning process?",a:"Situational analysis → alternative goals/strategies/plans → evaluating alternatives → making the choice → implementing the choice → evaluating the outcome (same pattern as decision making)."},
+{q:"Forecast, foresight, hope: which planning horizon does each belong to?",a:"Forecast = short-term tactics (<1 year); foresight = intermediate strategy (1–5 years); hope = long-term vision/mission/values (>5 years). Predictability falls as the horizon grows."},
+{q:"What is scenario planning (contingency planning)?",a:"Generating multiple forecasts of future conditions, then analysing how to respond effectively to each, so the firm is prepared for several possible futures. A learning tool that improves strategic planning."},
+{q:"How can organizational goals be classified?",a:"By type (financial, strategic, social), by time horizon (short- vs. long-term) and by level (strategic = top, tactical = mid, operational = lower level)."},
+{q:"What does S.M.A.R.T. stand for (as in the slides)?",a:"Specific, Measurable, Attainable, Realistic, Timely."},
+{q:"What is competitive advantage?",a:"A firm has a competitive advantage when its strategy leads to superior performance relative to its competitors or the industry average."},
+{q:"What is a business model? Give examples.",a:"The underlying logic of how a firm operates and creates and captures value; choices must fit and be hard to replicate. Examples: razor & blade, freemium, peer-to-peer, self-service, subscription."},
+{q:"Which strategy tools does the PoM course focus on?",a:"Only Porter's Five Forces and Porter's generic strategies (not SWOT or PESTLE)."}
 ],
 quiz:[
 {q:"Which of Fayol's plan qualities refers to plans needing to adapt as situations change?",opts:["Accuracy","Unity in Action","Flexibility","Continuity"],correct:2,exp:"Flexibility means plans must adapt to changing circumstances."},
@@ -1474,7 +1529,10 @@ quiz:[
 {q:"A firm's activities that all reinforce each other, creating a system stronger than any single activity, illustrate:",opts:["Simple consistency","Mutually reinforcing / collective optimization fit","Organizational slack","Holdup"],correct:1,exp:"Collective optimization means the whole system of activities creates synergy beyond simple alignment."},
 {q:"\"Strategy is as much about choosing what NOT to do\" refers to:",opts:["Dynamic consistency","Trade-offs","Vertical integration","Feedforward control"],correct:1,exp:"Deliberate trade-offs prevent mixed signals and create barriers to imitation by rivals."},
 {q:"The strategy that \"actually happens\" after execution, including adjustments to unforeseen events, is called:",opts:["Planned strategy","Realized strategy","Standing plan","Single-use plan"],correct:1,exp:"Realized strategy is what is actually executed, as opposed to the originally intended planned strategy."},
-{q:"In the five-step strategy implementation process, which step comes right before \"hold accountability\"?",opts:["Allocate responsibility","Draft detailed action plan","Establish timetable","Allocate resources"],correct:3,exp:"The sequence is: allocate responsibility → draft action plan → establish timetable → allocate resources → hold accountability."}
+{q:"In the five-step strategy implementation process, which step comes right before \"hold accountability\"?",opts:["Allocate responsibility","Draft detailed action plan","Establish timetable","Allocate resources"],correct:3,exp:"The sequence is: allocate responsibility → draft action plan → establish timetable → allocate resources → hold accountability."},
+{q:"Which approach generates several possible futures and analyses how to respond to each?",opts:["Forecasting", "Scenario planning", "Standing plan", "Management by objectives"],correct:1,exp:"Scenario (contingency) planning prepares the firm for several possible futures."},
+{q:"Long-term plans (>5 years) such as vision and mission rest mainly on…",opts:["a forecast", "foresight", "hope", "a budget"],correct:2,exp:"Forecast = short term, foresight = intermediate, hope = long term."},
+{q:"Which of these is NOT one of the course's focus tools for strategy?",opts:["Porter's Five Forces", "Cost leadership", "SWOT analysis", "Differentiation"],correct:2,exp:"The slides say the course only focuses on Porter's Five Forces and the generic strategies."}
 ]},
 {id:'pom-3',title:'Organizing — Organizational Design & Structure',summary:`Organizing creates a formal structure of task and reporting relationships. Structural forms include:
 - Simple (startups)
@@ -1532,7 +1590,22 @@ Key financial ratios:
 MBO is a 3-step joint goal-setting/review cycle.
 
 Organizational Change moves toward a desired future state; Lewin's Force-Field Model explains resistance as driving vs. resisting forces. Evolutionary (gradual) vs. Revolutionary (rapid, dramatic) change. Four steps to manage change:
-=> assess need → decide → implement → evaluate`,
+=> assess need → decide → implement → evaluate
+
+Performance indicators (KPIs, performance measures or performance ratios) measure the degree to which key objectives are achieved. They are condensed, quantitative, high-level metrics of effectiveness and/or efficiency, e.g. new customer acquisition or revenue per customer segment in sales, and quality, capacity utilization or rejection rate in manufacturing. They must reflect the organization's goals and be understandable, meaningful, measurable and influenceable.
+
+Traditional performance indicator systems are quantitative and objective, simple to calculate, give orientation and an overview, and allow comparison across companies. On the downside, they are short-term, based on accounting data and monetary, focused on past performance, inflexible and generic, come with a time lag, are not tied to the company's strategy, and need a lot of information and resources.
+
+Output control also works through goals that cascade from top management down to divisions, functions and individuals, and through operating budgets: blueprints of how managers intend to use organizational resources to achieve goals efficiently. Each division is evaluated on its own budget for cost, revenue or profit. Output standards must be challenging yet motivating at all levels, and must not push managers into inappropriate behaviour just to hit the numbers.
+
+Behavior control has two main forms besides MBO:
+- Direct supervision: managers actively monitor and observe subordinates, teach them appropriate behaviour and intervene to take corrective action. It is the most immediate and potent form of behavior control and can motivate, but it is very expensive (only a low span of control is possible) and can demotivate through close scrutiny and lack of freedom.
+- Bureaucratic control: a system of rules and standard operating procedures (SOPs) that shapes and regulates the behaviour of divisions, functions and individuals. Rules are easier to make than to discard ("red tape"), people may follow rules so automatically that they stop thinking for themselves, and innovation is incompatible with bureaucratic controls.
+
+Output and behavior control cannot become an organization-wide mechanism: the work of doctors, research scientists or engineers cannot be judged by watching their daily behaviour or by rules and SOPs, and measures like the time a surgeon takes per operation are only crude measures of quality. This is where clan control (shared values and norms) is needed.
+
+Change can also be understood from a technology perspective. Along the technology S-curve, a technology's rate of improvement and its diffusion to the market follow an S-shaped curve:
+=> Low competitive impact (low integration in products/processes) → High competitive impact (still low integration) → High competitive impact (high integration) → Loses competitive impact (replaced by a new technology)`,
 cards:[
 {q:"Define Controlling.",a:"Monitoring/evaluating how well an organization achieves its goals, and taking corrective action."},
 {q:"What are the three steps of the controlling cycle?",a:"Monitor, Compare, Correct."},
@@ -1545,7 +1618,13 @@ cards:[
 {q:"What are the three steps of MBO?",a:"(1) Jointly establish goals; (2) manager and subordinate determine subordinate's goals; (3) jointly review progress."},
 {q:"What is Clan control?",a:"Control through shared values, norms, and expectations (socialization) rather than formal systems."},
 {q:"What does Lewin's Force-Field Model explain?",a:"Resistance to change as a balance between driving and resisting forces; change shifts this balance to a new equilibrium."},
-{q:"What are the four steps of managing organizational change?",a:"Assess the need, decide on the change, implement it, evaluate it."}
+{q:"What are the four steps of managing organizational change?",a:"Assess the need, decide on the change, implement it, evaluate it."},
+{q:"What is a performance indicator (KPI) and what must it fulfil?",a:"A condensed quantitative measure of how far key objectives are achieved (effectiveness/efficiency). Must reflect the organization's goals and be understandable, meaningful, measurable and influenceable."},
+{q:"Name disadvantages of traditional performance indicator systems.",a:"Short-term, accounting-based and monetary, focused on past performance, inflexible and generic, time lag, not tied to strategy, need lots of information and resources."},
+{q:"What is an operating budget?",a:"A blueprint of how managers intend to use organizational resources to achieve goals efficiently; each division is evaluated on its budget for cost, revenue or profit (output control)."},
+{q:"Direct supervision vs. bureaucratic control: pros and cons?",a:"Direct supervision: most immediate and potent, can motivate, but very expensive (low span of control) and demotivating through close scrutiny. Bureaucratic control (rules/SOPs): red tape, people stop thinking for themselves, incompatible with innovation."},
+{q:"Why can't output and behavior control be used everywhere?",a:"Work like that of doctors, scientists or engineers can't be judged by watching behaviour or by rules/SOPs, and output measures are crude. Clan control (shared values and norms) is needed."},
+{q:"Describe the technology S-curve.",a:"A technology's improvement and market diffusion follow an S-shape: low impact/low integration → high impact/low integration → high impact/high integration → loses impact and is replaced by a new technology."}
 ],
 quiz:[
 {q:"Which control type anticipates and prevents problems before they occur?",opts:["Concurrent control","Feedback control","Feedforward control","Clan control"],correct:2,exp:"Feedforward control anticipates problems before they occur."},
@@ -1556,16 +1635,18 @@ quiz:[
 {q:"Lewin's Force-Field Model explains change as resulting from:",opts:["Random chance","A shift in the balance between driving and resisting forces","Only external technological shifts","Only internal culture changes"],correct:1,exp:"Change occurs when driving forces overcome resisting forces."},
 {q:"A rapid, dramatic overhaul of strategy/structure in response to a crisis is:",opts:["Evolutionary change","Revolutionary change","Feedforward control","Clan control"],correct:1,exp:"Revolutionary change is rapid, dramatic, and broadly focused."},
 {q:"The first step in managing organizational change is to:",opts:["Implement top-down","Evaluate post-change performance","Assess the need for change","Decide the ideal future state"],correct:2,exp:"The process begins with recognizing that a problem exists."},
-{q:"Which ratio indicates how far profits can decline before missing interest obligations?",opts:["Current ratio","Times-covered ratio","Inventory turnover","Days sales outstanding"],correct:1,exp:"Times-covered ratio = profit before interest and taxes / total interest charges."}
+{q:"Which ratio indicates how far profits can decline before missing interest obligations?",opts:["Current ratio","Times-covered ratio","Inventory turnover","Days sales outstanding"],correct:1,exp:"Times-covered ratio = profit before interest and taxes / total interest charges."},
+{q:"A key weakness of traditional performance indicator systems is that they…",opts:["are hard to calculate", "are not tied to the company's strategy", "cannot be compared across companies", "ignore monetary aspects"],correct:1,exp:"They are simple and comparable, but short-term, monetary, backward-looking and not tied to strategy."},
+{q:"Which form of behavior control is the most immediate and potent, but also very expensive?",opts:["Bureaucratic control", "Direct supervision", "Clan control", "Operating budget"],correct:1,exp:"Direct supervision allows only a low span of control, which makes it expensive."}
 ]}
 ];
 
 const POM_CHEAT = [
 {h:"Foundations — Organizations & Managers",items:["Organization: people deliberately structured to achieve goals, using human/financial/physical/information resources","Manager skills: Conceptual (top), Human (all levels), Technical (first-line)","3 levels: Top (long-term direction) → Middle (implement strategy) → First-line (day-to-day execution)","Efficiency = doing things right (resource use) vs. Effectiveness = doing the right things (right goals)","Efficiency×Effectiveness matrix: best case = both high; worst case = both low","Mintzberg's roles: Decisional (Entrepreneur, Disturbance Handler, Resource Allocator, Negotiator), Interpersonal (Figurehead, Leader, Liaison), Informational (Monitor, Disseminator, Spokesperson)","Left brain (logical/analytical) vs. Right brain (creative/intuitive) vs. Whole brain (balanced)"]},
-{h:"History / Approaches (4 schools & eras)",items:["Classic (1900s–1910s): Scientific Management (Taylor), Administrative Theory (Fayol), Bureaucracy (Weber)","Behavioural (1930s–1940s): Hawthorne Studies, Human Relations, Theory X/Y, OB","Quantitative (1950s): Management science, Operations research, TQM","Contemporary (1960s–1970s): Systems theory, Contingency theory"]},
-{h:"Planning",items:["Planning: Goals (\"what\") → Strategies (\"how\") → Implementation (\"how exactly\")","Three planning levels: Corporate, Business, Functional","Time horizons: Short-term (<1yr) → Intermediate (1–5yr) → Long-term (>5yr)","Vision / Mission / Goals; SMART goals","Porter's Five Forces; Porter's 3 generic strategies (Cost Leadership, Differentiation, Focus)","Internal consistency: value proposition + target market fit + fit of activities + trade-offs","Dynamic consistency threats: imitation, substitution, holdup, organizational slack","Implementation (planned → realized strategy): allocate responsibility → action plan → timetable → allocate resources → hold accountability"]},
-{h:"Organizing",items:["Six design parameters: specialization, departmentalization, chain of command, span of control, centralization, formalization","Structures: Simple, Functional, Divisional, Matrix, Product Team, Holacracy","Contingency factors: Strategy, Size, Environment","Mechanistic vs. Organic structure"]},
-{h:"Control & Change",items:["Controlling Cycle: Monitor → Compare → Correct","Three control timings: Feedforward, Concurrent, Feedback","Three control systems: Output, Behavior, Clan","Lewin's Force-Field Model; Evolutionary vs. Revolutionary change","4 steps to manage change: Assess → Decide → Implement → Evaluate"]}
+{h:"Planning",items:["Planning: Goals (\"what\") → Strategies (\"how\") → Implementation (\"how exactly\")","Three planning levels: Corporate, Business, Functional","Time horizons: Short-term (<1yr) → Intermediate (1–5yr) → Long-term (>5yr)","Vision / Mission / Goals; SMART goals","Porter's Five Forces; Porter's 3 generic strategies (Cost Leadership, Differentiation, Focus)","Internal consistency: value proposition + target market fit + fit of activities + trade-offs","Dynamic consistency threats: imitation, substitution, holdup, organizational slack","Implementation (planned → realized strategy): allocate responsibility → action plan → timetable → allocate resources → hold accountability","Why plan: direction & purpose, participation, coordination, controlling managers","Planning process: Situational analysis → Alternatives → Evaluate → Choose → Implement → Evaluate outcome","Forecast (<1yr, tactics) · Foresight (1–5yr, strategy) · Hope (>5yr, vision/mission/values)","Scenario (contingency) planning: several possible futures + a response for each","Goals: financial / strategic / social; strategic (top) → tactical (mid) → operational (lower); S.M.A.R.T. = Specific, Measurable, Attainable, Realistic, Timely","Competitive advantage = superior performance vs. competitors / industry average","Business models: razor & blade, freemium, peer-to-peer, self-service, subscription","Only Porter's 5 Forces + generic strategies (no SWOT/PESTLE)"]},
+{h:"Control & Change",items:["Controlling Cycle: Monitor → Compare → Correct","Three control timings: Feedforward, Concurrent, Feedback","Three control systems: Output, Behavior, Clan","Lewin's Force-Field Model; Evolutionary vs. Revolutionary change","4 steps to manage change: Assess → Decide → Implement → Evaluate","KPIs: must reflect goals; understandable, meaningful, measurable, influenceable","Traditional indicator systems: simple & comparable, but short-term, monetary, backward-looking, not tied to strategy","Output control tools: financial ratios, cascading goals, operating budgets","Direct supervision (potent but expensive) vs. Bureaucratic control (rules/SOPs, red tape, anti-innovation)","Clan control where output/behavior control fail (doctors, scientists, engineers)","Technology S-curve: Low impact → High impact, low integration → High impact, high integration → Replaced"]},
+{notExam:true,h:"History / Approaches (4 schools & eras)",items:["Classic (1900s–1910s): Scientific Management (Taylor), Administrative Theory (Fayol), Bureaucracy (Weber)","Behavioural (1930s–1940s): Hawthorne Studies, Human Relations, Theory X/Y, OB","Quantitative (1950s): Management science, Operations research, TQM","Contemporary (1960s–1970s): Systems theory, Contingency theory"]},
+{notExam:true,h:"Organizing",items:["Six design parameters: specialization, departmentalization, chain of command, span of control, centralization, formalization","Structures: Simple, Functional, Divisional, Matrix, Product Team, Holacracy","Contingency factors: Strategy, Size, Environment","Mechanistic vs. Organic structure"]}
 ];
 
 const POM_RATIOS_TABLE = [
@@ -1954,17 +2035,21 @@ const OB_NAV = [
     {id:'ob-sim', label:'Exam Simulator', icon:'timer'}
   ]}
 ];
+// per "Principles of Management_Slides for written exam" (24 Sep 2026): History and Organizing are not exam content
+const POM_NOT_EXAM = ['pom-1','pom-3'];
+const pomExamTopics = () => POM_TOPICS.filter(t=>!POM_NOT_EXAM.includes(t.id));
+const pomExtraTopics = () => POM_TOPICS.filter(t=>POM_NOT_EXAM.includes(t.id));
 const POM_NAV = [
   {sec:'Overview', items:[{id:'pom-home', label:'POM Home & Exam Info', icon:'home'}]},
   {sec:'Exam Prep', items:[
     {id:'pom-sim', label:'Exam Simulator', icon:'timer'},
     {id:'pom-cheat', label:'Cheat Sheet & Ratios', icon:'cheat'}
-  ]},
-  {sec:'Extra — not in written exam', items:[
-    {id:'pom-case', label:'Growth Case Studio', icon:'case'},
-    {id:'pom-ratio', label:'Ratio Practice', icon:'calc'},
-    {id:'pom-timeline', label:'Theory Timeline', icon:'clock'}
   ]}
+];
+const POM_EXTRA_TOOLS = [
+  {id:'pom-case', label:'Growth Case Studio', icon:'case'},
+  {id:'pom-ratio', label:'Ratio Practice', icon:'calc'},
+  {id:'pom-timeline', label:'Theory Timeline', icon:'clock'}
 ];
 const AW_NAV = [
   {sec:'Overview', items:[{id:'aw-home', label:'AW Home', icon:'home'}]},
@@ -2009,9 +2094,15 @@ function buildSidebarNav(subjId){
   });
   if(subjId==='ob' || subjId==='pom'){
     html += `<div class="nav-section-label">Topics</div>`;
-    const topics = subjId==='ob'?OB_TOPICS:POM_TOPICS;
+    const topics = subjId==='ob'?OB_TOPICS:pomExamTopics();
     topics.forEach((t,i)=>{
       html += `<div class="nav-item" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${i+1}. ${t.title}</span></div>`;
+    });
+  }
+  if(subjId==='pom'){
+    html += `<div class="nav-section-label nav-not-exam-label">Not in the written exam</div>`;
+    [...pomExtraTopics().map(t=>({id:t.id, label:t.title, icon:'summary'})), ...POM_EXTRA_TOOLS].forEach(it=>{
+      html += `<div class="nav-item nav-not-exam" data-page="${it.id}" onclick="navTo('${it.id}')">${icon(it.icon)}<span>${it.label}</span></div>`;
     });
   }
   nav.innerHTML = html;
@@ -2029,7 +2120,7 @@ function buildSearchIndex(){
   const subjLabel = id => id.toUpperCase();
   [['ob',OB_TOPICS],['pom',POM_TOPICS]].forEach(([subj,topics])=>{
     topics.forEach((t,i)=>{
-      const where = `${subjLabel(subj)} · Topic ${i+1}`;
+      const where = subj==='pom' ? (POM_NOT_EXAM.includes(t.id) ? 'POM · not in exam' : `POM · Topic ${pomExamTopics().indexOf(t)+1}`) : `${subjLabel(subj)} · Topic ${i+1}`;
       add({type:'Topic', rank:0, title:t.title, text:'', where, page:t.id, tab:'sum'});
       t.summary.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:t.title, text:searchFlat(p), where, page:t.id, tab:'sum'}));
       t.cards.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:`${where} · ${t.title}`, page:t.id, tab:'fc'}));
@@ -2178,7 +2269,7 @@ function buildHomeCards(){
   const wrap = document.getElementById('home-cards');
   const meta = {
     ob:{banner:'var(--tile-banner)', stat1:'9 topics', stat2:'4 tools'},
-    pom:{banner:'var(--tile-banner)', stat1:'5 topics', stat2:'exam simulator'},
+    pom:{banner:'var(--tile-banner)', stat1:'3 exam topics', stat2:'exam simulator'},
     aw:{banner:'var(--tile-banner)', stat1:'reference + drills', stat2:'3 tools'}
   };
   wrap.innerHTML = SUBJECTS.map(s=>{
@@ -2606,7 +2697,7 @@ function fcMasteryHtml(storeKey, total){
 function fcMasteryLecture(subjId){
   let entries = [];
   if(subjId==='ob') entries = OB_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
-  else if(subjId==='pom') entries = POM_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
+  else if(subjId==='pom') entries = pomExamTopics().map(t=>['fc-'+t.id, t.cards.length]);
   else if(subjId==='aw') entries = [['fc-aw', AW_CARDS.length]];
   let gotit=0, partial=0, dontknow=0, total=0;
   entries.forEach(([key,n])=>{
@@ -2671,7 +2762,7 @@ function topicSize(t){ return t.cards.length + t.quiz.length + Math.round(t.summ
 
 function radarAxes(subj){
   if(subj==='ob' || subj==='pom'){
-    return (subj==='ob'?OB_TOPICS:POM_TOPICS).map(t=>({label:t.title, page:t.id, score:topicKnowledge(t)}));
+    return (subj==='ob'?OB_TOPICS:pomExamTopics()).map(t=>({label:t.title, page:t.id, score:topicKnowledge(t)}));
   }
   return [
     {label:'Flashcards', page:'aw-flash', score:knowledgeScore('fc-aw', AW_CARDS.length)},
@@ -2684,7 +2775,7 @@ function planItemPool(){
   const items = [];
   const weightOf = s => s==null ? 1 : 1-s;
   OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
-  POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
+  pomExamTopics().forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   const pomSim = knowledgeScore(null, 0, 'pom-exam-sim', 20);
   items.push({subj:'pom', label:'POM Exam Simulator (single choice)', page:'pom-sim', weight:pomSim==null ? .8 : 1-pomSim, size:POM_EXAM_SCENARIOS.length});
   const aw = radarAxes('aw');
@@ -3101,9 +3192,11 @@ function renderCheat(container, blocks, extraHtml, key){
   container.innerHTML = cheatHtml(blocks, extraHtml);
 }
 function cheatHtml(blocks, extraHtml){
-  return blocks.map(b=>`
-    <div class="cheat-block"><h4>${esc(b.h)}</h4><ul>${b.items.map(i=>`<li${i.includes(' → ')?' class="has-flow"':''}>${cheatItemHtml(i)}</li>`).join('')}</ul></div>
-  `).join('') + (extraHtml||'');
+  // extra HTML (e.g. the ratio table) is exam content, so it goes before the "not in the written exam" part
+  const hasNotExam = blocks.some(b=>b.notExam);
+  return blocks.map((b,i)=>(b.notExam && !(blocks[i-1]||{}).notExam ? (extraHtml||'') + `<div class="not-exam-divider"><span>Not in the written exam</span></div>` : '') + `
+    <div class="cheat-block${b.notExam?' not-exam':''}"><h4>${esc(b.h)}</h4><ul>${b.items.map(i=>`<li${i.includes(' → ')?' class="has-flow"':''}>${cheatItemHtml(i)}</li>`).join('')}</ul></div>
+  `).join('') + (hasNotExam ? '' : (extraHtml||''));
 }
 
 /* ============================================================ TOPIC PAGE BUILDER (OB / POM) ============================================================ */
@@ -3116,6 +3209,7 @@ function buildTopicPage(t, subjColor){
         <p>Summary, spaced-repetition flashcards, and an applied quiz for this topic.</p>
       </div>
       <div class="page-body">
+        ${POM_NOT_EXAM.includes(t.id) ? notInExamNote('This block is in the complete slide deck but not in the "Slides for written exam" (92 slides). Keep it for reference only. Exception: Mintzberg\'s <i>Liaison</i> role, Fayol\'s plan qualities and bureaucratic control are exam content, but they live in the other topics.') : ''}
         <div class="tabbar">
           <button class="tabbtn active" data-tab="sum">Summary</button>
           <button class="tabbtn" data-tab="fc">Flashcards</button>
@@ -3325,7 +3419,13 @@ const POM_EXAM_SCENARIOS = [
 {topic:'pom-4',q:"Each January, a manager and each employee jointly agree on goals; during the year they review progress together. Which control approach is this?",opts:["Output control","Clan control","Management by Objectives (MBO)","Feedforward control","Force-field analysis"],correct:2,exp:"MBO is a joint goal-setting and review cycle, a form of behavior control."},
 {topic:'pom-4',q:"A bank wants to know whether a company can pay its short-term debts without having to sell any of its inventory. Which ratio answers this best?",opts:["Return on investment (ROI)","Current ratio","Quick ratio","Debt-to-asset ratio","Inventory turnover"],correct:2,exp:"Quick ratio = (current assets − inventory) / current liabilities, i.e. liquidity without relying on inventory."},
 {topic:'pom-4',q:"Before introducing a new IT system, management lists everything that pushes for the change and everything that holds employees back from it. Which model are they using?",opts:["Lewin's Force-Field Model","Porter's Five Forces","Mintzberg's managerial roles","Management by Objectives","Contingency Theory"],correct:0,exp:"Lewin's Force-Field Model explains change and resistance as driving vs. resisting forces."},
-{topic:'pom-4',q:"After a severe crisis, a retailer replaces its entire business model, structure and top management within a few months. What kind of change is this?",opts:["Evolutionary change","Revolutionary change","Feedforward control","Incremental planning","Standing plan"],correct:1,exp:"Rapid, dramatic change = revolutionary; gradual change = evolutionary."}
+{topic:'pom-4',q:"After a severe crisis, a retailer replaces its entire business model, structure and top management within a few months. What kind of change is this?",opts:["Evolutionary change","Revolutionary change","Feedforward control","Incremental planning","Standing plan"],correct:1,exp:"Rapid, dramatic change = revolutionary; gradual change = evolutionary."},
+{topic:'pom-0',q:"After the budget is approved, the head of sales checks every month whether the regional teams hit their targets and steps in where they fall behind. Which management function is she performing?",opts:["Planning", "Organizing", "Leading", "Controlling", "Staffing"],correct:3,exp:"Monitoring and measuring completed work and taking corrective action = Controlling."},
+{topic:'pom-2',q:"An energy company develops three possible pictures of 2035 (fast green transition, slow transition, energy crisis) and prepares a response for each. What is this called?",opts:["Forecasting", "Scenario planning", "Standing plan", "Operating budget", "Management by objectives"],correct:1,exp:"Generating multiple possible futures and analysing how to respond to each = scenario (contingency) planning."},
+{topic:'pom-2',q:"A software company gives its basic app away for free and earns money from users who upgrade to premium features. Which business model is this?",opts:["Razor & blade", "Peer-to-peer", "Self-service", "Subscription", "Freemium"],correct:4,exp:"Free basic version + paid premium features = freemium."},
+{topic:'pom-2',q:"A production team leader sets the goal \"reduce the rejection rate on line 3 to below 2% this month\". At which level is this goal set?",opts:["Strategic goal", "Financial goal", "Operational goal", "Social goal", "Tactical goal"],correct:2,exp:"Strategic goals are set at the top, tactical goals at mid level and operational goals at the lower level."},
+{topic:'pom-4',q:"A research lab cannot judge its scientists by watching them work or by rules, and \"time per experiment\" says little about quality. Which control system should it rely on most?",opts:["Clan control", "Direct supervision", "Bureaucratic control", "Operating budget", "Output control"],correct:0,exp:"Where output and behavior control are inappropriate (doctors, scientists, engineers), shared values and norms (clan control) are needed."},
+{topic:'pom-4',q:"A technology is now built into almost every product in the industry and has a high competitive impact. Where is it on the technology S-curve?",opts:["Low impact, low integration", "High impact, low integration", "Loses impact and is being replaced", "High impact, high integration", "It is not on the S-curve"],correct:3,exp:"S-curve: low/low → high impact, low integration → high impact, high integration → loses impact and is replaced."}
 ];
 
 function buildPOMSim(){
@@ -3334,15 +3434,17 @@ function buildPOMSim(){
     const body = div.querySelector('#pom-sim-body');
     const topicTitle = id => (POM_TOPICS.find(t=>t.id===id)||{}).title || 'General';
     const start = (mode)=>{
-      const pool = POM_EXAM_SCENARIOS.map(q=>({...q, topic:topicTitle(q.topic)}));
-      if(mode==='exam') POM_TOPICS.forEach(t=>t.quiz.forEach(q=>pool.push({...q, topic:t.title})));
-      // exam mode: 20 random questions, at least 12 scenario cases; practice: all scenario cases
+      // only exam topics (History and Organizing are not in the "Slides for written exam")
+      const cases = POM_EXAM_SCENARIOS.filter(q=>!POM_NOT_EXAM.includes(q.topic)).map(q=>({...q, topic:topicTitle(q.topic)}));
+      // exam mode: 20 random questions, 12 scenario cases + 8 topic-quiz questions; practice: all scenario cases
       let questions;
       if(mode==='exam'){
-        const cases = shuffle(pool.slice(0, POM_EXAM_SCENARIOS.length)).slice(0,12);
-        const rest = shuffle(pool.slice(POM_EXAM_SCENARIOS.length)).slice(0,8);
-        questions = shuffle([...cases, ...rest]);
-      } else questions = shuffle(pool);
+        const quizPool = [];
+        pomExamTopics().forEach(t=>t.quiz.forEach(q=>quizPool.push({...q, topic:t.title})));
+        const pickCases = shuffle(cases).slice(0,12);
+        const rest = shuffle(quizPool).slice(0,8);
+        questions = shuffle([...pickCases, ...rest]);
+      } else questions = shuffle(cases);
       // shuffle answer options too, so the correct letter isn't predictable
       questions = questions.map(q=>{ const ord = shuffle(q.opts.map((_,i)=>i)); return {...q, opts:ord.map(i=>q.opts[i]), correct:ord.indexOf(q.correct)}; });
       renderQuiz(body, questions, mode==='exam' ? 'pom-exam-sim' : 'pom-exam-practice', {timerSec: mode==='exam' ? 20*60 : null, topicOf:(qi)=>questions[qi].topic});
@@ -3352,7 +3454,7 @@ function buildPOMSim(){
       <p style="color:var(--ink-soft);margin:0 auto 22px;max-width:480px;">The PoM part of the written exam is <b>single choice only</b>. Train exactly that: apply a concept to a short business case.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <button class="btn pom-sim-exam">Timed exam · 20 questions · 20 min</button>
-        <button class="btn ghost pom-sim-practice">Practice all ${POM_EXAM_SCENARIOS.length} cases · no timer</button>
+        <button class="btn ghost pom-sim-practice">Practice all ${POM_EXAM_SCENARIOS.filter(q=>!POM_NOT_EXAM.includes(q.topic)).length} cases · no timer</button>
       </div></div>`;
     body.querySelector('.pom-sim-exam').addEventListener('click', ()=>start('exam'));
     body.querySelector('.pom-sim-practice').addEventListener('click', ()=>start('practice'));
@@ -3369,8 +3471,8 @@ function buildPOMHome(){
     div.innerHTML = `
       <div class="page-header">
         <div class="eyebrow">${icon('home')} Principles of Management</div>
-        <h2>5 Topics</h2>
-        <p>Foundations, history, planning &amp; strategy, organizing, and control &amp; change: the management canon (Jones &amp; George, Ch. 2, 8, 10, 11).</p>
+        <h2>3 Exam Topics</h2>
+        <p>Managers &amp; managing, planning &amp; strategy, and control &amp; change: exactly what the "Slides for written exam" cover (Jones &amp; George, Ch. 8 and 11).</p>
       </div>
       <div class="page-body">
         <div class="exam-card">
@@ -3386,7 +3488,7 @@ function buildPOMHome(){
             <div class="exam-col">
               <ul class="exam-facts">
                 <li><b>Format:</b> single-choice questions only (5 options), usually a short business case.</li>
-                <li><b>Content:</b> introduction &amp; history, planning &amp; strategy, organizational design &amp; structure, control &amp; change. <i>Leading</i> is not PoM (it is in OB).</li>
+                <li><b>Content</b> (per the "Slides for written exam", 92 slides): managers &amp; managing (incl. Mintzberg), planning &amp; strategy, organizational control &amp; change. <b>Not included:</b> History of Management, Organizational Design &amp; Structure, SWOT/PESTLE, Leading (that is OB). Worth confirming once in the exam debrief.</li>
                 <li><b>Growth Scenarios:</b> in-class group work. Slides due <b>30 Sep 2026, 5:00 PM</b>, one submission per group on Canvas.</li>
               </ul>
             </div>
@@ -3400,19 +3502,24 @@ function buildPOMHome(){
         </div>
         ${lectureMasteryHtml('pom')}
         <div class="topic-grid">
-          ${POM_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
+          ${pomExamTopics().map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
         </div>
         <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Exam prep</div>
         <div class="tool-tiles">
-          <div class="tool-tile" onclick="navTo('pom-sim')"><div class="ic">${icon('timer')}</div><h4>Exam Simulator</h4><p>${POM_EXAM_SCENARIOS.length} single-choice cases in the real exam style.</p></div>
+          <div class="tool-tile" onclick="navTo('pom-sim')"><div class="ic">${icon('timer')}</div><h4>Exam Simulator</h4><p>${POM_EXAM_SCENARIOS.filter(q=>!POM_NOT_EXAM.includes(q.topic)).length} single-choice cases in the real exam style.</p></div>
           <div class="tool-tile" onclick="navTo('pom-cheat')"><div class="ic">${icon('cheat')}</div><h4>Cheat Sheet &amp; Ratios</h4><p>Every framework + financial ratio table.</p></div>
         </div>
-        <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Extra: not in the written exam</div>
-        <div class="tool-tiles extra">
-          <div class="tool-tile" onclick="navTo('pom-case')"><div class="ic">${icon('case')}</div><h4>Growth Case Studio</h4><p>For the Growth Scenario group work.</p></div>
-          <div class="tool-tile" onclick="navTo('pom-ratio')"><div class="ic">${icon('calc')}</div><h4>Ratio Practice</h4><p>Calculating ratios, beyond exam level.</p></div>
-          <div class="tool-tile" onclick="navTo('pom-timeline')"><div class="ic">${icon('clock')}</div><h4>Theory Timeline</h4><p>Taylor to Contingency Theory.</p></div>
-        </div>
+        <section class="not-exam-area">
+          <div class="not-exam-head"><h3>Not in the written exam</h3><p>These blocks are in the complete slide deck but not in the "Slides for written exam". Kept here for reference, the group work, or in case the debrief says otherwise.</p></div>
+          <div class="topic-grid">
+            ${pomExtraTopics().map(t=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">NOT IN EXAM</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p></div>`).join('')}
+          </div>
+          <div class="tool-tiles">
+            <div class="tool-tile" onclick="navTo('pom-case')"><div class="ic">${icon('case')}</div><h4>Growth Case Studio</h4><p>For the Growth Scenario group work.</p></div>
+            <div class="tool-tile" onclick="navTo('pom-ratio')"><div class="ic">${icon('calc')}</div><h4>Ratio Practice</h4><p>Calculating ratios, beyond exam level.</p></div>
+            <div class="tool-tile" onclick="navTo('pom-timeline')"><div class="ic">${icon('clock')}</div><h4>Theory Timeline</h4><p>Taylor to Contingency Theory.</p></div>
+          </div>
+        </section>
       </div>`;
   });
 }
