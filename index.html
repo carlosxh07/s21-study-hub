@@ -2675,14 +2675,39 @@ function knowledgeScore(fcKey, nCards, quizKey, nQuiz){
 function topicKnowledge(t){ return knowledgeScore('fc-'+t.id, t.cards.length, 'quiz-'+t.id, t.quiz.length); }
 function topicSize(t){ return t.cards.length + t.quiz.length + Math.round(t.summary.split(/\s+/).length/120); }
 
+// latest result per question (keyed by question text, so it survives shuffling) — feeds the finer radar axes
+function qresKey(text){ let h = 5381; for(let i=0;i<text.length;i++) h = ((h<<5) + h + text.charCodeAt(i)) | 0; return 'q'+(h>>>0).toString(36); }
+function qresRecord(text, right){ const r = ls('qres', {}); r[qresKey(text)] = right ? 1 : 0; lsSet('qres', r); }
+// share of a question group answered correctly (last attempt); null if none answered yet
+function qresScore(questions){
+  if(!questions.length) return null;
+  const r = ls('qres', {});
+  let seen = 0, right = 0;
+  questions.forEach(q=>{ const v = r[qresKey(q.q)]; if(v!==undefined){ seen++; right += v; } });
+  return seen ? right/questions.length : null;
+}
+// AW exam areas (indices into AW_QUIZ / AW_MOCK_MC)
+const AW_AREAS = [
+  {label:'Argumentation & Logic', page:'aw-summary', quiz:[0,1,2], mock:[]},
+  {label:'Sources & Academic Integrity', page:'aw-mockexam-mc', quiz:[], mock:[0,1,2,3,4,5,6]},
+  {label:'Citation & Referencing (APA)', page:'aw-citation', quiz:[3], mock:[7,8,9,10,11,12,13,14,15,16,17]},
+  {label:'Formatting, Figures & Tables', page:'aw-rules', quiz:[13], mock:[18,19,20,21,22,23,24,25,26,27,28,29]},
+  {label:'Structure & Genres', page:'aw-peel', quiz:[4,5,6,7,8], mock:[30,31,32,33,34,35,36,37]},
+  {label:'Presentations & Career', page:'aw-present', quiz:[9,10,11,12,14], mock:[]}
+];
+const POM_SHORT = {'pom-0':'Foundations','pom-2':'Planning & Strategy','pom-4':'Control & Change'};
 function radarAxes(subj){
-  if(subj==='ob' || subj==='pom'){
-    return (subj==='ob'?OB_TOPICS:POM_TOPICS).map(t=>({label:t.title, page:t.id, score:topicKnowledge(t)}));
+  if(subj==='ob') return OB_TOPICS.map(t=>({label:t.title, page:t.id, score:topicKnowledge(t)}));
+  if(subj==='pom'){
+    // per topic: knowledge (topic quiz) and application (simulator cases) → 6 axes
+    return POM_TOPICS.flatMap(t=>[
+      {label:`${POM_SHORT[t.id]||t.title} · Quiz`, page:t.id, score:topicKnowledge(t)},
+      {label:`${POM_SHORT[t.id]||t.title} · Cases`, page:'pom-sim', score:qresScore(POM_EXAM_SCENARIOS.filter(q=>q.topic===t.id))}
+    ]);
   }
   return [
-    ...(planUsesFc() ? [{label:'Flashcards', page:'aw-flash', score:knowledgeScore('fc-aw', AW_CARDS.length)}] : []),
-    {label:'Quiz', page:'aw-quiz', score:knowledgeScore(null, 0, 'quiz-aw', AW_QUIZ.length)},
-    {label:'Mockup MCQ (Shalini)', page:'aw-mockexam-mc', score:knowledgeScore(null, 0, 'quiz-aw-mockmc', AW_MOCK_MC.length)}
+    ...AW_AREAS.map(a=>({label:a.label, page:a.page, score:qresScore([...a.quiz.map(i=>AW_QUIZ[i]), ...a.mock.map(i=>AW_MOCK_MC[i])].filter(Boolean))})),
+    ...(planUsesFc() ? [{label:'Flashcards', page:'aw-flash', score:knowledgeScore('fc-aw', AW_CARDS.length)}] : [])
   ];
 }
 
@@ -2693,11 +2718,10 @@ function planItemPool(){
   POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   const pomSim = knowledgeScore(null, 0, 'pom-exam-sim', 20);
   items.push({subj:'pom', label:'POM Exam Simulator (single choice)', page:'pom-sim', weight:pomSim==null ? .8 : 1-pomSim, size:POM_EXAM_SCENARIOS.length});
-  const aw = radarAxes('aw');
   const leeItems = AW_LEE_DRILLS.reduce((n,d)=>n+d.items.length, 0);
-  const awScore = page => (aw.find(a=>a.page===page)||{}).score;
-  items.push({subj:'aw', label:'AW Flashcards (all sessions)', page:'aw-flash', weight:planUsesFc() ? weightOf(awScore('aw-flash')) : .6, size:AW_CARDS.length});
-  items.push({subj:'aw', label:'Mockup MCQ Exam', page:'aw-mockexam-mc', weight:awScore('aw-mockexam-mc')==null ? .8 : 1-awScore('aw-mockexam-mc'), size:AW_MOCK_MC.length});
+  const awFc = knowledgeScore('fc-aw', AW_CARDS.length), awMock = knowledgeScore(null, 0, 'quiz-aw-mockmc', AW_MOCK_MC.length);
+  items.push({subj:'aw', label:'AW Flashcards (all sessions)', page:'aw-flash', weight:planUsesFc() ? weightOf(awFc) : .6, size:AW_CARDS.length});
+  items.push({subj:'aw', label:'Mockup MCQ Exam', page:'aw-mockexam-mc', weight:awMock==null ? .8 : 1-awMock, size:AW_MOCK_MC.length});
   items.push({subj:'aw', label:'Mockup Written Exam', page:'aw-mockexam-written', weight:.8, size:AW_MOCK_WRITTEN.length*8});
   items.push({subj:'aw', label:'Lee Hawkins — Grammar & Language Drills', page:'aw-lee-drills', weight:.55, size:leeItems});
   items.push({subj:'aw', label:'Marie Claire — Exam-Prep MCQ', page:'aw-marie-quiz', weight:.55, size:AW_MARIE_QUIZ.length});
@@ -2882,7 +2906,7 @@ function renderRadar(div){
     .map(a=>`<div class="radar-row" onclick="navTo('${a.page}')"><span class="radar-row-num">${a.n}</span><span class="radar-row-label">${esc(a.label)}</span><span class="radar-bar"><i class="${radarLevel(a.score)}" style="width:${Math.round((a.score||0)*100)}%"></i></span><span class="radar-val">${pct(a.score)}</span></div>`).join('');
   const weakest = axes.filter(a=>a.score==null || a.score<.75).sort((a,b)=>(a.score??-1)-(b.score??-1)).slice(0,2);
   div.querySelector('.radar-reco').innerHTML = weakest.length
-    ? `<b>Focus next:</b> ${weakest.map(a=>`<a href="#${a.page}" onclick="navTo('${a.page}');return false;">${esc(a.label)}</a> (${pct(a.score)})`).join(' and ')}. Rate flashcards and finish quizzes to keep the radar accurate.`
+    ? `<b>Focus next:</b> ${weakest.map(a=>`<a href="#${a.page}" onclick="navTo('${a.page}');return false;">${esc(a.label)}</a> (${pct(a.score)})`).join(' and ')}. ${planUsesFc() ? 'Rate flashcards and finish quizzes' : 'Do the topic quizzes and the exam simulator'} to keep the radar accurate.`
     : `<b>Looking strong.</b> Everything is above 75% — keep reviewing to hold it there.`;
 }
 
@@ -3180,6 +3204,7 @@ function renderQuiz(container, questions, storeKey, opts){
     });
     const isRight = i===correct;
     if(isRight) score++;
+    qresRecord(q.q, isRight);
     const t = topicOf(qi);
     topicScores[t] = topicScores[t]||{right:0,total:0};
     topicScores[t].total++;
