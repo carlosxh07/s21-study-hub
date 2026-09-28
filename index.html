@@ -660,6 +660,28 @@ body.hl-armed .hl-container{cursor:text;}
 #home-search .hs-empty{padding:16px;font-size:.85rem;color:var(--ink-soft);text-align:center;}
 ::highlight(search-hit){background-color:rgba(255,214,10,.55);color:inherit;}
 @media(max-width:640px){#home-search{margin:-20px 0 28px;}#home-search kbd{display:none;}}
+.exam-card{padding:20px 22px;border-radius:var(--radius);margin-bottom:24px;background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);box-shadow:var(--shadow-sm);}
+.exam-card-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.exam-card-head h3{font-size:1.05rem;}
+.exam-date{font-size:.78rem;font-weight:600;color:var(--accent-ink);background:var(--accent-bg);padding:3px 10px;border-radius:var(--radius-pill);}
+.exam-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;}
+.exam-label{font-size:.74rem;font-weight:600;color:var(--ink-soft);margin:0 0 6px;}
+.exam-bar{display:flex;gap:3px;margin-bottom:14px;border-radius:10px;overflow:hidden;}
+.exam-bar span{padding:7px 8px;font-size:.72rem;font-weight:600;text-align:center;background:var(--bg2);color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.exam-bar span.me{background:var(--accent);color:#fff;}
+.exam-total{font-size:.82rem;color:var(--ink-soft);line-height:1.5;}
+.exam-facts{padding-left:18px;font-size:.84rem;line-height:1.55;color:var(--ink-soft);}
+.exam-facts li{margin-bottom:7px;}
+.exam-facts b,.exam-total b{color:var(--ink);}
+.exam-example{margin-top:14px;border-top:1px solid var(--line);padding-top:12px;font-size:.84rem;}
+.exam-example summary{cursor:pointer;font-weight:600;color:var(--accent-ink);}
+.exam-example p{margin-top:8px;color:var(--ink-soft);line-height:1.55;}
+.exam-example .exam-opts{color:var(--ink);}
+.exam-note{margin-bottom:20px;padding:11px 14px;border-left:3px solid var(--warn);background:var(--warn-bg);border-radius:var(--radius-sm);font-size:.84rem;line-height:1.55;color:var(--ink-soft);}
+.exam-note b{color:var(--ink);}
+.tool-tiles.extra .tool-tile{opacity:.72;}
+.tool-tiles.extra .tool-tile:hover{opacity:1;}
+@media(max-width:760px){.exam-grid{grid-template-columns:1fr;gap:8px;}}
 </style>
 </head>
 <body>
@@ -1931,9 +1953,12 @@ const OB_NAV = [
   ]}
 ];
 const POM_NAV = [
-  {sec:'Overview', items:[{id:'pom-home', label:'POM Home', icon:'home'}]},
-  {sec:'Cross-Topic Tools', items:[
-    {id:'pom-cheat', label:'Cheat Sheet & Ratios', icon:'cheat'},
+  {sec:'Overview', items:[{id:'pom-home', label:'POM Home & Exam Info', icon:'home'}]},
+  {sec:'Exam Prep', items:[
+    {id:'pom-sim', label:'Exam Simulator', icon:'timer'},
+    {id:'pom-cheat', label:'Cheat Sheet & Ratios', icon:'cheat'}
+  ]},
+  {sec:'Extra — not in written exam', items:[
     {id:'pom-case', label:'Growth Case Studio', icon:'case'},
     {id:'pom-ratio', label:'Ratio Practice', icon:'calc'},
     {id:'pom-timeline', label:'Theory Timeline', icon:'clock'}
@@ -2015,6 +2040,7 @@ function buildSearchIndex(){
   AW_MARIE_SUMMARY.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:'Stress Management', text:searchFlat(p), where:'AW · Marie Claire', page:'aw-marie-summary'}));
   AW_CARDS.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:'AW · Flashcards', page:'aw-flash'}));
   AW_QUIZ.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:'AW · Quiz', page:'aw-quiz'}));
+  POM_EXAM_SCENARIOS.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:'POM · Exam Simulator', page:'pom-sim'}));
   AW_VERBS.forEach(v=>add({type:'Action verbs', rank:2, title:v.cat, text:v.verbs.join(', '), where:'AW · Action Verbs', page:'aw-verbs'}));
   [['ob',OB_NAV],['pom',POM_NAV],['aw',AW_NAV]].forEach(([subj,nav])=>nav.forEach(sec=>sec.items.forEach(it=>
     add({type:'Page', rank:0, title:it.label, text:sec.sec, where:`${subjLabel(subj)} · ${sec.sec}`, page:it.id}))));
@@ -2150,7 +2176,7 @@ function buildHomeCards(){
   const wrap = document.getElementById('home-cards');
   const meta = {
     ob:{banner:'var(--tile-banner)', stat1:'9 topics', stat2:'4 tools'},
-    pom:{banner:'var(--tile-banner)', stat1:'4 topics', stat2:'3 tools'},
+    pom:{banner:'var(--tile-banner)', stat1:'5 topics', stat2:'exam simulator'},
     aw:{banner:'var(--tile-banner)', stat1:'reference + drills', stat2:'3 tools'}
   };
   wrap.innerHTML = SUBJECTS.map(s=>{
@@ -2657,6 +2683,8 @@ function planItemPool(){
   const weightOf = s => s==null ? 1 : 1-s;
   OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
+  const pomSim = knowledgeScore(null, 0, 'pom-exam-sim', 20);
+  items.push({subj:'pom', label:'POM Exam Simulator (single choice)', page:'pom-sim', weight:pomSim==null ? .8 : 1-pomSim, size:POM_EXAM_SCENARIOS.length});
   const aw = radarAxes('aw');
   const leeItems = AW_LEE_DRILLS.reduce((n,d)=>n+d.items.length, 0);
   items.push({subj:'aw', label:'AW Flashcards (all sessions)', page:'aw-flash', weight:weightOf(aw[0].score), size:AW_CARDS.length});
@@ -3256,24 +3284,131 @@ OB_TOPICS.forEach(t=>buildTopicPage(t,'ob'));
 buildOBHome(); buildOBCheat(); buildOBScenario(); buildOBMatch(); buildOBSim();
 
 /* ============================================================ POM PAGES ============================================================ */
+// Scenario-style single-choice questions in the format of Dr. Minullah's example exam question (5 options a–e)
+const POM_EXAM_SCENARIOS = [
+{topic:'pom-0',q:"The night before a major product launch, a plant manager learns that a key supplier's factory has burned down. She immediately reorganizes production schedules and finds a replacement supplier. According to Mintzberg, she is playing the role of a _____.",opts:["Entrepreneur","Disturbance handler","Negotiator","Monitor","Resource allocator"],correct:1,exp:"Dealing with crises and unexpected problems is the Disturbance Handler role (decisional)."},
+{topic:'pom-0',q:"The CEO of a logistics firm cuts the ribbon at the new headquarters and gives a speech at an employee's 25th work anniversary. According to Mintzberg, the CEO is acting as a _____.",opts:["Leader","Spokesperson","Figurehead","Liaison","Disseminator"],correct:2,exp:"Symbolic, ceremonial duties = Figurehead (interpersonal role)."},
+{topic:'pom-0',q:"Every week, the head of marketing reads industry reports and tracks competitors' prices to stay informed about the market. According to Mintzberg, this is the role of a _____.",opts:["Monitor","Disseminator","Spokesperson","Entrepreneur","Liaison"],correct:0,exp:"Collecting and analyzing information = Monitor (informational role)."},
+{topic:'pom-0',q:"A department head has to decide how the annual budget and the available staff are split between two competing projects. According to Mintzberg, she is acting as a _____.",opts:["Negotiator","Resource allocator","Leader","Disturbance handler","Figurehead"],correct:1,exp:"Distributing money, staff and time = Resource Allocator (decisional role)."},
+{topic:'pom-0',q:"The CFO of a listed company presents the quarterly results to investors and answers questions from journalists. According to Mintzberg, the CFO is acting as a _____.",opts:["Disseminator","Monitor","Spokesperson","Figurehead","Liaison"],correct:2,exp:"Representing the organization to outsiders = Spokesperson. (Sharing information inside the organization would be Disseminator.)"},
+{topic:'pom-0',q:"Maria has just been promoted to foreman on an assembly line, where she directly supervises 12 non-managerial workers. Which type of managerial skill is most important at her level?",opts:["Conceptual skills","Human skills","Technical skills","Political skills","Strategic skills"],correct:2,exp:"Technical (job-specific) skills are most needed by first-line managers; conceptual skills matter most at the top; human skills at all levels."},
+{topic:'pom-0',q:"PhoneCo produces its new smartphone at the lowest cost in the industry, but hardly any customers want to buy it. How would you classify PhoneCo's performance?",opts:["High efficiency + high effectiveness","Low efficiency + high effectiveness","High efficiency + low effectiveness","Low efficiency + low effectiveness","It cannot be classified without financial ratios"],correct:2,exp:"Resources are used well (efficient = doing things right) but the goal is wrong (not effective = not doing the right things): a great product nobody wants."},
+{topic:'pom-0',q:"A regional manager supervises several first-line managers and translates top management's strategy into concrete departmental plans. She is a _____.",opts:["Top manager","Middle manager","First-line manager","Non-managerial employee","Board member"],correct:1,exp:"Middle managers supervise first-line managers and implement top-management strategy into departmental plans."},
+{topic:'pom-1',q:"A consultant times every movement of warehouse workers, writes the fastest method down as a standard procedure and links pay to the number of parcels packed. Which management approach is he applying?",opts:["Scientific Management","Administrative Theory","Bureaucracy","Human Relations","Contingency Theory"],correct:0,exp:"Studying tasks scientifically, codifying rules/SOPs and tying pay to performance is Taylor's Scientific Management."},
+{topic:'pom-1',q:"In a factory study, productivity rose in both the test group and the control group — workers performed better simply because they felt observed and valued. This finding is known as the _____.",opts:["Hawthorne effect","Theory X","Scientific Management","Bureaucratic control","Open-system effect"],correct:0,exp:"The Hawthorne Studies (Mayo) showed that social attention and morale drive productivity — the Hawthorne effect."},
+{topic:'pom-1',q:"A public agency assigns authority strictly to positions (not persons), appoints staff based on merit and follows clearly specified written rules. Which classical approach does this reflect?",opts:["Fayol's Administrative Theory","Weber's Bureaucracy","Taylor's Scientific Management","Systems Theory","Mayo's Human Relations"],correct:1,exp:"Authority tied to position, merit-based appointment and formal rules are Weber's idealized bureaucracy."},
+{topic:'pom-1',q:"The new CEO says: \"There is no single best way to organize. Our structure has to fit our environment and our technology.\" Which approach is she following?",opts:["Scientific Management","Human Relations Movement","Contingency Theory","Quantitative approach","Bureaucracy"],correct:2,exp:"Contingency Theory: no single best way to manage — it depends on internal and external circumstances."},
+{topic:'pom-1',q:"A consultant analyzes a hospital as a set of inputs (staff, equipment, patients) that are transformed into outputs (treated patients) while constantly interacting with its environment. Which approach is this?",opts:["Systems Theory","Theory X","Scientific Management","Total Quality Management","Administrative Theory"],correct:0,exp:"Systems Theory sees organizations as open systems: input → conversion → output, interacting with the environment."},
+{topic:'pom-1',q:"A manager believes his employees dislike work, avoid responsibility and therefore have to be closely supervised and controlled. According to McGregor, he holds _____.",opts:["Theory Y","Theory X","the Hawthorne view","a contingency view","a systems view"],correct:1,exp:"Theory X assumes people dislike work and need control; Theory Y assumes people are self-motivated."},
+{topic:'pom-1',q:"A textbook describes management as a universal set of functions: forecasting, planning, organizing, commanding, coordinating and controlling. Which approach does this come from?",opts:["Administrative Theory (Fayol)","Scientific Management (Taylor)","Bureaucracy (Weber)","Human Relations (Mayo)","Operations research"],correct:0,exp:"Fayol's Administrative Theory defined management as a distinct practice with these functions and 14 principles."},
+{topic:'pom-2',q:"An online shop handles every refund request with the same written step-by-step procedure. What type of plan is this?",opts:["Single-use plan","Standing plan","Vision statement","Business-level strategy","Project plan"],correct:1,exp:"Standing plans (policies, rules, SOPs) address recurring decisions; single-use plans (programs, projects) address unique situations."},
+{topic:'pom-2',q:"A budget airline offers no-frills flights at the lowest possible prices to as many travellers as possible. Which of Porter's generic strategies is it pursuing?",opts:["Differentiation","Cost leadership","Focus","Stuck in the middle","Vertical integration"],correct:1,exp:"Lowest cost for a broad (mass) market = Cost Leadership."},
+{topic:'pom-2',q:"A Swiss watchmaker produces only a few hundred unique, hand-made watches a year for a small group of wealthy collectors. Which of Porter's generic strategies fits best?",opts:["Cost leadership","Differentiation","Focus","Related diversification","Horizontal integration"],correct:2,exp:"Serving a narrow niche segment = Focus strategy (here a differentiation focus)."},
+{topic:'pom-2',q:"A coffee-house chain buys its own coffee plantations in Colombia. Which corporate-level strategy is this?",opts:["Horizontal integration","Vertical integration","Unrelated diversification","Related diversification","Licensing"],correct:1,exp:"Moving into a supplier's stage of the value chain = (backward) vertical integration."},
+{topic:'pom-2',q:"A car manufacturer acquires one of its direct competitors that sells cars in the same market. Which corporate-level strategy is this?",opts:["Vertical integration","Horizontal integration","Unrelated diversification","Joint venture","Franchising"],correct:1,exp:"Acquiring a competitor in the same industry = horizontal integration."},
+{topic:'pom-2',q:"A German start-up wants to enter the Japanese market with the lowest possible investment and risk. Which mode of international expansion should it start with?",opts:["Wholly owned subsidiary","Strategic alliance / joint venture","Licensing","Exporting","Acquisition of a local firm"],correct:3,exp:"Export → license → alliance/JV → wholly owned subsidiary, with investment and risk increasing along the way. Exporting is the lowest."},
+{topic:'pom-2',q:"The management team agrees to \"open three pop-up stores and run an Instagram campaign\" to reach its target of 10% more market share. Which planning question does this decision answer?",opts:["Goals — \"what?\"","Strategies — \"how?\"","Implementation — \"how exactly?\"","Vision — \"why we exist\"","Mission — \"what/why\""],correct:1,exp:"The target (10% more share) is the goal; the chosen way to get there is the strategy (\"how?\"). Deadlines and responsibilities would be implementation."},
+{topic:'pom-2',q:"Cinemas are losing customers because more and more people watch new films on streaming platforms at home. Which of Porter's Five Forces does this describe?",opts:["Threat of new entrants","Bargaining power of suppliers","Bargaining power of buyers","Threat of substitutes","Rivalry among existing competitors"],correct:3,exp:"A different product that fulfils the same need (streaming instead of cinema) = threat of substitutes."},
+{topic:'pom-2',q:"A firm planned to expand to Spain, but supply problems forced it to adapt, and it ended up expanding to Portugal instead. What is the Portugal expansion called?",opts:["Planned strategy","Realized strategy","Vision","Standing plan","Functional-level strategy"],correct:1,exp:"Planned strategy = what managers intend; realized strategy = what actually happens after execution, including adjustments to unforeseen events."},
+{topic:'pom-2',q:"Which of the following goals meets the SMART criteria?",opts:["Become better at marketing","Increase online sales by 15% by 31 December 2026","Be the best company in Europe","Improve employee happiness","Grow as fast as possible"],correct:1,exp:"Only this goal is Specific, Measurable, Achievable, Relevant and Time-bound."},
+{topic:'pom-3',q:"At MetalWorks, employees are grouped into marketing, finance and production departments. Each department is very efficient at its own task, but the departments barely talk to each other. Which structure does MetalWorks have?",opts:["Functional structure","Divisional structure","Matrix structure","Product team structure","Holacracy"],correct:0,exp:"Grouping by task (function) is efficient but tends to create silos."},
+{topic:'pom-3',q:"At a consulting firm, every consultant reports both to a project manager and to the head of their functional department. Which structure is this?",opts:["Functional structure","Divisional structure","Matrix structure","Simple structure","Bureaucracy"],correct:2,exp:"A dual chain of command is the defining feature of the matrix structure: flexible, but prone to power struggles."},
+{topic:'pom-3',q:"A small start-up pursues an innovation strategy in a fast-changing, unstable market. Which type of structure fits best?",opts:["Mechanistic structure","Organic structure","Functional structure with high formalization","Centralized bureaucracy","Tall hierarchy with narrow spans of control"],correct:1,exp:"Innovation strategy, small size and an unstable environment all point to an organic (decentralized, low-formalization) structure."},
+{topic:'pom-3',q:"A company is split into self-contained units for Europe, Asia and the Americas, each with its own marketing, finance and production. What is a typical disadvantage of this structure?",opts:["Dual chain of command","Duplicated resources","No accountability for results","Silos between functions within one unit","It only works for start-ups"],correct:1,exp:"Divisional structures make units accountable, but duplicate resources across divisions."},
+{topic:'pom-3',q:"After a restructuring, one supervisor now has 25 employees reporting directly to her instead of 8. Which design parameter has changed?",opts:["Chain of command","Span of control","Centralization","Formalization","Departmentalization"],correct:1,exp:"Span of control = the number of subordinates a manager directly supervises."},
+{topic:'pom-3',q:"An online retailer abolishes traditional managers; instead, work is organized in self-organizing circles that redefine their roles regularly. Which organizational form is this?",opts:["Matrix structure","Holacracy","Divisional structure","Simple structure","Product team structure"],correct:1,exp:"Holacracy = self-organizing circles (e.g. Zappos)."},
+{topic:'pom-4',q:"A production supervisor walks the shop floor and corrects mistakes while the work is being done. Which type of control is this?",opts:["Feedforward control","Concurrent control","Feedback control","Clan control","Output control"],correct:1,exp:"Control during the process = concurrent. Feedforward happens before, feedback after."},
+{topic:'pom-4',q:"A bakery inspects every delivery of flour for quality before it is used in production. Which type of control is this?",opts:["Feedforward control","Concurrent control","Feedback control","Clan control","Behavior control"],correct:0,exp:"Control before the process starts = feedforward control."},
+{topic:'pom-4',q:"A creative agency has almost no written rules; employees regulate their own behaviour through strong shared values and norms. Which control system is dominant?",opts:["Output control","Behavior control","Clan control","Feedforward control","Budget control"],correct:2,exp:"Clan control relies on shared values and norms rather than rules or targets."},
+{topic:'pom-4',q:"Each January, a manager and each employee jointly agree on goals; during the year they review progress together. Which control approach is this?",opts:["Output control","Clan control","Management by Objectives (MBO)","Feedforward control","Force-field analysis"],correct:2,exp:"MBO is a joint goal-setting and review cycle, a form of behavior control."},
+{topic:'pom-4',q:"A bank wants to know whether a company can pay its short-term debts without having to sell any of its inventory. Which ratio answers this best?",opts:["Return on investment (ROI)","Current ratio","Quick ratio","Debt-to-asset ratio","Inventory turnover"],correct:2,exp:"Quick ratio = (current assets − inventory) / current liabilities, i.e. liquidity without relying on inventory."},
+{topic:'pom-4',q:"Before introducing a new IT system, management lists everything that pushes for the change and everything that holds employees back from it. Which model are they using?",opts:["Lewin's Force-Field Model","Porter's Five Forces","Mintzberg's managerial roles","Management by Objectives","Contingency Theory"],correct:0,exp:"Lewin's Force-Field Model explains change and resistance as driving vs. resisting forces."},
+{topic:'pom-4',q:"After a severe crisis, a retailer replaces its entire business model, structure and top management within a few months. What kind of change is this?",opts:["Evolutionary change","Revolutionary change","Feedforward control","Incremental planning","Standing plan"],correct:1,exp:"Rapid, dramatic change = revolutionary; gradual change = evolutionary."}
+];
+
+function buildPOMSim(){
+  registerPage('pom-sim', (div)=>{
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('timer')} Exam prep</div><h2>POM Exam Simulator</h2><p>Single-choice questions in the style of the real exam: short business cases, five answer options, one correct.</p></div><div class="page-body" id="pom-sim-body"></div>`;
+    const body = div.querySelector('#pom-sim-body');
+    const topicTitle = id => (POM_TOPICS.find(t=>t.id===id)||{}).title || 'General';
+    const start = (mode)=>{
+      const pool = POM_EXAM_SCENARIOS.map(q=>({...q, topic:topicTitle(q.topic)}));
+      if(mode==='exam') POM_TOPICS.forEach(t=>t.quiz.forEach(q=>pool.push({...q, topic:t.title})));
+      // exam mode: 20 random questions, at least 12 scenario cases; practice: all scenario cases
+      let questions;
+      if(mode==='exam'){
+        const cases = shuffle(pool.slice(0, POM_EXAM_SCENARIOS.length)).slice(0,12);
+        const rest = shuffle(pool.slice(POM_EXAM_SCENARIOS.length)).slice(0,8);
+        questions = shuffle([...cases, ...rest]);
+      } else questions = shuffle(pool);
+      // shuffle answer options too, so the correct letter isn't predictable
+      questions = questions.map(q=>{ const ord = shuffle(q.opts.map((_,i)=>i)); return {...q, opts:ord.map(i=>q.opts[i]), correct:ord.indexOf(q.correct)}; });
+      renderQuiz(body, questions, mode==='exam' ? 'pom-exam-sim' : 'pom-exam-practice', {timerSec: mode==='exam' ? 20*60 : null, topicOf:(qi)=>questions[qi].topic});
+    };
+    body.innerHTML = `<div style="text-align:center;padding:44px 20px;">
+      <h3 style="font-size:1.3rem;margin-bottom:10px;">Ready when you are</h3>
+      <p style="color:var(--ink-soft);margin:0 auto 22px;max-width:480px;">The PoM part of the written exam is <b>single choice only</b>. Train exactly that: apply a concept to a short business case.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn pom-sim-exam">Timed exam · 20 questions · 20 min</button>
+        <button class="btn ghost pom-sim-practice">Practice all ${POM_EXAM_SCENARIOS.length} cases · no timer</button>
+      </div></div>`;
+    body.querySelector('.pom-sim-exam').addEventListener('click', ()=>start('exam'));
+    body.querySelector('.pom-sim-practice').addEventListener('click', ()=>start('practice'));
+  });
+}
+
+// small banner for tools that are useful but not part of the single-choice written exam
+function notInExamNote(why){
+  return `<div class="exam-note"><b>Not part of the written exam.</b> ${why}</div>`;
+}
+
 function buildPOMHome(){
   registerPage('pom-home', (div)=>{
     div.innerHTML = `
       <div class="page-header">
         <div class="eyebrow">${icon('home')} Principles of Management</div>
-        <h2>4 Topics</h2>
-        <p>History, planning &amp; strategy, organizing, and control &amp; change — the management canon, plus the running Growth Scenario case.</p>
+        <h2>5 Topics</h2>
+        <p>Foundations, history, planning &amp; strategy, organizing, and control &amp; change: the management canon (Jones &amp; George, Ch. 2, 8, 10, 11).</p>
       </div>
       <div class="page-body">
+        <div class="exam-card">
+          <div class="exam-card-head"><h3>Exam at a glance</h3><span class="exam-date">Written exam · 5 Oct 2026</span></div>
+          <div class="exam-grid">
+            <div class="exam-col">
+              <div class="exam-label">Written exam · 90 points (whole module)</div>
+              <div class="exam-bar"><span class="me" style="flex:30">PoM 30</span><span style="flex:30">OB 30</span><span style="flex:30">Ethics, Law &amp; Politics 30</span></div>
+              <div class="exam-label">Class participation · 90 points (whole module)</div>
+              <div class="exam-bar"><span class="me" style="flex:30">PoM 30</span><span style="flex:30">OB 30</span><span style="flex:30">Ethics, Law &amp; Politics 30</span></div>
+              <p class="exam-total"><b>180 points</b> in total for the module. PoM = <b>60</b> of them: 30 in the exam, 30 for participation. All graded individually.</p>
+            </div>
+            <div class="exam-col">
+              <ul class="exam-facts">
+                <li><b>Format:</b> single-choice questions only (5 options), usually a short business case.</li>
+                <li><b>Content:</b> introduction &amp; history, planning &amp; strategy, organizational design &amp; structure, control &amp; change. <i>Leading</i> is not PoM (it is in OB).</li>
+                <li><b>Growth Scenarios:</b> in-class group work. Slides due <b>30 Sep 2026, 5:00 PM</b>, one submission per group on Canvas.</li>
+              </ul>
+            </div>
+          </div>
+          <details class="exam-example"><summary>Example question from the kickoff slides</summary>
+            <p>SkyGen, an airline company, appointed an engineer to be the link between the company's R&amp;D department and the government contractor sponsoring the design of a new fighter plane. According to Mintzberg, the engineer is playing the role of a _____.</p>
+            <p class="exam-opts">a) Monitor · b) Leader · c) Figurehead · d) Resource allocator · e) Liaison</p>
+            <p class="exam-ans">Answer: <b>e) Liaison</b>: building links and relationships outside the own unit.</p>
+          </details>
+          <button class="btn" onclick="navTo('pom-sim')" style="margin-top:14px;">Practice in this format → Exam Simulator</button>
+        </div>
         ${lectureMasteryHtml('pom')}
         <div class="topic-grid">
           ${POM_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
         </div>
-        <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Cross-topic tools</div>
+        <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Exam prep</div>
         <div class="tool-tiles">
+          <div class="tool-tile" onclick="navTo('pom-sim')"><div class="ic">${icon('timer')}</div><h4>Exam Simulator</h4><p>${POM_EXAM_SCENARIOS.length} single-choice cases in the real exam style.</p></div>
           <div class="tool-tile" onclick="navTo('pom-cheat')"><div class="ic">${icon('cheat')}</div><h4>Cheat Sheet &amp; Ratios</h4><p>Every framework + financial ratio table.</p></div>
-          <div class="tool-tile" onclick="navTo('pom-case')"><div class="ic">${icon('case')}</div><h4>Growth Case Studio</h4><p>The $5M-raise startup case, 4 parts.</p></div>
-          <div class="tool-tile" onclick="navTo('pom-ratio')"><div class="ic">${icon('calc')}</div><h4>Ratio Practice</h4><p>Fresh random numbers, every click.</p></div>
+        </div>
+        <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Extra: not in the written exam</div>
+        <div class="tool-tiles extra">
+          <div class="tool-tile" onclick="navTo('pom-case')"><div class="ic">${icon('case')}</div><h4>Growth Case Studio</h4><p>For the Growth Scenario group work.</p></div>
+          <div class="tool-tile" onclick="navTo('pom-ratio')"><div class="ic">${icon('calc')}</div><h4>Ratio Practice</h4><p>Calculating ratios, beyond exam level.</p></div>
           <div class="tool-tile" onclick="navTo('pom-timeline')"><div class="ic">${icon('clock')}</div><h4>Theory Timeline</h4><p>Taylor to Contingency Theory.</p></div>
         </div>
       </div>`;
@@ -3290,7 +3425,7 @@ function buildPOMCheat(){
 
 function buildPOMCase(){
   registerPage('pom-case', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('case')}</div><h2>Growth Scenario Case Studio</h2><p>One running case, four applied parts — one per management function.</p></div><div class="page-body" id="pom-case-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('case')}</div><h2>Growth Scenario Case Studio</h2><p>One running case, four applied parts — one per management function.</p></div><div class="page-body">${notInExamNote('The Growth Scenarios are in-class group work with a slide deck (due 30 Sep 2026, 5:00 PM, one submission per group on Canvas). Useful for that and for applying concepts — the written exam itself is single choice.')}<div id="pom-case-body"></div></div>`;
     const body = div.querySelector('#pom-case-body');
     let active = 0;
     function render(){
@@ -3311,7 +3446,7 @@ function buildPOMCase(){
 
 function buildPOMRatio(){
   registerPage('pom-ratio', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('calc')}</div><h2>Financial Ratio Practice</h2><p>A fresh randomized mini balance-sheet/income-statement problem every time — genuinely new numbers via Math.random().</p></div><div class="page-body" id="pom-ratio-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('calc')}</div><h2>Financial Ratio Practice</h2><p>A fresh randomized mini balance-sheet/income-statement problem every time — genuinely new numbers via Math.random().</p></div><div class="page-body">${notInExamNote('Calculating ratios is unlikely in a single-choice exam. Know what each ratio measures (e.g. quick ratio = liquidity without inventory) — see the Cheat Sheet.')}<div id="pom-ratio-body"></div></div>`;
     const body = div.querySelector('#pom-ratio-body');
     const TYPES = ['current','quick','debt','turnover','roi'];
     let cur;
@@ -3394,7 +3529,7 @@ function buildPOMRatio(){
 
 function buildPOMTimeline(){
   registerPage('pom-timeline', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('clock')}</div><h2>Management Theory Timeline</h2><p>Click any era to expand its key ideas — Taylor through Contingency Theory.</p></div><div class="page-body"><div class="timeline" id="pom-tl-body"></div></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('clock')}</div><h2>Management Theory Timeline</h2><p>Click any era to expand its key ideas — Taylor through Contingency Theory.</p></div><div class="page-body">${notInExamNote('The exam is single choice, so ordering eras by date is unlikely to be asked. Knowing what each approach says (e.g. Taylor vs. Weber vs. Contingency) is what matters — that is covered in the Exam Simulator.')}<div class="timeline" id="pom-tl-body"></div></div>`;
     const body = div.querySelector('#pom-tl-body');
     body.innerHTML = POM_TIMELINE.map((e,i)=>`
       <div class="tl-era" id="tl-${i}"><div class="tl-dot"></div>
@@ -3406,7 +3541,7 @@ function buildPOMTimeline(){
 }
 
 POM_TOPICS.forEach(t=>buildTopicPage(t,'pom'));
-buildPOMHome(); buildPOMCheat(); buildPOMCase(); buildPOMRatio(); buildPOMTimeline();
+buildPOMHome(); buildPOMCheat(); buildPOMSim(); buildPOMCase(); buildPOMRatio(); buildPOMTimeline();
 
 /* ============================================================ AW PAGES ============================================================ */
 function buildAWHome(){
