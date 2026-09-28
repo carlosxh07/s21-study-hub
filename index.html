@@ -495,6 +495,7 @@ body.hl-armed .hl-container{cursor:text;}
 .plan-toggle-row input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;}
 .plan-toggle-row small{font-weight:400;color:var(--ink-faint);font-size:.74rem;max-width:210px;line-height:1.35;}
 .radar-basis{display:block;font-size:.74rem;color:var(--ink-faint);margin-top:2px;}
+.radar-bests{font-size:.74rem;color:var(--ink-faint);margin-top:8px;}
 .plan-settings input[type=date]{padding:7px 10px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--panel-2);color:var(--ink);font:inherit;color-scheme:light dark;}
 .plan-start-row .btn{padding:7px 14px;}
 .plan-exam-val{padding:8px 0;font-weight:700;color:var(--ink);}
@@ -2679,13 +2680,13 @@ function topicSize(t){ return t.cards.length + t.quiz.length + Math.round(t.summ
 function qresKey(text){ let h = 5381; for(let i=0;i<text.length;i++) h = ((h<<5) + h + text.charCodeAt(i)) | 0; return 'q'+(h>>>0).toString(36); }
 function qresRecord(text, right){ const r = ls('qres', {}); r[qresKey(text)] = right ? 1 : 0; lsSet('qres', r); }
 // share of a question group answered correctly (last attempt); null if none answered yet
-function qresScore(questions){
-  if(!questions.length) return null;
+function qresDetail(questions){
   const r = ls('qres', {});
   let seen = 0, right = 0;
   questions.forEach(q=>{ const v = r[qresKey(q.q)]; if(v!==undefined){ seen++; right += v; } });
-  return seen ? right/questions.length : null;
+  return {right, seen, n:questions.length};
 }
+function qresScore(questions){ const d = qresDetail(questions); return d.seen ? d.right/d.n : null; }
 // AW exam areas (indices into AW_QUIZ / AW_MOCK_MC)
 const AW_AREAS = [
   {label:'Argumentation & Logic', page:'aw-summary', quiz:[0,1,2], mock:[]},
@@ -2698,15 +2699,29 @@ const AW_AREAS = [
 const POM_SHORT = {'pom-0':'Foundations','pom-2':'Planning & Strategy','pom-4':'Control & Change'};
 function radarAxes(subj){
   if(subj==='ob') return OB_TOPICS.map(t=>({label:t.title, page:t.id, score:topicKnowledge(t)}));
+  // until questions are answered again (per-question results only exist since 28 Sep), fall back to the saved
+  // best overall score of the quiz the area draws from, marked as an estimate
+  const bestRatio = (key, n) => { const b = ls(key+'-best', null); return b==null ? null : Math.min(1, b/n); };
+  // answered questions count with their real result, not-yet-answered ones with the estimate
+  const withEstimate = (d, fallbacks) => {
+    const f = fallbacks.filter(x=>x!=null);
+    const est = f.length ? f.reduce((a,b)=>a+b,0)/f.length : null;
+    if(!d.n) return {score:null};
+    if(est==null) return {score: d.seen ? d.right/d.n : null};
+    if(d.seen===d.n) return {score: d.right/d.n};
+    return {score: (d.right + est*(d.n-d.seen))/d.n, est:true};
+  };
   if(subj==='pom'){
     // per topic: knowledge (topic quiz) and application (simulator cases) → 6 axes
     return POM_TOPICS.flatMap(t=>[
       {label:`${POM_SHORT[t.id]||t.title} · Quiz`, page:t.id, score:topicKnowledge(t)},
-      {label:`${POM_SHORT[t.id]||t.title} · Cases`, page:'pom-sim', score:qresScore(POM_EXAM_SCENARIOS.filter(q=>q.topic===t.id))}
+      {label:`${POM_SHORT[t.id]||t.title} · Cases`, page:'pom-sim', ...withEstimate(qresDetail(POM_EXAM_SCENARIOS.filter(q=>q.topic===t.id)), [bestRatio('pom-exam-sim', 20)])}
     ]);
   }
   return [
-    ...AW_AREAS.map(a=>({label:a.label, page:a.page, score:qresScore([...a.quiz.map(i=>AW_QUIZ[i]), ...a.mock.map(i=>AW_MOCK_MC[i])].filter(Boolean))})),
+    ...AW_AREAS.map(a=>({label:a.label, page:a.page, ...withEstimate(
+      qresDetail([...a.quiz.map(i=>AW_QUIZ[i]), ...a.mock.map(i=>AW_MOCK_MC[i])].filter(Boolean)),
+      [a.quiz.length ? bestRatio('quiz-aw', AW_QUIZ.length) : null, a.mock.length ? bestRatio('quiz-aw-mockmc', AW_MOCK_MC.length) : null])})),
     ...(planUsesFc() ? [{label:'Flashcards', page:'aw-flash', score:knowledgeScore('fc-aw', AW_CARDS.length)}] : [])
   ];
 }
@@ -2900,13 +2915,20 @@ function renderRadar(div){
   const svgWrap = div.querySelector('.radar-svg-wrap');
   svgWrap.style.display = axes.length>=3 ? '' : 'none';
   svgWrap.innerHTML = axes.length>=3 ? radarSvg(axes) : '';
-  const pct = s => s==null ? 'not started' : Math.round(s*100)+'%';
+  const pct = (s, est) => s==null ? 'not started' : (est ? '≈ ' : '') + Math.round(s*100)+'%';
   div.querySelector('.radar-list').innerHTML = axes.map((a,i)=>({...a, n:i+1}))
     .sort((a,b)=>(a.score??-1)-(b.score??-1))
-    .map(a=>`<div class="radar-row" onclick="navTo('${a.page}')"><span class="radar-row-num">${a.n}</span><span class="radar-row-label">${esc(a.label)}</span><span class="radar-bar"><i class="${radarLevel(a.score)}" style="width:${Math.round((a.score||0)*100)}%"></i></span><span class="radar-val">${pct(a.score)}</span></div>`).join('');
+    .map(a=>`<div class="radar-row" onclick="navTo('${a.page}')"><span class="radar-row-num">${a.n}</span><span class="radar-row-label">${esc(a.label)}</span><span class="radar-bar"><i class="${radarLevel(a.score)}" style="width:${Math.round((a.score||0)*100)}%"></i></span><span class="radar-val">${pct(a.score, a.est)}</span></div>`).join('');
+  const bests = subj==='aw' ? [['AW Quiz','quiz-aw',AW_QUIZ.length],['Mockup MCQ (38)','quiz-aw-mockmc',AW_MOCK_MC.length]]
+    : subj==='pom' ? [['POM Exam Simulator','pom-exam-sim',20]] : [];
+  const bestTxt = bests.map(([l,k,n])=>{ const b = ls(k+'-best', null); return b==null ? null : `${l}: best ${b}/${n}`; }).filter(Boolean);
+  const hasEst = axes.some(a=>a.est);
+  div.querySelector('.radar-list').insertAdjacentHTML('beforeend',
+    (bestTxt.length ? `<div class="radar-bests">Saved best scores · ${bestTxt.map(esc).join(' · ')}</div>` : '') +
+    (hasEst ? `<div class="radar-bests">≈ = partly estimated from your saved best score; answering the questions again replaces the estimate step by step</div>` : ''));
   const weakest = axes.filter(a=>a.score==null || a.score<.75).sort((a,b)=>(a.score??-1)-(b.score??-1)).slice(0,2);
   div.querySelector('.radar-reco').innerHTML = weakest.length
-    ? `<b>Focus next:</b> ${weakest.map(a=>`<a href="#${a.page}" onclick="navTo('${a.page}');return false;">${esc(a.label)}</a> (${pct(a.score)})`).join(' and ')}. ${planUsesFc() ? 'Rate flashcards and finish quizzes' : 'Do the topic quizzes and the exam simulator'} to keep the radar accurate.`
+    ? `<b>Focus next:</b> ${weakest.map(a=>`<a href="#${a.page}" onclick="navTo('${a.page}');return false;">${esc(a.label)}</a> (${pct(a.score, a.est)})`).join(' and ')}. ${planUsesFc() ? 'Rate flashcards and finish quizzes' : 'Do the topic quizzes and the exam simulator'} to keep the radar accurate.`
     : `<b>Looking strong.</b> Everything is above 75% — keep reviewing to hold it there.`;
 }
 
