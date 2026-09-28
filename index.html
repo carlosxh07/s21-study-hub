@@ -621,6 +621,27 @@ body.hl-armed .hl-container{cursor:crosshair;}
 #support-modal .sm-qr svg{width:170px;height:170px;}
 #support-modal .sm-link{display:inline-block;margin-top:6px;font-size:.78rem;color:var(--accent-ink);text-decoration:none;}
 #support-modal .sm-close{position:absolute;top:10px;right:12px;width:32px;height:32px;border:0;border-radius:50%;background:var(--side-2);color:var(--ink);font-size:1.1rem;cursor:pointer;}
+#home-search{position:relative;max-width:620px;margin:-16px auto 34px;text-align:left;z-index:30;}
+#home-search .hs-box{display:flex;align-items:center;gap:10px;padding:0 16px;height:52px;border-radius:var(--radius-pill);background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-edge);box-shadow:var(--shadow-md);transition:box-shadow .2s var(--ease),border-color .2s var(--ease);}
+#home-search .hs-box:focus-within{border-color:var(--accent);box-shadow:var(--shadow-md),0 0 0 4px var(--accent-bg);}
+#home-search .hs-box svg{width:19px;height:19px;color:var(--ink-faint);flex-shrink:0;}
+#home-search input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--ink);font:inherit;font-size:1rem;}
+#home-search input::placeholder{color:var(--ink-faint);}
+#home-search input::-webkit-search-cancel-button{display:none;}
+#home-search kbd{font:inherit;font-size:.72rem;color:var(--ink-faint);border:1px solid var(--line);border-radius:6px;padding:1px 7px;}
+#home-search .hs-results{display:none;position:absolute;left:0;right:0;top:calc(100% + 8px);max-height:min(460px,60vh);overflow-y:auto;padding:6px;border-radius:var(--radius);background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-edge);box-shadow:var(--shadow-lg);}
+#home-search.open .hs-results{display:block;}
+#home-search .hs-item{display:flex;flex-direction:column;gap:3px;width:100%;text-align:left;padding:10px 12px;border:0;border-radius:var(--radius-sm);background:none;color:var(--ink);font:inherit;cursor:pointer;}
+#home-search .hs-item.active,#home-search .hs-item:hover{background:var(--accent-bg);}
+#home-search .hs-top{display:flex;align-items:center;gap:8px;font-size:.7rem;}
+#home-search .hs-type{font-weight:700;letter-spacing:.03em;color:var(--accent-ink);text-transform:uppercase;}
+#home-search .hs-where{color:var(--ink-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#home-search .hs-title{font-size:.9rem;font-weight:600;line-height:1.35;}
+#home-search .hs-snip{font-size:.8rem;color:var(--ink-soft);line-height:1.45;}
+#home-search .hs-title b,#home-search .hs-snip b{color:var(--ink);background:var(--warn-bg);border-radius:3px;font-weight:700;}
+#home-search .hs-empty{padding:16px;font-size:.85rem;color:var(--ink-soft);text-align:center;}
+::highlight(search-hit){background-color:rgba(255,214,10,.55);color:inherit;}
+@media(max-width:640px){#home-search{margin:-20px 0 28px;}#home-search kbd{display:none;}}
 </style>
 </head>
 <body>
@@ -653,6 +674,14 @@ body.hl-armed .hl-container{cursor:crosshair;}
         <div class="kicker">Semester 2 · Block 1</div>
         <h1>Your Study Hub</h1>
         <p>Deep, tool-rich revision for all three modules — scenario practice, matching games, timed exam simulators, randomized numeric drills, citation repair and more.</p>
+        <div id="home-search">
+          <div class="hs-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input type="search" placeholder="Search topics, keywords, theories…" aria-label="Search the hub" autocomplete="off" spellcheck="false">
+            <kbd>/</kbd>
+          </div>
+          <div class="hs-results" role="listbox"></div>
+        </div>
         <div class="sh-glass-btn" onclick="selectSubject('ob',true)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()">
           <span class="sh-text">Get started</span>
           <div class="sh-icon">
@@ -1697,6 +1726,159 @@ function buildSidebarNav(subjId){
   }
   nav.innerHTML = html;
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.page===location.hash.replace('#','')));
+}
+
+/* ============================================================ DASHBOARD SEARCH ============================================================ */
+// flat index over all static content; each entry knows the page (+ tab) to open
+let searchIndex = null;
+function searchNorm(s){ return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+function buildSearchIndex(){
+  const idx = [];
+  const add = (e)=>{ e.norm = searchNorm(e.title+' '+e.text); idx.push(e); };
+  const subjLabel = id => id.toUpperCase();
+  [['ob',OB_TOPICS],['pom',POM_TOPICS]].forEach(([subj,topics])=>{
+    topics.forEach((t,i)=>{
+      const where = `${subjLabel(subj)} · Topic ${i+1}`;
+      add({type:'Topic', rank:0, title:t.title, text:'', where, page:t.id, tab:'sum'});
+      t.summary.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:t.title, text:p.replace(/ :: /g,' — ').replace(/\n/g,' · '), where, page:t.id, tab:'sum'}));
+      t.cards.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:`${where} · ${t.title}`, page:t.id, tab:'fc'}));
+      t.quiz.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:`${where} · ${t.title}`, page:t.id, tab:'qz'}));
+    });
+  });
+  [['ob','ob-cheat',OB_CHEAT,'Cheat Sheet'],['pom','pom-cheat',POM_CHEAT,'Cheat Sheet'],['aw','aw-rules',AW_RULES,'Writing Rules'],['aw','aw-present',AW_PRESENT_REF,'Presentation Skills']]
+    .forEach(([subj,page,blocks,name])=>blocks.forEach(b=>b.items.forEach(it=>add({type:'Cheat sheet', rank:2, title:b.h, text:it, where:`${subjLabel(subj)} · ${name}`, page}))));
+  AW_SUMMARY_TEXT.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:'AW Summary', text:p, where:'AW · Summary', page:'aw-summary'}));
+  AW_MARIE_SUMMARY.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:'Stress Management', text:p, where:'AW · Marie Claire', page:'aw-marie-summary'}));
+  AW_CARDS.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:'AW · Flashcards', page:'aw-flash'}));
+  AW_QUIZ.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:'AW · Quiz', page:'aw-quiz'}));
+  AW_VERBS.forEach(v=>add({type:'Action verbs', rank:2, title:v.cat, text:v.verbs.join(', '), where:'AW · Action Verbs', page:'aw-verbs'}));
+  [['ob',OB_NAV],['pom',POM_NAV],['aw',AW_NAV]].forEach(([subj,nav])=>nav.forEach(sec=>sec.items.forEach(it=>
+    add({type:'Page', rank:0, title:it.label, text:sec.sec, where:`${subjLabel(subj)} · ${sec.sec}`, page:it.id}))));
+  add({type:'Page', rank:0, title:'Study Plan', text:'weak-spot radar revision plan exam dates', where:'Cross-subject', page:'plan'});
+  return idx;
+}
+function searchQuery(q){
+  searchIndex = searchIndex || buildSearchIndex();
+  const words = searchNorm(q).split(/\s+/).filter(w=>w.length>1 || /\d/.test(w));
+  if(!words.length) return [];
+  const phrase = words.join(' ');
+  const hits = [];
+  searchIndex.forEach(e=>{
+    if(!words.every(w=>e.norm.includes(w))) return;
+    const t = searchNorm(e.title);
+    // type order first (topic/page > summary > cheat sheet > flashcard > quiz), best match within each type
+    let score = (5 - e.rank)*10;
+    if(t.includes(phrase)) score += 4;
+    if(t.startsWith(phrase)) score += 2;
+    if(e.norm.includes(phrase)) score += 3;
+    hits.push({e, score});
+  });
+  hits.sort((a,b)=>b.score-a.score);
+  return hits.slice(0,40).map(h=>h.e);
+}
+// snippet around the first matched word, with all query words wrapped in <b>
+function searchSnippet(text, words, len){
+  if(!text) return '';
+  const n = searchNorm(text);
+  let at = -1; words.forEach(w=>{ const i=n.indexOf(w); if(i>=0 && (at<0||i<at)) at=i; });
+  let start = Math.max(0, at - Math.floor(len/3));
+  if(start>0){ const sp = text.indexOf(' ', start); if(sp>=0 && sp-start<20) start = sp+1; }
+  let s = text.slice(start, start+len);
+  const pre = start>0 ? '… ' : '', post = start+len<text.length ? ' …' : '';
+  return pre + searchMark(s, words) + post;
+}
+function searchMark(s, words){
+  const n = searchNorm(s); // same length as s for Latin text (diacritics stripped per char)
+  const ranges = [];
+  words.forEach(w=>{ let i=0; while((i=n.indexOf(w,i))>=0){ ranges.push([i,i+w.length]); i+=w.length; } });
+  ranges.sort((a,b)=>a[0]-b[0]);
+  let out='', pos=0;
+  ranges.forEach(([a,b])=>{ if(a<pos) return; out += esc(s.slice(pos,a)) + '<b>' + esc(s.slice(a,b)) + '</b>'; pos=b; });
+  return out + esc(s.slice(pos));
+}
+// open the page/tab and scroll to + softly highlight the first occurrence (CSS Highlight API — no DOM changes,
+// so saved text highlights are never touched)
+function searchOpen(e, words){
+  navTo(e.page);
+  const page = document.getElementById('page-'+e.page);
+  if(!page) return;
+  if(e.tab){ const b = page.querySelector(`.tabbtn[data-tab="${e.tab}"]`); if(b) b.click(); }
+  requestAnimationFrame(()=>{
+    const scope = page.querySelector('.tabpanel.active') || page;
+    const ranges = [];
+    let first = null;
+    const needles = [words.join(' '), ...words].filter((w,i,a)=>w && a.indexOf(w)===i);
+    for(const needle of needles){
+      const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
+      let node;
+      while((node = walker.nextNode())){
+        if(!node.parentElement || node.parentElement.closest('script,style,.fc-back')) continue;
+        const n = searchNorm(node.data);
+        let i = 0;
+        while((i = n.indexOf(needle, i))>=0){
+          const r = document.createRange(); r.setStart(node, i); r.setEnd(node, i+needle.length);
+          ranges.push(r); if(!first) first = node.parentElement; i += needle.length;
+        }
+      }
+      if(ranges.length) break;
+    }
+    if(first) first.scrollIntoView({block:'center', behavior:'smooth'});
+    if(ranges.length && window.CSS && CSS.highlights && window.Highlight){
+      CSS.highlights.set('search-hit', new Highlight(...ranges));
+      clearTimeout(window.__searchHlT);
+      window.__searchHlT = setTimeout(()=>CSS.highlights.delete('search-hit'), 6000);
+    }
+  });
+}
+function initHomeSearch(){
+  const wrap = document.getElementById('home-search');
+  if(!wrap) return;
+  const input = wrap.querySelector('input');
+  const list = wrap.querySelector('.hs-results');
+  let results = [], active = -1, words = [];
+  function render(){
+    const q = input.value.trim();
+    words = searchNorm(q).split(/\s+/).filter(w=>w.length>1 || /\d/.test(w));
+    results = q ? searchQuery(q) : [];
+    active = results.length ? 0 : -1;
+    if(!q){ list.innerHTML=''; wrap.classList.remove('open'); return; }
+    wrap.classList.add('open');
+    list.innerHTML = results.length ? results.map((e,i)=>`
+      <button type="button" class="hs-item${i===active?' active':''}" data-i="${i}">
+        <span class="hs-top"><span class="hs-type">${e.type}</span><span class="hs-where">${esc(e.where)}</span></span>
+        <span class="hs-title">${searchMark(e.title.length>140?e.title.slice(0,140)+'…':e.title, words)}</span>
+        ${e.text && e.type!=='Page' ? `<span class="hs-snip">${searchSnippet(e.text, words, 170)}</span>` : ''}
+      </button>`).join('')
+      : `<div class="hs-empty">No results for “${esc(q)}”. Try a shorter keyword.</div>`;
+  }
+  function setActive(i){
+    const items = list.querySelectorAll('.hs-item');
+    if(!items.length) return;
+    active = (i+items.length)%items.length;
+    items.forEach((el,k)=>el.classList.toggle('active', k===active));
+    items[active].scrollIntoView({block:'nearest'});
+  }
+  function open(i){ const e = results[i]; if(!e) return; wrap.classList.remove('open'); searchOpen(e, words); }
+  input.addEventListener('input', render);
+  input.addEventListener('focus', ()=>{ if(input.value.trim()) wrap.classList.add('open'); });
+  input.addEventListener('keydown', ev=>{
+    if(ev.key==='ArrowDown'){ ev.preventDefault(); setActive(active+1); }
+    else if(ev.key==='ArrowUp'){ ev.preventDefault(); setActive(active-1); }
+    else if(ev.key==='Enter'){ ev.preventDefault(); open(active); }
+    else if(ev.key==='Escape'){ input.value=''; render(); input.blur(); }
+  });
+  list.addEventListener('mousedown', ev=>ev.preventDefault()); // keep focus so the click lands
+  list.addEventListener('click', ev=>{ const b = ev.target.closest('.hs-item'); if(b) open(+b.dataset.i); });
+  document.addEventListener('click', ev=>{ if(!wrap.contains(ev.target)) wrap.classList.remove('open'); });
+  // "/" or Cmd/Ctrl+K jumps to the search from anywhere
+  document.addEventListener('keydown', ev=>{
+    const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) || document.activeElement.isContentEditable;
+    if((ev.key==='/' && !typing) || (ev.key.toLowerCase()==='k' && (ev.metaKey||ev.ctrlKey))){
+      ev.preventDefault();
+      navTo('home');
+      input.focus(); input.select();
+    }
+  });
 }
 
 /* ============================================================ HOME CARDS ============================================================ */
@@ -3159,6 +3341,7 @@ buildStudyPlan();
 /* ============================================================ INIT ============================================================ */
 buildSubjectSwitch();
 buildHomeCards();
+initHomeSearch();
 initHighlighting();
 hlIslandEl();
 updateHlIslandVisibility();
