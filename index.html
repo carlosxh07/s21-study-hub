@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>S2/1 Study Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f5f5f7; --bg2:#e8e8ed; --panel:rgba(255,255,255,.68); --panel-solid:#ffffff; --panel-2:rgba(255,255,255,.42);
@@ -216,6 +216,7 @@ a,button{font-family:inherit;}
 .summary-text{font-size:.97rem;line-height:1.85;color:var(--ink);}
 .summary-text p{margin-bottom:16px;}
 .summary-text .sum-lead{margin-bottom:6px;}
+.summary-text ul,.summary-text dl,.summary-text .flow{clear:left;}
 .summary-text .sum-list{margin:0 0 16px;padding-left:22px;}
 .summary-text .sum-list li{margin:3px 0;padding-left:2px;}
 .summary-text .sum-list li::marker{color:var(--accent-ink);}
@@ -321,17 +322,25 @@ body.hl-armed .hl-container{cursor:text;}
 .fc-tally-chip.dontknow{background:var(--bad-bg);color:var(--bad);}
 .fc-tally-chip.partial{background:var(--warn-bg);color:var(--warn);}
 .fc-tally-chip.gotit{background:var(--good-bg);color:var(--good);}
-.flashcard-wrap{perspective:1600px;height:230px;cursor:pointer;margin-bottom:20px;}
+.flashcard-wrap{perspective:1600px;height:230px;cursor:pointer;margin-bottom:20px;transition:height .25s var(--ease);}
 .flashcard-inner{position:relative;width:100%;height:100%;transition:transform .55s var(--ease);transform-style:preserve-3d;}
 .flashcard-inner.flipped{transform:rotateY(180deg);}
-.flashcard-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow-md);border:1px solid var(--line);}
+.flashcard-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;padding:28px 30px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow-md);border:1px solid var(--line);overflow:hidden;}
 .flashcard-front{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);}
-.flashcard-back{background:var(--accent);transform:rotateY(180deg);color:#fff;border:none;}
+.flashcard-back{background:var(--panel-2);transform:rotateY(180deg);color:var(--ink);box-shadow:var(--shadow-md),inset 0 3px 0 var(--accent);}
 .flashcard-face .fc-label{font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;font-weight:700;opacity:.7;}
 .flashcard-front .fc-label{color:var(--accent-ink);}
-.flashcard-back .fc-label{color:rgba(255,255,255,.85);}
-.flashcard-face .fc-body{font-size:1.05rem;overflow-y:auto;max-height:150px;font-weight:500;line-height:1.5;}
-.flashcard-front .fc-body{font-family:'Inter',-apple-system,sans-serif;font-weight:600;font-size:1.2rem;}
+.flashcard-back .fc-label{color:var(--accent-ink);}
+.flashcard-face .fc-body{font-family:'Lexend','Inter',-apple-system,sans-serif;font-size:1rem;font-weight:400;line-height:1.6;}
+.fc-answer p{margin:0 0 8px;}
+.fc-answer p:last-child{margin-bottom:0;}
+.fc-answer .fc-lead{font-weight:500;margin-bottom:6px;}
+.fc-answer .fc-list{margin:0 0 8px;padding-left:20px;}
+.fc-answer .fc-list li{margin:3px 0;padding-left:2px;}
+.fc-answer .fc-list li::marker{color:var(--accent-ink);font-weight:600;}
+.fc-answer b{font-weight:600;}
+.fc-answer .flow{margin:8px 0 6px;}
+.flashcard-front .fc-body{font-weight:500;font-size:1.2rem;line-height:1.45;}
 .fc-hint{position:absolute;bottom:14px;right:20px;font-size:.66rem;opacity:.55;font-weight:600;}
 .fc-rate{display:flex;gap:10px;margin-bottom:16px;}
 .fc-rate .sh-glass-btn{--w:auto;--h:auto;--tr:22%;flex:1;width:auto;min-height:46px;margin:0;padding:9px 8px;gap:6px;cursor:pointer;}
@@ -2976,6 +2985,112 @@ function renderRadar(div){
     : `<b>Looking strong.</b> Everything is above 75% — keep reviewing to hold it there.`;
 }
 
+/* ---------- flashcard answer formatting: lists, numbered steps, flows and paragraphs from plain card text ---------- */
+// split at `sep` only outside brackets/quotes
+function fcTopSplit(str, sep){
+  const out = []; let depth = 0, q = false, cur = '';
+  for(let i=0;i<str.length;i++){
+    const ch = str[i];
+    if(ch==='"') q = !q;
+    else if(!q && (ch==='(' || ch==='[')) depth++;
+    else if(!q && (ch===')' || ch===']')) depth = Math.max(0, depth-1);
+    if(depth===0 && !q && str.startsWith(sep, i)){ out.push(cur); cur=''; i += sep.length-1; continue; }
+    cur += ch;
+  }
+  out.push(cur);
+  return out.map(x=>x.trim()).filter(Boolean);
+}
+// sentences, not splitting inside brackets or after abbreviations like "e.g." / "vs."
+function fcSentences(str){
+  const out = []; let depth = 0, cur = '';
+  for(let i=0;i<str.length;i++){
+    const ch = str[i];
+    if(ch==='(' || ch==='[') depth++; else if(ch===')' || ch===']') depth = Math.max(0, depth-1);
+    cur += ch;
+    if(depth===0 && /[.!?]/.test(ch) && str[i+1]===' ' && /[A-Z0-9"(]/.test(str[i+2]||'') && !/(\be\.g|\bi\.e|\bvs|\bet al|\betc|\bcf|\bNo|\bDr|\bProf|\bSt)\.$/i.test(cur)){
+      out.push(cur.trim()); cur = ''; i++;
+    }
+  }
+  if(cur.trim()) out.push(cur.trim());
+  return out;
+}
+// bold the term in "Term (…)", "Term = …", "Term: …" or "Term — …"
+function fcItemHtml(item){
+  item = item.replace(/^(and|or)\s+/i, '').replace(/[.;]$/, '');
+  item = item.charAt(0).toUpperCase() + item.slice(1);
+  const m = item.match(/^([^()=:—]{1,48}?)(\s*(?:\(|=|:|—)\s*)([\s\S]*)$/);
+  if(m && m[3]) return `<b>${esc(m[1])}</b>${esc(m[2])}${esc(m[3])}`;
+  return esc(item);
+}
+function fcListItems(sentence){
+  const s = sentence.replace(/\.$/, '');
+  const semi = fcTopSplit(s, '; ');
+  if(semi.length>=3) return semi;
+  const comma = fcTopSplit(s, ', ');
+  const rich = comma.filter(p=>/[(=:—]/.test(p)).length;
+  if(comma.length>=3 && rich>=2) return comma;
+  if(comma.length>=4 && comma.every(p=>p.length<70)) return comma;
+  return null;
+}
+function fcFormat(text){
+  const t = String(text).trim();
+  // numbered: "1) … 2) …" or "(1) … (2) …"
+  if(/(^|\s)\(?1\)\s/.test(t) && /\s\(?2\)\s/.test(t)){
+    const lead = t.slice(0, t.search(/(^|\s)\(?1\)\s/)).trim();
+    const items = t.slice(t.search(/(^|\s)\(?1\)\s/)).split(/\s*\(?\d\)\s+/).map(x=>x.trim().replace(/[;,]$/, '')).filter(Boolean);
+    return (lead ? `<p class="fc-lead">${esc(lead.replace(/:$/, ''))}:</p>` : '') + `<ol class="fc-list">${items.map(i=>`<li>${fcItemHtml(i)}</li>`).join('')}</ol>`;
+  }
+  // several "Term = explanation" / "Term: explanation" sentences → one list with bold terms
+  const sens = fcSentences(t);
+  if(sens.length>=2 && sens.every(x=>/^[^=:()]{1,40}\s?(=|:)\s/.test(x))) return `<ul class="fc-list">${sens.map(x=>`<li>${fcItemHtml(x)}</li>`).join('')}</ul>`;
+  const blocks = [];
+  let para = [];
+  const flushPara = ()=>{ if(para.length){ blocks.push(`<p>${para.map(esc).join(' ')}</p>`); para = []; } };
+  fcSentences(t).forEach(sen=>{
+    // arrow chain with 3+ steps → flow diagram (optional "Label:" in front)
+    const arrows = fcTopSplit(sen.replace(/\.$/, ''), ' → ');
+    if(arrows.length>=3){
+      flushPara();
+      const colon = arrows[0].lastIndexOf(': ');
+      if(colon>=0){ blocks.push(`<p class="fc-lead">${esc(arrows[0].slice(0, colon+1))}</p>`); arrows[0] = arrows[0].slice(colon+2); }
+      blocks.push(flowHtml(flowSplit(arrows.join(' → '))));
+      return;
+    }
+    // "Lead: a, b, c" or plain enumeration → bullet list
+    const colon = fcTopSplit(sen, ': ');
+    const listPart = colon.length>=2 ? colon.slice(1).join(': ') : sen;
+    const items = fcListItems(listPart);
+    if(items){
+      flushPara();
+      let lead = colon.length>=2 ? colon[0] : '';
+      // "X, built through a, b, c" / "including" / "such as": everything up to the keyword is an intro, not an item
+      if(!lead){
+        const k = items.slice(0,2).findIndex(x=>/\b(through|including|such as|namely)\s/.test(x));
+        if(k>=0){
+          const m = items[k].match(/^(.*\b(?:through|including|such as|namely))\s+(.+)$/);
+          lead = [...items.slice(0,k), m[1]].join(', ');
+          items.splice(0, k+1, m[2]);
+        }
+      }
+      if(lead) blocks.push(`<p class="fc-lead">${esc(lead)}:</p>`);
+      blocks.push(`<ul class="fc-list">${items.map(i=>`<li>${fcItemHtml(i)}</li>`).join('')}</ul>`);
+      return;
+    }
+    // "Term — explanation" at the start → bold lead line
+    const dash = sen.match(/^([^—]{2,50}?) — ([\s\S]+)$/);
+    if(dash && !blocks.length && !para.length){
+      blocks.push(`<p class="fc-lead"><b>${esc(dash[1])}</b></p>`);
+      para.push(dash[2].charAt(0).toUpperCase() + dash[2].slice(1));
+      return;
+    }
+    para.push(sen);
+    // long answers: one sentence per paragraph so it doesn't become a wall of text
+    if(t.length>160) flushPara();
+  });
+  flushPara();
+  return blocks.join('');
+}
+
 const FC_STATUS = {
   dontknow: {label:"Don't know", short:"Don't know", icon:'&#10007;', cls:'dontknow'},
   partial:  {label:'Partially',  short:'Partially',  icon:'&#8776;',  cls:'partial'},
@@ -3075,7 +3190,7 @@ function renderFlashcards(container, cards, storeKey){
       <div class="flashcard-wrap" id="fc-wrap">
         <div class="flashcard-inner${flipped?' flipped':''}">
           <div class="flashcard-face flashcard-front"><div class="fc-label">Question</div><div class="fc-body">${esc(c.q)}</div><div class="fc-hint">click or space</div></div>
-          <div class="flashcard-face flashcard-back"><div class="fc-label">Answer</div><div class="fc-body">${esc(c.a)}</div></div>
+          <div class="flashcard-face flashcard-back"><div class="fc-label">Answer</div><div class="fc-body fc-answer">${fcFormat(c.a)}</div></div>
         </div>
       </div>
       <div class="fc-rate">
@@ -3087,6 +3202,11 @@ function renderFlashcards(container, cards, storeKey){
         <button id="fc-prev-btn" ${idx===0?'disabled':''}>&larr; Prev</button>
         <button id="fc-next-btn">Next &rarr;</button>
       </div>`;
+    // grow the card to fit the longer side instead of scrolling inside it
+    const wrap = container.querySelector('#fc-wrap');
+    const fitCard = ()=>{ const h = Math.max(...[...wrap.querySelectorAll('.flashcard-face')].map(f=>f.scrollHeight)); wrap.style.height = Math.max(230, h) + 'px'; };
+    requestAnimationFrame(fitCard);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitCard);
     container.querySelector('#fc-shuffle-btn').addEventListener('click', doShuffle);
     container.querySelector('#fc-reset-btn').addEventListener('click', (e)=>{e.stopPropagation(); if(confirm('Reset all progress for this deck?')) restart();});
     container.querySelector('#fc-wrap').addEventListener('click', flip);
