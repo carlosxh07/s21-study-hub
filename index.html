@@ -710,6 +710,23 @@ body.hl-armed .hl-container{cursor:text;}
 .exam-example p{margin-top:8px;color:var(--ink-soft);line-height:1.55;}
 .exam-example .exam-opts{color:var(--ink);}
 @media(max-width:760px){.exam-grid{grid-template-columns:1fr;gap:8px;}}
+.rz-home{margin-top:40px;padding-top:26px;border-top:1px solid var(--line);}
+.rz-home-head h3{font-size:1.1rem;margin-bottom:4px;}
+.rz-home-head p{font-size:.85rem;color:var(--ink-soft);line-height:1.55;max-width:760px;margin-bottom:16px;}
+.rz-home .topic-grid{margin-bottom:14px;}
+.rz-task{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;margin-bottom:14px;box-shadow:var(--shadow-sm);}
+.rz-task-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+.rz-task-head h4{font-size:1rem;flex:1;min-width:160px;}
+.rz-num{font-size:.7rem;font-weight:700;color:var(--accent-ink);background:var(--accent-bg);padding:2px 8px;border-radius:var(--radius-pill);}
+.rz-prompt{font-size:.9rem;line-height:1.6;color:var(--ink);margin-bottom:10px;white-space:pre-wrap;}
+.rz-prompt a{color:var(--accent-ink);font-weight:600;}
+.rz-answer{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:inherit;font-size:.9rem;line-height:1.55;resize:vertical;}
+.rz-answer:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg);}
+.rz-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;}
+.rz-count{font-size:.74rem;color:var(--ink-faint);}
+.rz-hints{display:none;margin-top:12px;padding:12px 14px 12px 32px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:var(--radius-sm);font-size:.86rem;line-height:1.55;color:var(--ink-soft);}
+.rz-hints li{margin:4px 0;}
+.rz-task.open .rz-hints{display:block;}
 </style>
 </head>
 <body>
@@ -1607,6 +1624,226 @@ const POM_RATIOS_TABLE = [
 ["Days sales outstanding","Accounts receivable / Sales for period (× days)"]
 ];
 
+/* ============================================================ RAATZSCH (Ethics & Philosophy, part of PoM) ============================================================ */
+const RZ_TOPICS = [
+{id:'rz-1',title:'Concepts, Language & Conceptual Confusion',summary:`Prof. Raatzsch's part of the course is about concepts, not facts. What something is differs from how, why, when or where it is. What something is, is given by its concept, and studying concepts is called philosophy: an activity, not a body of doctrine. His slides are meant to stimulate your own thinking; what looks like a thesis is mainly a problem.
+
+The Iron Rule for studying philosophy: writing is better than reading, speaking is better than listening. But thinking you have understood is not having understood. The proof of understanding is reproducing the insight in your own words.
+
+William James' squirrel is his model for conceptual confusions (and philosophical debates). A squirrel climbs around a tree while you walk around the tree, parallel to it. Do you also go around the squirrel? James: it depends, so say what you want, as long as you still see how things are.
+
+Why is this so difficult? Because we think our concepts should be well-defined, picking out all and only the things that fall under them. We want definitions that say what something is. Kinds of definition:
+- Lists and examples
+- Ostensive definitions ("This over there is …")
+- Stipulations ("I want to call this …")
+- Essences ("An X is …")
+
+The classical essence definition is genus proximum plus differentia specifica, e.g. a cloud is an H2O-structure (genus proximum) located in the sky (differentia specifica). Problems: dust clouds, clouds near the ground. And the definition itself consists of further words, so there is no final definition unless everything definable is defined: we would need a complete system or theory.
+
+If no single definition fits the way we use a word, the usual move is:
+=> Pick one feature as the most important → Declare its instances the proper ones → Reduce the other cases to those
+This contains an element of arbitrariness. Classical definitions are still useful: they make problems visible where we saw none, because knowing how to use a word is not being able to say how it is used. A distorted view is not a wrong view.
+
+Without arbitrariness: family resemblances (Wittgenstein). In the chain (ABCD) (BCDE) (CDEF) (DEFG) (EFGH), members 1 and 5 share no feature, yet they are linked by overlapping similarities. Think of "game", "number", "good", and also "organization", "culture", "leader".
+
+Worksheet 1 trains suspicion about language: it is a wonderful tool, but also full of traps. Three kinds of statement:
+Conceptual :: true by the meaning of the words ("Bachelors are unmarried"); you know it by knowing the language; whoever disagrees has misunderstood a word
+Empirical :: true or false depending on the facts ("Married people live longer than bachelors"); you find out by investigating
+Evaluative :: an expression of values or preferences ("Bachelors have a better life than married people")
+
+Some sentences are not false but defective: "Bachelors are married" contradicts itself, "Married people live longer than 3 plus 3" mixes categories, and "Bachelors gonkel krigsfulty" is nonsense. The same words can also do different things: "I declare you husband and wife" makes a marriage when the mayor says it, but not when an actor says it on stage. "By 'bachelor' I mean …" is a stipulation for the discussion, not a claim about the world.
+
+The worksheet argument that "we cannot talk about games" (or numbers, organizations, business plans) fails at the premise that every concept needs a definition by necessary and sufficient conditions, so that all its instances must share at least one feature. Family resemblance is the alternative: we agree in how we use words without a common essence.
+
+Worksheet 3 sums up the method. Conceptual investigation is an activity of clarification, not a doctrine. Conceptual confusions show up as dilemmas, paradoxes, contradictions, tautologies, obvious falsehoods or truths, and riddles. Clarity is not reached by empirical investigation but by asking how we actually use our linguistic expressions.
+
+For management this matters because conceptual and empirical claims are easily confused. Worksheet example: a CEO says that in all his years on the board a strategy process was always going on, yet no strategy it produced was ever followed through, and still the process is important. How can that be? It only looks absurd if "strategy process" must mean "producing a plan that is then executed".`,
+cards:[
+{q:"What is philosophy, according to Raatzsch?",a:"The study of concepts: what something is, as opposed to how, why, when or where it is. An activity, not a body of doctrine."},
+{q:"What is the Iron Rule for studying philosophy?",a:"Writing is better than reading; speaking is better than listening. Thinking you have understood is not having understood; the proof is reproducing the insight in your own words."},
+{q:"What does William James' squirrel show?",a:"A model for conceptual confusions: whether you \"go around\" the squirrel depends on what you mean by it. Say what you want, as long as you still see how things are."},
+{q:"Name four kinds of definition from the slides.",a:"Lists and examples; ostensive definitions (\"This over there is …\"); stipulations (\"I want to call this …\"); essences (\"An X is …\")."},
+{q:"What is the classical form of an essence definition?",a:"Genus proximum plus differentia specifica, e.g. a cloud is an H2O-structure (genus) located in the sky (differentia)."},
+{q:"Why is there no final definition?",a:"A definition consists of further words, so there is no final definition unless everything definable is defined; we would need a complete system or theory."},
+{q:"What are family resemblances (Wittgenstein)?",a:"Overlapping similarities without one common feature: in (ABCD) (BCDE) (CDEF) (DEFG) (EFGH), members 1 and 5 share nothing. Examples: game, number, good, organization, culture, leader."},
+{q:"Conceptual vs. empirical vs. evaluative statement?",a:"Conceptual = true by meaning (\"Bachelors are unmarried\"). Empirical = depends on facts (\"Married people live longer\"). Evaluative = expresses values (\"Bachelors have a better life\")."},
+{q:"Why are classical definitions still useful?",a:"They make problems visible where we saw none, because knowing how to use a word is not being able to say how it is used. A distorted view is not a wrong view."},
+{q:"What is a conceptual investigation?",a:"An activity of clarification: it removes conceptual confusions (dilemmas, paradoxes, contradictions, riddles) by asking how we actually use our words, not by empirical research."},
+{q:"Which premise fails in the argument \"we cannot talk about games\"?",a:"That every concept needs a definition by necessary and sufficient conditions, so all instances share a feature. We agree in the use of words through family resemblance."}
+],
+quiz:[
+{q:"\"Bachelors are unmarried\" is best described as a …",opts:["empirical statement", "conceptual statement", "evaluative statement", "mathematical statement"],correct:1,exp:"It is true by the meaning of the words; you know it by knowing the language."},
+{q:"\"Married people live longer than 3 plus 3\" is …",opts:["false", "true", "a category mistake", "an evaluative claim"],correct:2,exp:"It mixes categories: a lifespan cannot be compared with a number sum in that way."},
+{q:"According to Raatzsch, philosophy is …",opts:["a body of doctrine", "an empirical science", "an activity of studying concepts", "a branch of psychology"],correct:2,exp:"Philosophy is an activity, not a body of doctrine."},
+{q:"A definition by genus proximum and differentia specifica is a …",opts:["stipulation", "ostensive definition", "classical essence definition", "family resemblance"],correct:2,exp:"It gives the essence: the next higher kind plus the specific difference."},
+{q:"Wittgenstein's family resemblance means that members of a concept …",opts:["all share one essential feature", "are linked by overlapping similarities", "are defined by stipulation", "cannot be talked about"],correct:1,exp:"Like (ABCD) … (EFGH): members 1 and 5 share nothing, yet the chain holds together."},
+{q:"\"I declare you husband and wife\" said by an actor on stage …",opts:["creates a valid marriage", "is false", "does not marry anyone", "is a stipulation"],correct:2,exp:"The same words only perform a marriage when uttered by the authorised person in the right setting."}
+]},
+{id:'rz-2',title:'Ethics, Organizations & Individuals',summary:`Conceptual confusions and ethics. Don't let the hopes fly too high: future and fictitious cases may still be treated differently (is "bonkers" a game?). An element of arbitrariness may remain, because concepts express our interests; language is an enormous set of practices. There will still be no justification, but understanding and clarity are all we need.
+
+Knowing how is not knowing that: being able to tie a knot is not being able to tell how it is done. We may also be inclined to give contradicting answers, e.g. "organizations are structures" and "OB is behaviour"; a structure is not a behaviour, although the two are related. What we need is an overview of our use of words like "organization", "structure", "agency", "behaviour" and "responsibility". The use of words is a practice, and in the end our life.
+
+What is ethically interesting about organizations like corporations?
+- Virtues and interests (greed, responsibility, profit)
+- Aims and functions (nature and human life, leading a decent life)
+- Laws and morality (duties and rights)
+- The ethical tension (foundations, facts and criticism; moral dilemmas)
+
+What ethics can do:
+=> A conceptual investigation of how the problem arises → Make visible a claim's weight → The tension disappears, or we see that we have to make a decision
+Ethics never justifies what we should do. But it helps to see things clearly, so that we may no longer be in doubt about what to do.
+
+The Beech-Nut case: the president and vice-president of Beech-Nut Corp. admitted to knowingly selling adulterated apple juice for babies. The company pleaded guilty to 215 counts of violating federal food and drug laws and paid a $2 million fine. No one went to prison, no one was fired, all legal expenses were covered and all salaries paid. One executive on the witness stand: "What was I supposed to do? Close down the factory?"
+
+The puzzle behind the case: a corporation is not a human being, only the guilty should be punished, the company pleaded guilty and was punished, but people could also have been punished. If ethics deals with the good and evil will, virtues and vices, or the effects of actions on humans, and all of these primarily concern persons, what exactly is the ethical problem?
+
+What is a corporation? A common idea: "Corporations are ultimately groups of people acting towards a common goal" (du Plessis et al.). This has the classical definition form, and perhaps there is no single definition of an organization, since organizations take many forms.
+
+Organizations and individuals. What kind of "relation" holds between persons and organizations? Compare 3 is larger than 2 (mathematical), John is Lisa's boss (organizational) and Kate is smarter than Peter (intellectual). Are there organizations without individuals? Is an organization the sum of the activities of individuals? And what is a common goal: individual vs. collective intentions (painting a house together, taking a walk together, having a common goal)?
+
+Methodological individualism :: social "things" (organizations, collective actions) are the result of the interaction of individuals; the social "emerges" out of the individual
+Emergence :: the name of a problem, not a solution
+
+Individuals and cultural roles. "As a waiter, N.N. cannot declare war." Two pictures of individuals and their stations:
+- An entity with a property it might as well not have (the car and its colour)
+- An entity whose identity is determined by its properties (the king in chess and its rules)
+
+The call "You cannot do this!" merges both pictures. Being the president is having a position in a social structure, which is an element of a form of human life. Human life can take different forms, but there is no human life without some social form: form is essential. So "there is more to ethics than my station and my duty" (Bradley). Business and organizational ethics is not just applied ethics, but a constitutive part of all ethics.
+
+Foundations (worksheet 4). The most important aspects of things are hidden by their simplicity and familiarity (Wittgenstein). We cannot avoid making moral judgements, yet our judgements may change with new information. So we need to:
+- treat any moral judgement with caution, even suspicion, until we know all the relevant details
+- ask what we need to know to make a justified moral judgement
+
+The usual premise is that we must find the foundations of morality. The ethical systems are built on it:
+Utilitarianism :: what finally matters is utility
+Deontology :: what finally matters is the good will
+Virtue ethics :: what finally matters is character
+Perfectionism :: what finally matters is creativity
+Pragmatism :: what finally matters is … whatever
+
+The worksheet asks instead what the foundations of ordinary activities are: counting nuts in a bag (compared with counting clouds in the sky), measuring a table, reporting how your holiday was. And what would a world have to look like to make these activities impossible?
+
+The self (worksheet 5). "Know thyself." The true point of "Everyone ought to do what they think they ought to do": one should not just do what is right, but do the right thing because one thinks it is the right thing. The worksheet asks what matters most to you, who you want to be, whether a dream career bought with a broken family means you did something wrong, which traits belong to management as such, and what makes a life, and management, good and meaningful.`,
+cards:[
+{q:"Knowing how vs. knowing that?",a:"Knowing how (tying a knot) is not the same as knowing that (being able to tell how it is done)."},
+{q:"What is ethically interesting about organizations?",a:"Virtues and interests (greed, responsibility, profit); aims and functions; laws and morality (duties, rights); the ethical tension (foundations, facts, criticism, moral dilemmas)."},
+{q:"What can ethics do, and what can it not do?",a:"It never justifies what we should do. It makes a claim's weight visible, so the tension disappears or we see we must decide, and we may no longer be in doubt."},
+{q:"Summarise the Beech-Nut case.",a:"Executives knowingly sold adulterated apple juice for babies. The company pleaded guilty to 215 counts and paid $2 million; no one went to prison or was fired. \"What was I supposed to do? Close down the factory?\""},
+{q:"What is the ethical puzzle of the Beech-Nut case?",a:"A corporation is not a person and only the guilty should be punished; the company was punished, yet people could have been too. If ethics concerns persons, what exactly is the ethical problem?"},
+{q:"Common definition of a corporation (du Plessis et al.)?",a:"\"Corporations are ultimately groups of people acting towards a common goal\": the classical definition form, though there may be no single definition."},
+{q:"What is methodological individualism?",a:"Social things (organizations, collective actions) are the result of the interaction of individuals; the social \"emerges\" out of the individual."},
+{q:"What does Raatzsch say about \"emergence\"?",a:"It is the name of a problem, not a solution."},
+{q:"Two pictures of individuals and their stations?",a:"1) An entity with a property it might as well not have (car and its colour). 2) An entity whose identity is determined by its properties (king in chess and its rules)."},
+{q:"Why is business ethics not just \"applied ethics\"?",a:"Positions like \"president\" belong to social structures within a form of human life; there is no human life without social form, so business ethics is a constitutive part of all ethics (\"more to ethics than my station and my duty\")."},
+{q:"What finally matters in the five ethical systems?",a:"Utilitarianism: utility. Deontology: the good will. Virtue ethics: character. Perfectionism: creativity. Pragmatism: whatever."},
+{q:"What is the true point of \"Everyone ought to do what they think they ought to do\"?",a:"One should not just do what is right, but do the right thing because one thinks it is the right thing."}
+],
+quiz:[
+{q:"According to Raatzsch, ethics …",opts:["justifies what we should do", "never justifies what we should do, but helps us see clearly", "is purely empirical", "only applies to individuals"],correct:1,exp:"Ethics makes a claim's weight visible; it does not justify actions."},
+{q:"In methodological individualism, \"emergence\" is …",opts:["the solution to the problem", "the name of a problem, not a solution", "a legal concept", "a type of ownership"],correct:1,exp:"Saying the social \"emerges\" from the individual names the problem."},
+{q:"\"As a waiter, N.N. cannot declare war\" illustrates …",opts:["family resemblance", "individuals and cultural roles", "the lottery paradox", "ownership"],correct:1,exp:"What someone can do depends on their position in a social structure."},
+{q:"Which ethical system says that what finally matters is character?",opts:["Utilitarianism", "Deontology", "Virtue ethics", "Pragmatism"],correct:2,exp:"Virtue ethics: character. Deontology: the good will. Utilitarianism: utility."},
+{q:"In the Beech-Nut case, who was punished?",opts:["The executives went to prison", "The company paid a $2 million fine; no one went to prison or was fired", "No one at all", "Only the vice-president"],correct:1,exp:"The company pleaded guilty to 215 counts; all salaries and legal expenses were paid."},
+{q:"\"The king in chess and its rules\" is a picture of an entity …",opts:["with a property it might as well not have", "whose identity is determined by its properties", "that has no properties", "that emerges from individuals"],correct:1,exp:"Contrast: the car and its colour (a property it might not have)."}
+]},
+{id:'rz-3',title:'Ownership, Corporations, Sustainability & Compliance',summary:`Ownership. Words like "own", "owner" and "property" are not strictly regulated: often it makes no difference whether we say "N.N. owns X", "X is N.N.'s property" or "X belongs to N.N.". The method: understand ownership through its primitive forms and through what we do and say.
+
+Primitive forms of ownership: you take a toy away from a child, and what usually happens; someone wants to eat an apple hanging on a tree, and what they usually do. What we do and say (saying is already a doing): "Give it back to me!", "This is mine!", "Get out of my house!", "Do not enter.", "Today, we acquired 51% of the stocks of company A.", "And the winner is …!"
+
+Questions that lead to a genealogy of ownership: what do we actually teach the child, and how and when? What if the apple is too far away to simply grab it? What if it is not an apple but whales? An extension of our technological capabilities usually goes along with a change in our social capabilities, and vice versa.
+
+Kinds of ownership:
+- Private ("Hands off!")
+- Collective
+- Public
+- Species-specific (?)
+
+All of it is social. Was Robinson Crusoe an owner? Problems: how can we justify private or collective property as opposed to public property (and vice versa), and what is the best form of ownership? Ask yourself: what real difference would an answer make, can we answer this in general terms, and who should answer which question?
+
+Corporations. In ordinary language "corporation", "company", "firm" and "enterprise" are interchangeable ("legalish" is not ordinary language). Useful to know: since when we have corporations, since when they are the most important form of economic activity, which industries this form created, how long we will still have them, why people create them, and which function they have to realize in order to exist.
+
+The key problem: is there something like one corporate function, such as generating return on investment or profit? And can there only be one such function? Compare: is there just one thing that constitutes survival in the animal kingdom? (Literature: Fama & Jensen on ownership and control; Jensen 2010 on value maximization and the corporate function.)
+
+Sustainability. Processes, states, objects, ideas and features can be sustainable. Is "sustainable" in "sustainable economy" like the redness of a red car (something added) or like the roundness of a circle (part of what it is)?
+
+The standard definition (Brundtland Commission 1987): a sustainable development is a "development which meets the needs of current generations without compromising the ability of future generations to meet their own needs". Problems with it:
+- What is a need, compared to a wish, a demand or a desire?
+- If thirst is a need, have humans always satisfied it in the same form?
+- Humans are historic creatures who change essentially, so how should we know the needs of future generations?
+
+If being sustainable is not just something in addition to an activity being a business activity, what does it mean to be a proper business person? And if sustainability is largely secured by state regulation today, what does that tell us about the social form of economic processes and about the nature of corporations?
+
+Compliance. The general idea:
+=> Rules are needed to regulate economic activity (financial crisis, drug dealing, pollution) → To be followed, rules include (sub)rules for punishment → Compliance departments make sure rules and regulations are obeyed
+
+The rules that companies have to obey seem to come from outside business. Three problems:
+- In which sense is this true, and in which not? (Compare state regulation with company planning.)
+- Would something be a rule if nobody ever obeyed it? (Is a defect engine only different from a functioning engine in that it does not work?)
+- If rules are indeed often not obeyed, how is that possible?
+
+What the lectures want you to be able to do: raise questions about the nature of management and business; bring about conceptual confusion among those who never worried about the foundations of business studies, and give hints on how to remove it; take a critical stance towards business studies; and recognise conceptual insights in cartoons, spots and jokes (Calvin and Hobbes, Monty Python, Banksy).`,
+cards:[
+{q:"How does Raatzsch approach ownership?",a:"Through its primitive forms (taking a toy from a child, picking an apple) and through what we do and say (\"This is mine!\", \"Give it back!\"): a genealogy of ownership."},
+{q:"Kinds of ownership?",a:"Private (\"Hands off!\"), collective, public, species-specific (?). All of it is social."},
+{q:"How do technology and ownership relate?",a:"An extension of our technological capabilities usually goes along with a change in our social capabilities, and vice versa (apple too far away, whales)."},
+{q:"Three questions to ask about justifying forms of ownership?",a:"What real difference would an answer make? Can we answer this in general terms? Who should answer which question?"},
+{q:"Is there one corporate function?",a:"The problem: is profit or ROI the one function a corporation must realize to exist? Compare: is there just one thing that constitutes survival in the animal kingdom?"},
+{q:"Brundtland definition of sustainable development (1987)?",a:"\"Development which meets the needs of current generations without compromising the ability of future generations to meet their own needs.\""},
+{q:"Problems with the standard sustainability definition?",a:"What is a need (vs. wish, demand, desire)? Needs are satisfied in changing forms; humans change essentially, so we cannot know future generations' needs."},
+{q:"Redness of a car or roundness of a circle?",a:"The question whether \"sustainable\" is added to an economy from outside (redness) or belongs to what a proper economy is (roundness)."},
+{q:"What is the general idea of compliance?",a:"Rules regulate economic activity; to be followed they include rules for punishment; compliance departments make sure they are obeyed."},
+{q:"Three problems of compliance?",a:"1) In which sense do rules come from outside business? 2) Would something be a rule if nobody ever obeyed it (defect engine)? 3) If rules are often not obeyed, how is that possible?"},
+{q:"What should you be able to do after these lectures?",a:"Raise questions about the nature of management; create conceptual confusion and hint at how to remove it; take a critical stance towards business studies; spot conceptual insights in cartoons and jokes."}
+],
+quiz:[
+{q:"\"Private ownership means: …\" (Raatzsch)",opts:["\"Share it!\"", "\"Hands off!\"", "\"Buy it!\"", "\"It belongs to the state\""],correct:1,exp:"Private ownership = \"Hands off!\"; all forms of ownership are social."},
+{q:"The Brundtland definition of sustainability focuses on …",opts:["profit over time", "meeting present needs without compromising future generations' needs", "state regulation", "corporate compliance"],correct:1,exp:"Brundtland Commission 1987."},
+{q:"\"Is a defect engine only different from a functioning engine in that it does not work?\" is a hint for which question?",opts:["What is ownership?", "Would something be a rule if nobody ever obeyed it?", "What is a corporation?", "What is a need?"],correct:1,exp:"It belongs to the second problem of compliance."},
+{q:"\"Was Robinson Crusoe an owner?\" points to the idea that ownership is …",opts:["natural", "social", "legal only", "private only"],correct:1,exp:"All forms of ownership are social."},
+{q:"Asking whether there is just one thing that constitutes survival in the animal kingdom questions …",opts:["the definition of sustainability", "whether a corporation has only one function (e.g. profit)", "collective intentions", "the lottery paradox"],correct:1,exp:"It challenges the idea of a single corporate function such as ROI."}
+]}
+];
+const RZ_SHEETS = ['Language & Definitions','Paradoxes & Puzzles','Concepts','Foundations','The Self'];
+const RZ_TASKS = [
+{sheet:1,id:"1-1",title:"Football and the aim of a business",prompt:"What is professional football (baseball, tennis, …): sports, business, both, something else? What is the aim (bottom line, purpose, …) of a business (corporation, firm, …)? Discover the problems!",hints:["The task is to discover problems, not to give a definition. Show why each quick answer runs into trouble.", "\"Sport\" and \"business\" overlap like family resemblances: a club can be both, and cases pull in different directions (a loss-making club is still football).", "\"Aim\" can mean purpose, function or bottom line. Is there one corporate function, like profit or ROI? Compare: is there one thing that constitutes survival in the animal kingdom?"],kind:"task"},
+{sheet:1,id:"1-2",title:"Three bachelor sentences",prompt:"\"Bachelors are unmarried.\" \"Married people live longer than bachelors.\" \"Bachelors have a better life than married people.\" For each: is it true (false, undecided)? How do you know? What mistake does someone make who disagrees with you?",hints:["Sentence 1 is conceptual: true by the meaning of \"bachelor\". You know it by knowing the language; whoever disagrees has misunderstood the word.", "Sentence 2 is empirical: true or false depending on the facts. You find out by investigating (statistics); someone who disagrees has the facts wrong or measured differently.", "Sentence 3 is evaluative: it expresses values or preferences. \"Better\" needs a standard; disagreement is about values, not facts or meanings."],kind:"task"},
+{sheet:1,id:"1-3",title:"What is wrong with these sentences?",prompt:"\"Bachelors are married.\" \"Married people life longer than 3 plus 3.\" \"Bachelors gonkel krigsfulty.\" What is wrong with each sentence?",hints:["Sentence 1 contradicts itself (a conceptual falsehood).", "Sentence 2 is a category mistake: a lifespan and a sum of numbers are not comparable in that way.", "Sentence 3 is nonsense: the words have no use in our language, so it says nothing at all."],kind:"task"},
+{sheet:1,id:"1-4",title:"Four utterances",prompt:"\"I declare you husband and wife!\" (by the Lord Mayor) · the same words by an actor on stage · \"By 'bachelor' I mean 'an adult unmarried person'!\" (in a discussion) · \"Bachelors are adult unmarried people\" (in the same discussion). What goes on in each?",hints:["The mayor performs an act: in the right role and setting the words make a marriage (saying is doing).", "The actor utters the same words, but on stage they marry no one: no authority, no institution.", "\"By 'bachelor' I mean …\" is a stipulation: it fixes the use for this discussion and cannot be false.", "The last sentence looks like a claim about bachelors, but in the discussion it works as a remark about how the word is used."],kind:"task"},
+{sheet:1,id:"1-5",title:"Can we talk about games?",prompt:"(a) To communicate we must agree in our language. (b) For that we must agree in how we use words (our concepts). (c) For that, concepts need a definition picking out one and only one class of things (necessary and sufficient conditions). (d) So the things picked out must share at least one feature. (e) Not all games (numbers, organizations, goals, business plans) have something in common. (f) So we cannot talk about games. Find the wrong premise and develop an alternative.",hints:["The conclusion is obviously false: we do talk about games. So a premise must be wrong.", "Premise (c), and with it (d), is the culprit: concepts do not need necessary and sufficient conditions.", "Alternative: we agree in the use of words through practice and examples; the instances are linked by family resemblances (ABCD, BCDE, …), not a common essence."],kind:"task"},
+{sheet:1,id:"1-6",title:"Questions without answers",prompt:"What is the radius of a triangle with all sides 3 cm long? How much money does a child cost? Were there times and places where the second question had an answer, and what has changed? Compare: how much profit should a company make for it to be good business to poison the Rhine?",hints:["A triangle has no single \"radius\": you would first have to say what you mean (inscribed or circumscribed circle). The question is unclear, not hard.", "Where children could be bought and sold, the question had a price as answer. Our concept of a child as a person has changed; the costs of raising a child are a different question.", "The Rhine question treats as a matter of amount what our concepts do not allow to be traded against profit. Ask what the question presupposes."],kind:"task"},
+{sheet:2,id:"2-1",title:"Heraclitus and the river",prompt:"Heraclitus: \"We cannot step twice into the same river.\" Wittgenstein: \"The man who said we cannot step twice into the same river said something wrong.\" Heraclitus: \"We step into the same rivers and we don't, we are and we're not.\" Where is the trap?",hints:["\"Same\" is used in different ways: the same river (a named, lasting thing) vs. the same water.", "Given how we actually use \"the same river\", Heraclitus' sentence is false. His point only works if you quietly switch the meaning of \"same\"."],kind:"task"},
+{sheet:2,id:"2-2",title:"Zeno: Achilles and the tortoise",prompt:"Achilles gives the tortoise a 10 m head start. Whenever he reaches where she was, she has moved on a bit, so he never catches her. Where is the trap?",hints:["The story divides the race into infinitely many steps, but infinitely many ever smaller steps can take a finite time.", "The description counts catching-up steps, not seconds; in real time Achilles overtakes the tortoise."],kind:"task"},
+{sheet:2,id:"2-3",title:"Sorites: the heap",prompt:"One grain of rice is not a heap, adding one grain never makes a heap, so no number of grains is a heap. Where is the trap?",hints:["\"Heap\" is a vague concept with no sharp boundary; the argument assumes it must have one.", "Compare Frege: \"A concept must be sharply limited.\" Our actual concept of a heap is not, and works fine."],kind:"task"},
+{sheet:2,id:"2-4",title:"Meno: can anything be explained?",prompt:"Unless you already know what gravitation (or virtue) is, you cannot recognise an explanation of it; if you know, explaining is pointless. Where is the trap?",hints:["It assumes knowing is all-or-nothing and only possible via a definition.", "We learn through examples, practice and partial understanding; knowing how comes before being able to say."],kind:"task"},
+{sheet:2,id:"2-5",title:"Buridan's donkey",prompt:"A hungry donkey stands exactly between two equal heaps of food, cannot choose, and starves. What does it teach about rational decision? Where is the trap?",hints:["A rational decision does not always need a reason to prefer one option; when options are equal, just picking one is rational.", "Not deciding is itself a (bad) decision."],kind:"task"},
+{sheet:2,id:"2-6",title:"The surprise test",prompt:"A test announced as a \"surprise\" next week cannot be on Friday (it would be expected), nor Thursday, … so it can never happen. Right or wrong? Where is the trap?",hints:["\"Surprise\" depends on what the students know. The backward reasoning undermines itself.", "Once the students conclude that no test can come, any day is a surprise again."],kind:"task"},
+{sheet:2,id:"2-7",title:"The lottery",prompt:"Each ticket is very unlikely to win, so no ticket will win the lottery. Where is the trap?",hints:["\"Very unlikely for each ticket\" does not add up to \"no ticket wins\"; that one ticket wins is certain.", "The trap lies in moving from each single case to all cases together."],kind:"task"},
+{sheet:2,id:"2-8",title:"Moore's paradox",prompt:"\"It is raining, but you do not know this\" is fine. But can you say \"It is raining, but I do not believe it\"? Where is the trap?",hints:["The sentence is not contradictory in content (it could be true), but it is absurd to assert.", "Asserting something expresses that you believe it; in the third person (\"…, but she doesn't believe it\") the problem disappears."],kind:"task"},
+{sheet:2,id:"2-9",title:"The election",prompt:"With millions of voters my vote makes almost no difference, so voting makes no sense, for anyone. Where is the trap?",hints:["If everyone reasons like this, nobody votes, and the conclusion destroys what gives each vote its point.", "Voting is a collective practice: \"my vote\" is part of \"our voting\" (compare collective intentions: painting a house together)."],kind:"task"},
+{sheet:2,id:"2-10",title:"St. Augustine's dilemma",prompt:"Only N has the medicine M needs to cure her children, and N gives it only if M betrays her husband. What should M do? What if it were her children's career, their own room, a new iPhone? Where is the trap?",hints:["A real moral dilemma: making the weight of each claim visible may not remove the tension, but shows that she has to decide.", "Changing the stakes shows how the weight of the claims changes; ethics does not calculate the answer for her."],kind:"task"},
+{sheet:2,id:"2-11",title:"The goat problem (Monty Hall)",prompt:"Three doors: a car behind one, goats behind two. You pick a door; the host opens another door with a goat. Switch or stick? Where is the trap?",hints:["Switch: your first pick wins with 1/3, switching wins with 2/3.", "The host's action carries information because he never opens the car door."],kind:"task"},
+{sheet:2,id:"2-12",title:"Philosophy is dead? (Hawking vs. Wittgenstein)",prompt:"Hawking: \"Philosophy is dead\", because philosophers have not kept up with science. Wittgenstein: philosophy makes no progress because our language stays the same and seduces us into the same questions. Who is right?",hints:["Hawking treats philosophy as a competing body of theories about the universe.", "For Wittgenstein and Raatzsch, philosophy is an activity of clarifying concepts; no data from a particle collider can dissolve a conceptual confusion."],kind:"task"},
+{sheet:3,id:"3-1",title:"Strawson on responsibility",prompt:"(a) I am (in many cases) responsible for what I do. (b) My actions follow from who I am. (c) I am not responsible for who I am. (d) So I am not responsible for what I do. Who is right: a-Strawson or d-Strawson?",hints:["Look for the premise that relies on an impossible picture: (c) demands that I created myself from scratch.", "Responsibility is part of a practice of holding people responsible; it does not require self-creation. Who we are also develops through what we do.", "The first-person form does not matter; it applies to \"anyone\"."],kind:"task"},
+{sheet:3,id:"3-2",title:"Analyse the clip",prompt:"Can you analyse this clip? https://www.youtube.com/watch?v=zG7PPOaJnNM",hints:["Look for the conceptual joke or trap: which word is used in two ways, which question has no answer in the form it is asked?"],kind:"task"},
+{sheet:3,id:"3-3",title:"\"Everyone ought to do what they think they ought to do\"",prompt:"Do you agree? Explain.",hints:["Thinking something is right does not make it right.", "The true point (worksheet 5): not just do the right thing, but do it because you think it is right."],kind:"task"},
+{sheet:3,id:"3-4",title:"What is a conceptual dilemma?",prompt:"Having gone through all these dilemmas, riddles, puzzles and paradoxes: what is a conceptual dilemma (riddle, puzzle)?",hints:["Something about which it is clear that something is wrong with it: a paradox, contradiction, tautology, obvious falsehood or truth, riddle.", "What is wrong is not found by empirical investigation, but by asking how we use our words."],kind:"task"},
+{sheet:3,id:"3-5",title:"What is a game, a tool, kindness, cleverness, responsibility?",prompt:"Try to say what each of these is.",hints:["Collect examples and notice that there is no single common feature: family resemblances.", "Knowing how to use these words is not being able to define them."],kind:"task"},
+{sheet:3,id:"3-6",title:"Conceptual statements and management",prompt:"What is a conceptual statement, compared to an empirical one, a mathematical one, an expression of taste? How do these differences matter for management? (A CEO: a strategy process was always going on, never was a strategy followed through, and yet it is an important process. How can that be?)",hints:["Conceptual: about meaning and use. Empirical: about facts, found by investigation. Mathematical: proved within a system. Taste: expresses a preference.", "The CEO's claim only sounds absurd if \"strategy process\" must mean \"a plan that gets executed\".", "Ask what else the process does, e.g. shared understanding, coordination, learning. Clarifying the concept removes the apparent contradiction."],kind:"task"},
+{sheet:4,id:"4-1",title:"Explaining a reorganisation",prompt:"You reorganise a team of twelve; some are unhappy and ask why. What is the nature of your explanation? What is the relative weight of the things explained and the things explaining them?",hints:["An explanation relates the decision to purposes and circumstances that the listener already accepts.", "What explains must be more certain than what is explained; at some point the explanation rests on things taken for granted: foundations."],kind:"task"},
+{sheet:4,id:"4-2",title:"The CFO's 10 million",prompt:"You are CFO and made €10 million profit. Invest it or give it to the shareholders? How do you decide?",hints:["Behind the practical question lies a conceptual one: what is the function of a corporation? Is there only one (value maximization, Jensen)?", "Name what your answer takes for granted."],kind:"task"},
+{sheet:4,id:"4-3",title:"Foundations of everyday activities",prompt:"What are the foundations of counting nuts in a bag, measuring the length of a table, reporting how your last holiday was? (Compare counting nuts with counting clouds.) What would an alien world have to look like to make these activities impossible?",hints:["Counting needs discrete, stable, identifiable things; clouds merge and split, nuts do not.", "Measuring needs rigid rulers and objects that keep their length; reporting needs memory, a shared language and trust.", "In an alien world where nuts merge, tables change length or nobody remembers, the activities would lose their point, not just become hard."],kind:"task"},
+{sheet:4,id:"4-4",title:"What is a foundation?",prompt:"What is a foundation of an activity (counting, measuring, judging, …)?",hints:["The background regularities of the world and of our practices that make the activity possible and are not questioned within it.", "They are hidden because they are simple and familiar (Wittgenstein, motto of worksheet 4)."],kind:"task"},
+{sheet:4,id:"4-5",title:"The Beech-Nut case",prompt:"What are the conceptual problems here? Which are moral or ethical, which perhaps legal, and how are they related?",hints:["Conceptual: what is a corporation, can it be guilty, how do collective and individual responsibility relate (methodological individualism)?", "Moral: knowingly selling harmful baby juice; the executive's excuse \"Close down the factory?\".", "Legal: 215 counts, guilty plea, $2 million fine, no one imprisoned.", "Relation: the law punished the company, while morality points at the persons who acted."],kind:"task"},
+{sheet:4,id:"4-6",title:"In-class essay: respecting subordinates",prompt:"Should, and if so why, a manager respect his or her subordinates?",hints:["Clarify \"respect\" first: politeness, taking interests seriously, treating them as persons, not only as resources.", "Distinguish: is respect good for business (empirical), or part of what managing people is (conceptual)?", "Use the two pictures of individuals: a subordinate is a person in a station, not only a function.", "Consider a counter-position and show its weight; conclude in your own words."],kind:"essay"},
+{sheet:5,id:"5-1",title:"What matters to you?",prompt:"What matters most to you (3 things)? What do you want most (3)? What matters least? What do you not want at all? What makes you cry, laugh, afraid, lightens you up?",hints:null,kind:"personal"},
+{sheet:5,id:"5-2",title:"Who do you want to be?",prompt:"Who, how, what kind of person do you want to be? Who would you never like to be? Who are you?",hints:null,kind:"personal"},
+{sheet:5,id:"5-3",title:"The career in 20 years",prompt:"In 20 years you have the job you want most today, but the long hours broke your family (or whatever you value almost as much). Did you do anything wrong? If so, what? If not, where do the misgivings come from? How can there be such misgivings at all?",hints:["Misgivings can exist without a single wrong step: many reasonable choices can add up to a life you did not want.", "Notice the way we speak: \"career vs. life\", as if a career were not part of one's life (slide 7)."],kind:"task"},
+{sheet:5,id:"5-4",title:"What belongs to management as such?",prompt:"Which of these belong to management as such, and which not? Being honest (to everyone); taking care of those who suffer from illness; loving friends and family; fostering social equality; fighting poverty; obeying orders; preserving the natural environment.",hints:["\"As such\" asks what is part of the role itself (the station) and what belongs to the person or to other roles.", "Use the two pictures: a property one might as well not have vs. one that determines identity."],kind:"task"},
+{sheet:5,id:"5-5",title:"What is a good life?",prompt:"What is a good life? Could the difficulty be that \"good\" means different things (a good life as a beautiful life, compared to …)? What makes a life meaningful?",hints:["\"Good\" can mean morally good, good for me, or beautiful; the answers differ with the meaning."],kind:"task"},
+{sheet:5,id:"5-6",title:"In-class essay: good and meaningful management",prompt:"What makes management good or meaningful?",hints:["Separate \"good\" (successful? morally good?) from \"meaningful\".", "Link to the course: is there one corporate function? Is business ethics just applied ethics?", "Give examples, weigh a counter-position, conclude in your own words."],kind:"essay"}
+];
+
+
 /* ============================================================ AW DATA ============================================================ */
 const AW_CARDS = [
 {q:"What are the three building blocks of an academic argument?",a:"Claim, Evidence, and Reason (the explanatory link between them)."},
@@ -1920,7 +2157,8 @@ function navTo(pageId){
     if(pd) renderPlanDays(pd);
   } else {
     const subj = pageId.split('-')[0];
-    if(SUBJECTS.find(s=>s.id===subj)) selectSubject(subj, false);
+    const subjId = subj==='rz' ? 'pom' : subj; // Raatzsch pages live under POM
+    if(SUBJECTS.find(s=>s.id===subjId)) selectSubject(subjId, false);
   }
   requestAnimationFrame(updateHlIslandVisibility);
 }
@@ -2019,6 +2257,11 @@ function buildSidebarNav(subjId){
       html += `<div class="nav-item" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${i+1}. ${t.title}</span></div>`;
     });
   }
+  if(subjId==='pom'){
+    html += `<div class="nav-section-label">Ethics &amp; Philosophy · Raatzsch</div>`;
+    RZ_TOPICS.forEach(t=>{ html += `<div class="nav-item" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${t.title}</span></div>`; });
+    html += `<div class="nav-item" data-page="rz-tasks" onclick="navTo('rz-tasks')">${icon('doc')}<span>Task Sheets 1–5</span></div>`;
+  }
   nav.innerHTML = html;
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.page===location.hash.replace('#','')));
 }
@@ -2032,9 +2275,9 @@ function buildSearchIndex(){
   const idx = [];
   const add = (e)=>{ e.norm = searchNorm(e.title+' '+e.text); idx.push(e); };
   const subjLabel = id => id.toUpperCase();
-  [['ob',OB_TOPICS],['pom',POM_TOPICS]].forEach(([subj,topics])=>{
+  [['ob',OB_TOPICS],['pom',POM_TOPICS],['rz',RZ_TOPICS]].forEach(([subj,topics])=>{
     topics.forEach((t,i)=>{
-      const where = `${subjLabel(subj)} · Topic ${i+1}`;
+      const where = subj==='rz' ? 'POM · Raatzsch' : `${subjLabel(subj)} · Topic ${i+1}`;
       add({type:'Topic', rank:0, title:t.title, text:'', where, page:t.id, tab:'sum'});
       t.summary.trim().split(/\n\n+/).forEach(p=>add({type:'Summary', rank:1, title:t.title, text:searchFlat(p), where, page:t.id, tab:'sum'}));
       t.cards.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:`${where} · ${t.title}`, page:t.id, tab:'fc'}));
@@ -2048,6 +2291,7 @@ function buildSearchIndex(){
   AW_CARDS.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:'AW · Flashcards', page:'aw-flash'}));
   AW_QUIZ.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:'AW · Quiz', page:'aw-quiz'}));
   POM_EXAM_SCENARIOS.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:'POM · Exam Simulator', page:'pom-sim'}));
+  RZ_TASKS.forEach(t=>add({type:'Task', rank:3, title:t.title, text:t.prompt, where:`POM · Raatzsch · Task sheet ${t.sheet}`, page:'rz-tasks', tab:'s'+t.sheet}));
   AW_VERBS.forEach(v=>add({type:'Action verbs', rank:2, title:v.cat, text:v.verbs.join(', '), where:'AW · Action Verbs', page:'aw-verbs'}));
   [['ob',OB_NAV],['pom',POM_NAV],['aw',AW_NAV]].forEach(([subj,nav])=>nav.forEach(sec=>sec.items.forEach(it=>
     add({type:'Page', rank:0, title:it.label, text:sec.sec, where:`${subjLabel(subj)} · ${sec.sec}`, page:it.id}))));
@@ -2731,6 +2975,7 @@ function planItemPool(){
   const weightOf = s => s==null ? 1 : 1-s;
   OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
+  RZ_TOPICS.forEach(t=> items.push({subj:'pom', label:'Raatzsch: '+t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   const pomSim = knowledgeScore(null, 0, 'pom-exam-sim', 20);
   items.push({subj:'pom', label:'POM Exam Simulator (single choice)', page:'pom-sim', weight:pomSim==null ? .8 : 1-pomSim, size:POM_EXAM_SCENARIOS.length});
   const leeItems = AW_LEE_DRILLS.reduce((n,d)=>n+d.items.length, 0);
@@ -3572,7 +3817,55 @@ function buildPOMHome(){
           <div class="tool-tile" onclick="navTo('pom-sim')"><div class="ic">${icon('timer')}</div><h4>Exam Simulator</h4><p>${POM_EXAM_SCENARIOS.length} single-choice cases in the real exam style.</p></div>
           <div class="tool-tile" onclick="navTo('pom-cheat')"><div class="ic">${icon('cheat')}</div><h4>Cheat Sheet &amp; Ratios</h4><p>Every framework + financial ratio table.</p></div>
         </div>
+        <section class="rz-home">
+          <div class="rz-home-head"><h3>Ethics &amp; Philosophy · Prof. Raatzsch</h3><p>His own part of the module (“Ethics, Law &amp; Politics in Business”, <b>30 points</b> of the written exam). The kickoff slides don't say how this part is examined; his worksheets end with in-class essays, so practise writing answers in your own words.</p></div>
+          <div class="topic-grid">
+            ${RZ_TOPICS.map(t=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">RAATZSCH</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div></div>`).join('')}
+          </div>
+          <div class="tool-tiles">
+            <div class="tool-tile" onclick="navTo('rz-tasks')"><div class="ic">${icon('doc')}</div><h4>Task Sheets 1–5</h4><p>${RZ_TASKS.length} tasks: write your answer, then compare with pointers from the lecture.</p></div>
+          </div>
+        </section>
       </div>`;
+  });
+}
+
+// Raatzsch task sheets: own answer (saved per task) + pointers from the lecture, one tab per sheet
+function buildRZTasks(){
+  registerPage('rz-tasks', (div)=>{
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('doc')} Prof. Raatzsch · Ethics &amp; Philosophy</div><h2>Task Sheets 1–5</h2><p>Every task from the worksheets. Write your own answer first (saved in this browser), then compare it with pointers from the lecture. Raatzsch's Iron Rule: writing is better than reading, and the proof of understanding is saying it in your own words.</p></div>
+      <div class="page-body"><div class="tabbar">${RZ_SHEETS.map((n,i)=>`<button class="tabbtn${i===0?' active':''}" data-tab="s${i+1}">${i+1}. ${esc(n)}</button>`).join('')}</div><div class="rz-list"></div></div>`;
+    const list = div.querySelector('.rz-list');
+    const linkify = t => t.replace(/(https?:\/\/\S+)/g, '<a href="$1" target="_blank" rel="noopener">open link</a>');
+    const words = t => (t.trim().match(/\S+/g)||[]).length;
+    const render = sheet=>{
+      const answers = ls('rz-ans', {});
+      list.innerHTML = RZ_TASKS.filter(t=>t.sheet===sheet).map(t=>`
+        <div class="rz-task" data-id="${t.id}">
+          <div class="rz-task-head"><span class="rz-num">${t.id}</span><h4>${esc(t.title)}</h4>${t.kind==='essay'?'<span class="plan-badge prio">In-class essay</span>':''}${t.kind==='personal'?'<span class="plan-badge large">Personal</span>':''}</div>
+          <p class="rz-prompt">${linkify(esc(t.prompt))}</p>
+          <textarea class="rz-answer" rows="${t.kind==='essay'?10:4}" placeholder="${t.kind==='personal'?'Your own answer. There is no model answer for this one.':'Your answer in your own words…'}">${esc(answers[t.id]||'')}</textarea>
+          <div class="rz-foot"><span class="rz-count">${words(answers[t.id]||'')} words</span>${t.hints?'<button type="button" class="btn ghost rz-hint-btn">Show pointers from the lecture</button>':''}</div>
+          ${t.hints?`<ul class="rz-hints">${t.hints.map(h=>`<li>${esc(h)}</li>`).join('')}</ul>`:''}
+        </div>`).join('');
+    };
+    div.querySelector('.tabbar').addEventListener('click', e=>{
+      const b = e.target.closest('.tabbtn'); if(!b) return;
+      div.querySelectorAll('.tabbar .tabbtn').forEach(x=>x.classList.toggle('active', x===b));
+      render(+b.dataset.tab.slice(1));
+    });
+    list.addEventListener('input', e=>{
+      const ta = e.target.closest('.rz-answer'); if(!ta) return;
+      const id = ta.closest('.rz-task').dataset.id;
+      const answers = ls('rz-ans', {}); answers[id] = ta.value; lsSet('rz-ans', answers);
+      ta.closest('.rz-task').querySelector('.rz-count').textContent = words(ta.value)+' words';
+    });
+    list.addEventListener('click', e=>{
+      const b = e.target.closest('.rz-hint-btn'); if(!b) return;
+      const open = b.closest('.rz-task').classList.toggle('open');
+      b.textContent = open ? 'Hide pointers' : 'Show pointers from the lecture';
+    });
+    render(1);
   });
 }
 
@@ -3586,6 +3879,7 @@ function buildPOMCheat(){
 
 POM_TOPICS.forEach(t=>buildTopicPage(t,'pom'));
 buildPOMHome(); buildPOMCheat(); buildPOMSim();
+RZ_TOPICS.forEach(t=>buildTopicPage(t,'pom')); buildRZTasks();
 
 /* ============================================================ AW PAGES ============================================================ */
 function buildAWHome(){
