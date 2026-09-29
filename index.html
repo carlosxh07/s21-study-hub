@@ -73,7 +73,8 @@ a,button{font-family:inherit;}
 #sidebar-logo p{font-size:.68rem;color:var(--side-ink-dim);margin-top:5px;text-transform:uppercase;letter-spacing:.11em;}
 
 .subject-switch{display:flex;flex-direction:column;gap:4px;padding:16px 14px;border-bottom:1px solid var(--side-line);}
-#plan-nav-btn{margin:10px 14px;width:calc(100% - 28px);box-sizing:border-box;}
+#plan-nav-btn,#mistakes-nav-btn{margin:10px 14px;width:calc(100% - 28px);box-sizing:border-box;}
+#mistakes-nav-btn{margin-top:0;}
 .subject-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-pill);cursor:pointer;font-size:.82rem;font-weight:600;color:var(--side-ink);transition:background .18s var(--ease),color .18s var(--ease);border:1px solid transparent;background:none;width:100%;text-align:left;font-family:inherit;}
 .subject-btn:hover{background:var(--side-2);color:var(--side-text);}
 .subject-btn.active{color:var(--side-text);background:var(--side-2);border-color:var(--side-line);}
@@ -727,6 +728,25 @@ body.hl-armed .hl-container{cursor:text;}
 .rz-hints{display:none;margin-top:12px;padding:12px 14px 12px 32px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:var(--radius-sm);font-size:.86rem;line-height:1.55;color:var(--ink-soft);}
 .rz-hints li{margin:4px 0;}
 .rz-task.open .rz-hints{display:block;}
+.mk-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.mk-stat{padding:14px 16px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;gap:2px;}
+.mk-stat b{font-size:1.6rem;line-height:1.1;}
+.mk-stat span{font-size:.78rem;color:var(--ink-soft);}
+.mk-stat.good b{color:var(--good);}.mk-stat.bad b{color:var(--bad);}
+.mk-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.mk-actions .btn[disabled]{opacity:.45;cursor:not-allowed;}
+.mk-list{display:flex;flex-direction:column;gap:8px;}
+.mk-row{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);background:var(--panel);border:1px solid var(--line);}
+.mk-mark{flex:0 0 26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;}
+.mk-row.no .mk-mark{background:var(--bad-bg);color:var(--bad);}
+.mk-row.ok .mk-mark{background:var(--good-bg);color:var(--good);}
+.mk-q{flex:1;min-width:0;}
+.mk-text{font-size:.88rem;line-height:1.45;}
+.mk-meta{font-size:.72rem;color:var(--ink-faint);margin-top:3px;}
+.mk-open{flex-shrink:0;padding:6px 12px;font-size:.78rem;}
+.mk-empty{color:var(--ink-soft);font-size:.9rem;padding:10px 0;}
+.mk-back{margin-bottom:14px;}
+@media(max-width:640px){.mk-stats{grid-template-columns:1fr 1fr 1fr;gap:6px;}.mk-stat{padding:10px;}.mk-stat b{font-size:1.25rem;}.mk-row{flex-wrap:wrap;}}
 </style>
 </head>
 <body>
@@ -748,6 +768,10 @@ body.hl-armed .hl-container{cursor:text;}
   <button class="subject-btn" id="plan-nav-btn" onclick="navTo('plan')">
     <span class="dot" style="background:var(--ink-soft)"></span>
     <span><span>Study Plan</span><span class="sub">Days to exam, weighted review</span></span>
+  </button>
+  <button class="subject-btn" id="mistakes-nav-btn" onclick="navTo('mistakes')">
+    <span class="dot" style="background:var(--bad)"></span>
+    <span><span>Mistakes &amp; Memory</span><span class="sub">Practise what you got wrong</span></span>
   </button>
   <div id="sidebar-nav"></div>
   <div id="sidebar-footer">Progress &amp; scores saved locally in this browser.</div>
@@ -780,6 +804,10 @@ body.hl-armed .hl-container{cursor:text;}
         <a href="#plan" onclick="navTo('plan');return false;" class="btn ghost" style="margin:18px auto 0;display:inline-flex;gap:8px;align-items:center;">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
           <span>Study Plan</span>
+        </a>
+        <a href="#mistakes" onclick="navTo('mistakes');return false;" class="btn ghost" style="margin:18px 0 0 8px;display:inline-flex;gap:8px;align-items:center;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+          <span>Practise mistakes</span>
         </a>
       </div>
       <div class="home-strip">Everything below is generated from the real course frameworks — nothing here is decorative filler.</div>
@@ -2150,11 +2178,16 @@ function navTo(pageId){
   document.getElementById('main').scrollTop = 0;
   const planBtn = document.getElementById('plan-nav-btn');
   if(planBtn) planBtn.classList.toggle('active', pageId==='plan');
+  const mBtn = document.getElementById('mistakes-nav-btn');
+  if(mBtn) mBtn.classList.toggle('active', pageId==='mistakes');
   if(pageId==='home'){
     buildHomeCards();
   } else if(pageId==='plan'){
     const pd = document.getElementById('page-plan');
     if(pd) renderPlanDays(pd);
+  } else if(pageId==='mistakes'){
+    const md = document.getElementById('page-mistakes');
+    if(md) renderMistakes(md);
   } else {
     const subj = pageId.split('-')[0];
     const subjId = subj==='rz' ? 'pom' : subj; // Raatzsch pages live under POM
@@ -2922,7 +2955,13 @@ function topicSize(t){ return t.cards.length + t.quiz.length + Math.round(t.summ
 
 // latest result per question (keyed by question text, so it survives shuffling) — feeds the finer radar axes
 function qresKey(text){ let h = 5381; for(let i=0;i<text.length;i++) h = ((h<<5) + h + text.charCodeAt(i)) | 0; return 'q'+(h>>>0).toString(36); }
-function qresRecord(text, right){ const r = ls('qres', {}); r[qresKey(text)] = right ? 1 : 0; lsSet('qres', r); }
+function qresRecord(text, right){
+  const k = qresKey(text);
+  const r = ls('qres', {}); r[k] = right ? 1 : 0; lsSet('qres', r);
+  // memory for the Mistakes page: attempts, wrong answers, last time
+  const m = ls('qmeta', {}); const e = m[k] || {n:0, w:0};
+  e.n++; if(!right) e.w++; e.t = Date.now(); m[k] = e; lsSet('qmeta', m);
+}
 // share of a question group answered correctly (last attempt); null if none answered yet
 function qresDetail(questions){
   const r = ls('qres', {});
@@ -3033,6 +3072,91 @@ function buildStudyPlanData(){
   });
   Object.values(byDay).forEach(list=>list.sort((a,b)=> (b.prio?1:0)-(a.prio?1:0) || (b.large?1:0)-(a.large?1:0)));
   return { byDay, maxDay };
+}
+
+/* ---------- Mistakes & Memory: every quiz question you answered (since 28 Sep 2026), practise the wrong ones ---------- */
+function quizRegistry(){
+  const reg = new Map();
+  const add = (subj, src, page, qs) => qs.forEach(q=>{ const k = qresKey(q.q); if(!reg.has(k)) reg.set(k, {...q, key:k, subj, src, page}); });
+  OB_TOPICS.forEach(t=>add('ob', t.title, t.id, t.quiz));
+  POM_TOPICS.forEach(t=>add('pom', t.title, t.id, t.quiz));
+  add('pom', 'POM Exam Simulator', 'pom-sim', POM_EXAM_SCENARIOS);
+  RZ_TOPICS.forEach(t=>add('pom', 'Raatzsch: '+t.title, t.id, t.quiz));
+  add('aw', 'AW Quiz', 'aw-quiz', AW_QUIZ);
+  add('aw', 'Mockup MCQ (Shalini)', 'aw-mockexam-mc', AW_MOCK_MC);
+  return reg;
+}
+function buildMistakes(){
+  registerPage('mistakes', (div)=>{
+    div.innerHTML = `
+      <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Mistakes &amp; Memory</h2><p>Every quiz question you have answered, and whether you got it right the last time. Practise only the ones you got wrong: answer them correctly and they drop off the list. Tracked since 28 Sep 2026 (topic quizzes, POM simulator, AW quiz and mockup MCQ).</p></div>
+      <div class="page-body">
+        <div class="tabbar mk-tabs"><button class="tabbtn active" data-subj="all">All</button>${SUBJECTS.map(s=>`<button class="tabbtn" data-subj="${s.id}">${s.id.toUpperCase()}</button>`).join('')}</div>
+        <div class="mk-overview"></div>
+        <div class="mk-practice" style="display:none"><button class="btn ghost mk-back">← Back to overview</button><div class="mk-quiz"></div></div>
+      </div>`;
+    div.dataset.subj = 'all';
+    div.querySelector('.mk-tabs').addEventListener('click', e=>{
+      const b = e.target.closest('.tabbtn'); if(!b) return;
+      div.dataset.subj = b.dataset.subj; renderMistakes(div);
+    });
+    div.querySelector('.mk-back').addEventListener('click', ()=>renderMistakes(div));
+    div.querySelector('.mk-overview').addEventListener('click', e=>{
+      const reg = quizRegistry(), subj = div.dataset.subj;
+      const inScope = q => subj==='all' || q.subj===subj;
+      if(e.target.closest('.mk-start')){
+        const qres = ls('qres', {});
+        const wrong = [...reg.values()].filter(q=>inScope(q) && qres[q.key]===0);
+        if(!wrong.length) return;
+        div.querySelector('.mk-overview').style.display = 'none';
+        div.querySelector('.mk-practice').style.display = '';
+        const qs = shuffle(wrong);
+        renderQuiz(div.querySelector('.mk-quiz'), qs, 'mistakes-practice', {topicOf:qi=>qs[qi].src});
+      }
+      if(e.target.closest('.mk-toggle-all')){ div.dataset.showAll = div.dataset.showAll==='1' ? '0' : '1'; renderMistakes(div); }
+      if(e.target.closest('.mk-reset')){
+        const keys = [...reg.values()].filter(inScope).map(q=>q.key);
+        const label = subj==='all' ? 'all subjects' : subj.toUpperCase();
+        if(!confirm(`Reset the question memory for ${label}? This forgets which questions you got right or wrong. Best scores and flashcards are not affected.`)) return;
+        const qres = ls('qres', {}), meta = ls('qmeta', {});
+        keys.forEach(k=>{ delete qres[k]; delete meta[k]; });
+        lsSet('qres', qres); lsSet('qmeta', meta);
+        renderMistakes(div);
+      }
+    });
+  });
+}
+function renderMistakes(div){
+  const subj = div.dataset.subj || 'all';
+  div.querySelectorAll('.mk-tabs .tabbtn').forEach(b=>b.classList.toggle('active', b.dataset.subj===subj));
+  div.querySelector('.mk-practice').style.display = 'none';
+  const ov = div.querySelector('.mk-overview'); ov.style.display = '';
+  const reg = quizRegistry(), qres = ls('qres', {}), meta = ls('qmeta', {});
+  const answered = [...reg.values()].filter(q=>(subj==='all' || q.subj===subj) && qres[q.key]!==undefined)
+    .map(q=>({...q, ok: qres[q.key]===1, m: meta[q.key] || {n:1, w: qres[q.key]===1 ? 0 : 1}}))
+    .sort((a,b)=>(a.ok-b.ok) || (b.m.w-a.m.w) || ((b.m.t||0)-(a.m.t||0)));
+  const wrong = answered.filter(q=>!q.ok);
+  const showAll = div.dataset.showAll==='1';
+  const rows = (showAll ? answered : wrong);
+  const when = t => t ? new Date(t).toLocaleDateString(undefined, {day:'numeric', month:'short'}) : '—';
+  ov.innerHTML = `
+    <div class="mk-stats">
+      <div class="mk-stat"><b>${answered.length}</b><span>questions answered</span></div>
+      <div class="mk-stat good"><b>${answered.length-wrong.length}</b><span>right last time</span></div>
+      <div class="mk-stat bad"><b>${wrong.length}</b><span>wrong last time</span></div>
+    </div>
+    <div class="mk-actions">
+      <button class="btn mk-start" ${wrong.length?'':'disabled'}>Practise ${wrong.length} wrong question${wrong.length===1?'':'s'}</button>
+      <button class="btn ghost mk-toggle-all">${showAll ? 'Show only wrong' : 'Show all answered'}</button>
+      <button class="btn ghost mk-reset" ${answered.length?'':'disabled'}>Reset memory${subj==='all'?'':' ('+subj.toUpperCase()+')'}</button>
+    </div>
+    ${rows.length ? `<div class="mk-list">${rows.map(q=>`
+      <div class="mk-row ${q.ok?'ok':'no'}">
+        <span class="mk-mark">${q.ok?'✓':'✗'}</span>
+        <div class="mk-q"><div class="mk-text">${esc(q.q)}</div><div class="mk-meta">${esc(q.subj.toUpperCase())} · ${esc(q.src)} · wrong ${q.m.w} of ${q.m.n} · last ${when(q.m.t)}</div></div>
+        <button class="btn ghost mk-open" onclick="navTo('${q.page}')">Open</button>
+      </div>`).join('')}</div>`
+      : `<p class="mk-empty">${answered.length ? 'No wrong answers in your memory. Nice! Switch to “Show all answered” to see everything.' : 'Nothing answered yet. Do a topic quiz, the POM simulator or the AW mockup, and your answers show up here.'}</p>`}`;
 }
 
 function buildStudyPlan(){
@@ -4180,6 +4304,7 @@ buildAWHome(); buildAWSummary(); buildAWFlash(); buildAWQuiz(); buildAWVerbs(); 
 buildAWMockExamMC(); buildAWMockExamWritten(); buildAWLeeDrills(); buildAWMarieSummary(); buildAWMarieQuiz();
 
 buildStudyPlan();
+buildMistakes();
 
 /* ============================================================ INIT ============================================================ */
 buildSubjectSwitch();
