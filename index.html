@@ -747,6 +747,15 @@ body.hl-armed .hl-container{cursor:text;}
 .mk-empty{color:var(--ink-soft);font-size:.9rem;padding:10px 0;}
 .mk-back{margin-bottom:14px;}
 @media(max-width:640px){.mk-stats{grid-template-columns:1fr 1fr 1fr;gap:6px;}.mk-stat{padding:10px;}.mk-stat b{font-size:1.25rem;}.mk-row{flex-wrap:wrap;}}
+/* flashcards are optional (user decision 29 Sep 2026): kept, but pushed to the edge and greyed out */
+.tabbar .tabbtn.tab-minor{margin-left:auto;font-size:.78rem;font-weight:500;color:var(--ink-faint);opacity:.7;}
+.tabbar .tabbtn.tab-minor:hover,.tabbar .tabbtn.tab-minor.active{opacity:1;}
+.nav-item.nav-minor{opacity:.45;font-size:.85em;}
+.nav-item.nav-minor:hover,.nav-item.nav-minor.active{opacity:.9;}
+.tool-tile[onclick*="aw-flash"]{opacity:.45;order:99;}
+.tool-tile[onclick*="aw-flash"]:hover{opacity:.8;}
+#page-ob-home .page-body,#page-pom-home .page-body,#page-aw-home .page-body{display:flex;flex-direction:column;}
+#page-ob-home .lecture-mastery,#page-pom-home .lecture-mastery,#page-aw-home .lecture-mastery{order:99;opacity:.45;filter:grayscale(1);margin-top:30px;}
 </style>
 </head>
 <body>
@@ -2246,11 +2255,11 @@ const AW_NAV = [
   {sec:'Overview', items:[{id:'aw-home', label:'AW Home', icon:'home'}]},
   {sec:'Reference', items:[
     {id:'aw-summary', label:'Summary', icon:'summary'},
-    {id:'aw-flash', label:'Flashcards', icon:'flash'},
     {id:'aw-quiz', label:'Quiz', icon:'quiz'},
     {id:'aw-verbs', label:'Action Verbs', icon:'verb'},
     {id:'aw-rules', label:'Writing Rules', icon:'rules'},
-    {id:'aw-present', label:'Presentation Skills', icon:'present'}
+    {id:'aw-present', label:'Presentation Skills', icon:'present'},
+    {id:'aw-flash', label:'Flashcards', icon:'flash', minor:true}
   ]},
   {sec:'Checklists', items:[
     {id:'aw-checklists', label:'Interactive Checklists', icon:'check'}
@@ -2280,7 +2289,7 @@ function buildSidebarNav(subjId){
   structure.forEach(section=>{
     html += `<div class="nav-section-label">${section.sec}</div>`;
     section.items.forEach(it=>{
-      html += `<div class="nav-item" data-page="${it.id}" onclick="navTo('${it.id}')">${icon(it.icon)}<span>${it.label}</span></div>`;
+      html += `<div class="nav-item${it.minor?' nav-minor':''}" data-page="${it.id}" onclick="navTo('${it.id}')">${icon(it.icon)}<span>${it.label}</span></div>`;
     });
   });
   if(subjId==='ob' || subjId==='pom'){
@@ -2935,15 +2944,10 @@ function lectureMasteryHtml(subjId){
 const PLAN_EXAM_AW = new Date(2026,9,6); // confirmed Klausur date 06.10.2026
 const PLAN_EXAM_OBPOM = new Date(2026,9,5); // confirmed Klausur date 05.10.2026 (OB & POM)
 
-// knowledge 0..1 from flashcard ratings (got it = 1, partially = .5) and best quiz score; null = nothing practised yet
-// flashcard ratings only count towards plan + radar if the user opts in on the Study Plan page (default: off)
-function planUsesFc(){ return ls('plan-use-fc', false)===true; }
+// knowledge 0..1 from the best quiz score; null = nothing practised yet.
+// plan + radar are scored from quiz / simulator results only; flashcards never count (user decision, 29 Sep 2026)
 function knowledgeScore(fcKey, nCards, quizKey, nQuiz){
   const parts = [];
-  if(fcKey && nCards && planUsesFc()){
-    const vals = Object.values(ls(fcKey, {}));
-    if(vals.length) parts.push((vals.filter(v=>v==='gotit').length + vals.filter(v=>v==='partial').length*.5) / nCards);
-  }
   if(quizKey && nQuiz){
     const best = ls(quizKey+'-best', null);
     if(best!=null) parts.push(Math.min(1, best/nQuiz));
@@ -2951,7 +2955,7 @@ function knowledgeScore(fcKey, nCards, quizKey, nQuiz){
   return parts.length ? parts.reduce((a,b)=>a+b,0)/parts.length : null;
 }
 function topicKnowledge(t){ return knowledgeScore('fc-'+t.id, t.cards.length, 'quiz-'+t.id, t.quiz.length); }
-function topicSize(t){ return t.cards.length + t.quiz.length + Math.round(t.summary.split(/\s+/).length/120); }
+function topicSize(t){ return t.quiz.length + Math.round(t.summary.split(/\s+/).length/60); }
 
 // latest result per question (keyed by question text, so it survives shuffling) — feeds the finer radar axes
 function qresKey(text){ let h = 5381; for(let i=0;i<text.length;i++) h = ((h<<5) + h + text.charCodeAt(i)) | 0; return 'q'+(h>>>0).toString(36); }
@@ -3004,8 +3008,7 @@ function radarAxes(subj){
   return [
     ...AW_AREAS.map(a=>({label:a.label, page:a.page, ...withEstimate(
       qresDetail([...a.quiz.map(i=>AW_QUIZ[i]), ...a.mock.map(i=>AW_MOCK_MC[i])].filter(Boolean)),
-      [a.quiz.length ? bestRatio('quiz-aw', AW_QUIZ.length) : null, a.mock.length ? bestRatio('quiz-aw-mockmc', AW_MOCK_MC.length) : null])})),
-    ...(planUsesFc() ? [{label:'Flashcards', page:'aw-flash', score:knowledgeScore('fc-aw', AW_CARDS.length)}] : [])
+      [a.quiz.length ? bestRatio('quiz-aw', AW_QUIZ.length) : null, a.mock.length ? bestRatio('quiz-aw-mockmc', AW_MOCK_MC.length) : null])}))
   ];
 }
 
@@ -3018,8 +3021,9 @@ function planItemPool(){
   const pomSim = knowledgeScore(null, 0, 'pom-exam-sim', 20);
   items.push({subj:'pom', label:'POM Exam Simulator (single choice)', page:'pom-sim', weight:pomSim==null ? .8 : 1-pomSim, size:POM_EXAM_SCENARIOS.length});
   const leeItems = AW_LEE_DRILLS.reduce((n,d)=>n+d.items.length, 0);
-  const awFc = knowledgeScore('fc-aw', AW_CARDS.length), awMock = knowledgeScore(null, 0, 'quiz-aw-mockmc', AW_MOCK_MC.length);
-  items.push({subj:'aw', label:'AW Flashcards (all sessions)', page:'aw-flash', weight:planUsesFc() ? weightOf(awFc) : .6, size:AW_CARDS.length});
+  const awMock = knowledgeScore(null, 0, 'quiz-aw-mockmc', AW_MOCK_MC.length);
+  const awQuiz = knowledgeScore(null, 0, 'quiz-aw', AW_QUIZ.length);
+  items.push({subj:'aw', label:'AW Quiz', page:'aw-quiz', weight:awQuiz==null ? .8 : 1-awQuiz, size:AW_QUIZ.length});
   items.push({subj:'aw', label:'Mockup MCQ Exam', page:'aw-mockexam-mc', weight:awMock==null ? .8 : 1-awMock, size:AW_MOCK_MC.length});
   items.push({subj:'aw', label:'Mockup Written Exam', page:'aw-mockexam-written', weight:.8, size:AW_MOCK_WRITTEN.length*8});
   items.push({subj:'aw', label:'Lee Hawkins — Grammar & Language Drills', page:'aw-lee-drills', weight:.55, size:leeItems});
@@ -3162,7 +3166,7 @@ function renderMistakes(div){
 function buildStudyPlan(){
   registerPage('plan', (div)=>{
     div.innerHTML = `
-      <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Study Plan</h2><p>See where your knowledge is weak, then follow a day-by-day revision plan built from your quiz and exam-simulator results (flashcard ratings only if you switch them on). Weak topics show up more often, mastered ones fade out, and everything gets denser as each exam gets closer.</p></div>
+      <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Study Plan</h2><p>See where your knowledge is weak, then follow a day-by-day revision plan built from your quiz and exam-simulator results. Weak topics show up more often, mastered ones fade out, and everything gets denser as each exam gets closer.</p></div>
       <div class="page-body">
         <div class="radar-card glass">
           <div class="radar-head"><div><h3>Weak-Spot Radar</h3><span class="radar-basis"></span></div>
@@ -3171,9 +3175,6 @@ function buildStudyPlan(){
           <div class="radar-wrap"><div class="radar-svg-wrap"></div><div class="radar-side"><div class="radar-list"></div><div class="radar-reco"></div></div></div>
         </div>
         <div class="plan-settings glass" style="padding:18px 22px;border-radius:var(--radius);">
-          <label class="plan-toggle"><span>Count flashcard ratings</span>
-            <span class="plan-toggle-row"><input type="checkbox" class="plan-use-fc"><small>Off: plan + radar use only quiz &amp; exam-simulator results</small></span>
-          </label>
           <label>Plan starts on
             <span class="plan-start-row"><input type="date" class="plan-start-input" max="${planIso(PLAN_EXAM_AW)}"><button type="button" class="btn ghost plan-start-today">Today</button></span>
           </label>
@@ -3191,9 +3192,6 @@ function buildStudyPlan(){
         <div class="plan-legend"><span class="plan-badge prio">Priority</span> weakest topics, do these first <span class="plan-badge large">Lots of content</span> big topic, plan extra time</div>
         <div id="plan-days-list"></div>
       </div>`;
-    const fcToggle = div.querySelector('.plan-use-fc');
-    fcToggle.checked = planUsesFc();
-    fcToggle.addEventListener('change', ()=>{ lsSet('plan-use-fc', fcToggle.checked); renderPlanDays(div); });
     const startInput = div.querySelector('.plan-start-input');
     startInput.value = planIso(planStart());
     startInput.addEventListener('change', ()=>{
@@ -3279,7 +3277,7 @@ function renderRadar(div){
   const subj = div.dataset.radarSubj || currentSubject || 'ob';
   div.querySelectorAll('.radar-tabs .tabbtn').forEach(b=>b.classList.toggle('active', b.dataset.subj===subj));
   const axes = radarAxes(subj);
-  div.querySelector('.radar-basis').textContent = planUsesFc() ? 'Based on quiz results + flashcard ratings' : 'Based on quiz & exam-simulator results';
+  div.querySelector('.radar-basis').textContent = 'Based on quiz & exam-simulator results only';
   // a radar needs 3+ axes; with fewer (e.g. AW without flashcards) show only the list
   const svgWrap = div.querySelector('.radar-svg-wrap');
   svgWrap.style.display = axes.length>=3 ? '' : 'none';
@@ -3297,7 +3295,7 @@ function renderRadar(div){
     (hasEst ? `<div class="radar-bests">≈ = partly estimated from your saved best score; answering the questions again replaces the estimate step by step</div>` : ''));
   const weakest = axes.filter(a=>a.score==null || a.score<.75).sort((a,b)=>(a.score??-1)-(b.score??-1)).slice(0,2);
   div.querySelector('.radar-reco').innerHTML = weakest.length
-    ? `<b>Focus next:</b> ${weakest.map(a=>`<a href="#${a.page}" onclick="navTo('${a.page}');return false;">${esc(a.label)}</a> (${pct(a.score, a.est)})`).join(' and ')}. ${planUsesFc() ? 'Rate flashcards and finish quizzes' : 'Do the topic quizzes and the exam simulator'} to keep the radar accurate.`
+    ? `<b>Focus next:</b> ${weakest.map(a=>`<a href="#${a.page}" onclick="navTo('${a.page}');return false;">${esc(a.label)}</a> (${pct(a.score, a.est)})`).join(' and ')}. Do the topic quizzes and the exam simulator to keep the radar accurate.`
     : `<b>Looking strong.</b> Everything is above 75% — keep reviewing to hold it there.`;
 }
 
@@ -3659,13 +3657,13 @@ function buildTopicPage(t, subjColor){
       <div class="page-header">
         <div class="eyebrow">${icon('summary')} Topic</div>
         <h2>${esc(t.title)}</h2>
-        <p>Summary, spaced-repetition flashcards, and an applied quiz for this topic.</p>
+        <p>Summary and quiz for this topic (flashcards optional, on the right).</p>
       </div>
       <div class="page-body">
         <div class="tabbar">
           <button class="tabbtn active" data-tab="sum">Summary</button>
-          <button class="tabbtn" data-tab="fc">Flashcards</button>
           <button class="tabbtn" data-tab="qz">Quiz</button>
+          <button class="tabbtn tab-minor" data-tab="fc">Flashcards</button>
         </div>
         <div class="tabpanel active" id="${t.id}-sum"></div>
         <div class="tabpanel" id="${t.id}-fc"></div>
@@ -3698,7 +3696,7 @@ function buildOBHome(){
       <div class="page-body">
         ${lectureMasteryHtml('ob')}
         <div class="topic-grid">
-          ${OB_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
+          ${OB_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
         </div>
         <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Cross-topic tools</div>
         <div class="tool-tiles">
@@ -3936,7 +3934,7 @@ function buildPOMHome(){
         </div>
         ${lectureMasteryHtml('pom')}
         <div class="topic-grid">
-          ${POM_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div>${fcMasteryHtml('fc-'+t.id, t.cards.length)}</div>`).join('')}
+          ${POM_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
         </div>
         <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Exam prep</div>
         <div class="tool-tiles">
@@ -3946,7 +3944,7 @@ function buildPOMHome(){
         <section class="rz-home">
           <div class="rz-home-head"><h3>Ethics &amp; Philosophy · Prof. Raatzsch</h3><p>His own part of the module (“Ethics, Law &amp; Politics in Business”, <b>30 points</b> of the written exam). The kickoff slides don't say how this part is examined; his worksheets end with in-class essays, so practise writing answers in your own words.</p></div>
           <div class="topic-grid">
-            ${RZ_TOPICS.map(t=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">RAATZSCH</div><h4>${esc(t.title)}</h4><p>${t.cards.length} flashcards · ${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Flashcards</span><span>Quiz</span></div></div>`).join('')}
+            ${RZ_TOPICS.map(t=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">RAATZSCH</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
           </div>
           <div class="tool-tiles">
             <div class="tool-tile" onclick="navTo('rz-tasks')"><div class="ic">${icon('doc')}</div><h4>Task Sheets 1–5</h4><p>${RZ_TASKS.length} tasks: write your answer, then compare with pointers from the lecture.</p></div>
