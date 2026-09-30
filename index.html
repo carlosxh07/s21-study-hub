@@ -756,6 +756,31 @@ body.hl-armed .hl-container{cursor:text;}
 .tool-tile[onclick*="aw-flash"]:hover{opacity:.8;}
 #page-ob-home .page-body,#page-pom-home .page-body,#page-aw-home .page-body{display:flex;flex-direction:column;}
 #page-ob-home .lecture-mastery,#page-pom-home .lecture-mastery,#page-aw-home .lecture-mastery{order:99;opacity:.45;filter:grayscale(1);margin-top:30px;}
+.rz-exam-card{padding:20px 22px;border-radius:var(--radius);margin:0 0 20px;background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);box-shadow:var(--shadow-sm);}
+.rz-exam-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.rz-exam-head h3{font-size:1.05rem;}
+.rz-exam-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:14px;}
+.rz-exam-grid h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent-ink);margin:0 0 6px;}
+.rz-exam-grid ul{padding-left:18px;margin:0 0 12px;font-size:.84rem;line-height:1.55;color:var(--ink-soft);}
+.rz-exam-grid li{margin-bottom:5px;}
+.rz-exam-grid b{color:var(--ink);}
+.rz-exam-small{font-size:.78rem;color:var(--ink-faint);line-height:1.5;}
+.rz-note{margin-bottom:18px;padding:11px 14px;border-left:3px solid var(--warn);background:var(--warn-bg);border-radius:var(--radius-sm);font-size:.85rem;line-height:1.55;color:var(--ink-soft);}
+.rz-note b{color:var(--ink);} .rz-note a{color:var(--accent-ink);font-weight:600;}
+.topic-card.rz-foundation{opacity:.6;}
+.topic-card.rz-foundation:hover{opacity:1;}
+.rz-ex-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;font-size:.88rem;color:var(--ink-soft);}
+.rz-ex-time{font-size:1.4rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
+.rz-ex-time.over{color:var(--bad);font-size:1rem;}
+.rz-ex-bar .btn{margin-left:auto;}
+.rz-ex-pts{font-size:.72rem;font-weight:600;color:var(--ink-faint);}
+.rz-check{display:flex;flex-direction:column;gap:6px;margin-top:10px;font-size:.84rem;color:var(--ink-soft);}
+.rz-check label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;}
+.rz-check input{accent-color:var(--accent);margin-top:3px;}
+.rz-min{font-size:.78rem;font-weight:600;}
+.rz-min.low{color:var(--warn);} .rz-min.ok{color:var(--good);}
+.rz-ex-done{font-size:.9rem;color:var(--ink-soft);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+@media(max-width:860px){.rz-exam-grid{grid-template-columns:1fr;gap:6px;}}
 </style>
 </head>
 <body>
@@ -1840,6 +1865,42 @@ quiz:[
 {q:"An investor insists: \"A company exists for exactly one reason: profit.\" What does Raatzsch's comparison with the animal kingdom question?",opts:["Whether animals make profit in the same way companies do","Whether there is just one thing that constitutes survival, and so one corporate function","Whether companies are living beings that grow, die and reproduce just like animals in nature","Whether profit can be sustained over many generations of owners, managers and employees"],correct:1,exp:"Is there only one thing that constitutes survival in the animal kingdom? If not, why should a corporation have only one function?"}
 ]}
 ];
+const RZ_EXAM_QS = [
+{topic:"Ownership",q:"What is ownership? (Put emphasis on why every form of ownership is social.)",pointers:["Start from primitive forms: taking a toy away from a child, picking an apple from a tree, and what we say (\"This is mine!\", \"Give it back!\").", "Kinds: private (\"Hands off!\"), collective, public, species-specific (?). All of them are social.", "Problem: was Robinson Crusoe an owner? \"Mine\" only has a point among others.", "Words like own / owner / property are not strictly regulated; say how you use them."]},
+{topic:"Ownership",q:"How do ownership and technology change together? (Use the apple that is too far away and the whales.)",pointers:["An extension of our technological capabilities usually goes along with a change in our social capabilities, and vice versa.", "Apple within reach: grab it. Apple too far away: tools, cooperation, rules about who gets it. Whales: what could \"owning\" them even mean?", "Show the problem: forms of ownership are not fixed; they grow with what we can do."]},
+{topic:"Ownership of a corporation",q:"What is ownership of a corporation? (Address what changes when someone says: \"Today we acquired 51% of the stocks of company A.\")",pointers:["Compare with primitive ownership: you cannot hold a corporation like a toy. What exactly is owned: shares, votes, assets, a right to profits?", "Link to corporations: \"groups of people acting towards a common goal\" (du Plessis). Can a group of people be owned?", "Awareness of problems: ownership and control come apart (Fama & Jensen); who decides, who is responsible (Beech-Nut: who could have gone to prison?)."]},
+{topic:"Corporation",q:"What is a corporation? (Address the question whether there is only one corporate function.)",pointers:["Start with the common definition: \"groups of people acting towards a common goal\" (du Plessis et al.), and show its limits (classical definition form, many forms of organizations).", "Is profit / ROI the one function a corporation must realize to exist? Compare: is there just one thing that constitutes survival in the animal kingdom?", "Corporation, company, firm, enterprise are used interchangeably in ordinary language; legal language is different."]},
+{topic:"Corporation",q:"A corporation pleads guilty, but no person goes to prison. What is a corporation, that this is possible? (Look at the Beech-Nut case.)",pointers:["Beech-Nut: adulterated baby juice sold knowingly, 215 counts, $2 million fine, nobody fired or imprisoned.", "Tension: a corporation is not a person, only the guilty should be punished, yet the company was punished and people could have been.", "Relation persons – organization: sum of individuals? Methodological individualism; \"emergence\" names the problem, it does not solve it."]},
+{topic:"Sustainability",q:"What is sustainability? (Look at the problem of knowing the needs of future generations.)",pointers:["Standard definition (Brundtland 1987): meeting the needs of current generations without compromising the ability of future generations to meet their own needs.", "What is a need, compared to a wish, a demand or a desire? Thirst is a need, but has it always been satisfied in the same form?", "Humans are historic creatures who change essentially: how can we know what future generations will need?"]},
+{topic:"Sustainability",q:"What makes a corporation sustainable? (Address whether \"sustainable\" is like the redness of a car or like the roundness of a circle.)",pointers:["Redness: an added, contingent property. Roundness: part of what a circle is.", "If sustainability is not just an add-on to business activity, what does it mean to be a proper business person?", "If sustainability is largely secured by state regulation today, what does that say about the social form of economic processes and the nature of corporations?"]},
+{topic:"Compliance",q:"What is compliance? (Put emphasis on whether the rules really come from outside business.)",pointers:["General idea: rules regulate economic activity (financial crisis, drugs, pollution); they include rules for punishment; compliance departments make sure they are obeyed.", "In which sense do the rules come from outside, and in which not? Compare state regulation with company planning (companies make rules too).", "Show the problem instead of only describing departments."]},
+{topic:"Compliance",q:"Would a rule still be a rule if nobody ever obeyed it? What follows for compliance? (Use the defect engine.)",pointers:["Is a defect engine only different from a functioning engine in that it does not work? A broken engine is still an engine, but only against the background of working ones.", "If rules are often not obeyed, how is that possible? Breaking a rule presupposes the rule.", "Consequence for compliance: punishment rules, the difference between a rule and a regularity."]}
+];
+// from Prof. Raatzsch's exam briefing (recorded 30 Sep 2026)
+const RZ_EXAM_INFO = `<div class="rz-exam-card">
+  <div class="rz-exam-head"><h3>Exam: what Raatzsch said</h3><span class="exam-date">Briefing 30 Sep 2026</span></div>
+  <div class="rz-exam-grid">
+    <div><h4>Format</h4><ul>
+      <li><b>3 questions, answer 2.</b> Skip the topic you have the weakest grip on.</li>
+      <li><b>15 points each</b> (30 in total) ≈ 15 minutes each. Time is flexible: the exam is 90 minutes shared with the other examiners' parts.</li>
+      <li>Each question comes with <b>hints in brackets</b>, e.g. “What is X? (Put emphasis on why …)”.</li>
+      <li>Very similar to the <b>in-class essays</b>; the exam questions may even be the same ones.</li></ul></div>
+    <div><h4>What he grades</h4><ul>
+      <li><b>Only two things: clarity and awareness of problems.</b></li>
+      <li>There is no “complete” answer (whole libraries exist on these topics), but there is a <b>minimum</b>: don't write too little.</li></ul>
+      <h4>Topics</h4><ul>
+      <li><b>Only the last lectures:</b> ownership, ownership of a corporation, corporation, sustainability, compliance, or combinations (“What makes a corporation sustainable?”).</li>
+      <li><b>Not</b> the first five lectures (Heraclitus, Buridan's donkey, paradoxes …): they only introduced conceptual investigation.</li></ul></div>
+    <div><h4>How to prepare (his advice)</h4><ul>
+      <li>Work through the worksheets properly; if short on time, <b>start with the last five</b> (they build on the earlier ones).</li>
+      <li><b>Study in groups of up to four:</b> one person answers a task, the others criticise (“unclear, missing, superfluous, false”), then the next task.</li>
+      <li>Reading the slides helps, but <b>writing answers</b> helps much more.</li>
+      <li>Make a short list of the <b>three most important things</b> from class, and keep the exam in perspective: do your best and leave the rest to him.</li></ul>
+      <p class="rz-exam-small">Last lecture on 1 Oct: compliance + one more in-class essay. He grades one of the three collected essays (corporations, 30 Sep, 1 Oct).</p></div>
+  </div>
+  <button class="btn" onclick="navTo('rz-exam')">Practise in exam format → Essay Trainer</button>
+</div>`;
+const RZ_FOUNDATION = ['rz-1','rz-2'];
 const RZ_SHEETS = ['Language & Definitions','Paradoxes & Puzzles','Concepts','Foundations','The Self'];
 const RZ_TASKS = [
 {sheet:1,id:"1-1",title:"Football and the aim of a business",prompt:"What is professional football (baseball, tennis, …): sports, business, both, something else? What is the aim (bottom line, purpose, …) of a business (corporation, firm, …)? Discover the problems!",hints:["The task is to discover problems, not to give a definition. Show why each quick answer runs into trouble.", "\"Sport\" and \"business\" overlap like family resemblances: a club can be both, and cases pull in different directions (a loss-making club is still football).", "\"Aim\" can mean purpose, function or bottom line. Is there one corporate function, like profit or ROI? Compare: is there one thing that constitutes survival in the animal kingdom?"],kind:"task"},
@@ -2301,7 +2362,8 @@ function buildSidebarNav(subjId){
   }
   if(subjId==='pom'){
     html += `<div class="nav-section-label">Ethics &amp; Philosophy · Raatzsch</div>`;
-    RZ_TOPICS.forEach(t=>{ html += `<div class="nav-item" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${t.title}</span></div>`; });
+    html += `<div class="nav-item" data-page="rz-exam" onclick="navTo('rz-exam')">${icon('timer')}<span>Exam Essay Trainer</span></div>`;
+    [...RZ_TOPICS.filter(t=>!RZ_FOUNDATION.includes(t.id)), ...RZ_TOPICS.filter(t=>RZ_FOUNDATION.includes(t.id))].forEach(t=>{ const f = RZ_FOUNDATION.includes(t.id); html += `<div class="nav-item${f?' nav-minor':''}" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${f?'Foundations: ':''}${t.title}</span></div>`; });
     html += `<div class="nav-item" data-page="rz-tasks" onclick="navTo('rz-tasks')">${icon('doc')}<span>Task Sheets 1–5</span></div>`;
   }
   nav.innerHTML = html;
@@ -3017,7 +3079,8 @@ function planItemPool(){
   const weightOf = s => s==null ? 1 : 1-s;
   OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
-  RZ_TOPICS.forEach(t=> items.push({subj:'pom', label:'Raatzsch: '+t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
+  RZ_TOPICS.filter(t=>!RZ_FOUNDATION.includes(t.id)).forEach(t=> items.push({subj:'pom', label:'Raatzsch: '+t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
+  items.push({subj:'pom', label:'Raatzsch: Exam Essay Trainer (2 of 3 questions)', page:'rz-exam', weight:.8, size:12});
   const pomSim = knowledgeScore(null, 0, 'pom-exam-sim', 20);
   items.push({subj:'pom', label:'POM Exam Simulator (single choice)', page:'pom-sim', weight:pomSim==null ? .8 : 1-pomSim, size:POM_EXAM_SCENARIOS.length});
   const leeItems = AW_LEE_DRILLS.reduce((n,d)=>n+d.items.length, 0);
@@ -3660,6 +3723,7 @@ function buildTopicPage(t, subjColor){
         <p>Summary and quiz for this topic (flashcards optional, on the right).</p>
       </div>
       <div class="page-body">
+        ${RZ_FOUNDATION.includes(t.id) ? `<div class="rz-note"><b>Foundations, not asked in the exam.</b> Raatzsch said the first five lectures only introduced conceptual investigation; exam questions are about ownership, corporations, sustainability and compliance. Useful background for writing clearly.</div>` : ''}
         <div class="tabbar">
           <button class="tabbtn active" data-tab="sum">Summary</button>
           <button class="tabbtn" data-tab="qz">Quiz</button>
@@ -3942,11 +4006,13 @@ function buildPOMHome(){
           <div class="tool-tile" onclick="navTo('pom-cheat')"><div class="ic">${icon('cheat')}</div><h4>Cheat Sheet &amp; Ratios</h4><p>Every framework + financial ratio table.</p></div>
         </div>
         <section class="rz-home">
-          <div class="rz-home-head"><h3>Ethics &amp; Philosophy · Prof. Raatzsch</h3><p>His own part of the module (“Ethics, Law &amp; Politics in Business”, <b>30 points</b> of the written exam). The kickoff slides don't say how this part is examined; his worksheets end with in-class essays, so practise writing answers in your own words.</p></div>
+          <div class="rz-home-head"><h3>Ethics &amp; Philosophy · Prof. Raatzsch</h3><p>His own part of the module (“Ethics, Law &amp; Politics in Business”, <b>30 points</b> of the written exam): two short essays on ownership, corporations, sustainability or compliance.</p></div>
+          ${RZ_EXAM_INFO}
           <div class="topic-grid">
-            ${RZ_TOPICS.map(t=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">RAATZSCH</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
+            ${[...RZ_TOPICS].sort((a,b)=>RZ_FOUNDATION.includes(a.id)-RZ_FOUNDATION.includes(b.id)).map(t=>`<div class="topic-card${RZ_FOUNDATION.includes(t.id)?' rz-foundation':''}" onclick="navTo('${t.id}')"><div class="num">${RZ_FOUNDATION.includes(t.id)?'FOUNDATIONS · NOT IN EXAM':'RAATZSCH · EXAM TOPIC'}</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
           </div>
           <div class="tool-tiles">
+            <div class="tool-tile" onclick="navTo('rz-exam')"><div class="ic">${icon('timer')}</div><h4>Exam Essay Trainer</h4><p>3 exam-style questions, answer 2 in 30 minutes, then check clarity and problems.</p></div>
             <div class="tool-tile" onclick="navTo('rz-tasks')"><div class="ic">${icon('doc')}</div><h4>Task Sheets 1–5</h4><p>${RZ_TASKS.length} tasks: write your answer, then compare with pointers from the lecture.</p></div>
           </div>
         </section>
@@ -3955,10 +4021,57 @@ function buildPOMHome(){
 }
 
 // Raatzsch task sheets: own answer (saved per task) + pointers from the lecture, one tab per sheet
+// Raatzsch exam trainer: 3 random exam-style questions (hints in brackets), answer 2, 30-minute timer, then pointers + self-check
+function buildRZExam(){
+  registerPage('rz-exam', (div)=>{
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('timer')} Prof. Raatzsch · Exam practice</div><h2>Exam Essay Trainer</h2><p>Like the real exam: three questions with hints in brackets, you answer two. About 15 minutes per question. He grades only clarity and awareness of problems.</p></div>
+      <div class="page-body">${RZ_EXAM_INFO.replace('<button class="btn" onclick="navTo(\'rz-exam\')">Practise in exam format → Essay Trainer</button>','')}<div class="rz-ex"></div></div>`;
+    const box = div.querySelector('.rz-ex');
+    const words = t => (t.trim().match(/\S+/g)||[]).length;
+    let timer = null;
+    const start = ()=>{
+      // three questions from three different topics
+      const byTopic = {}; shuffle(RZ_EXAM_QS).forEach(q=>{ (byTopic[q.topic] = byTopic[q.topic] || []).push(q); });
+      const qs = shuffle(Object.keys(byTopic)).slice(0,3).map(t=>byTopic[t][0]);
+      let left = 30*60; clearInterval(timer);
+      box.innerHTML = `<div class="rz-ex-bar"><span class="rz-ex-time">30:00</span><span>Choose <b>2 of 3</b> questions. Write in your own words.</span><button class="btn ghost rz-ex-new">New set</button></div>
+        ${qs.map((q,i)=>`<div class="rz-task rz-ex-q" data-i="${i}">
+          <div class="rz-task-head"><span class="rz-num">Q${i+1}</span><h4>${esc(q.topic)}</h4><span class="rz-ex-pts">15 points</span></div>
+          <p class="rz-prompt">${esc(q.q)}</p>
+          <textarea class="rz-answer" rows="9" placeholder="Leave this one empty if you skip it."></textarea>
+          <div class="rz-foot"><span class="rz-count">0 words</span></div>
+          <div class="rz-ex-review"></div>
+        </div>`).join('')}
+        <button class="btn rz-ex-finish">Finish &amp; review</button>`;
+      const tEl = box.querySelector('.rz-ex-time');
+      timer = setInterval(()=>{ left--; if(left<0){ clearInterval(timer); tEl.textContent='Time is up'; tEl.classList.add('over'); return; } tEl.textContent = String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0'); }, 1000);
+      box.querySelector('.rz-ex-new').addEventListener('click', ()=>{ if(confirm('Start a new set? Your current answers will be cleared.')) start(); });
+      box.addEventListener('input', e=>{ const ta = e.target.closest('.rz-answer'); if(ta) ta.closest('.rz-ex-q').querySelector('.rz-count').textContent = words(ta.value)+' words'; });
+      box.querySelector('.rz-ex-finish').addEventListener('click', ()=>{
+        clearInterval(timer);
+        const answered = [...box.querySelectorAll('.rz-ex-q')].filter(el=>words(el.querySelector('.rz-answer').value)>0).length;
+        box.querySelectorAll('.rz-ex-q').forEach(el=>{
+          const q = qs[+el.dataset.i]; const w = words(el.querySelector('.rz-answer').value);
+          el.querySelector('.rz-ex-review').innerHTML = `<ul class="rz-hints" style="display:block">${q.pointers.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>
+            <div class="rz-check"><b>Self-check (his two criteria):</b>
+              <label><input type="checkbox"> <b>Clarity:</b> I said in my own words how I use the key word(s), with an example.</label>
+              <label><input type="checkbox"> <b>Awareness of problems:</b> I showed at least one real problem or tension, not just a definition.</label>
+              <label><input type="checkbox"> I used the hint in brackets.</label>
+              <span class="rz-min ${w===0?'':w<120?'low':'ok'}">${w===0?'Skipped':w<120?w+' words: probably below his minimum, add a problem or an example':w+' words'}</span></div>`;
+        });
+        box.querySelector('.rz-ex-finish').outerHTML = `<p class="rz-ex-done">${answered===2?'Two answers, like in the exam.':answered<2?'In the exam you answer two questions; here you answered '+answered+'.':'You answered all three; in the exam two are enough, so you can spend more time on each.'} <button class="btn ghost rz-ex-again">New set</button></p>`;
+        box.querySelector('.rz-ex-again').addEventListener('click', start);
+      });
+    };
+    box.innerHTML = `<div style="text-align:center;padding:30px 10px;"><p style="color:var(--ink-soft);max-width:520px;margin:0 auto 18px;">You will get three questions from different exam topics. Pick two, write for about 30 minutes, then compare with the pointers from his lectures.</p><button class="btn rz-ex-start">Start (30 minutes)</button></div>`;
+    box.querySelector('.rz-ex-start').addEventListener('click', start);
+  });
+}
+
 function buildRZTasks(){
   registerPage('rz-tasks', (div)=>{
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('doc')} Prof. Raatzsch · Ethics &amp; Philosophy</div><h2>Task Sheets 1–5</h2><p>Every task from the worksheets. Write your own answer first (saved in this browser), then compare it with pointers from the lecture. Raatzsch's Iron Rule: writing is better than reading, and the proof of understanding is saying it in your own words.</p></div>
-      <div class="page-body"><div class="tabbar">${RZ_SHEETS.map((n,i)=>`<button class="tabbtn${i===0?' active':''}" data-tab="s${i+1}">${i+1}. ${esc(n)}</button>`).join('')}</div><div class="rz-list"></div></div>`;
+      <div class="page-body"><div class="rz-note"><b>Heads-up from the exam briefing:</b> sheets 1–5 belong to the first five lectures (foundations), which are <b>not</b> asked in the exam. He recommends working through the <b>last five sheets</b> (ownership, corporations, sustainability, compliance). Those are not in the hub yet. Until then, practise with the <a href="#rz-exam" onclick="navTo('rz-exam');return false;">Exam Essay Trainer</a>.</div><div class="tabbar">${RZ_SHEETS.map((n,i)=>`<button class="tabbtn${i===0?' active':''}" data-tab="s${i+1}">${i+1}. ${esc(n)}</button>`).join('')}</div><div class="rz-list"></div></div>`;
     const list = div.querySelector('.rz-list');
     const linkify = t => t.replace(/(https?:\/\/\S+)/g, '<a href="$1" target="_blank" rel="noopener">open link</a>');
     const words = t => (t.trim().match(/\S+/g)||[]).length;
@@ -4003,7 +4116,7 @@ function buildPOMCheat(){
 
 POM_TOPICS.forEach(t=>buildTopicPage(t,'pom'));
 buildPOMHome(); buildPOMCheat(); buildPOMSim();
-RZ_TOPICS.forEach(t=>buildTopicPage(t,'pom')); buildRZTasks();
+RZ_TOPICS.forEach(t=>buildTopicPage(t,'pom')); buildRZTasks(); buildRZExam();
 
 /* ============================================================ AW PAGES ============================================================ */
 function buildAWHome(){
