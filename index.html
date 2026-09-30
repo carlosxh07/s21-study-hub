@@ -396,6 +396,10 @@ body.hl-armed .hl-container{cursor:text;}
 .quiz-meta-row{display:flex;justify-content:space-between;font-size:.76rem;color:var(--ink-soft);margin-bottom:8px;font-weight:600;}
 .quiz-timer{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent-ink);}
 .quiz-q{background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 20px;margin-bottom:18px;box-shadow:var(--shadow-sm);}
+.src-badge{display:inline-flex;align-items:center;gap:6px;font-size:.66rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#8a5a00;background:rgba(245,170,40,.16);border:1px solid rgba(245,170,40,.45);padding:3px 10px;border-radius:16px;margin:0 6px 10px 0;}
+.src-badge svg{width:12px;height:12px;}
+[data-theme="dark"] .src-badge{color:#ffc766;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .src-badge{color:#ffc766;}}
 .quiz-q .qtag{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-ink);background:var(--accent-bg);display:inline-block;padding:3px 9px;border-radius:16px;margin-bottom:10px;}
 .quiz-q .qtitle{font-weight:700;margin-bottom:16px;font-size:1rem;font-family:'Inter',-apple-system,sans-serif;line-height:1.4;}
 .quiz-options{display:flex;flex-direction:column;gap:9px;}
@@ -3966,6 +3970,12 @@ function renderFlashcards(container, cards, storeKey){
   render();
 }
 
+// questions copied word for word from a professor's file get a visible source badge
+function srcBadge(src){ return src ? `<span class="src-badge" title="Original question from the professor's material">${icon('doc')} Prof. file · ${esc(src)}</span>` : ''; }
+AW_MOCK_MC.forEach(q=>{ q.src = 'Shalini · Sample Exam Q1'; });
+AW_MOCK_WRITTEN.forEach(w=>{ w.src = 'Shalini · Sample Exam ' + (/10/.test(w.pts||'') ? 'Q3' : 'Q2'); });
+AW_MARIE_QUIZ.forEach(q=>{ q.src = 'Marie Claire · Session 2 exam-prep slides'; });
+RZ_TASKS.forEach(t=>{ t.src = 'Raatzsch · Worksheet ' + t.sheet; });
 function renderQuiz(container, questions, storeKey, opts){
   opts = opts||{};
   // shuffle answer options so the correct letter isn't predictable (authored banks tend to cluster on B/C)
@@ -3999,7 +4009,7 @@ function renderQuiz(container, questions, storeKey, opts){
       <div class="quiz-meta-row"><span>Question ${idx+1} of ${order.length}</span>${timeLeft!==null?`<span class="quiz-timer" id="quiz-timer-el">${fmtTime(timeLeft)}</span>`:`<span>Score: ${score}/${idx}</span>`}</div>
       <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
       <div class="quiz-q">
-        ${opts.topicOf?`<div class="qtag">${esc(topicOf(qi))}</div>`:''}
+        ${opts.topicOf?`<div class="qtag">${esc(topicOf(qi))}</div>`:''}${srcBadge(q.src)}
         <div class="qtitle">${esc(q.q)}</div>
         <div class="quiz-options" id="qopts">
           ${q.opts.map((o,i)=>`<div class="quiz-option" data-i="${i}"><span class="letter">${String.fromCharCode(65+i)}</span><span>${esc(o)}</span></div>`).join('')}
@@ -4300,7 +4310,8 @@ const POM_EXAM_SCENARIOS = [
 {topic:"pom-0",q:"A plant manager agrees with the labour union on next year's shift pay and with a supplier on the price of raw materials. According to Mintzberg, he is acting as a _____.",opts:["Resource allocator", "Disturbance handler", "Negotiator", "Liaison", "Monitor"],correct:2,exp:"Reaching agreements with suppliers, distributors and labour unions = Negotiator."},
 {topic:"pom-0",q:"A managing director decides to expand into South America to win new customers for the company's products. According to Mintzberg, this is the role of a _____.",opts:["Entrepreneur", "Resource allocator", "Spokesperson", "Monitor", "Negotiator"],correct:0,exp:"Deciding to expand internationally to obtain new customers = Entrepreneur."},
 {topic:"pom-0",q:"Each month a division head reviews how her managers performed on their tasks and steps in where results fall short. According to Mintzberg, she is acting as a _____.",opts:["Leader", "Disseminator", "Resource allocator", "Monitor", "Disturbance handler"],correct:3,exp:"Evaluating the performance of managers and taking corrective action is listed under Monitor."},
-{topic:"pom-0",q:"A CEO gives a speech at the town hall to inform residents about the company's plans for the next five years. According to Mintzberg, this is the role of a _____.",opts:["Disseminator", "Figurehead", "Spokesperson", "Liaison", "Leader"],correct:2,exp:"Informing the local community (outsiders) about future intentions = Spokesperson. Informing employees would be Disseminator."}
+{topic:"pom-0",q:"A CEO gives a speech at the town hall to inform residents about the company's plans for the next five years. According to Mintzberg, this is the role of a _____.",opts:["Disseminator", "Figurehead", "Spokesperson", "Liaison", "Leader"],correct:2,exp:"Informing the local community (outsiders) about future intentions = Spokesperson. Informing employees would be Disseminator."},
+{topic:"pom-0",src:'POM Kickoff & Exam Guidelines (example question)',q:"SkyGen, an airline company, appointed an engineer to be the link between the company's R&D department and the government contractor sponsoring the design of a new fighter plane. According to Mintzberg, the engineer is playing the role of a _____.",opts:["Monitor","Leader","Figurehead","Resource allocator","Liaison"],correct:4,exp:"Building links and relationships outside the own unit = Liaison (interpersonal role)."}
 ];
 
 function buildPOMSim(){
@@ -4454,7 +4465,7 @@ function buildRZTasks(){
       list.innerHTML = RZ_TASKS.filter(t=>t.sheet===sheet).map(t=>`
         <div class="rz-task" data-id="${t.id}">
           <div class="rz-task-head"><span class="rz-num">${t.id}</span><h4>${esc(t.title)}</h4>${t.kind==='essay'?'<span class="plan-badge prio">In-class essay</span>':''}${t.kind==='personal'?'<span class="plan-badge large">Personal</span>':''}</div>
-          <p class="rz-prompt">${linkify(esc(t.prompt))}</p>
+          ${srcBadge(t.src)}<p class="rz-prompt">${linkify(esc(t.prompt))}</p>
           <textarea class="rz-answer" rows="${t.kind==='essay'?10:4}" placeholder="${t.kind==='personal'?'Your own answer. There is no model answer for this one.':'Your answer in your own words…'}">${esc(answers[t.id]||'')}</textarea>
           <div class="rz-foot"><span class="rz-count">${words(answers[t.id]||'')} words</span>${t.hints?'<button type="button" class="btn ghost rz-hint-btn">Show pointers from the lecture</button>':''}</div>
           ${t.hints?`<ul class="rz-hints">${t.hints.map(h=>`<li>${esc(h)}</li>`).join('')}</ul>`:''}
@@ -4766,7 +4777,7 @@ function buildAWMockExamWritten(){
     body.innerHTML = AW_MOCK_WRITTEN.map((w,i)=>`
       <div class="case-brief" style="margin-bottom:10px;"><strong>${esc(w.tab)} &middot; ${esc(w.pts)}</strong></div>
       <div class="doc-card">
-        <div class="case-q">${esc(w.title)}</div>
+        ${srcBadge(w.src)}<div class="case-q">${esc(w.title)}</div>
         <div style="white-space:pre-line;font-size:.87rem;color:var(--ink-soft);line-height:1.7;margin-bottom:16px;">${esc(w.prompt)}</div>
         <button class="btn ghost" onclick="window.__mockWrReveal(${i})">Reveal model answer</button>
         <div class="case-model" id="mockwr-model-${i}" style="white-space:pre-line;margin-top:14px;"><h5>Model Answer</h5>${esc(w.model)}</div>
@@ -4822,7 +4833,7 @@ function buildAWMarieQuiz(){
     const body = div.querySelector('#aw-marie-quiz-body');
     body.innerHTML = AW_MARIE_QUIZ.map((q,i)=>`
       <div class="doc-card">
-        <div class="case-q" style="font-size:.98rem;">${esc(q.q)}</div>
+        ${srcBadge(q.src)}<div class="case-q" style="font-size:.98rem;">${esc(q.q)}</div>
         <div class="quiz-options" id="marie-opts-${i}">
           ${q.opts.map((o,oi)=>`<div class="quiz-option" data-oi="${oi}" onclick="window.__marieToggle(${i},${oi})"><span class="letter">${String.fromCharCode(65+oi)}</span><span>${esc(o)}</span></div>`).join('')}
         </div>
