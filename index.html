@@ -637,8 +637,6 @@ body.hl-armed .hl-container{cursor:text;}
   .hero h1{font-size:1.9rem;}
 }
 /* ============ SUPPORT / DONATE ============ */
-#support-btn{display:none;width:calc(100% - 28px);margin:0 14px 12px;padding:9px 12px;border-radius:12px;border:1px solid rgba(255,196,110,.55);background:linear-gradient(135deg,#ffd58a 0%,#f6a93b 55%,#e8892a 100%);color:#2a1602;font:inherit;font-size:.76rem;font-weight:700;cursor:pointer;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 14px rgba(246,169,59,.3),inset 0 1px 0 rgba(255,255,255,.5);transition:transform .2s var(--ease),box-shadow .2s var(--ease);}
-#support-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(246,169,59,.5),inset 0 1px 0 rgba(255,255,255,.55);}
 .home-support{display:none;position:relative;overflow:hidden;margin:-18px auto 34px;padding:12px 24px;border-radius:999px;border:1px solid rgba(255,196,110,.55);background:linear-gradient(135deg,#ffd58a 0%,#f6a93b 55%,#e8892a 100%);color:#3b2105;font:inherit;font-size:.92rem;font-weight:500;cursor:pointer;align-items:center;gap:9px;box-shadow:0 6px 22px rgba(246,169,59,.38),inset 0 1px 0 rgba(255,255,255,.55);transition:transform .25s var(--ease),box-shadow .25s var(--ease);animation:hs-pulse 3.2s ease-in-out infinite;}
 .hero p.home-support-note{display:none;max-width:500px;text-wrap:balance;margin:-22px auto 34px;font-size:.78rem;line-height:1.5;color:var(--ink-soft);}
 .home-support b{color:#2a1602;font-weight:700;}
@@ -836,7 +834,6 @@ body.hl-armed .hl-container{cursor:text;}
     </div>
     <p>EBS Business School</p>
   </div>
-  <button id="support-btn" class="support-open" type="button">☕ <span>Buy me a coffee at the Cafta</span></button>
   <div class="subject-switch" id="subject-switch"></div>
   <button class="subject-btn" id="plan-nav-btn" onclick="navTo('plan')">
     <span class="dot" style="background:var(--ink-soft)"></span>
@@ -2027,12 +2024,7 @@ const AW_QUIZ = [
 {q:"In PEEL, what does the second \"E\" stand for?",opts:["Evidence","Example","Explanation","Evaluation"],correct:2,exp:"PEEL = Point, Evidence, Explanation, Link."},
 {q:"When structuring a counter-argument, which element must always come last?",opts:["Concession","Counter-argument","Refutation","Point"],correct:2,exp:"Refutation always comes last."},
 {q:"The \"Conversation Metaphor\" for synthesis suggests the writer should act like:",opts:["A stenographer recording each source in turn, exactly as it was said","A chair of a debate, shaping discussion and drawing out tensions","A judge ruling one source right","A translator converting each source into plain English for a general audience"],correct:1,exp:"Identify agreement, conflict, and nuance rather than listing sources."},
-{q:"Per Nancy Duarte's \"Glance Test,\" a well-designed slide should:",opts:["Contain full sentences so the audience can read along with the speaker","Communicate its main point in about the time it takes to glance at it","Always include at least one chart or diagram to support the spoken argument","Be read aloud word-for-word"],correct:1,exp:"A slide requiring longer than a glance splits audience attention."},
-{q:"Per the EBS presentation guide, which behaviour is recommended?",opts:["Reading directly from your notes","Leaning on the podium","Using hand gestures and eye contact","Turning your back to the audience"],correct:2,exp:"Hand gestures and eye contact are explicitly recommended."},
-{q:"In the CAR Principle, \"Result\" should ideally be:",opts:["Vague, to avoid overpromising","Left out if negative","Concise and, where possible, measurable/quantifiable","Described only in the interview"],correct:2,exp:"Concrete, quantifiable outcomes strengthen CAR stories."},
-{q:"The \"Smart / VW Golf / Maybach\" analogy illustrates:",opts:["Three CV template designs, from simple to premium layouts","Increasing detail across CV, cover letter, and interview","Three tiers of job seniority, from intern to executive","Three writing styles for different industries and employers"],correct:1,exp:"CV = brief (Smart), cover letter = more detail (Golf), interview = full depth (Maybach)."},
-{q:"Which is a correct use of a Latin abbreviation, per the style rules?",opts:["\"cf. this example shows...\" used freely in running text","\"Smith et al. (2002) found that...\" used in a citation","\"(viz. increased sales)\" with no comma after viz.","Using \"e.g.\" interchangeably with \"i.e.\" at will"],correct:1,exp:"\"et al.\" is the accepted exception for running text citations."},
-{q:"On the EBS presentation rubric, how many total points, and which criteria tie for most weight?",opts:["10 points; Content carries most weight","15 points; Language and Presentation Skills tie at 4 points each","20 points; Slides and Structure tie at 5 points each for most weight","15 points; Structure carries most weight"],correct:1,exp:"Total 15 points; Language and Presentation Skills each weighted 4."}
+{q:"Which is a correct use of a Latin abbreviation, per the style rules?",opts:["\"cf. this example shows...\" used freely in running text","\"Smith et al. (2002) found that...\" used in a citation","\"(viz. increased sales)\" with no comma after viz.","Using \"e.g.\" interchangeably with \"i.e.\" at will"],correct:1,exp:"\"et al.\" is the accepted exception for running text citations."}
 ];
 const AW_CHECKLISTS = [
 {id:'aw-cl-1',title:'Before submitting a research assignment',items:[
@@ -3069,13 +3061,14 @@ function qresDetail(questions){
 }
 function qresScore(questions){ const d = qresDetail(questions); return d.seen ? d.right/d.n : null; }
 // AW exam areas (indices into AW_QUIZ / AW_MOCK_MC)
+// AW quiz shrank from 15 to 10 questions (presentation/CV questions removed, 30 Sep 2026): rescale the saved best once
+(function(){ try{ if(!ls('quiz-aw-rescaled', false)){ const b = ls('quiz-aw-best', null); if(b!=null) lsSet('quiz-aw-best', Math.round(b*10/15)); lsSet('quiz-aw-rescaled', true); } }catch(e){} })();
 const AW_AREAS = [
   {label:'Argumentation & Logic', page:'aw-summary', quiz:[0,1,2], mock:[]},
   {label:'Sources & Academic Integrity', page:'aw-mockexam-mc', quiz:[], mock:[0,1,2,3,4,5,6]},
   {label:'Citation & Referencing (APA)', page:'aw-citation', quiz:[3], mock:[7,8,9,10,11,12,13,14,15,16,17]},
-  {label:'Formatting, Figures & Tables', page:'aw-rules', quiz:[13], mock:[18,19,20,21,22,23,24,25,26,27,28,29]},
-  {label:'Structure & Genres', page:'aw-peel', quiz:[4,5,6,7,8], mock:[30,31,32,33,34,35,36,37]},
-  {label:'Presentations & Career', page:'aw-present', quiz:[9,10,11,12,14], mock:[]}
+  {label:'Formatting, Figures & Tables', page:'aw-rules', quiz:[9], mock:[18,19,20,21,22,23,24,25,26,27,28,29]},
+  {label:'Structure & Genres', page:'aw-peel', quiz:[4,5,6,7,8], mock:[30,31,32,33,34,35,36,37]}
 ];
 const POM_SHORT = {'pom-0':'Foundations','pom-2':'Planning & Strategy','pom-4':'Control & Change'};
 function radarAxes(subj){
@@ -4277,11 +4270,7 @@ Cohesion (sentence-to-sentence linking via the given-to-new principle, signposti
 
 The PEEL structure (Point, Evidence, Explanation, Link) organizes paragraphs, with counter-arguments following:
 => concession → counter-argument → refutation (always last)
-Synthesising multiple sources means putting them "in conversation," organizing a literature review paragraph by idea rather than source.
-
-On the presentation side, Nancy Duarte's Glance Test says a slide should land its point in about three seconds; anxiety is best managed by reframing it as energy, preparing without over-scripting, and accepting minor stumbles. The EBS rubric weighs Language and Presentation Skills most heavily (4 points each of 15).
-
-For job applications, the CAR Principle (Challenge, Action, Result) turns experience into evidence-based stories, escalating in detail across CV (brief), cover letter (more detail), and interview (full depth) — always backed by strong action verbs and measurable results.`;
+Synthesising multiple sources means putting them "in conversation," organizing a literature review paragraph by idea rather than source.`;
 function buildAWSummary(){
   registerPage('aw-summary', (div)=>{
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('summary')} Reference</div><h2>AW Summary</h2><p>The full module in prose.</p></div><div class="page-body" id="aw-sum-body"></div>`;
