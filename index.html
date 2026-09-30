@@ -755,7 +755,8 @@ body.hl-armed .hl-container{cursor:text;}
 .tool-tile[onclick*="aw-flash"]{opacity:.45;order:99;}
 .tool-tile[onclick*="aw-flash"]:hover{opacity:.8;}
 #page-ob-home .page-body,#page-pom-home .page-body,#page-aw-home .page-body{display:flex;flex-direction:column;}
-#page-ob-home .lecture-mastery,#page-pom-home .lecture-mastery,#page-aw-home .lecture-mastery{order:99;opacity:.45;filter:grayscale(1);margin-top:30px;}
+#page-ob-home .lecture-mastery,#page-pom-home .lecture-mastery,#page-aw-home .lecture-mastery{order:-1;}
+.lm-sub a{color:var(--accent-ink);font-weight:600;text-decoration:none;}
 .rz-exam-card{padding:20px 22px;border-radius:var(--radius);margin:0 0 20px;background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);box-shadow:var(--shadow-sm);}
 .rz-exam-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
 .rz-exam-head h3{font-size:1.05rem;}
@@ -2298,6 +2299,8 @@ function navTo(pageId){
   if(mBtn) mBtn.classList.toggle('active', pageId==='mistakes');
   const eBtn = document.getElementById('exams-nav-btn');
   if(eBtn) eBtn.classList.toggle('active', pageId==='exams');
+  const lm = el && /^(ob|pom|aw)-home$/.test(pageId) ? el.querySelector('.lecture-mastery') : null;
+  if(lm) lm.outerHTML = lectureMasteryHtml(pageId.split('-')[0]);
   if(pageId==='home'){
     buildHomeCards();
   } else if(pageId==='plan'){
@@ -3000,48 +3003,33 @@ function fcMasteryHtml(storeKey, total){
   return `<div class="topic-mastery"><div class="mbar"><div class="mfill" style="width:${m.pct}%"></div></div><span class="mlabel">${m.gotit}/${m.total} known</span></div>`;
 }
 
-function fcMasteryLecture(subjId){
-  let entries = [];
-  if(subjId==='ob') entries = OB_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
-  else if(subjId==='pom') entries = POM_TOPICS.map(t=>['fc-'+t.id, t.cards.length]);
-  else if(subjId==='aw') entries = [['fc-aw', AW_CARDS.length]];
-  let gotit=0, partial=0, dontknow=0, total=0;
-  entries.forEach(([key,n])=>{
-    const known = ls(key, {});
-    Object.values(known).forEach(v=>{
-      if(v==='gotit') gotit++;
-      else if(v==='partial') partial++;
-      else if(v==='dontknow') dontknow++;
-    });
-    total += n;
-  });
-  const unrated = total - gotit - partial - dontknow;
-  return { gotit, partial, dontknow: dontknow+unrated, total, pct: total? Math.round(gotit/total*100) : 0 };
-}
+// "Quiz knowledge" ring at the top of each subject page: same basis as the Weak-Spot Radar
+// (quiz + simulator results, partly estimated from saved best scores); flashcards never count
 function lectureMasteryHtml(subjId){
-  const m = fcMasteryLecture(subjId);
-  if(!m.total) return '';
-  const R = 34, C = 2*Math.PI*R;
-  const off = C - (m.pct/100)*C;
-  const rows = [
-    ['gotit','Got it', m.gotit],
-    ['partial','Partially', m.partial],
-    ['dontknow','Not yet', m.dontknow]
-  ];
-  return `<div class="lecture-mastery glass">
+  const axes = radarAxes(subjId);
+  const n = axes.length; if(!n) return '';
+  const pct = Math.round(axes.reduce((sum,x)=>sum+(x.score||0),0)/n*100);
+  const R = 34, C = 2*Math.PI*R, off = C - (pct/100)*C;
+  const strong = axes.filter(x=>x.score!=null && x.score>=.75).length;
+  const mid = axes.filter(x=>x.score!=null && x.score>=.5 && x.score<.75).length;
+  const weak = n - strong - mid;
+  const rows = [['gotit','Strong (75%+)',strong],['partial','Getting there',mid],['dontknow','Weak / not started',weak]];
+  const unit = subjId==='ob' ? 'topics' : 'areas';
+  const est = axes.some(x=>x.est);
+  return `<div class="lecture-mastery glass" data-subj="${subjId}">
     <div class="lm-ring">
       <svg viewBox="0 0 84 84">
         <circle class="lm-track" cx="42" cy="42" r="${R}"/>
         <circle class="lm-fill" cx="42" cy="42" r="${R}" style="stroke-dasharray:${C};stroke-dashoffset:${off}"/>
       </svg>
-      <div class="lm-pct"><b>${m.pct}</b><span>%</span></div>
+      <div class="lm-pct"><b>${pct}</b><span>%</span></div>
     </div>
     <div class="lm-body">
-      <div class="lm-title">Flashcard mastery</div>
+      <div class="lm-title">Quiz knowledge</div>
       <div class="fc-breakdown" style="margin:10px 0 0;max-width:none;">
-        ${rows.map(([cls,label,n])=>`<div class="fc-breakdown-row"><span class="fc-breakdown-label ${cls}">${label}</span><div class="fc-breakdown-bar"><div class="fc-breakdown-fill ${cls}" style="width:${m.total?Math.round(n/m.total*100):0}%"></div></div><span class="fc-breakdown-pct">${n}</span></div>`).join('')}
+        ${rows.map(([cls,label,k])=>`<div class="fc-breakdown-row"><span class="fc-breakdown-label ${cls}">${label}</span><div class="fc-breakdown-bar"><div class="fc-breakdown-fill ${cls}" style="width:${Math.round(k/n*100)}%"></div></div><span class="fc-breakdown-pct">${k}</span></div>`).join('')}
       </div>
-      <div class="lm-sub">${m.gotit} of ${m.total} cards mastered</div>
+      <div class="lm-sub">${strong} of ${n} ${unit} at 75%+ · from quiz &amp; simulator results${est?' (≈ partly estimated from best scores)':''} · <a href="#plan" onclick="navTo('plan');return false;">Weak-Spot Radar →</a></div>
     </div>
   </div>`;
 }
