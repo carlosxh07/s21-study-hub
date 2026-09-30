@@ -807,6 +807,18 @@ body.hl-armed .hl-container{cursor:text;}
 .xo-course ul{list-style:none;padding:0;font-size:.8rem;color:var(--ink-soft);line-height:1.7;}
 .xo-course li span{display:inline-block;min-width:34px;font-size:.66rem;font-weight:700;color:var(--ink-faint);}
 @media(max-width:900px){.xo-parts{grid-template-columns:1fr;}}
+.nav-section-label.nav-minor-label{opacity:.5;margin-top:18px;border-top:1px dashed var(--side-line);padding-top:14px;}
+.aw-sec{padding-left:0!important;margin-top:26px;}
+.aw-exam-parts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:4px 0 12px;}
+.aw-exam-parts h4{font-size:.9rem;margin:8px 0 4px;}
+.aw-exam-parts h4 small{font-size:.74rem;color:var(--ink-faint);font-weight:600;margin-left:4px;}
+.aw-exam-parts p{font-size:.8rem;line-height:1.5;color:var(--ink-soft);}
+.aw-extra{margin-top:40px;padding:20px 22px;border:1px dashed var(--line);border-radius:var(--radius);background:var(--bg2);}
+.aw-extra-head h3{font-size:1rem;color:var(--ink-soft);}
+.aw-extra-head p{font-size:.82rem;color:var(--ink-faint);margin:4px 0 14px;}
+.aw-extra .tool-tile{opacity:.7;}
+.aw-extra .tool-tile:hover{opacity:1;}
+@media(max-width:860px){.aw-exam-parts{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -2349,33 +2361,29 @@ const POM_NAV = [
   ]}
 ];
 const AW_NAV = [
-  {sec:'Overview', items:[{id:'aw-home', label:'AW Home', icon:'home'}]},
-  {sec:'Reference', items:[
+  {sec:'Overview', items:[{id:'aw-home', label:'AW Home & Exam Info', icon:'home'}]},
+  {sec:'Exam · Academic Writing (Shalini) · 35', items:[
     {id:'aw-summary', label:'Summary', icon:'summary'},
     {id:'aw-quiz', label:'Quiz', icon:'quiz'},
-    {id:'aw-verbs', label:'Action Verbs', icon:'verb'},
+    {id:'aw-mockexam-mc', label:'Mockup MCQ (38)', icon:'quiz'},
+    {id:'aw-mockexam-written', label:'Mockup Written Exams', icon:'doc'},
     {id:'aw-rules', label:'Writing Rules', icon:'rules'},
-    {id:'aw-present', label:'Presentation Skills', icon:'present'},
-    {id:'aw-flash', label:'Flashcards', icon:'flash', minor:true}
-  ]},
-  {sec:'Checklists', items:[
-    {id:'aw-checklists', label:'Interactive Checklists', icon:'check'}
-  ]},
-  {sec:'Tools', items:[
     {id:'aw-citation', label:'Citation Doctor', icon:'doc'},
     {id:'aw-logic', label:'Logic Type Classifier', icon:'logic'},
-    {id:'aw-peel', label:'PEEL Paragraph Builder', icon:'peel'}
+    {id:'aw-peel', label:'PEEL Paragraph Builder', icon:'peel'},
+    {id:'aw-flash', label:'Flashcards', icon:'flash', minor:true}
   ]},
-  {sec:'Shalini — Mockup Exams', items:[
-    {id:'aw-mockexam-mc', label:'Mockup MCQ (38)', icon:'quiz'},
-    {id:'aw-mockexam-written', label:'Mockup Written Exams', icon:'doc'}
-  ]},
-  {sec:'Lee Hawkins — Extra Practice', items:[
+  {sec:'Exam · English (Lee Hawkins) · 10', items:[
     {id:'aw-lee-drills', label:'Grammar & Language Drills', icon:'verb'}
   ]},
-  {sec:'Marie Claire — Stress Management', items:[
+  {sec:'Exam · Time & Stress (Marie Claire) · 15', items:[
     {id:'aw-marie-summary', label:'Stress Management Summary', icon:'summary'},
-    {id:'aw-marie-quiz', label:'Exam-Prep MCQ', icon:'quiz'}
+    {id:'aw-marie-quiz', label:'Exam-Prep MCQ (2 correct)', icon:'quiz'}
+  ]},
+  {sec:'Presentations & CV · not in exam', minor:true, items:[
+    {id:'aw-present', label:'Presentation Skills', icon:'present', minor:true},
+    {id:'aw-verbs', label:'Action Verbs (CV)', icon:'verb', minor:true},
+    {id:'aw-checklists', label:'Checklists (research, presentation, CV)', icon:'check', minor:true}
   ]}
 ];
 
@@ -2384,7 +2392,7 @@ function buildSidebarNav(subjId){
   let structure = subjId==='ob'?OB_NAV:subjId==='pom'?POM_NAV:AW_NAV;
   let html = '';
   structure.forEach(section=>{
-    html += `<div class="nav-section-label">${section.sec}</div>`;
+    html += `<div class="nav-section-label${section.minor?' nav-minor-label':''}">${section.sec}</div>`;
     section.items.forEach(it=>{
       html += `<div class="nav-item${it.minor?' nav-minor':''}" data-page="${it.id}" onclick="navTo('${it.id}')">${icon(it.icon)}<span>${it.label}</span></div>`;
     });
@@ -4224,31 +4232,52 @@ RZ_TOPICS.forEach(t=>buildTopicPage(t,'pom')); buildRZTasks(); buildRZExam();
 /* ============================================================ AW PAGES ============================================================ */
 function buildAWHome(){
   registerPage('aw-home', (div)=>{
+    const ex = EXAMS.find(e=>e.title.startsWith('Academic Writing'));
+    const tile = (id, ic, h, p) => `<div class="tool-tile" onclick="navTo('${id}')"><div class="ic">${icon(ic)}</div><h4>${h}</h4><p>${p}</p></div>`;
     div.innerHTML = `
       <div class="page-header">
         <div class="eyebrow">${icon('home')} Academic Writing &amp; Presentations</div>
-        <h2>Reference &amp; Practice</h2>
-        <p>Argumentation, citation, structure, presentation delivery, and CV writing — plus three new applied drills.</p>
+        <h2>Exam Prep &amp; Reference</h2>
+        <p>What you need for the written exam on 6 Oct first, grouped by lecturer. Presentation and CV material is at the bottom.</p>
       </div>
       <div class="page-body">
-        ${lectureMasteryHtml('aw')}
-        <div class="tool-tiles">
-          <div class="tool-tile" onclick="navTo('aw-summary')"><div class="ic">${icon('summary')}</div><h4>Summary</h4><p>The full reference in prose.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-flash')"><div class="ic">${icon('flash')}</div><h4>Flashcards</h4><p>${AW_CARDS.length} cards, spaced repetition.</p>${fcMasteryHtml('fc-aw', AW_CARDS.length)}</div>
-          <div class="tool-tile" onclick="navTo('aw-quiz')"><div class="ic">${icon('quiz')}</div><h4>Quiz</h4><p>${AW_QUIZ.length} exam-style questions.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-verbs')"><div class="ic">${icon('verb')}</div><h4>Action Verbs</h4><p>Searchable CV verb bank.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-rules')"><div class="ic">${icon('rules')}</div><h4>Writing Rules</h4><p>Argument structure &amp; citation rules.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-present')"><div class="ic">${icon('present')}</div><h4>Presentation Skills</h4><p>Glance Test, rubric, do's/don'ts.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-checklists')"><div class="ic">${icon('check')}</div><h4>Checklists</h4><p>3 interactive, saved locally.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-citation')"><div class="ic">${icon('doc')}</div><h4>Citation Doctor</h4><p>${AW_CITATIONS.length} flawed citations to fix.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-logic')"><div class="ic">${icon('logic')}</div><h4>Logic Type Classifier</h4><p>${AW_LOGIC.length} arguments to classify.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-peel')"><div class="ic">${icon('peel')}</div><h4>PEEL Builder</h4><p>Worked, color-coded examples.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-mockexam-mc')"><div class="ic">${icon('quiz')}</div><h4>Mockup MCQ</h4><p>${AW_MOCK_MC.length} exam-style questions (Shalini).</p></div>
-          <div class="tool-tile" onclick="navTo('aw-mockexam-written')"><div class="ic">${icon('doc')}</div><h4>Mockup Written Exams</h4><p>${AW_MOCK_WRITTEN.length} practice questions with model answers.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-lee-drills')"><div class="ic">${icon('verb')}</div><h4>Grammar &amp; Language Drills</h4><p>Linking words, persuasive language, structure.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-marie-summary')"><div class="ic">${icon('summary')}</div><h4>Stress Management</h4><p>Marie Claire's sessions, summarised.</p></div>
-          <div class="tool-tile" onclick="navTo('aw-marie-quiz')"><div class="ic">${icon('quiz')}</div><h4>Stress Mgmt Exam Prep</h4><p>${AW_MARIE_QUIZ.length} two-correct-answer MCQs.</p></div>
+        <div class="exam-card">
+          <div class="exam-card-head"><h3>Exam at a glance</h3><span class="exam-date">Written exam · Tue 6 Oct 2026 · 60 points</span></div>
+          <div class="exam-bar">${ex.parts.map(pt=>`<span class="${pt.badge==='struct'?'me':''}" style="flex:${pt.pts}">${esc(pt.who.split(',')[0])} · ${pt.pts}</span>`).join('')}</div>
+          <div class="aw-exam-parts">${ex.parts.map(pt=>`<div><span class="xo-badge ${pt.badge}">${EXAM_BADGE[pt.badge]}</span><h4>${esc(pt.course)} <small>${pt.pts} pts</small></h4><p>${esc(pt.how)}</p></div>`).join('')}</div>
+          <p class="exam-total">Module total <b>90</b>: written exam 60 + group presentation 15 (done, 26/29 Sep) + CV take-home 15 (due 9 Oct, 1 PM). Marie Claire's MCQs: exactly two options are correct, marking more than two scores 0.</p>
+          <button class="btn ghost" onclick="navTo('exams')" style="margin-top:10px;">All exams: question types per lecturer →</button>
         </div>
+        <div class="nav-section-label aw-sec">Exam · Academic Writing (Shalini Rogbeer) · 35 pts · 5 MCQ + 2 structured questions</div>
+        <div class="tool-tiles">
+          ${tile('aw-mockexam-mc','quiz','Mockup MCQ',`${AW_MOCK_MC.length} exam-style questions (Shalini).`)}
+          ${tile('aw-mockexam-written','doc','Mockup Written Exams',`${AW_MOCK_WRITTEN.length} structured questions with model answers.`)}
+          ${tile('aw-quiz','quiz','Quiz',`${AW_QUIZ.length} exam-style questions.`)}
+          ${tile('aw-summary','summary','Summary','The full reference in prose.')}
+          ${tile('aw-rules','rules','Writing Rules','Argument structure &amp; citation rules.')}
+          ${tile('aw-citation','doc','Citation Doctor',`${AW_CITATIONS.length} flawed citations to fix.`)}
+          ${tile('aw-logic','logic','Logic Type Classifier',`${AW_LOGIC.length} arguments to classify.`)}
+          ${tile('aw-peel','peel','PEEL Builder','Worked, color-coded examples.')}
+          ${tile('aw-flash','flash','Flashcards',`${AW_CARDS.length} cards (optional).`)}
+        </div>
+        <div class="nav-section-label aw-sec">Exam · English (Lee Hawkins) · 10 pts · 5 MCQ</div>
+        <div class="tool-tiles">
+          ${tile('aw-lee-drills','verb','Grammar &amp; Language Drills','Linking words, persuasive language, structure, trends.')}
+        </div>
+        <div class="nav-section-label aw-sec">Exam · Time &amp; Stress Management (Marie Claire Joyeaux) · 15 pts · 5 MCQ (2 correct) + 1 question</div>
+        <div class="tool-tiles">
+          ${tile('aw-marie-quiz','quiz','Stress Mgmt Exam Prep',`${AW_MARIE_QUIZ.length} two-correct-answer MCQs.`)}
+          ${tile('aw-marie-summary','summary','Stress Management',"Marie Claire's sessions, summarised.")}
+        </div>
+        <section class="aw-extra">
+          <div class="aw-extra-head"><h3>Presentations &amp; CV · not in the written exam</h3><p>Useful for the group presentation (done) and the CV take-home (due 9 Oct).</p></div>
+          <div class="tool-tiles">
+            ${tile('aw-present','present','Presentation Skills',"Glance Test, rubric, do's and don'ts.")}
+            ${tile('aw-verbs','verb','Action Verbs','Searchable CV verb bank.')}
+            ${tile('aw-checklists','check','Checklists','Research assignment, presentation and CV.')}
+          </div>
+        </section>
+        ${lectureMasteryHtml('aw')}
       </div>`;
   });
 }
