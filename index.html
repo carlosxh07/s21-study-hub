@@ -73,8 +73,8 @@ a,button{font-family:inherit;}
 #sidebar-logo p{font-size:.68rem;color:var(--side-ink-dim);margin-top:5px;text-transform:uppercase;letter-spacing:.11em;}
 
 .subject-switch{display:flex;flex-direction:column;gap:4px;padding:16px 14px;border-bottom:1px solid var(--side-line);}
-#plan-nav-btn,#mistakes-nav-btn{margin:10px 14px;width:calc(100% - 28px);box-sizing:border-box;}
-#mistakes-nav-btn{margin-top:0;}
+#plan-nav-btn,#mistakes-nav-btn,#exams-nav-btn{margin:10px 14px;width:calc(100% - 28px);box-sizing:border-box;}
+#mistakes-nav-btn,#exams-nav-btn{margin-top:0;}
 .subject-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-pill);cursor:pointer;font-size:.82rem;font-weight:600;color:var(--side-ink);transition:background .18s var(--ease),color .18s var(--ease);border:1px solid transparent;background:none;width:100%;text-align:left;font-family:inherit;}
 .subject-btn:hover{background:var(--side-2);color:var(--side-text);}
 .subject-btn.active{color:var(--side-text);background:var(--side-2);border-color:var(--side-line);}
@@ -781,6 +781,32 @@ body.hl-armed .hl-container{cursor:text;}
 .rz-min.low{color:var(--warn);} .rz-min.ok{color:var(--good);}
 .rz-ex-done{font-size:.9rem;color:var(--ink-soft);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 @media(max-width:860px){.rz-exam-grid{grid-template-columns:1fr;gap:6px;}}
+.xo-exam{margin-bottom:28px;padding:20px 22px;border-radius:var(--radius);background:var(--panel);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);box-shadow:var(--shadow-sm);}
+.xo-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+.xo-head h3{font-size:1.08rem;}
+.xo-head p{font-size:.8rem;color:var(--ink-soft);margin-top:3px;}
+.xo-bar{display:flex;gap:3px;border-radius:10px;overflow:hidden;margin-bottom:16px;}
+.xo-seg{padding:7px 9px;font-size:.72rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.xo-seg.sc,.xo-badge.sc{background:#0a84ff;} .xo-seg.essay,.xo-badge.essay{background:#bf5af2;} .xo-seg.struct,.xo-badge.struct{background:#ff9f0a;}
+.xo-seg.mcq,.xo-badge.mcq{background:#30b0c7;} .xo-seg.mcq2,.xo-badge.mcq2{background:#34c759;} .xo-seg.unk,.xo-badge.unk{background:#8e8e93;}
+.xo-parts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.xo-part{padding:14px 16px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--line);display:flex;flex-direction:column;}
+.xo-part-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.xo-badge{font-size:.68rem;font-weight:700;color:#fff;padding:3px 9px;border-radius:var(--radius-pill);}
+.xo-pts{font-size:.8rem;font-weight:700;color:var(--ink);}
+.xo-part h4{font-size:.95rem;}
+.xo-who{font-size:.76rem;color:var(--ink-faint);margin:2px 0 8px;}
+.xo-type{font-size:.86rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.xo-how{font-size:.82rem;line-height:1.5;color:var(--ink-soft);margin-bottom:8px;}
+.xo-tips{padding-left:16px;font-size:.78rem;line-height:1.5;color:var(--ink-soft);margin-bottom:10px;}
+.xo-tips li{margin-bottom:4px;}
+.xo-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;}
+.xo-links .btn{padding:5px 11px;font-size:.76rem;}
+.xo-course{opacity:.7;padding:14px 18px;border:1px dashed var(--line);border-radius:var(--radius-sm);}
+.xo-course h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:8px;}
+.xo-course ul{list-style:none;padding:0;font-size:.8rem;color:var(--ink-soft);line-height:1.7;}
+.xo-course li span{display:inline-block;min-width:34px;font-size:.66rem;font-weight:700;color:var(--ink-faint);}
+@media(max-width:900px){.xo-parts{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -806,6 +832,10 @@ body.hl-armed .hl-container{cursor:text;}
   <button class="subject-btn" id="mistakes-nav-btn" onclick="navTo('mistakes')">
     <span class="dot" style="background:var(--bad)"></span>
     <span><span>Mistakes &amp; Memory</span><span class="sub">Practise what you got wrong</span></span>
+  </button>
+  <button class="subject-btn" id="exams-nav-btn" onclick="navTo('exams')">
+    <span class="dot" style="background:var(--accent)"></span>
+    <span><span>Exam Overview</span><span class="sub">Question types per lecturer</span></span>
   </button>
   <div id="sidebar-nav"></div>
   <div id="sidebar-footer">Progress &amp; scores saved locally in this browser.</div>
@@ -842,6 +872,10 @@ body.hl-armed .hl-container{cursor:text;}
         <a href="#mistakes" onclick="navTo('mistakes');return false;" class="btn ghost" style="margin:18px 0 0 8px;display:inline-flex;gap:8px;align-items:center;">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
           <span>Practise mistakes</span>
+        </a>
+        <a href="#exams" onclick="navTo('exams');return false;" class="btn ghost" style="margin:18px 0 0 8px;display:inline-flex;gap:8px;align-items:center;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>
+          <span>Exam overview</span>
         </a>
       </div>
       <div class="home-strip">Everything below is generated from the real course frameworks — nothing here is decorative filler.</div>
@@ -2250,6 +2284,8 @@ function navTo(pageId){
   if(planBtn) planBtn.classList.toggle('active', pageId==='plan');
   const mBtn = document.getElementById('mistakes-nav-btn');
   if(mBtn) mBtn.classList.toggle('active', pageId==='mistakes');
+  const eBtn = document.getElementById('exams-nav-btn');
+  if(eBtn) eBtn.classList.toggle('active', pageId==='exams');
   if(pageId==='home'){
     buildHomeCards();
   } else if(pageId==='plan'){
@@ -3153,6 +3189,73 @@ function quizRegistry(){
   add('aw', 'Mockup MCQ (Shalini)', 'aw-mockexam-mc', AW_MOCK_MC);
   return reg;
 }
+/* ---------- Exam Overview: which kind of question comes from which lecturer (+ graded coursework, secondary) ---------- */
+const EXAMS = [
+  {date:new Date(2026,9,5), title:'Introduction to Management & Business Studies', sub:'Written exam · 90 minutes for all three parts · 90 points (+ 90 class participation = 180)', parts:[
+    {subj:'POM', who:'Dr. Nasar um Minullah', course:'Principles of Management', pts:30, type:'Single choice', badge:'sc',
+     how:'Only single-choice questions with 5 options, usually a short business case (e.g. "According to Mintzberg, the engineer is playing the role of a ___").',
+     tips:['Content = the "Slides for written exam" only (managers & managing, planning & strategy, control & change).','Apply terms to a situation, not just define them.'],
+     links:[['pom-sim','POM Exam Simulator'],['pom-cheat','Cheat Sheet']]},
+    {subj:'OB', who:'Dr. Meir Shemla (course lead per kickoff) · lectures also by Bilqees Ghani', course:'Organizational Behaviour', pts:30, type:'Format not confirmed', badge:'unk',
+     how:'No briefing found yet on how the OB part is asked. Ask in class or check Canvas.',
+     tips:['Until then: practise both recognition (quiz) and short explanations of the models.'],
+     links:[['ob-sim','OB Exam Simulator'],['ob-cheat','Cheat Sheet']]},
+    {subj:'POM', who:'Prof. Richard Raatzsch', course:'Ethics, Law & Politics (in Business)', pts:30, type:'Essay: answer 2 of 3', badge:'essay',
+     how:'Three conceptual questions with hints in brackets ("What is X? (Put emphasis on why …)"); you answer two, 15 points each (≈ 15 min each, time flexible within the 90 minutes).',
+     tips:['Graded only on clarity and awareness of problems; no "complete" answer, but a minimum.','Topics: ownership, ownership of a corporation, corporation, sustainability, compliance. Not the first five lectures.'],
+     links:[['rz-exam','Exam Essay Trainer'],['rz-3','Exam topic summary']]}
+  ]},
+  {date:new Date(2026,9,6), title:'Academic Writing, Effective Communication & Personal Mastery', sub:'Written exam · 60 points (module total 90 with presentation 15 + CV 15)', parts:[
+    {subj:'AW', who:'Shalini Rogbeer, Ph.D.', course:'Academic Writing', pts:35, type:'5 MCQ + 2 structured questions', badge:'struct',
+     how:'5 multiple-choice questions (10 points) and 2 structured questions (10 + 15 points).',
+     tips:['MCQs look like her 38 mockup questions (sources, APA, formatting, genres).','Structured questions: practise with her mockup written exams and model answers.'],
+     links:[['aw-mockexam-mc','Mockup MCQ (38)'],['aw-mockexam-written','Mockup Written Exams']]},
+    {subj:'AW', who:'Lee Hawkins', course:'English Writing & Presentations', pts:10, type:'5 MCQ', badge:'mcq',
+     how:'5 multiple-choice questions, 10 points.',
+     tips:['Language material from his exercises: linking words, being lively & persuasive, structure & key phrases, trends/graphs.'],
+     links:[['aw-lee-drills','Grammar & Language Drills']]},
+    {subj:'AW', who:'Marie Claire Joyeaux', course:'Time & Stress Management', pts:15, type:'5 MCQ (2 correct each) + 1 question', badge:'mcq2',
+     how:'5 MCQs with five options each, exactly two correct (10 points) plus 1 written question (5 points).',
+     tips:['1 point per correct option marked; no minus points; marking more than two options scores 0; marking one is allowed.','All slides count, including group-work readings. You must apply concepts: name components, explain why, apply to a case. Options can differ by one word.'],
+     links:[['aw-marie-quiz','Exam-Prep MCQ (2 correct)'],['aw-marie-summary','Stress Management Summary']]}
+  ]}
+];
+const COURSEWORK = [
+  ['Dr. Meir Shemla','OB','Two graded online quizzes on Canvas'],
+  ['Dr. Nasar um Minullah','POM','Presentation upload (Growth Scenario slides, due 30 Sep 2026, 5 PM)'],
+  ['Prof. Richard Raatzsch','POM','In-class essays; he grades one of three (corporations, 30 Sep, 1 Oct)'],
+  ['Lee Hawkins','AW','Group presentation (26/29 Sep 2026), 15 points'],
+  ['Marie Claire Joyeaux','AW','CV upload (take-home, 9 Oct 2026, 1 PM), 15 points']
+];
+const EXAM_BADGE = {sc:'Single choice', essay:'Essay', struct:'MCQ + structured', mcq:'MCQ', mcq2:'MCQ · 2 correct', unk:'Unknown'};
+function buildExamOverview(){
+  registerPage('exams', (div)=>{
+    const today = new Date(); today.setHours(0,0,0,0);
+    const daysTo = d => Math.round((d - today)/86400000);
+    div.innerHTML = `
+      <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Exam Overview</h2><p>Which kind of question comes from which lecturer, how many points it is worth, and where to practise it in the hub.</p></div>
+      <div class="page-body">
+        ${EXAMS.map(ex=>`<section class="xo-exam">
+          <div class="xo-head"><div><h3>${esc(ex.title)}</h3><p>${esc(ex.sub)}</p></div>
+            <span class="exam-date">${ex.date.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})}${daysTo(ex.date)>=0?' · in '+daysTo(ex.date)+' days':''}</span></div>
+          <div class="xo-bar">${ex.parts.map(pt=>`<span class="xo-seg ${pt.badge}" style="flex:${pt.pts}">${esc(pt.course)} · ${pt.pts}</span>`).join('')}</div>
+          <div class="xo-parts">${ex.parts.map(pt=>`<div class="xo-part">
+            <div class="xo-part-top"><span class="xo-badge ${pt.badge}">${EXAM_BADGE[pt.badge]}</span><span class="xo-pts">${pt.pts} pts</span></div>
+            <h4>${esc(pt.course)}</h4><div class="xo-who">${esc(pt.who)}</div>
+            <div class="xo-type">${esc(pt.type)}</div>
+            <p class="xo-how">${esc(pt.how)}</p>
+            <ul class="xo-tips">${pt.tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>
+            <div class="xo-links">${pt.links.map(([id,l])=>`<button class="btn ghost" onclick="navTo('${id}')">${esc(l)} →</button>`).join('')}</div>
+          </div>`).join('')}</div>
+        </section>`).join('')}
+        <section class="xo-course">
+          <h4>Graded coursework (besides the exams)</h4>
+          <ul>${COURSEWORK.map(([who,subj,what])=>`<li><span>${esc(subj)}</span> <b>${esc(who)}</b>: ${esc(what)}</li>`).join('')}</ul>
+        </section>
+      </div>`;
+  });
+}
+
 function buildMistakes(){
   registerPage('mistakes', (div)=>{
     div.innerHTML = `
@@ -4416,6 +4519,7 @@ buildAWMockExamMC(); buildAWMockExamWritten(); buildAWLeeDrills(); buildAWMarieS
 
 buildStudyPlan();
 buildMistakes();
+buildExamOverview();
 
 /* ============================================================ INIT ============================================================ */
 buildSubjectSwitch();
