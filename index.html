@@ -3185,9 +3185,9 @@ const EXAMS = [
      how:'Only single-choice questions with 5 options, usually a short business case (e.g. "According to Mintzberg, the engineer is playing the role of a ___").',
      tips:['Content = the "Slides for written exam" only (managers & managing, planning & strategy, control & change).','Apply terms to a situation, not just define them.'],
      links:[['pom-sim','POM Exam Simulator'],['pom-cheat','Cheat Sheet']]},
-    {subj:'OB', who:'Dr. Meir Shemla (course lead per kickoff) · lectures also by Bilqees Ghani', course:'Organizational Behaviour', pts:30, type:'Format not confirmed', badge:'unk',
-     how:'No briefing found yet on how the OB part is asked. Ask in class or check Canvas.',
-     tips:['Until then: practise both recognition (quiz) and short explanations of the models.'],
+    {subj:'OB', who:'Dr. Meir Shemla (course lead per kickoff) · lectures also by Bilqees Ghani', course:'Organizational Behaviour', pts:30, type:'Written · question type not stated', badge:'unk',
+     how:'Written part of the shared 90-minute exam (30 points). The OB slides only say "a written exam within a 90-minute timeframe"; whether the questions are multiple choice or open is not stated anywhere.',
+     tips:['The "Quick Canvas Exams" after Teams & Groups, Communication & Conflict and Leadership & Power were the separate online quizzes (graded coursework).','Until confirmed: practise both recognising concepts (quiz) and explaining models in 2–3 sentences with an example. Worth asking Shemla or Ghani in class.'],
      links:[['ob-sim','OB Exam Simulator'],['ob-cheat','Cheat Sheet']]},
     {subj:'POM', who:'Prof. Richard Raatzsch', course:'Ethics, Law & Politics (in Business)', pts:30, type:'Essay: answer 2 of 3', badge:'essay',
      how:'Three conceptual questions with hints in brackets ("What is X? (Put emphasis on why …)"); you answer two, 15 points each (≈ 15 min each, time flexible within the 90 minutes).',
@@ -3216,7 +3216,7 @@ const COURSEWORK = [
   ['Lee Hawkins','AW','Group presentation (26/29 Sep 2026), 15 points'],
   ['Marie Claire Joyeaux','AW','CV upload (take-home, 9 Oct 2026, 1 PM), 15 points']
 ];
-const EXAM_BADGE = {sc:'Single choice', essay:'Essay', struct:'MCQ + structured', mcq:'MCQ', mcq2:'MCQ · 2 correct', unk:'Unknown'};
+const EXAM_BADGE = {sc:'Single choice', essay:'Essay', struct:'MCQ + structured', mcq:'MCQ', mcq2:'MCQ · 2 correct', unk:'Type unclear'};
 function buildExamOverview(){
   registerPage('exams', (div)=>{
     const today = new Date(); today.setHours(0,0,0,0);
