@@ -4860,7 +4860,7 @@ function buildAWLeeDrills(){
   registerPage('aw-lee-drills', (div)=>{
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('verb')} Lee Hawkins — Extra Practice</div><h2>Grammar &amp; Language Drills</h2><p>New exercises from Lee Hawkins's sessions — linking words, persuasive language, and presentation structure — with answers to reveal.</p></div><div class="page-body" id="aw-lee-body"></div>`;
     const body = div.querySelector('#aw-lee-body');
-    // reset clears all picked answers and keeps the open tab
+    // every run (first render and each reset) shuffles the answer order; reset clears all picked answers and keeps the open tab
     const renderLee = (active=0)=>{
     body.innerHTML = `<div class="lee-toolbar"><span class="lee-score" id="lee-score"></span><button class="btn ghost lee-reset" type="button">↺ Reset answers</button></div>
       <div class="tabbar">${AW_LEE_DRILLS.map((t,i)=>`<button class="tabbtn${i===active?' active':''}" data-i="${i}">${esc(t.topic)}</button>`).join('')}</div>
@@ -4868,7 +4868,7 @@ function buildAWLeeDrills(){
         ${t.items.map((it,ii)=>`
           <div class="doc-card">
             <div style="font-size:.92rem;margin-bottom:12px;line-height:1.6;font-weight:600;">${esc(it.q)}</div>
-            <div class="logic-types" id="lee-btns-${ti}-${ii}">${it.opts.map(o=>`<button onclick="window.__leePick(${ti},${ii},'${esc(o).replace(/'/g,"\\'")}')">${esc(o)}</button>`).join('')}</div>
+            <div class="logic-types" id="lee-btns-${ti}-${ii}">${shuffle(it.opts.slice()).map(o=>`<button onclick="window.__leePick(${ti},${ii},'${esc(o).replace(/'/g,"\\'")}')">${esc(o)}</button>`).join('')}</div>
             <div class="doc-rule" id="lee-exp-${ti}-${ii}" style="margin-top:10px;">${esc(it.exp)}</div>
           </div>`).join('')}
       </div>`).join('')}`;
