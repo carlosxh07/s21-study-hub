@@ -770,7 +770,9 @@ body.hl-armed .hl-container{cursor:text;}
 .rz-exam-small{font-size:.78rem;color:var(--ink-faint);line-height:1.5;}
 .rz-note{margin-bottom:18px;padding:11px 14px;border-left:3px solid var(--warn);background:var(--warn-bg);border-radius:var(--radius-sm);font-size:.85rem;line-height:1.55;color:var(--ink-soft);}
 .rz-note b{color:var(--ink);} .rz-note a{color:var(--accent-ink);font-weight:600;}
-.topic-card.rz-foundation{opacity:.6;}
+.topic-card.rz-foundation,.topic-card.ob-extra{opacity:.6;}
+.topic-card.ob-extra:hover{opacity:1;}
+.ob-extra-note{font-size:.85rem;color:var(--ink-soft);margin:-4px 0 14px;max-width:720px;}
 .topic-card.rz-foundation:hover{opacity:1;}
 .rz-ex-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;font-size:.88rem;color:var(--ink-soft);}
 .rz-ex-time{font-size:1.4rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
@@ -960,7 +962,7 @@ function rnd(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 
 /* ============================================================ SUBJECT META ============================================================ */
 const SUBJECTS = [
-  {id:'ob', label:'Organizational Theory & Behaviour', short:'Shemla: motivation, self-leadership & evidence-based management.', color:'ob'},
+  {id:'ob', label:'Organizational Theory & Behaviour', short:'Shemla: motivation, self-leadership, evidence-based mgmt + more course topics.', color:'ob'},
   {id:'pom', label:'Principles of Management', short:'Managers, planning & strategy, control & change — what the exam covers.', color:'pom'},
   {id:'aw', label:'Academic Writing & Presentations', short:'Argumentation, citation, structure, delivery and CVs.', color:'aw'}
 ];
@@ -1135,20 +1137,447 @@ quiz:[
 {q:"Regarding journal selectivity and gender-diversity research findings:",opts:["Less-selective journals reported fewer positive findings than top journals","Top journals: 39% positive; less-selective: 92% positive","Both types of journal reported practically identical shares of positive results","Top journals never publish negative findings"],correct:1,exp:"Selectivity strongly affects reported effect direction."},
 {q:"Which is NOT one of the three principles for leveraging team differences?",opts:["Shared reality","Encourage dissent and debate","Shared identity","Maximize hierarchy"],correct:3,exp:"The module recommends reducing, not maximizing, hierarchy."},
 {q:"The MIT wine-bidding anchoring study demonstrates:",opts:["People reliably ignore irrelevant numbers when they bid","Irrelevant anchors can significantly distort judgments","Anchoring only affects experts, not ordinary buyers","Prices are immune to arbitrary cues like social security numbers"],correct:1,exp:"Social-security digits distorted bids by up to 346%."}
+]},
+{id:'ob-1',extra:'Teaching Team + Ghani',title:'Organizational Behavior',summary:`Organizational Behavior (OB) is the systematic, interdisciplinary study of human behavior within organizational contexts, operating at three levels:
+- individuals (personality, perception, motivation)
+- groups (dynamics, communication, team collaboration)
+- organizational systems (structure, culture, policies)
+
+OB matters because it enhances productivity (engaged employees show 73% higher productivity/customer ratings, 2.3x revenue growth correlation, 40% reduced turnover) and fosters organizational culture.
+
+Historically, OB evolved through four phases:
+- (1) Early 20th century Scientific Management/Efficiency Era, led by Frederick Taylor, which treated organizations as mechanical systems
+- (2) 1930s Human Relations Movement, driven by the Hawthorne Studies, showing morale and social dynamics affect productivity
+- (3) 1960s Behavioral Science Approaches, using rigorous scientific methods to study motivation, leadership, and group dynamics
+- (4) Contemporary OB, an interdisciplinary, globally-focused field addressing ethics, diversity, and technology
+
+Key individual-level concepts include the Big Five personality traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism) and the three components of attitude: cognitive (beliefs), affective (feelings), and behavioral (actions/intentions).
+
+At the interpersonal/group level, communication barriers include information overload, filtering, and selective perception. Conflict resolution is modeled by the Thomas-Kilmann Conflict Mode Instrument (TKI), mapping five styles along assertiveness/cooperation: Competing, Avoiding, Accommodating, Compromising, and Collaborating. Group development follows Tuckman's four stages: Forming, Storming, Norming, and Performing. Effective leadership involves visioning, inspiring, executing, and learning.
+
+Lecture slides "Understanding Organizational Behaviour" add a practical lens. OB is defined simply as the study of how people behave in organizations and how the organization influences their behaviour: PEOPLE + INTERACTIONS + WORK ENVIRONMENT.
+
+Three connected levels:
+- Individual (personality, motivation, emotions, values)
+- Group/Team (communication, teamwork, conflict, decision making)
+- Organization (culture, structure, leadership, systems)
+
+OB is not only for managers — it matters whenever you work in a team, communicate, decide, handle disagreement, or give/receive feedback. OB is interdisciplinary, drawing on six disciplines:
+- Psychology (the individual)
+- Social Psychology (people interacting)
+- Sociology (groups & organizations)
+- Anthropology (culture)
+- Political Science (power & influence)
+- Neuroscience (brain & behaviour)
+
+Common sense is not enough: statements like "quiet people are not interested", "people paid more will always work harder" or "a good team should agree most of the time" sound plausible but evidence challenges them. Perspective-taking asks "What else could explain this behaviour?" Contingency thinking — the central OB answer is "IT DEPENDS" (e.g. more feedback does not always improve performance).
+
+Simple framework:
+=> PERSON (personality, values, experience, motivation) → SITUATION (task, team, leadership, expectations, environment) → BEHAVIOUR → OUTCOME (performance, satisfaction, teamwork, relationships)
+
+Why OB matters today: diverse teams, hybrid/digital work, well-being, AI and changing work, ethics & fairness, leadership & teamwork.
+
+Key message: move from "What is wrong with this person?" to "What might be influencing this behaviour?" — good OB thinking starts with curiosity, not quick judgment.
+
+The three communication barriers:
+Information overload :: more information than a person can process
+Filtering :: information is distorted or withheld as it passes through the hierarchy
+Selective perception :: people notice what fits their own needs, background and interests
+
+Tuckman's four stages as described in the module:
+Forming :: members get to know each other; uncertainty about purpose and structure
+Storming :: debate and power struggles
+Norming :: group discussion, consensus and shared norms
+Performing :: quick, empowered, effective work on the task
+
+The five Thomas-Kilmann styles:
+Competing :: high assertiveness, low cooperation (win-lose)
+Collaborating :: high assertiveness and high cooperation: a win-win solution that satisfies both sides, e.g. combining both original ideas
+Compromising :: each side gives up something to reach an acceptable solution
+Avoiding :: low assertiveness, low cooperation: stepping back or delaying
+Accommodating :: low assertiveness, high cooperation: putting the other side's concerns first
+
+Perspective-taking in practice: an employee who says little in a meeting may be new to the team, need more time to think, be unsure of their role, have a different communication style, or be dominated by others. So first ask what else could explain the behaviour, before judging.
+
+Case Anna (lecture activity): a new hire gets conflicting instructions from her manager and a senior colleague, stops asking questions and is later told she lacks initiative. The main problem is organizational (unclear roles, procedures and communication), not her personality.
+
+The engagement figures (73% higher productivity, 2.3x revenue growth, 40% less turnover) come from Gallup's research on engaged workforces.`,
+cards:[
+{q:"What is Organizational Behavior (OB)?",a:"The systematic, interdisciplinary study of human behavior within organizational contexts, focusing on individuals, groups, and organizational systems."},
+{q:"What are the three levels of analysis in OB?",a:"Individual level, Group/interpersonal level, and Organizational systems level."},
+{q:"Who led the Scientific Management (Efficiency) Era, and when?",a:"Frederick W. Taylor, early 20th century — viewed organizations as mechanical systems focused on efficiency."},
+{q:"What did the Hawthorne Studies (Human Relations Movement, 1930s) show?",a:"Employee morale and social/psychological dynamics influence productivity, not just physical/efficiency factors."},
+{q:"What characterized the 1960s Behavioral Science Approach?",a:"Rigorous scientific research methods applied to study motivation, leadership, and group dynamics."},
+{q:"What are the Big Five personality traits?",a:"Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism."},
+{q:"What are the three components of attitude?",a:"Cognitive (beliefs), Affective (feelings), Behavioral (actions/intentions)."},
+{q:"Name the three communication barriers discussed in the module.",a:"Information overload, filtering, and selective perception."},
+{q:"What is the Thomas-Kilmann Conflict Mode Instrument (TKI)?",a:"A model mapping five conflict resolution styles along assertiveness and cooperativeness: Competing, Avoiding, Accommodating, Compromising, Collaborating."},
+{q:"Describe the \"Competing\" conflict style.",a:"High assertiveness, low cooperation — win-lose outcome; best when quick decisive action is needed."},
+{q:"Describe the \"Collaborating\" conflict style.",a:"High assertiveness and high cooperation — seeks a win-win solution fully satisfying both parties."},
+{q:"What are Tuckman's four stages of group development?",a:"Forming, Storming, Norming, Performing."},
+{q:"What is the simple definition of OB in the Ghani lecture?",a:"The study of how people behave in organizations and how the organization influences their behaviour — PEOPLE + INTERACTIONS + WORK ENVIRONMENT."},
+{q:"Which six disciplines does OB draw on?",a:"Psychology (individual), Social Psychology (people interacting), Sociology (groups & organizations), Anthropology (culture), Political Science (power & influence), Neuroscience (brain & behaviour)."},
+{q:"What is contingency thinking in OB?",a:"There is no one rule for everyone — \"it depends\": what works for one person, team or organization may not work for another."},
+{q:"What is the Person → Situation → Behaviour → Outcome framework?",a:"Behaviour results from the person (personality, values, experience, motivation) AND the situation (task, team, leadership, expectations, environment), and leads to outcomes (performance, satisfaction, teamwork, relationships)."},
+{q:"Why is common sense not enough in OB?",a:"Plausible assumptions (\"quiet = not interested\", \"more pay = more effort\", \"good teams always agree\") are often wrong — evidence can challenge them."},
+{q:"Name the six reasons OB matters in today's workplace.",a:"Diverse teams, hybrid/digital work, employee well-being, AI and changing work, ethics and fairness, leadership and teamwork."}
+],
+quiz:[
+{q:"Which era of OB thought focused on optimizing industrial efficiency and treated organizations as mechanical systems?",opts:["Human Relations Movement","Scientific Management (Efficiency Era)","Behavioral Science Approaches","Contemporary OB"],correct:1,exp:"Frederick Taylor's early 20th-century work systematized processes, viewing organizations as mechanical systems focused on efficiency."},
+{q:"The Hawthorne Studies primarily demonstrated that:",opts:["Financial incentives are the only motivator that reliably raises output","Employee morale and social dynamics influence productivity","Scientific management maximizes output when every task is timed and standardized","Group conflict always reduces performance, so teams should avoid it"],correct:1,exp:"The studies showed social and psychological factors, not just physical conditions, affect workplace productivity."},
+{q:"Which of the following is NOT one of the Big Five personality traits?",opts:["Conscientiousness","Neuroticism","Assertiveness","Agreeableness"],correct:2,exp:"The Big Five are Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism; Assertiveness is not one of them."},
+{q:"In the TKI, a style with low assertiveness and low cooperation is called:",opts:["Accommodating","Compromising","Avoiding","Collaborating"],correct:2,exp:"Avoiding sidesteps the conflict without addressing it directly."},
+{q:"If two team members brainstorm to find a solution incorporating both original ideas, they use:",opts:["Competing","Collaborating","Accommodating","Avoiding"],correct:1,exp:"Collaborating seeks a win-win solution satisfying both parties' concerns."},
+{q:"Which Tuckman stage involves members getting to know each other while the group's purpose and structure are still unclear?",opts:["Storming","Norming","Forming","Performing"],correct:2,exp:"Forming is the initial stage where members become acquainted."},
+{q:"Which attitude component refers to \"how you feel emotionally\" about your work?",opts:["Cognitive","Affective","Behavioral","Normative"],correct:1,exp:"The affective component captures emotional feelings."},
+{q:"Per Gallup, highly engaged workforces show approximately how much greater revenue growth correlation?",opts:["1.5x","2.3x","40%","73%"],correct:1,exp:"The module cites a 2.3x revenue growth correlation for highly engaged workforces."},
+{q:"Which communication barrier involves information being distorted as it passes through hierarchies?",opts:["Selective perception","Information overload","Filtering","Groupthink"],correct:2,exp:"Filtering refers to distortion or withholding of information as it moves through hierarchies."},
+{q:"Which leadership behavior involves \"translating vision into action\"?",opts:["Visioning","Inspiring","Executing","Learning"],correct:2,exp:"Executing translates the defined vision into concrete action."},
+{q:"Which discipline contributes the study of power, influence and conflict to OB?",opts:["Anthropology","Sociology","Political Science","Neuroscience"],correct:2,exp:"Political Science contributes power & influence (conflict, influence, decision making); anthropology contributes culture."},
+{q:"A manager says: \"More feedback always improves performance.\" Which OB idea challenges this most directly?",opts:["Scientific management","Contingency thinking","Filtering","Tuckman's model"],correct:1,exp:"Contingency thinking: \"it depends\" — some people value frequent feedback, others prefer independence."},
+{q:"An employee says little in meetings. According to the perspective-taking idea, what should you do first?",opts:["Conclude they are not interested and focus on more engaged colleagues","Ask what else could explain the behaviour","Give them a formal warning about participation","Move them to another team where they might fit better"],correct:1,exp:"OB encourages looking beyond the first explanation (new to team, needs time, unsure of role, others dominate, etc.)."},
+{q:"New hire Anna gets conflicting instructions from her manager and a senior colleague, stops asking questions, and is later criticised for lacking initiative. Which OB level best explains the root problem?",opts:["Individual only — Anna simply lacks motivation and initiative","Organizational — unclear roles, procedures and communication","Neuroscience — her stress response blocks decision-making and makes her avoid questions","None — it is common sense that new hires need time"],correct:1,exp:"The main cause is situational/organizational (inconsistent instructions, unclear responsibility); blaming Anna's personality would be a quick judgment."},
+{q:"Which is part of the SITUATION in the Person → Situation → Behaviour → Outcome framework?",opts:["Personality traits such as conscientiousness","Values the person brings to work","Team and leadership expectations","Past experience from previous jobs"],correct:2,exp:"Task, team, leadership, expectations and work environment are situational factors; personality, values and experience belong to the person."}
+]},
+{id:'ob-3',extra:'Teaching Team',title:'Personality and Values',summary:`Personality is the unique, relatively stable pattern of thoughts, feelings, and behaviors shaping workplace reactions. The MBTI sorts people into 16 types across four dichotomies but has limited scientific validity; the Big Five (OCEAN) is the most scientifically robust framework, with Conscientiousness the strongest predictor of job performance.
+
+Values split into Terminal (desired end-states) and Instrumental (preferred behaviors), per Rokeach. Person-Job Fit predicts performance; Person-Organization Fit predicts satisfaction/retention. Holland's RIASEC model links six types (Realistic, Investigative, Artistic, Social, Enterprising, Conventional) to matching careers.
+
+The "Dark Triad" — Narcissism, Machiavellianism, Psychopathy — describes toxic traits requiring documentation and HR involvement. Personality can evolve via growth mindset.
+
+Hofstede's cultural dimensions (Power Distance, Individualism vs. Collectivism, Masculinity vs. Femininity, Uncertainty Avoidance, Long- vs. Short-Term Orientation, Indulgence vs. Restraint) explain how culture shapes workplace behavior, tied to Cultural Intelligence (CQ).
+
+Conscientiousness (organized, responsible, dependable) is the number-one Big Five predictor of job performance.
+
+The six RIASEC types:
+Realistic (The Doers) :: practical, hands-on; e.g. engineer, electrician, pilot
+Investigative (The Thinkers) :: analytical, curious; e.g. scientist, researcher, doctor, data analyst
+Artistic (The Creators) :: imaginative, expressive, unconventional; e.g. artist, musician, designer, architect
+Social (The Helpers) :: cooperative, empathetic, nurturing; e.g. teacher, counselor, nurse
+Enterprising (The Persuaders) :: ambitious, persuasive; e.g. manager, salesperson, entrepreneur
+Conventional (The Organizers) :: orderly, detail-oriented; e.g. accountant, administrator
+
+The Dark Triad traits:
+Narcissism :: grandiose sense of self-importance, need for excessive admiration, lack of empathy
+Machiavellianism :: manipulative, cynical worldview, emotionally detached, believes the ends justify the means
+Psychopathy :: lack of empathy, impulsivity, superficial charm
+
+Managing Dark Triad behaviour starts with observing patterns over time rather than reacting to single incidents, then recognising warning signs (frequent blame-shifting, gaslighting) and documenting objective evidence.
+
+Hofstede's Individualism vs. Collectivism contrasts personal achievement (individualism) with group harmony (collectivism).
+
+Google's Project Aristotle found that psychological safety (a shared value of mutual respect and trust) was the strongest predictor of team performance, outweighing personality composition or technical skills.
+
+Cultural Intelligence (CQ) is built through cultural knowledge, mindfulness, behavioural adaptability, and motivation/curiosity; developing it is an ongoing journey of continuous learning and self-reflection.`,
+cards:[
+{q:"What are the five traits in the Big Five (OCEAN) model?",a:"Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Stability."},
+{q:"Which Big Five trait is the #1 predictor of job performance?",a:"Conscientiousness."},
+{q:"What are the four MBTI dichotomies?",a:"Introversion vs. Extraversion, Sensing vs. Intuition, Thinking vs. Feeling, Judging vs. Perceiving."},
+{q:"What is a key criticism of the MBTI?",a:"Limited scientific validity for predicting job performance despite widespread corporate use."},
+{q:"Difference between terminal and instrumental values?",a:"Terminal = desired end-states (security, achievement); instrumental = preferred methods of behavior (honesty, ambition)."},
+{q:"Difference between P-J Fit and P-O Fit?",a:"P-J Fit matches abilities to job requirements, predicts performance; P-O Fit matches values to culture, predicts satisfaction/retention."},
+{q:"What does Holland's RIASEC model stand for?",a:"Realistic, Investigative, Artistic, Social, Enterprising, Conventional."},
+{q:"What are the three Dark Triad traits?",a:"Narcissism, Machiavellianism, Psychopathy."},
+{q:"How does Machiavellianism manifest at work?",a:"Manipulative, cynical worldview; strategic deception, belief the ends justify the means."},
+{q:"Can personality change over time?",a:"Yes — traits like adaptability and openness can evolve through experience and a growth mindset."},
+{q:"What are Hofstede's six cultural dimensions?",a:"Power Distance, Individualism vs. Collectivism, Masculinity vs. Femininity, Uncertainty Avoidance, Long- vs. Short-Term Orientation, Indulgence vs. Restraint."},
+{q:"What is Cultural Intelligence (CQ)?",a:"The ability to function effectively across cultures, built through cultural knowledge, mindfulness, behavioral adaptability, and motivation/curiosity."}
+],
+quiz:[
+{q:"Which model is described as the most scientifically robust personality framework?",opts:["MBTI","Big Five Model","Holland's RIASEC","Dark Triad"],correct:1,exp:"The Big Five is explicitly called the most scientifically robust framework."},
+{q:"Which Big Five trait is the #1 predictor of job performance?",opts:["Extraversion","Openness","Conscientiousness","Agreeableness"],correct:2,exp:"Conscientiousness — organized, responsible, dependable."},
+{q:"Terminal values refer to:",opts:["Preferred methods of behavior","Desired end-states or outcomes","Traits measured by MBTI","Hofstede's cultural dimensions"],correct:1,exp:"Terminal values are desired end-states; instrumental values are the methods to reach them."},
+{q:"Person-Organization (P-O) Fit primarily influences:",opts:["Task effectiveness","Job satisfaction, commitment, retention","MBTI type","RIASEC career code"],correct:1,exp:"P-O Fit predicts satisfaction, commitment, and retention."},
+{q:"In RIASEC, which type is \"The Helpers\" (teacher, counselor, nurse)?",opts:["Enterprising","Conventional","Social","Investigative"],correct:2,exp:"Social types are cooperative, empathetic, nurturing."},
+{q:"Which Dark Triad trait involves a cynical worldview and \"ends justify the means\"?",opts:["Narcissism","Machiavellianism","Psychopathy","Conscientiousness"],correct:1,exp:"Machiavellianism is manipulative, cynical, strategically deceptive."},
+{q:"The first recommended step managing Dark Triad behavior is to:",opts:["Immediately terminate","Observe patterns over time","Ignore it","Publicly confront in a meeting"],correct:1,exp:"Observe consistent behavioral patterns before escalating."},
+{q:"Which Hofstede dimension concerns personal achievement vs. group harmony?",opts:["Power Distance","Individualism vs. Collectivism","Uncertainty Avoidance","Indulgence vs. Restraint"],correct:1,exp:"Individualism = personal achievement; Collectivism = group harmony."},
+{q:"Google's Project Aristotle found the strongest predictor of team performance was:",opts:["Individual technical skill","Personality composition","Psychological safety","High Conscientiousness scores"],correct:2,exp:"Psychological safety outweighed personality composition or technical skills."},
+{q:"Cultural Intelligence (CQ) includes which components?",opts:["Cultural knowledge, mindfulness, behavioral adaptability, motivation/curiosity","Extraversion, agreeableness and openness, as measured by the Big Five personality model","MBTI type combined with a RIASEC career code","Terminal and instrumental values, plus fluency in the local language and its business etiquette"],correct:0,exp:"CQ is built through knowledge, mindfulness, adaptability, and curiosity."}
+]},
+{id:'ob-4',extra:'Teaching Team + Ghani',title:'Emotional Intelligence',summary:`Emotional Intelligence (EI) is the ability to understand and manage emotions — one's own and others' — to navigate relationships and make better decisions. The module frames EI around four components (Goleman): Self-Awareness, Self-Management, Social Awareness, Relationship Management.
+
+The amygdala triggers fight-or-flight in milliseconds; the prefrontal cortex is slower — giving the "6-Second Rule" for emotional chemicals to clear.
+
+Emotions are sharp/event-triggered; moods are longer-lasting and diffuse. Affective Events Theory explains how events trigger emotions that shape long-term attitudes.
+
+Emotional Labor: Surface Acting (faking, draining) vs. Deep Acting (genuine, sustainable). Emotional Contagion spreads moods through mimicry and convergence. EI is measured via EQ-i 2.0, EQ 360, and MSCEIT.
+
+Lecture slides "Workplace Emotions" frame emotions as a process:
+=> WORK EVENT (feedback, success/failure, delays) → APPRAISAL ("How do I interpret what happened?") → EMOTIONAL RESPONSE (anger, relief, anxiety, pride) → MOOD / ongoing state → BEHAVIOUR (speak up, withdraw, cooperate, react)
+
+The same event can be experienced differently because emotional responses are shaped by:
+- the PERSON (personality, values, past experience, current energy/stress, emotional skills)
+- the SITUATION (workload, deadlines, feedback, uncertainty, working conditions)
+- the SOCIAL/ORGANIZATIONAL CONTEXT (manager behaviour, team norms, relationships, culture, rules)
+
+OB asks "What may be shaping the emotional response?" rather than "What is wrong with this person?"
+
+Emotional labour vocabulary:
+Felt emotion :: what I actually feel
+Display rules :: what emotion the job expects me to show
+Surface acting :: change expression, not feeling
+Deep acting :: try to change the feeling so the expression is genuine
+
+AET is presented as:
+=> Work environment (demands, autonomy, relationships) → Daily events (hassles, conflicts, praise, progress) → Emotional reaction → Attitudes/behaviour (satisfaction, effort, helping, withdrawal)
+with personal dispositions moderating how strongly people react.
+
+EI is simplified to three steps:
+=> PERCEIVE (notice emotions in self and others) → UNDERSTAND (what it means and what causes it) → REGULATE/USE (manage the response)
+Note that how EI should be defined and measured, and how distinct it is from personality and cognitive ability, remains debated.
+
+Emotions connect to motivation, leadership, teams, decision making, customer service and well-being. Emotions are specific responses; moods are broader and longer-lasting.
+
+Key names and facts:
+Arlie Hochschild :: coined the term "emotional labor"
+Weiss & Cropanzano :: developed Affective Events Theory (not Goleman)
+Kahneman :: dual-system theory: System 1 fast and emotional, System 2 slow and rational
+Amygdala :: the brain's alarm system, triggers fight-or-flight within milliseconds
+MSCEIT :: an ability-based EI test (EQ-i 2.0 is a self-report, EQ 360 a multi-rater assessment)
+Imposter syndrome :: the persistent feeling of being a fraud despite evidence of competence; up to 70% of students experience it, especially during transitions
+
+In the Mina case (customer service with angry customers, few breaks, a manager who only counts calls), the lecture warns against diagnosing Mina: repeated emotional labour plus the situation (few breaks, monitoring) plausibly explain why her tension spills over after work, and the employer can change those conditions.
+
+The three-step EI model (perceive → understand → regulate/use) is the simplified version from Ghani's lecture.`,
+cards:[
+{q:"What is Emotional Intelligence (EI)?",a:"The ability to understand and manage your own and others' emotions to navigate relationships, make decisions, and achieve goals."},
+{q:"What are Goleman's four core components of EI?",a:"Self-Awareness, Self-Management, Social Awareness, Relationship Management."},
+{q:"Difference between emotions and moods?",a:"Emotions are sharp and event-triggered; moods are subtler, longer-lasting, without a clear cause."},
+{q:"What is the \"6-Second Rule\"?",a:"Intense emotional brain chemicals take about 6 seconds to clear, letting the prefrontal cortex regain control."},
+{q:"What is Affective Events Theory (AET) and who developed it?",a:"Weiss & Cropanzano — workplace events trigger emotional responses that drive behavior and shape long-term attitudes."},
+{q:"What is Emotional Labor, and who coined the term?",a:"Arlie Hochschild — managing emotions/expressions to meet social/professional expectations."},
+{q:"Difference between Surface Acting and Deep Acting?",a:"Surface Acting fakes expression (exhausting); Deep Acting genuinely shifts internal feeling (more sustainable)."},
+{q:"What is Emotional Contagion?",a:"Unconsciously feeling/expressing emotions similar to those around you, via mimicry and emotional convergence."},
+{q:"What is Imposter Syndrome?",a:"The persistent feeling of being a fraud despite evidence of competence; up to 70% of students experience it."},
+{q:"What three tools measure EI?",a:"EQ-i 2.0 (self-report), EQ 360 (multi-rater), MSCEIT (ability-based)."},
+{q:"What are the five steps of how emotional experience unfolds at work?",a:"Work event → Appraisal (interpretation) → Emotional response → Mood/ongoing state → Behaviour."},
+{q:"Which three sources can shape an emotional response?",a:"Person (personality, values, experience, stress, emotional skills), Situation (workload, deadlines, feedback, uncertainty, conditions), Social/organizational context (manager, team norms, relationships, culture, rules)."},
+{q:"What are display rules?",a:"The emotions a job expects an employee to show (e.g. \"remain calm and polite\"), which may differ from the felt emotion."},
+{q:"Felt emotion vs. displayed emotion?",a:"Felt = what I actually feel inside; displayed = what I show according to display rules. The gap is managed via surface or deep acting."},
+{q:"What are the three steps of EI in the Ghani lecture?",a:"Perceive (notice emotions in self/others) → Understand (meaning and causes) → Regulate/Use (manage the response appropriately)."},
+{q:"What is the main criticism of EI mentioned in the lecture?",a:"How EI should be defined and measured, and how distinct it is from personality and cognitive ability, remains debated."}
+],
+quiz:[
+{q:"What triggers workplace behaviors/attitudes per Affective Events Theory?",opts:["Personality traits alone, independent of what happens at work","Events → emotional response → behavior → long-term attitudes","IQ scores and general cognitive ability","Organizational hierarchy and formal reporting lines that decide who talks to whom"],correct:1,exp:"AET describes a chain from events to emotions to behavior to attitudes."},
+{q:"Who coined \"emotional labor\"?",opts:["Daniel Goleman","Arlie Hochschild","Mayer & Salovey","Sigal Barsade"],correct:1,exp:"Hochschild coined emotional labor."},
+{q:"Which acting strategy genuinely shifts internal emotional state?",opts:["Surface Acting","Deep Acting","Method Acting","Passive Acting"],correct:1,exp:"Deep Acting reframes the situation to genuinely feel the emotion."},
+{q:"Which brain structure triggers fight-or-flight in milliseconds?",opts:["Hippocampus","Cerebellum","Amygdala","Prefrontal cortex"],correct:2,exp:"The amygdala is the alarm system."},
+{q:"What does the \"6-Second Rule\" refer to?",opts:["Time needed to memorize a new word","Time for emotional chemicals to clear","Ideal length of a sincere apology at work","Duration of emotional contagion in a team"],correct:1,exp:"Pausing 6 seconds lets the prefrontal cortex regain control."},
+{q:"Which best distinguishes moods from emotions?",opts:["Moods are event-triggered and short; emotions are diffuse and last longer","Emotions are sharp/event-triggered; moods are diffuse/longer-lasting","No real difference — the terms are interchangeable","Moods only occur at work, while emotions only occur in private life outside the job"],correct:1,exp:"Emotions = thunderstorm; moods = weather pattern."},
+{q:"Emotional Contagion spreads via which two mechanisms?",opts:["Training and reviews","Automatic mimicry and emotional convergence","Salary incentives","Written memos"],correct:1,exp:"People unconsciously mimic others and converge emotionally over time."},
+{q:"Which tool is an \"ability-based assessment\" of EI?",opts:["EQ-i 2.0","EQ 360","MSCEIT","NEO-PI-R"],correct:2,exp:"MSCEIT is ability-based."},
+{q:"What % of students experience imposter syndrome, per the module?",opts:["Up to 10%","Up to 30%","Up to 50%","Up to 70%"],correct:3,exp:"Up to 70% of students, especially during transitions."},
+{q:"Which researcher pairing is correct?",opts:["Damasio – emotional labor and display rules in customer-facing service jobs","Kahneman – dual systems (System 1 emotional, System 2 rational)","Hochschild – the first scientific definition of emotional intelligence","Goleman – Affective Events Theory and daily work events"],correct:1,exp:"Kahneman's dual-system theory; Weiss & Cropanzano (not Goleman) developed AET."},
+{q:"Two students receive the same feedback but react differently. In the emotion process, which step best explains this?",opts:["Work event","Appraisal","Mood","Display rule"],correct:1,exp:"Appraisal — how each person interprets the event — differs, leading to different emotional responses."},
+{q:"A call-centre agent feels frustrated but, as expected by the job, remains calm and polite without changing the feeling. This is:",opts:["Deep acting","Surface acting","Emotional contagion","Appraisal"],correct:1,exp:"Surface acting changes the expression, not the feeling; the display rule requires calm politeness."},
+{q:"In AET, which of these is a \"daily event\"?",opts:["Autonomy in how the job is done","Job demands such as workload","Praise from a colleague","Job satisfaction over the year"],correct:2,exp:"Daily events are hassles, conflicts, praise, progress; autonomy/demands are the work environment; satisfaction is an attitude outcome."},
+{q:"Mina (customer service) stays polite with angry customers, has few breaks, and her manager only monitors call numbers. After work she is tense and impatient. Which explanation fits OB best?",opts:["Mina has a personality disorder that makes her unsuited to customer service","Repeated emotional labour plus situational factors (few breaks, monitoring) spill over","Mina lacks the intelligence needed to handle difficult customers calmly and professionally","Customers are always the cause, so nothing about Mina's job or her working conditions matters"],correct:1,exp:"The lecture stresses not diagnosing Mina: repeated emotional demands plus the work situation plausibly explain the spillover; the employer can change conditions."},
+{q:"Which is NOT one of the three EI steps in the Ghani lecture?",opts:["Perceive","Understand","Regulate/Use","Dominate"],correct:3,exp:"The three steps are perceive, understand, regulate/use."}
+]},
+{id:'ob-6',extra:'Floegel',title:'Leadership and Power',summary:`Leadership inspires toward shared goals ("what/why"); Management plans/organizes/coordinates ("how/when"); Power is the capacity to influence via control of resources ("who controls what").
+
+Leadership styles:
+- Autocratic (crisis)
+- Democratic (innovation)
+- Laissez-faire (creative experts)
+
+Leadership theory evolution:
+=> Trait (1930s-40s) → Behavioral (1940s-60s) → Contingency (1960s-80s; Fiedler, Hersey-Blanchard, Path-Goal) → Full-Range Leadership Model (Laissez-Faire → Transactional → Transformational) → Modern Era (ethics, authenticity, Servant/Greenleaf, Charismatic/Conger & Kanungo)
+
+Trust: Integrity, Benevolence, Ability. Power: formal bases (Legitimate, Coercive, Reward) and personal bases (Expert, Referent). Authority vs. Power vs. Politics. Influence tactics range from Rational Persuasion to Pressure (least effective). Power's dark side: self-interest, objectification, overconfidence.
+
+Leadership vs. management in one line: leadership asks "what" and "why" (direction), management asks "how" and "when" (order), power asks "who controls what".
+
+The contingency era (1960s–80s) matched the leadership style to the situation (Fiedler, Hersey-Blanchard, Path-Goal).
+
+Of all influence tactics, pressure (threats, demands, persistent checking) is the least effective; rational persuasion, inspirational appeals and consultation are among the most effective.
+
+Names to connect with the models:
+Bass :: Full-Range Leadership Model: Laissez-Faire → Transactional → Transformational
+Mayer, Davis & Schoorman :: trust rests on Integrity, Benevolence and Ability
+French & Raven :: power bases: formal (Legitimate, Coercive, Reward) and personal (Expert, Referent)
+Mintzberg :: politics is power in action: the dynamic use of tactics, i.e. "what you actually do"
+
+Authority is the formal right to decide, power is the capacity to influence, and politics is the use of that power in practice.`,
+cards:[
+{q:"How does the module distinguish Leadership, Management, and Power?",a:"Leadership = \"what/why\"; Management = \"how/when\"; Power = \"who controls what.\""},
+{q:"When is each leadership style best used?",a:"Autocratic in crisis; Democratic for innovation; Laissez-faire with creative experts."},
+{q:"What are the stages in the Evolution of Leadership Theories?",a:"Trait → Behavioral → Contingency → Full-Range/Transformational → Modern Era."},
+{q:"What do Trait, Behavioral, and Contingency theories focus on?",a:"Trait = who you are; Behavioral = what you do; Contingency = when it works best."},
+{q:"Describe the Full-Range Leadership Model.",a:"Laissez-Faire → Transactional (rewards/punishments) → Transformational (vision, personal example)."},
+{q:"What are the three components of trust?",a:"Integrity, Benevolence, Ability."},
+{q:"What is French & Raven's definition of power and its five bases?",a:"The capacity A has to influence B's behavior. Formal: Legitimate, Coercive, Reward. Personal: Expert, Referent."},
+{q:"How does the module differentiate Authority, Power, and Politics?",a:"Authority = right to decide; Power = ability to influence; Politics = power in action."},
+{q:"Which influence tactic is least effective?",a:"Pressure."},
+{q:"What three effects does the \"Dark Side of Power\" produce?",a:"Self-interest, objectifying others, overconfidence (e.g., Theranos, Enron)."}
+],
+quiz:[
+{q:"Which best distinguishes Leadership from Management?",opts:["Leadership = how/when, Management = what/why","Leadership = what/why, Management = how/when","They are identical","Management always requires formal power"],correct:1,exp:"Leadership asks what/why (direction); Management asks how/when (order)."},
+{q:"Which leadership style suits a crisis?",opts:["Democratic","Laissez-faire","Autocratic","Servant"],correct:2,exp:"Crisis = autocratic."},
+{q:"Which theory era corresponds to 1960s-1980s?",opts:["Trait","Behavioral","Contingency","Full-Range"],correct:2,exp:"Contingency theories match style to situation."},
+{q:"Which model spans Laissez-Faire → Transactional → Transformational?",opts:["French & Raven","Full-Range Leadership Model","Fiedler's model","Path-Goal Theory"],correct:1,exp:"Bass's Full-Range Leadership Model spans these three."},
+{q:"Per Mayer, Davis & Schoorman, trust rests on:",opts:["Integrity, Benevolence, Ability","Legitimacy, Coercion, Reward power","Vision, Charisma, Consistency","Expertise, Networks, Formal Authority"],correct:0,exp:"Integrity, Benevolence, Ability."},
+{q:"Which is a Formal Power base (French & Raven)?",opts:["Referent power","Expert power","Reward power","Authentic power"],correct:2,exp:"Formal: Legitimate, Coercive, Reward."},
+{q:"Politics, per Mintzberg, is best defined as:",opts:["Identical to Authority","Power in action — dynamic use of tactics","Only negative","The formal right to decide"],correct:1,exp:"Politics = \"what you actually do.\""},
+{q:"Which influence tactic is LEAST effective?",opts:["Rational Persuasion","Consultation","Pressure","Inspirational Appeals"],correct:2,exp:"Pressure (threats/demands) is explicitly least effective."},
+{q:"Which leadership approach puts followers' needs first?",opts:["Charismatic","Transactional","Servant","Autocratic"],correct:2,exp:"Servant leadership."},
+{q:"The \"Dark Side of Power\" produces which three effects?",opts:["Self-interest, objectification, overconfidence","Trust, transparency and reduced office politics","Delegation, reduced hierarchy, stronger networks","Ethics, accountability, stakeholder focus"],correct:0,exp:"Self-interest, objectifying others, overconfidence."}
+]},
+{id:'ob-7',extra:'Floegel',title:'Group Behaviour and Teams',summary:`A group shares information with neutral/individual synergy; a team's cooperation produces collective performance greater than the sum of contributions. Social Identity Theory explains ingroup favoritism.
+
+Tuckman's Model: Forming, Storming, Norming, Performing, Adjourning (Gersick's Punctuated-Equilibrium Model as alternative). Key group properties: roles, norms, status, size, cohesion.
+
+Asch's conformity experiments showed group-pressure influence on judgment. Groupthink, groupshift, social loafing are common pitfalls.
+
+The Team Effectiveness Model rests on Context, Composition, and Processes & States. Teams are problem-solving, cross-functional, self-managed, or virtual; best for complex, interdependent tasks.
+
+Key concepts in more detail:
+Social Identity Theory :: group membership becomes part of our self-concept; we tie our self-esteem to the group's success or failure (e.g. department pride, rivalry between sales teams)
+Asch's conformity experiment :: many people conformed to an obviously wrong group answer
+Groupthink (Janis) :: group pressure makes people silence doubts and avoid unusual ideas, leading to overconfidence and poor decisions
+Groupshift (risky shift) :: group discussion pushes members to more extreme positions than they would take alone; diffusion of responsibility drives it
+Social loafing :: people exert less effort when their individual contribution is less visible
+Nominal Group Technique :: structured, independent idea generation followed by ranking; avoids conformity (brainstorming can suffer from production blocking)
+
+The defining difference between a team and a group: a team has mutual accountability and synergy that exceeds the sum of individual contributions. Teams are not always the answer: avoid them when a decision must be made quickly, because teams take longer.`,
+cards:[
+{q:"Key difference between a group and a team?",a:"A group has individual accountability/neutral synergy; a team has mutual accountability and positive synergy exceeding the sum of contributions."},
+{q:"What are Tuckman's five stages?",a:"Forming, Storming, Norming, Performing, Adjourning."},
+{q:"What is the alternative to Tuckman's model?",a:"The Punctuated-Equilibrium Model — non-linear development."},
+{q:"What did Asch's conformity experiments show?",a:"Many participants conformed to an obviously wrong group answer rather than stand out."},
+{q:"What is Social Identity Theory?",a:"Group membership becomes part of self-concept, driving ingroup favoritism and outgroup bias."},
+{q:"What is groupthink, and who identified it?",a:"Janis — group pressures silence doubts, causing overconfidence and poor decisions."},
+{q:"What is social loafing?",a:"Latané, Williams & Harkins — reduced effort when individual contribution is less visible."},
+{q:"What are the three pillars of the Team Effectiveness Model?",a:"Context, Composition, Processes & States."},
+{q:"What are the four types of teams?",a:"Problem-solving, cross-functional, self-managed, virtual."},
+{q:"When should teams NOT be used?",a:"Simple/routine tasks, low interdependence, decision speed critical, high conflict potential with little added value."}
+],
+quiz:[
+{q:"Who developed the five-stage model of group development?",opts:["Tajfel & Turner","Janis","Tuckman","Latané, Williams & Harkins"],correct:2,exp:"Tuckman."},
+{q:"Social Identity Theory primarily explains:",opts:["Why groups make riskier decisions than individuals","How group membership becomes part of self-concept","Why effort drops in larger groups","How production blocking is reduced in brainstorming"],correct:1,exp:"People tie self-esteem to their group's success."},
+{q:"Asch's key finding was:",opts:["Groups always decide better than individuals","Many conformed to an obviously wrong answer","Larger groups loaf less than small ones","Virtual teams conform less than face-to-face groups"],correct:1,exp:"Even a clearly wrong group answer drew conformity."},
+{q:"Reduced effort when individual contribution is less visible is called:",opts:["Groupthink","Groupshift","Social loafing","Reflexivity"],correct:2,exp:"Social loafing."},
+{q:"The defining team-vs-group difference is:",opts:["Team size — a team always has more members than a group","Groups create positive synergy while teams only add up individual contributions","Mutual accountability and synergy exceeding parts","Groups decide faster than teams"],correct:2,exp:"Teams exceed the sum of individual contributions."},
+{q:"Which technique uses structured, independent idea generation?",opts:["Interacting group discussion","Open brainstorming session","Nominal Group Technique","Groupshift (risky shift)"],correct:2,exp:"NGT structures independent generation then ranking."},
+{q:"Which pillar covers communication, trust, conflict handling?",opts:["Context (resources, leadership)","Composition (skills, diversity)","Processes & States","Cohesion"],correct:2,exp:"Processes & States is \"how they work.\""},
+{q:"A reason to AVOID a team is:",opts:["Complex, multi-step task","High interdependence between tasks","Decision speed critical","Need for creativity"],correct:2,exp:"Teams slow decisions when speed is critical."},
+{q:"Groups making more extreme decisions than individuals is:",opts:["Groupthink","Groupshift (risky shift)","Social loafing","Ingroup favoritism"],correct:1,exp:"Diffusion of responsibility drives groupshift."},
+{q:"Who identified \"groupthink\"?",opts:["Janis","Tuckman","Gersick","Asch"],correct:0,exp:"Janis."}
+]},
+{id:'ob-8',extra:'Floegel + Ghani',title:'Communication and Conflict',summary:`Communication transmits information and meaning via encoding, sending, interpreting. Conflict begins when one party perceives another has negatively affected something they care about.
+
+The Shannon-Weaver Model: sender, encoding, channel, noise, decoding, receiver, feedback. Mehrabian's 55/38/7 rule: body language 55%, vocal 38%, words 7%. Media Richness Theory matches rich channels to complex messages, lean channels to routine ones.
+
+The Conflict Process (five stages: opposition, cognition/personalization, intentions, behavior, outcomes). Conflict types: task, relationship, process. The Thomas-Kilmann model: competing, collaborating, compromising, avoiding, accommodating.
+
+Psychological safety underpins performance. Individualist (direct, low-context) vs. collectivist (indirect, high-context) communication. Principled negotiation focuses on interests, not positions.
+
+Lecture slides "Conflict — When People, Tasks and Goals Collide". Conflict involves perceived incompatibility or opposition between people or groups; a difference of opinion does not always become conflict — perception is key.
+
+Earlier view: conflict as a problem to reduce or remove; more recent view: some conflict can be useful, but conflict that becomes personal, intense or poorly managed harms people and performance.
+
+Three types:
+- Task (about the work itself)
+- Process (how work is done — who does what, when)
+- Relationship (personal tension, e.g. "You never listen to me"); a task conflict can turn into a relationship conflict once people attack each other personally.
+
+Where conflict happens:
+- dyadic (between two people)
+- intragroup (within a team)
+- intergroup (between groups, e.g. sales vs. operations)
+
+Five stages:
+=> Potential opposition → Cognition → Intentions → Behaviour → Outcomes
+What happens early affects what happens later. Five handling styles: Competing, Collaborating, Compromising, Avoiding, Accommodating — the situation determines which is useful.
+
+Conflict intensity ranges from low (small disagreement/misunderstanding) through moderate (open disagreement or challenge) to high (aggressive words, threats, personal attacks); the more personal and aggressive, the higher the risk of harm.
+
+Case Oscar & Brittany: a bonus-criteria issue (task/process) became a relationship conflict when Brittany shared Oscar's grievance threat with the committee and he felt his trust was broken.
+
+Remember: before asking "Who is the problem?", ask "What is happening, and what is causing the conflict?"
+
+Details worth knowing:
+Task conflict :: disagreement about the work itself (goals, content); often productive
+Process conflict :: disagreement about how the work is done, e.g. who does which part and by when
+Relationship conflict :: personal tension; usually harmful
+Competing (TKI) :: high assertiveness, low cooperation
+Compromising (TKI) :: each side gives up something, e.g. suggesting to split the remaining work; discussing the problem and agreeing a joint plan would be collaborating
+Psychological safety (Edmondson) :: a team climate in which members feel safe to speak up and take risks; the strongest predictor of team innovation and success
+Media Richness :: lean channels (memos, emails) suit routine, unambiguous information; rich channels (face-to-face) suit complex, ambiguous messages
+
+According to De Dreu & Weingart, conflict mismanagement is the leading reason why teams underperform.
+
+The five stages of the Conflict Process:
+Stage I: Potential opposition :: conditions that create a chance for conflict (communication, structure, personal variables)
+Stage II: Cognition and personalization :: perceived conflict (becoming aware of it) vs. felt conflict (emotional involvement: anxiety, tension, hostility)
+Stage III: Intentions :: the chosen handling style (competing, collaborating, avoiding, accommodating, compromising)
+Stage IV: Behavior :: the visible conflict: statements, actions, reactions
+Stage V: Outcomes :: functional (better decisions) or dysfunctional (lower performance)
+
+Individualist cultures such as the US or Germany favour direct, low-context communication and task-focused negotiation; collectivist cultures favour indirect, high-context communication.`,
+cards:[
+{q:"Definition of communication used in this module?",a:"The process transmitting information and meaning via encoding, sending, interpreting to build common understanding."},
+{q:"Definition of conflict?",a:"Begins when one party perceives another has negatively affected something they care about; driven by perception."},
+{q:"What does the Shannon-Weaver Model illustrate?",a:"Message flow: sender → encode → channel (noise) → decode → receiver → feedback."},
+{q:"What is Mehrabian's 55/38/7 rule?",a:"55% body language, 38% vocal qualities, 7% words shape feeling-communication impact."},
+{q:"What is the Media Richness Model?",a:"Rich channels (face-to-face) suit complex/sensitive messages; lean channels (email) suit routine information."},
+{q:"What are the five stages of the Conflict Process?",a:"Potential opposition, cognition/personalization, intentions, behavior, outcomes."},
+{q:"Differentiate task, relationship, and process conflict.",a:"Task = disagreement on goals/procedures (often productive); Relationship = personal tension (destructive); Process = disagreement on how to accomplish tasks."},
+{q:"What are the five Thomas-Kilmann conflict-handling intentions?",a:"Competing, collaborating, compromising, avoiding, accommodating."},
+{q:"What is psychological safety, and who defined it?",a:"Edmondson — team climate where members feel safe to speak up and take risks; strongest predictor of team innovation."},
+{q:"What does principled negotiation emphasize?",a:"Focusing on interests, not positions, generating options for mutual gain."},
+{q:"How does the Ghani lecture define conflict?",a:"Perceived incompatibility or opposition between people or groups — a difference of opinion does not automatically become conflict; perception matters."},
+{q:"Earlier vs. more recent view of conflict?",a:"Earlier: conflict is a problem to reduce/remove. Recent: some conflict can be useful, but personal, intense or poorly managed conflict harms people and performance."},
+{q:"Dyadic, intragroup and intergroup conflict?",a:"Dyadic = between two people; intragroup = within a team; intergroup = between groups (e.g. sales vs. operations)."},
+{q:"What are the three levels of conflict intensity?",a:"Low (small disagreement/misunderstanding), Moderate (open disagreement or challenge), High (aggressive words, threats, personal attacks)."},
+{q:"Can a task conflict become a relationship conflict?",a:"Yes — if people start attacking each other personally, a disagreement about the work turns into personal tension."},
+{q:"What happened in the Oscar & Brittany case?",a:"A bonus-criteria issue became a relationship conflict after Brittany shared Oscar's grievance threat with the committee; Oscar felt his trust was broken and stopped speaking to her."}
+],
+quiz:[
+{q:"Per Mehrabian, what % of communication impact comes from body language?",opts:["7%","38%","55%","93%"],correct:2,exp:"55% body language, 38% vocal, 7% words."},
+{q:"In Shannon-Weaver, what causes a message to be misunderstood?",opts:["Feedback","Noise","Channel richness","Filtering"],correct:1,exp:"Noise distorts the signal between encoding and decoding."},
+{q:"Which conflict type is often productive?",opts:["Relationship conflict","Process conflict","Task conflict","Intergroup conflict"],correct:2,exp:"Task conflict about goals/procedures is often productive."},
+{q:"Which TKI style is high assertive/low cooperative?",opts:["Collaborating","Accommodating","Avoiding","Competing"],correct:3,exp:"Competing is high assertive, low cooperative."},
+{q:"Which conflict-process stage involves \"perceived\" and \"felt\" conflict?",opts:["Stage I: Potential opposition","Stage II: Cognition and personalization","Stage III: Intentions","Stage IV: Behavior"],correct:1,exp:"Stage II distinguishes perceived (awareness) from felt (emotional) conflict."},
+{q:"What term did Edmondson use for a climate enabling speaking up?",opts:["Media richness","Psychological safety","Principled negotiation","Selective perception"],correct:1,exp:"Psychological safety predicts team innovation and success."},
+{q:"Which channel suits routine information per Media Richness?",opts:["Face-to-face meetings","Video calls","Memos/emails (lean channels)","Mediation"],correct:2,exp:"Lean channels suit routine, unambiguous information."},
+{q:"Individualist cultures (US, Germany) favor which communication style?",opts:["Indirect, high-context","Direct, low-context","Relationship-focused only","Avoidance-based conflict"],correct:1,exp:"Direct, low-context communication and task-focused negotiation."},
+{q:"Per De Dreu & Weingart, the leading reason teams underperform is:",opts:["Lack of digital tools","Conflict mismanagement","Excessive formal communication","Too much task conflict"],correct:1,exp:"Conflict mismanagement is cited as the top barrier."},
+{q:"Principled negotiation emphasizes:",opts:["Positions, not interests","Competing to win","Interests, not positions","Avoiding conflict entirely"],correct:2,exp:"Focus on interests and mutual-gain options."},
+{q:"Two team members argue about who should do which part of the project and by when. This is mainly:",opts:["Task conflict","Process conflict","Relationship conflict","Intergroup conflict"],correct:1,exp:"Process conflict concerns how the work is done — division of work and timing."},
+{q:"Sales and operations disagree about delivery priorities. This conflict occurs at which level?",opts:["Dyadic","Intragroup","Intergroup","Intrapersonal"],correct:2,exp:"Conflict between groups/departments is intergroup."},
+{q:"Your teammate has not finished their section the day before the deadline. You suggest splitting the remaining work. Which style is this?",opts:["Avoiding","Accommodating","Compromising","Competing"],correct:2,exp:"Each side gives up something to reach an acceptable solution — compromising. Discussing the problem and agreeing a joint plan would be collaborating."},
+{q:"Which statement reflects the more recent view of conflict?",opts:["All conflict must be eliminated because it always harms performance and relationships","Some conflict can be useful, but personal/intense conflict is harmful","Conflict never affects performance, whether task- or relationship-based","Only managers experience conflict"],correct:1,exp:"The recent view accepts some constructive conflict while warning about personal, intense, poorly managed conflict."},
+{q:"In the Oscar & Brittany case, what turned the issue into a relationship conflict?",opts:["The size of the bonus Oscar expected for his waste-reduction work and the new criteria","Brittany sharing Oscar's private grievance threat with the committee","Oscar's decision to stop working on waste reduction after the bonus change","The committee chair election"],correct:1,exp:"Sharing private information broke Oscar's trust, making the conflict personal."}
 ]}
 ];
 
 const OB_CHEAT = [
 {h:"Motivation",items:["Herzberg's Two-Factor Theory (hygiene vs. motivator)","Vroom's Expectancy Theory: Effort → Performance → Reward","Latham & Locke's Goal-Setting Theory","Hackman & Oldham's Job Characteristics Model","Four-Drives Framework: acquire, bond, comprehend, defend","Change reaction curve: denial → resistance → valley of tears → adaptation → renewal"]},
 {h:"Self-Leadership",items:["Self-leadership model centered on self-awareness","CAPS model","Fixed vs. growth mindset; sleep and self-regulation","Locus of control; self-efficacy; promotion vs. prevention focus"]},
-{h:"Evidence-Based Management",items:["Confirmation bias (naïve acceptance, blinkered scepticism, biased search, selective recall)","Ladder of inference: statement → fact → data → evidence → proof","Internal vs. external validity; anchoring effect; informational cascades","Three principles for leveraging team differences: shared reality, dissent, shared identity"]}
+{h:"Evidence-Based Management",items:["Confirmation bias (naïve acceptance, blinkered scepticism, biased search, selective recall)","Ladder of inference: statement → fact → data → evidence → proof","Internal vs. external validity; anchoring effect; informational cascades","Three principles for leveraging team differences: shared reality, dissent, shared identity"]},
+{h:"Organizational Behavior & Foundations",items:["Ghani: OB = PEOPLE + INTERACTIONS + WORK ENVIRONMENT; 6 source disciplines (psychology, social psychology, sociology, anthropology, political science, neuroscience)","Contingency thinking (\"it depends\") · Person → Situation → Behaviour → Outcome","Levels of analysis: individual → group → organizational","History: Scientific Management (Taylor) → Human Relations/Hawthorne → Behavioral Science → Contemporary OB","Big Five (OCEAN); Attitude components: cognitive / affective / behavioral","Tuckman's stages: Forming, Storming, Norming, Performing (+ Adjourning)","Thomas-Kilmann: competing, collaborating, compromising, avoiding, accommodating"]},
+{h:"Personality & Values",items:["Big Five (OCEAN) vs. MBTI","Rokeach: Terminal vs. Instrumental values","Kristof-Brown: P-J Fit vs. P-O Fit","Holland's RIASEC model","Dark Triad: Narcissism, Machiavellianism, Psychopathy","Hofstede's Cultural Dimensions; Cultural Intelligence (CQ)"]},
+{h:"Emotional Intelligence",items:["Ghani: Event → Appraisal → Emotion → Mood → Behaviour; shaped by person, situation, social context","Felt emotion vs. display rules; EI as Perceive → Understand → Regulate/Use (definition debated)","Goleman's 4 components: self-awareness, self-management, social awareness, relationship management","Amygdala vs. prefrontal cortex; the \"6-Second Rule\"","Affective Events Theory","Emotional Labor: Surface Acting vs. Deep Acting","Emotional Contagion","EI measures: EQ-i 2.0, EQ 360, MSCEIT"]},
+{h:"Leadership & Power",items:["French & Raven's Bases of Power: Legitimate, Coercive, Reward, Expert, Referent","Trait → Behavioral → Contingency → Full-Range (Bass) → Transformational/Authentic/Charismatic/Servant","Trust model: Ability, Benevolence, Integrity","Authority vs. Power vs. Politics; Influence tactics"]},
+{h:"Group Behaviour & Teams",items:["Tuckman's Model + Punctuated-Equilibrium Model","Social Identity Theory; Asch conformity","Groupthink; social loafing","Team Effectiveness Model: Context, Composition, Processes & States","Psychological safety"]},
+{h:"Communication & Conflict",items:["Ghani: conflict = perceived incompatibility; task / process / relationship; dyadic / intragroup / intergroup","Conflict intensity: low → moderate → high (personal attacks, threats)","Shannon-Weaver Model; Media Richness Model","Mehrabian's 55/38/7 rule","Conflict Process — 5 stages","Thomas-Kilmann Conflict Model (5 styles); Principled negotiation"]}
 ];
 
 const OB_SCENARIOS = [
+{a:{name:"Alex",desc:"A team lead who, when a quiet new colleague barely speaks in meetings, first asks whether the colleague is new to the team, unsure of their role, or being talked over by others."},b:{name:"Ben",desc:"A team lead who immediately concludes the quiet colleague is simply not interested and stops assigning them important tasks."},q:"Which OB principle from \"Understanding OB\" does Alex apply and Ben ignore?",opts:["Alex: Perspective-taking and person + situation thinking · Ben: quick judgment","Alex: Scientific management · Ben: Human relations","Alex: Filtering · Ben: Selective perception","Both apply contingency thinking equally"],correct:0,exp:"Alex asks \"What else could explain this behaviour?\" and considers situational factors; Ben jumps to a person-only explanation — exactly what the lecture warns against."},
+{a:{name:"Alex",desc:"A team lead who insists on getting their way in every planning meeting, cutting off objections and pushing decisions through quickly to hit the deadline."},b:{name:"Ben",desc:"A colleague who quietly agrees in the meeting to avoid friction, then complains to others afterward that his concerns were never heard."},q:"Which Thomas-Kilmann conflict style is Alex displaying, and which is Ben displaying?",opts:["Alex: Competing · Ben: Avoiding","Alex: Collaborating · Ben: Accommodating","Alex: Compromising · Ben: Competing","Alex: Accommodating · Ben: Collaborating"],correct:0,exp:"Alex shows high assertiveness/low cooperation (Competing) by pushing decisions through. Ben shows low assertiveness/low cooperation (Avoiding) by suppressing his concerns rather than raising them."},
 {a:{name:"Alex",desc:"A new hire who believes success depends entirely on effort and preparation — when a pitch fails, Alex reviews what went wrong and adjusts the approach."},b:{name:"Ben",desc:"A new hire who blames the client and \"bad luck\" whenever a pitch fails, insisting nothing could have been done differently."},q:"Which locus of control does each person best illustrate?",opts:["Alex: External · Ben: Internal","Alex: Internal · Ben: External","Both show internal locus of control","Both show external locus of control"],correct:1,exp:"Alex attributes outcomes to personal effort/decisions (internal locus). Ben attributes outcomes to external circumstances/luck (external locus), which is linked to lower motivation and a fixed mindset."},
 {a:{name:"Alex",desc:"A project manager whose team just missed a deadline. Alex says: \"Let's figure out exactly what broke in our process and fix it before the next sprint.\""},b:{name:"Ben",desc:"A teammate who responds: \"It's fine, we always miss deadlines, there's no point changing anything.\""},q:"Applying the fixed vs. growth mindset framework, who shows a growth mindset?",opts:["Alex","Ben","Both show growth mindset","Neither shows growth mindset"],correct:0,exp:"Alex treats failure as a learning opportunity and looks to improve the process (growth mindset). Ben's fatalistic response reflects a fixed mindset that avoids effortful change."},
+{a:{name:"Alex",desc:"A department head who was appointed purely because of her official job title, and whose team follows her instructions mainly because she is \"the boss.\""},b:{name:"Ben",desc:"A senior engineer with no formal authority, but whose technical judgment is so trusted that the whole team defers to his recommendations."},q:"Which of French & Raven's power bases does each person primarily hold?",opts:["Alex: Expert power · Ben: Legitimate power","Alex: Legitimate power · Ben: Expert power","Alex: Referent power · Ben: Coercive power","Alex: Reward power · Ben: Referent power"],correct:1,exp:"Alex's influence stems from her formal position (Legitimate power). Ben's influence stems from his specialized knowledge (Expert power), a personal rather than formal power base."},
+{a:{name:"Alex",desc:"On a newly formed team, tension is rising — members are pushing back on the proposed approach and jockeying over who should lead which workstream."},b:{name:"Ben",desc:"On a much older team, everyone already has clear roles, works smoothly together, and consistently hits its targets."},q:"Which stages of Tuckman's model best describe Alex's team and Ben's team respectively?",opts:["Alex: Forming · Ben: Storming","Alex: Storming · Ben: Performing","Alex: Norming · Ben: Forming","Alex: Performing · Ben: Norming"],correct:1,exp:"Alex's team shows conflict over roles and approach — classic Storming. Ben's team functions smoothly at full capability — classic Performing."},
 {a:{name:"Alex",desc:"A manager who sets a goal for the team: \"Improve things this quarter.\""},b:{name:"Ben",desc:"A manager who sets a goal: \"Reduce average ticket resolution time from 48 to 36 hours by the end of Q3.\""},q:"Applying Latham & Locke's goal-setting theory, whose goal is more likely to drive higher performance?",opts:["Alex's — vague goals reduce pressure and raise performance","Ben's — difficult, specific goals raise performance more than vague ones","Both equally, since goal difficulty doesn't matter","Neither — goal-setting theory only applies to sales roles"],correct:1,exp:"Latham & Locke found that difficult, specific goals significantly outperform easy or vague ones, and higher goals tend to produce higher performance."},
+{a:{name:"Alex",desc:"A manager who privately feels undervalued by a peer's comment in a meeting but says nothing and keeps working normally."},b:{name:"Ben",desc:"A manager who feels the same undervaluation but stews on it, becomes visibly tense, and later snaps at a team member over an unrelated issue."},q:"Using the Conflict Process, which stage best captures Ben's reaction compared to Alex's?",opts:["Alex: felt conflict · Ben: perceived conflict","Alex: perceived conflict (aware, not yet emotional) · Ben: felt conflict (emotionally personalized)","Both are at the Behavior stage","Both are at the Outcomes stage"],correct:1,exp:"Alex is aware something happened but hasn't personalized it (perceived conflict). Ben's emotional reaction and displaced tension show cognition has become personalized (felt conflict)."},
+{a:{name:"Alex",desc:"A leader who paints a compelling vision for the company's future and leads by personal example, inspiring the team to go beyond expectations."},b:{name:"Ben",desc:"A leader who mainly offers bonuses for hitting targets and warnings for missing them, keeping performance stable but rarely inspired."},q:"Per the Full-Range Leadership Model, which style does each leader show?",opts:["Alex: Transactional · Ben: Transformational","Alex: Transformational · Ben: Transactional","Alex: Laissez-Faire · Ben: Transformational","Both are Transformational"],correct:1,exp:"Alex leads through vision and personal example — Transformational. Ben relies on rewards/punishments to maintain compliance — Transactional."},
+{a:{name:"Alex",desc:"A hiring manager choosing between two equally skilled candidates picks the one whose personal values (collaboration, transparency) closely match the company culture."},b:{name:"Ben",desc:"A hiring manager picks the candidate whose technical skills most precisely match the role's task requirements, regardless of cultural fit."},q:"Which type of fit is each manager prioritizing?",opts:["Alex: P-J Fit · Ben: P-O Fit","Alex: P-O Fit · Ben: P-J Fit","Both prioritize P-J Fit","Both prioritize P-O Fit"],correct:1,exp:"Alex is matching values to culture (Person-Organization Fit, predicts satisfaction/retention). Ben is matching skills to task requirements (Person-Job Fit, predicts performance)."},
 {a:{name:"Alex",desc:"In a group decision, Alex privately disagrees with the popular plan but stays silent because everyone else already voiced support and Alex doesn't want to be the odd one out."},b:{name:"Ben",desc:"In a separate meeting, Ben's team collects everyone's opinion anonymously before any discussion begins, so quieter dissenters aren't influenced by early vocal opinions."},q:"Which evidence-based management concept is at play in each case?",opts:["Alex: informational cascade · Ben: the remedy (private input collection)","Alex: confirmation bias · Ben: anchoring effect","Alex: groupthink prevention · Ben: informational cascade","Both illustrate anchoring"],correct:0,exp:"Alex's silence despite disagreement, driven by others' prior statements, is a textbook informational cascade. Ben's team applies the standard remedy: collecting opinions privately before discussion."},
+{a:{name:"Alex",desc:"A manager who genuinely reframes a stressful client call as an opportunity to help, and actually starts to feel calmer and more patient before picking up the phone."},b:{name:"Ben",desc:"A manager who grits his teeth and forces a friendly tone on the same kind of call while feeling irritated the entire time underneath."},q:"Which form of emotional labor does each manager use?",opts:["Alex: Surface Acting · Ben: Deep Acting","Alex: Deep Acting · Ben: Surface Acting","Both use Surface Acting","Neither is emotional labor"],correct:1,exp:"Alex genuinely shifts his internal state to match the situation (Deep Acting, more sustainable). Ben only masks his true feelings outwardly (Surface Acting, more exhausting)."},
 {a:{name:"Alex",desc:"A senior executive who systematically searches for and only shares data that supports the merger she already wants to approve."},b:{name:"Ben",desc:"A board member who insists on also reviewing the counter-analysis and asks what evidence would prove the merger a bad idea."},q:"Which evidence-based management behaviors do Alex and Ben each display?",opts:["Alex: confirmation bias (biased search) · Ben: actively seeking opposing views","Alex: black-and-white thinking · Ben: anchoring","Alex: informational cascade · Ben: groupthink","Both display confirmation bias"],correct:0,exp:"Alex's selective search for confirming evidence is a classic confirmation-bias pattern. Ben's deliberate search for disconfirming evidence is the recommended individual-level remedy."},
 {"a": {"name": "Alex", "desc": "A sales rep who sees the new target as a chance to earn the top bonus and win the regional ranking; she thrives when her manager is upbeat and praises progress."}, "b": {"name": "Ben", "desc": "A sales rep who mainly worries about missing the target and losing his standing; he double-checks every deal and wants clear rules to stay safe."}, "q": "Which regulatory focus does each person show?", "opts": ["Alex: prevention · Ben: promotion", "Alex: promotion · Ben: prevention", "Both: promotion focus", "Both: prevention focus"], "correct": 1, "exp": "Promotion focus treats goals as chances for gain (\"playing to win\", responds to optimism and praise); prevention focus treats goals as risks to avoid (\"playing not to lose\")."},
 {"a": {"name": "Alex", "desc": "An HR manager who raises salaries and renovates the office to stop employees from complaining."}, "b": {"name": "Ben", "desc": "An HR manager who gives employees more responsibility, recognises achievements publicly and lets them own whole projects."}, "q": "In Herzberg's Two-Factor Theory, which manager works on motivators?", "opts": ["Alex — pay and working conditions are motivators", "Ben — responsibility, recognition and the work itself are motivators", "Both equally, because any improvement motivates", "Neither, because only money motivates"], "correct": 1, "exp": "Pay and working conditions are hygiene factors: they prevent dissatisfaction but do not drive performance. Responsibility, recognition, achievement and the work itself are motivators."},
@@ -1158,12 +1587,30 @@ const OB_SCENARIOS = [
 ];
 
 const OB_MATCH_PAIRS = [
+{t:"Thomas-Kilmann Model",d:"Maps five conflict-handling styles on assertiveness vs. cooperativeness axes."},
+{t:"Tuckman's Stages",d:"Forming, Storming, Norming, Performing, Adjourning — group development over time."},
 {t:"Herzberg's Two-Factor Theory",d:"Hygiene factors prevent dissatisfaction; motivators drive higher performance."},
 {t:"Vroom's Expectancy Theory",d:"Motivation follows an Effort → Performance → Reward chain."},
 {t:"Job Characteristics Model",d:"Skill variety, task identity, significance, autonomy, feedback drive psychological states."},
 {t:"Four Drives Framework",d:"Acquire, bond, comprehend, defend — mapped to reward, culture, job design, resources."},
+{t:"Big Five (OCEAN)",d:"Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Stability."},
+{t:"Rokeach's Values Model",d:"Distinguishes terminal (end-state) from instrumental (behavioral) values."},
+{t:"Holland's RIASEC",d:"Six interest types matched to careers: Realistic, Investigative, Artistic, Social, Enterprising, Conventional."},
+{t:"Dark Triad",d:"Narcissism, Machiavellianism, and Psychopathy — toxic workplace traits."},
+{t:"Hofstede's Dimensions",d:"Power Distance, Individualism/Collectivism, Masculinity/Femininity, Uncertainty Avoidance, Time Orientation, Indulgence."},
+{t:"Goleman's EI Components",d:"Self-Awareness, Self-Management, Social Awareness, Relationship Management."},
+{t:"Affective Events Theory",d:"Workplace events trigger emotions that drive behavior and shape long-term attitudes."},
+{t:"Emotional Labor",d:"Surface Acting (faking expression) vs. Deep Acting (genuinely shifting feeling)."},
 {t:"CAPS Model",d:"Situational cues are encoded and activate personality-system elements to produce behavior."},
+{t:"French & Raven's Power Bases",d:"Legitimate, Coercive, Reward (formal) and Expert, Referent (personal)."},
+{t:"Trust Model (Mayer et al.)",d:"Integrity, Benevolence, and Ability as the three foundations of trust."},
+{t:"Social Identity Theory",d:"Group membership becomes part of self-concept, driving ingroup favoritism."},
+{t:"Team Effectiveness Model",d:"Context, Composition, and Processes & States determine team success."},
+{t:"Shannon-Weaver Model",d:"Sender encodes a message through a channel subject to noise to a decoding receiver."},
+{t:"Psychological Safety",d:"A team climate where members feel safe to speak up and take risks."},
+{t:"Mehrabian's 55/38/7 Rule",d:"Body language, vocal tone, and words contribute unequally to communicated feeling."},
 {t:"Informational Cascade",d:"A chain of same-direction opinions that suppresses later members' dissent."},
+{t:"Groupthink",d:"Desire for group harmony leads members to suppress doubts and avoid alternatives."},
 {"t": "Latham & Locke's Goal-Setting", "d": "Difficult, specific goals raise performance more than vague ones."},
 {"t": "Promotion vs. Prevention Focus", "d": "Goals as chances to win vs. risks to avoid (\"playing to win\" vs. \"playing not to lose\")."},
 {"t": "Locus of Control", "d": "Belief that outcomes depend on yourself (internal) or on luck and others (external)."},
@@ -2245,7 +2692,8 @@ function buildSidebarNav(subjId){
     html += `<div class="nav-section-label">Topics</div>`;
     const topics = subjId==='ob'?OB_TOPICS:POM_TOPICS;
     topics.forEach((t,i)=>{
-      html += `<div class="nav-item" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${i+1}. ${t.title}</span></div>`;
+      if(t.extra && !topics[i-1].extra) html += `<div class="nav-section-label">Further course content · maybe in exam</div>`;
+      html += `<div class="nav-item${t.extra?' nav-minor':''}" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${i+1}. ${t.title}</span></div>`;
     });
   }
   if(subjId==='pom'){
@@ -2418,7 +2866,7 @@ function initHomeSearch(){
 function buildHomeCards(){
   const wrap = document.getElementById('home-cards');
   const meta = {
-    ob:{banner:'var(--tile-banner)', stat1:'3 topics', stat2:'4 tools'},
+    ob:{banner:'var(--tile-banner)', stat1:'3 + 6 topics', stat2:'4 tools'},
     pom:{banner:'var(--tile-banner)', stat1:'3 exam topics', stat2:'exam simulator'},
     aw:{banner:'var(--tile-banner)', stat1:'reference + drills', stat2:'3 tools'}
   };
@@ -2994,7 +3442,7 @@ function radarAxes(subj){
 function planItemPool(){
   const items = [];
   const weightOf = s => s==null ? 1 : 1-s;
-  OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
+  OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t))*(t.extra?.6:1), size:topicSize(t)}));
   POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   RZ_TOPICS.filter(t=>!RZ_FOUNDATION.includes(t.id)).forEach(t=> items.push({subj:'pom', label:'Raatzsch: '+t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   items.push({subj:'pom', label:'Raatzsch: Exam Essay Trainer (2 of 3 questions)', page:'rz-exam', weight:.8, size:12});
@@ -3078,8 +3526,8 @@ const EXAMS = [
      tips:['Content = the "Slides for written exam" only (managers & managing, planning & strategy, control & change).','Apply terms to a situation, not just define them.'],
      links:[['pom-sim','POM Exam Simulator'],['pom-cheat','Cheat Sheet']]},
     {subj:'OB', who:'Prof. Dr. Meir Shemla', course:'Organizational Behaviour', pts:30, type:'Multiple choice only', badge:'mcq',
-     how:'Written part of the shared 90-minute exam (30 points), multiple-choice questions only. Content: only Shemla\'s three modules: Motivation, Self-Leadership and Evidence-Based Management (Floegel\'s and Ghani\'s topics are not part of it).',
-     tips:['Know the models well enough to recognise them in a short case, and read all options: they often differ in one detail (e.g. promotion vs. prevention focus, which bias).'],
+     how:'Written part of the shared 90-minute exam (30 points, "Dr. Shemla\'s course on Organizational Behavior"), multiple-choice questions only. Priority: his own modules Motivation, Self-Leadership and Evidence-Based Management. Nasar\'s exam slides also list personality, emotions, teams, communication, conflict and leading people as course content (taught by Floegel, Ghani and the teaching team), so these may come up too.',
+     tips:['Know the models well enough to recognise them in a short case, and read all options: they often differ in one detail (e.g. which TKI style, which bias).','The "Quick Canvas Exams" after Teams & Groups, Communication & Conflict and Leadership & Power were his graded online quizzes, so a good preview of his question style.'],
      links:[['ob-sim','OB Exam Simulator'],['ob-cheat','Cheat Sheet']]},
     {subj:'POM', who:'Prof. Richard Raatzsch', course:'Ethics, Law & Politics (in Business)', pts:30, type:'Essay: answer 2 of 3', badge:'essay',
      how:'Three conceptual questions with hints in brackets ("What is X? (Put emphasis on why …)"); you answer two, 15 points each (≈ 15 min each, time flexible within the 90 minutes).',
@@ -3744,19 +4192,24 @@ function buildOBHome(){
     div.innerHTML = `
       <div class="page-header">
         <div class="eyebrow">${icon('home')} Organizational Theory &amp; Behaviour</div>
-        <h2>3 Topics</h2>
-        <p>Only Prof. Shemla's exam modules: motivation, self-leadership and evidence-based management. Pick a topic, or jump into a cross-topic tool below.</p>
+        <h2>3 + 6 Topics</h2>
+        <p>Prof. Shemla's three modules first, then the further course content taught by Floegel, Ghani and the teaching team, which may also come up. Pick a topic, or jump into a cross-topic tool below.</p>
       </div>
       <div class="page-body">
         ${lectureMasteryHtml('ob')}
         <div class="topic-grid">
-          ${OB_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
+          ${OB_TOPICS.filter(t=>!t.extra).map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">SHEMLA · TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
+        </div>
+        <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Further course content · Floegel / Ghani / Teaching Team · maybe in exam</div>
+        <p class="ob-extra-note">Nasar's exam slides list personality, emotions, teams, communication, conflict and leading people as part of Shemla's OB course. Learn Shemla's three topics first, then these.</p>
+        <div class="topic-grid">
+          ${OB_TOPICS.filter(t=>t.extra).map((t,i)=>`<div class="topic-card ob-extra" onclick="navTo('${t.id}')"><div class="num">${esc(t.extra.toUpperCase())} · MAYBE IN EXAM</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
         </div>
         <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Cross-topic tools</div>
         <div class="tool-tiles">
           <div class="tool-tile" onclick="navTo('ob-cheat')"><div class="ic">${icon('cheat')}</div><h4>Cheat Sheet</h4><p>Every framework, one page.</p></div>
           <div class="tool-tile" onclick="navTo('ob-scenario')"><div class="ic">${icon('scenario')}</div><h4>Scenario Lab</h4><p>"Alex vs. Ben" applied practice.</p></div>
-          <div class="tool-tile" onclick="navTo('ob-match')"><div class="ic">${icon('match')}</div><h4>Framework Matcher</h4><p>Match theorists and models to definitions.</p></div>
+          <div class="tool-tile" onclick="navTo('ob-match')"><div class="ic">${icon('match')}</div><h4>Framework Matcher</h4><p>Match 24 theorists to definitions.</p></div>
           <div class="tool-tile" onclick="navTo('ob-sim')"><div class="ic">${icon('timer')}</div><h4>Exam Simulator</h4><p>20 questions, 20 minutes, timed.</p></div>
         </div>
       </div>`;
@@ -3765,7 +4218,7 @@ function buildOBHome(){
 
 function buildOBCheat(){
   registerPage('ob-cheat', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('cheat')} Reference</div><h2>OB Cheat Sheet</h2><p>All exam-critical models across Shemla's 3 topics.</p></div><div class="page-body" id="ob-cheat-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('cheat')} Reference</div><h2>OB Cheat Sheet</h2><p>All exam-critical models across all 9 topics.</p></div><div class="page-body" id="ob-cheat-body"></div>`;
     renderCheat(div.querySelector('#ob-cheat-body'), OB_CHEAT, null, 'cheat-ob');
   });
 }
@@ -3866,7 +4319,7 @@ function buildOBMatch(){
 
 function buildOBSim(){
   registerPage('ob-sim', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('timer')}</div><h2>Exam Simulator</h2><p>20 random questions across all 3 topics, 20-minute countdown, topic breakdown at the end.</p></div><div class="page-body" id="ob-sim-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('timer')}</div><h2>Exam Simulator</h2><p>20 random questions across all 9 topics, 20-minute countdown, topic breakdown at the end.</p></div><div class="page-body" id="ob-sim-body"></div>`;
     const body = div.querySelector('#ob-sim-body');
     body.innerHTML = `<div style="text-align:center;padding:50px 20px;"><h3 style="font-size:1.3rem;margin-bottom:10px;">Ready when you are</h3><p style="color:var(--ink-soft);margin-bottom:22px;max-width:440px;margin-left:auto;margin-right:auto;">20 questions pulled at random from all 9 OB topics. A 20-minute countdown starts the moment you begin — the simulator auto-submits when time runs out.</p><button class="btn" onclick="window.__simStart()">Start Exam Simulator</button></div>`;
     window.__simStart = ()=>{
