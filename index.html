@@ -3003,19 +3003,60 @@ function hlRebase(container, freshHtml){
   }).filter(m=>m.text.trim());
   if(!marks.length){ container.innerHTML = freshHtml; hlSave(container); return true; }
   const newT = textOf(fresh);
+  const nearest = (needle, rel)=>{ let best=-1, bestD=Infinity, i=-1; while((i = newT.str.indexOf(needle, i+1))>=0){ const d=Math.abs(i/Math.max(1,newT.str.length) - rel); if(d<bestD){ bestD=d; best=i; } } return best; };
+  // wording/layout around a highlight changed since it was saved (e.g. a paragraph became a list):
+  // cover it piece by piece with the longest runs of its text that still exist
+  const cover = m=>{
+    const pieces = []; let i = 0, covered = 0;
+    while(i < m.text.length){
+      let lo = 7, hi = m.text.length - i, bestLen = 0, bestAt = -1;
+      while(lo < hi){ const mid = Math.ceil((lo+hi)/2); const at = nearest(m.text.slice(i, i+mid), m.rel); if(at>=0){ lo = mid; bestLen = mid; bestAt = at; } else hi = mid-1; }
+      if(bestLen >= 8){ const part = m.text.slice(i, i+bestLen); if(part.trim()) pieces.push({...m, text:part, at:bestAt}); covered += bestLen; i += bestLen; }
+      else i++;
+    }
+    return covered >= m.text.trim().length*.6 ? pieces : null;
+  };
   const placed = [];
   for(const m of marks){
-    let best=-1, bestD=Infinity, i=-1;
-    while((i = newT.str.indexOf(m.text, i+1))>=0){ const d=Math.abs(i/Math.max(1,newT.str.length) - m.rel); if(d<bestD){ bestD=d; best=i; } }
-    if(best<0) return false;
-    placed.push({...m, at:best});
+    const best = nearest(m.text, m.rel);
+    if(best>=0){ placed.push({...m, at:best}); continue; }
+    const pieces = m.text.length>=8 ? cover(m) : null;
+    // a highlight that can't be placed at all: keep the saved page and only add the new content to it
+    if(!pieces) return hlMergeMissing(container, freshHtml);
+    placed.push(...pieces);
   }
+  // pieces must not overlap (a word would get two marks)
+  placed.sort((x,y)=>x.at-y.at);
+  for(let k=placed.length-1; k>0; k--){ const prev = placed[k-1], cur = placed[k]; if(cur.at < prev.at+prev.text.length){ if(cur.at+cur.text.length <= prev.at+prev.text.length) placed.splice(k,1); else { const cut = prev.at+prev.text.length-cur.at; cur.text = cur.text.slice(cut); cur.at += cut; } } }
   const locate = off=>{ for(let k=newT.nodes.length-1;k>=0;k--){ const [n,s]=newT.nodes[k]; if(off>=s) return [n, off-s]; } return null; };
   const ranges = placed.map(m=>{ const r=document.createRange(); const a=locate(m.at), b=locate(m.at+m.text.length); if(b[1]===0 && b[0]!==a[0]){ /* end at node start → end of previous node */ const k=newT.nodes.findIndex(([n])=>n===b[0]); const [pn]=newT.nodes[k-1]; r.setEnd(pn, pn.length); } else r.setEnd(b[0], b[1]); r.setStart(a[0], a[1]); return {m, r}; });
   // wrap last-to-first so earlier offsets stay valid
   ranges.sort((x,y)=>y.m.at-x.m.at).forEach(({m,r})=>wrapRange(r, m.tag, m.cls));
   container.innerHTML = fresh.innerHTML;
   hlSave(container);
+  return true;
+}
+// fallback when a saved highlight can't be re-attached: the saved (highlighted) text stays exactly as it is and
+// every block of the current content that is missing from it is inserted at its place, so new content always shows
+function hlMergeMissing(container, freshHtml){
+  const norm = t=>t.replace(/\s+/g,' ').trim();
+  const root = container.querySelector('.summary-text') || container;
+  const fresh = document.createElement('div'); fresh.innerHTML = freshHtml;
+  const freshRoot = fresh.querySelector('.summary-text') || fresh;
+  const oldBlocks = ()=>[...root.children];
+  let anchor = null, changed = false;
+  [...freshRoot.children].forEach(fb=>{
+    const t = norm(fb.textContent); if(!t) return;
+    const same = oldBlocks().find(ob=>norm(ob.textContent)===t) || oldBlocks().find(ob=>norm(ob.textContent).includes(t));
+    if(same){ anchor = same; return; }
+    let node = fb.cloneNode(true);
+    // the old block is the start of the new one (text was appended to it): add only the new tail
+    const prefix = oldBlocks().find(ob=>{ const o = norm(ob.textContent); return o.length>30 && t.startsWith(o); });
+    if(prefix && fb.tagName==='P'){ node = document.createElement('p'); node.textContent = t.slice(norm(prefix.textContent).length).trim(); anchor = prefix; }
+    if(anchor) anchor.after(node); else root.prepend(node);
+    anchor = node; changed = true;
+  });
+  if(changed) hlSave(container);
   return true;
 }
 function hlStripSources(container){
