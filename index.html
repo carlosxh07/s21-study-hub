@@ -768,6 +768,9 @@ body.hl-armed .hl-container{cursor:text;}
 .rz-exam-grid li{margin-bottom:5px;}
 .rz-exam-grid b{color:var(--ink);}
 .rz-exam-small{font-size:.78rem;color:var(--ink-faint);line-height:1.5;}
+.rz-ice{display:inline-block;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#8a5a00;background:rgba(245,170,40,.16);border:1px solid rgba(245,170,40,.45);padding:2px 8px;border-radius:12px;margin-right:6px;vertical-align:middle;}
+[data-theme="dark"] .rz-ice{color:#ffc766;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .rz-ice{color:#ffc766;}}
 .rz-core{padding:16px 18px;border-radius:var(--radius);background:var(--accent-bg);border:1px solid var(--line);margin-bottom:16px;}
 .rz-core h4,.rz-likely h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent-ink);margin:0 0 6px;}
 .rz-core p{margin:0;line-height:1.65;font-size:.95rem;}
@@ -2393,7 +2396,21 @@ Raatzsch's point: shareholder theory is not a theory, it is the expression of th
 - The shareholder as a shareholder only wants profit, but the corporation consists of billions of decisions that are about cars, menus and engines. Owning the claim to the profit is not owning the activity.
 - Even majority ownership is limited from outside (BaFin, drug approval, environmental law): ownership of a corporation is regulated ownership, and the reason is the interconnection of today's economy.
 - Managers control what shareholders own, and their interests can differ (Adam Smith's suspicion, short-term bonuses).
-- Shareholder vs. stakeholder: an opposition of interests, not of theories; the shareholder is a stakeholder too, so "stakeholder theory" should include shareholders, and yet someone has to decide.`}
+- Shareholder vs. stakeholder: an opposition of interests, not of theories; the shareholder is a stakeholder too, so "stakeholder theory" should include shareholders, and yet someone has to decide.`},
+{h:'His own summary on the slide ("Where are we?", 30 Sep)', text:`Task 2 on the slide: think about the following more or less recent phenomena:
+- Most decisions in a corporation are NOT made by shareholders.
+- Shareholders often have no (detailed) knowledge about the procedures within a corporation.
+- There is a large influence of all kinds of institutions on corporations (investment funds, governments, NGOs, …).
+- Some of this influence is called "regulation": what kind of influence is that?
+
+His summary afterwards ("Where are we?"):
+- We have seen that there are many forms of ownership.
+- We have seen what a corporation is.
+- There is nothing wrong with saying that a corporation is owned by its shareholders. But this is just one out of several notions of ownership. If by ownership we mean something like control, then the widespread distinction between ownership and control boils down to a distinction between control and control, which says nothing, unless we differentiate between different forms of control/ownership.
+- Often, and obviously so in the case of a corporation, different forms of ownership/control hang together in such a way that each of these forms depends on there being others.
+- This has consequences for the question as to whom a manager is responsible in which way.
+
+That last point was the in-class essay of 30 Sep: "To whom is a manager, by being a manager, responsible – and in which sense or way?" (model answer in the Model answers tab).`}
 ],
 recall:[
 {q:'What is a shareholder "as a shareholder"? Use his example.', a:'Someone defined only by an interest in the profit of the corporation (and what serves that aim). The Norwegian state fund, the largest shareholder in the world, only wants to keep and increase its money; whether it is cars or shoes does not matter. Being an engineer as well is accidental.'},
@@ -2402,16 +2419,16 @@ recall:[
 {q:'Why can a 51 % owner of Deutsche Bank not simply choose the CEO?', a:'BaFin must approve the person (qualification, ethical standards). Because the economy is interconnected (Lehman 2008, Strait of Hormuz), ownership of a corporation is regulated from outside.'},
 {q:'Why are shareholder and stakeholder "theories" not theories, according to Raatzsch?', a:'They express interests (profit vs. wages and other claims), they do not explain anything; the shareholder is itself a stakeholder, so the opposition does not even make sense, yet someone has to decide.'}
 ],
-exam:['owncorp-51','owncorp-who']},
+exam:['ice-manager','owncorp-51','owncorp-who']},
 
 {id:'rzd-corp', title:'Corporation', short:'Examples and borderline cases (IG Farben), du Plessis, Beech-Nut, one corporate function?, history, achievements and limits',
 core:`There is no single definition of a corporation, so start with examples: clear cases (Siemens, Suzuki), clear non-cases (a family), metaphorical uses (Japan Inc.) and borderline cases (IG Farben "in liquidation"). The standard idea that corporations are "groups of people acting towards a common goal" (du Plessis) has the classical definition form and runs into problems: whose goal, who is guilty (Beech-Nut), and is profit the one corporate function? Corporations are a historical social form, not a natural fact: they appeared in the 19th century and may disappear.`,
 sections:[
 {h:'Start with examples, not a definition', text:`Beware: "corporation", "company", "firm" and "enterprise" are used interchangeably in ordinary life; "legalish" is not ordinary language.
 
-In the lecture of 30 Sep he started with cases:
+In the lecture of 30 Sep he started with a task on the slide: "Which of these are corporations: (a) the local birdwatchers' club, (b) your family, (c) Japan, (d) Suzuki, (e) IG Farben (in Auflösung)?" The answer sorts them into kinds of cases:
 Clear cases :: Suzuki, Siemens, Apple, Volkswagen
-Clear non-cases :: your family, your local sports club
+Clear non-cases :: your family, the local birdwatchers' club
 Metaphorical cases :: "Japan Inc.": a country spoken of as if it were a corporation
 Borderline cases :: IG Farben: in the 1920s German chemical and pharmaceutical firms (BASF, Bayer, Hoechst and others) merged into the "Interessengemeinschaft Farben", by far the largest chemical corporation in the world. Under the Nazis it used forced labour and concentration-camp prisoners and produced Zyklon B, which was used to murder people. After the war it was dissolved, but for many years "IG Farben in Auflösung" still existed in Frankfurt as a postal address with a secretary: legally a corporation, but with no factories, no customers, practically no employees, no CEO, no board.
 
@@ -2438,7 +2455,9 @@ Is the corporation an evil, profit-hungry monster? Not by definition (what is ev
 - Guilt and punishment (Beech-Nut): the corporation pleads guilty, persons stay free; but punishing a person also hits innocent people (his example of Lisa, whose father goes to prison).
 - One function or many: profit as necessary condition vs. profit as the only purpose (animal kingdom analogy).
 - A historical form: since the 19th century, not forever; what comes after?
-- Evil monster or engine of welfare? Neither follows from the concept; but unwelcome effects follow predictably from the aim of profit, which explains regulation.`}
+- Evil monster or engine of welfare? Neither follows from the concept; but unwelcome effects follow predictably from the aim of profit, which explains regulation.
+- Joel Bakan (The Corporation: The Pathological Pursuit of Profit and Power) calls the corporation pathological. His hint in class: CAN we do away with corporations just so? And does "should" imply "can"? A demand to abolish what we cannot do without is no real duty; the realistic question is how to change the form.
+- What could come after the corporation? There were and are other social forms of economic activity (households, guilds, family firms, cooperatives, state enterprises); nobody knows what comes next.`}
 ],
 recall:[
 {q:'Which four kinds of cases does Raatzsch use to approach "corporation"?', a:'Clear cases (Siemens, Suzuki), clear non-cases (a family), metaphorical cases (Japan Inc.), borderline cases (IG Farben in liquidation: legally a corporation, but only a postal address).'},
@@ -2447,7 +2466,7 @@ recall:[
 {q:'When did corporations in today\'s sense appear, and why does it matter?', a:'In the mid-19th century (steel, textiles, railways). Economic activity existed for 300,000 years without them, so they are a historical social form that may disappear.'},
 {q:'Is the corporation an evil, profit-hungry monster?', a:'Not by definition (pension funds are not evil). But if it aims at profit, unwelcome effects are no surprise (oil and climate, wages), which explains waves of regulation (1929, 1997, 2007/08) and minimum wages.'}
 ],
-exam:['corp-function','corp-monster','corp-beech']},
+exam:['corp-monster','corp-beech-arg','corp-after','corp-function','corp-beech']},
 
 {id:'rzd-sust', title:'Sustainability', short:'Redness vs. roundness, Brundtland, needs, future generations, regulation, sustainable corporation',
 core:`Processes, states, objects, ideas and features can be sustainable. The key question is what kind of property "sustainable" is: added to an economy from outside like the redness of a red car, or part of what a proper economy is, like the roundness of a circle. Brundtland defines sustainable development by the needs of current and future generations, but we cannot know future needs, because humans are historical beings who change. Raatzsch's own view: it is a mistake to first define "economy" and then add sustainability; an economy that destroys its own conditions is a defective economy.`,
@@ -2476,6 +2495,13 @@ The problem in one sentence: the definition asks us to protect the ability of fu
 - And what does it tell us about the nature of corporations? If their function is profit, sustainability appears to them as a cost or a constraint. The oil industry makes the most money by selling as much oil as possible; if climate science is right (an overwhelming majority, he said), that means global warming with unforeseeable consequences.
 
 So there is a tension: conceptually, sustainability belongs to a proper economy (roundness); practically, it is secured by regulation against the interest of profit-oriented corporations (redness). Showing this tension is the awareness of problems he wants.`},
+{h:'From the lecture of 30 Sep: heroin and Calvin & Hobbes', text:`His transition on the slide: "We now move on to a special aspect of that last claim: the much-discussed topic of SUSTAINABILITY. Our task today will be: What kind of feature is 'sustainable'?"
+
+Class question: in which sense is trading heroin (not) a business? It is a business in the sense of buying, selling and making profit. It is not a business in the full sense because it is illegal (outside the legal order that makes business possible) and because it destroys its own customers. Our hesitation shows that "proper business" means more than profit, which is exactly the roundness view of sustainability.
+
+The cartoon on the slide (Calvin and Hobbes): Calvin reads about countless species being pushed toward extinction by the destruction of forests and remarks that the surest sign that intelligent life exists elsewhere in the universe is that none of it has tried to contact us. Raatzsch uses such cartoons as conceptual insights: an activity that destroys its own world is hardly a sign of intelligence.
+
+In-class essay of 30 Sep: "What kind of characteristic (property, feature) is 'sustainable' when used in connection with business/economy?" (model answer in the Model answers tab).`},
 {h:'Connections for combination questions', text:`Sustainability × corporation :: "What makes a corporation sustainable?": a corporation that only survives (economic sustainability) vs. one whose activity keeps the conditions of life intact; profit as one function among others
 Sustainability × compliance :: if sustainability is secured by rules from outside, compliance departments become the place where sustainability is enforced; but compliance without integrity is box-ticking (greenwashing)
 Sustainability × ownership :: species-specific ownership of the climate, the oceans; who may decide in the name of future generations?`}
@@ -2487,7 +2513,7 @@ recall:[
 {q:'What is the thesis of Raatzsch\'s own paper on sustainability?', a:'It is a mistake to first analyse "economy" and then add sustainability; that misunderstands both the concepts and today\'s practical demands. Sustainability belongs to what a proper economy is.'},
 {q:'What does it tell us that sustainability is largely secured by state regulation?', a:'That today\'s profit-oriented form of the economy does not produce sustainability by itself; for corporations it appears as an external cost (redness), although conceptually it belongs to a proper economy (roundness).'}
 ],
-exam:['sust-needs','sust-corp','sust-reg']},
+exam:['ice-sust','corp-heroin','sust-needs','sust-corp','sust-reg']},
 
 {id:'rzd-comp', title:'Compliance', short:'The general idea, rules "from outside"?, the defect engine, breaking rules, integrity, William James',
 core:`The general idea of compliance: economic activity needs rules (financial crisis, drug dealing, pollution), rules need sub-rules for punishment, and compliance departments make sure rules are obeyed. Raatzsch questions all three steps: in which sense do the rules come from outside business; would something be a rule if nobody ever obeyed it (the defect engine); and how is breaking rules possible at all? His own answer in his paper: there is no compliance in the full sense without integrity; compliance without integrity is a pathological case.`,
@@ -2520,7 +2546,11 @@ And there is a second side, from William James (in the reader): moral progress s
 {h:'The problems you should show', text:`- Rules "from outside": true from the profit perspective, false because companies make rules themselves and because business is constituted by rules (property, contracts, legal persons).
 - The defect engine: rules exist only in a practice of following them; a rule nobody ever obeyed would be no rule.
 - Breaking rules presupposes agents who understand them; compliance cannot be secured by punishment alone (who controls the controllers?).
-- Compliance and integrity: compliance without integrity is pathological (box-ticking, greenwashing, VW); but integrity can require breaking a rule that has grown too narrow (William James), so compliance is not good in itself.`}
+- Compliance and integrity: compliance without integrity is pathological (box-ticking, greenwashing, VW); but integrity can require breaking a rule that has grown too narrow (William James), so compliance is not good in itself.
+- Complexity: the slide of 1 Oct also warns that rules can become so many and so complex that, at some point, no one knows what they actually say, and the system breaks down. More rules do not automatically mean more compliance.`},
+{h:'From the lecture of 1 Oct', text:`The task on the slide: "What do you make of the following statement: Rules and regulations, which companies, by installing compliance departments, have to make sure are obeyed, come, as it were, from outside business. (Hint: compare state ordered regulations with company-planning.)"
+
+In-class essay of 1 Oct: "What is compliance (with laws, rules, regulations, …)?" (model answer in the Model answers tab).`}
 ],
 recall:[
 {q:'State the general idea of compliance in three steps.', a:'Economic activity needs rules (financial crisis, drugs, pollution); rules need sub-rules for punishment; compliance departments make sure the rules are obeyed. Implicit: the rules come from outside business.'},
@@ -2529,10 +2559,74 @@ recall:[
 {q:'Why is breaking a rule possible, and what follows?', a:'Rules are standards for agents who understand them and can act otherwise, not laws of nature. So compliance depends on the will of people; punishment alone leads to a regress (who controls the controllers?).'},
 {q:'What is the thesis of Raatzsch\'s compliance paper?', a:'There is no compliance in the full sense without integrity; compliance without integrity is a pathological case. (And, with William James: sometimes integrity means breaking rules that have grown too narrow.)'}
 ],
-exam:['comp-outside','comp-never','comp-integrity']}
+exam:['ice-comp','comp-outside','comp-never','comp-integrity']}
 ];
 
 const RZ_EXAM_QS = [
+{id:'ice-manager', inclass:'In-class essay · 30 Sep', topic:'Ownership of a corporation', dossier:'rzd-owncorp', q:'To whom is a manager, by being a manager, responsible – and in which sense or way?',
+outline:['"By being a manager": responsibility that comes with the position (role), not with the person (the waiter cannot declare war).','Senses of "responsible": accountable/answerable to someone (can be held to account, fired), legally liable (punishment), morally responsible for those affected.','To whom: the corporation and its owners (shareholders via the supervisory board), subordinates, customers, the law/state, society and the environment, oneself (integrity).','Link to ownership: the manager controls what others own; ownership/control are split and depend on each other, so responsibility is split too.','Problem: these responsibilities conflict (profit vs. wages, respect vs. targets, Beech-Nut "close down the factory?"); someone has to decide, and the role does not settle it.'],
+problems:['Responsibility of the role vs. of the person.','Different senses of "responsible": accountability, liability, moral responsibility.','The responsibilities conflict (shareholders vs. employees vs. customers); Beech-Nut.'],
+model:`"By being a manager" points to responsibility that comes with a position, not with the private person. As a waiter cannot declare war, a manager can only act as a manager within a social structure: a company with owners, boards, employees and customers, inside a legal order. The question is what this position makes him responsible for, and to whom.
+
+"Responsible" has at least three senses. A manager is accountable: he has to answer to someone who can hold him to account, praise him, cut his bonus or fire him. He can be legally liable: if the company breaks the law, he may be tried. And he can be morally responsible for what his decisions do to other people.
+
+In the first sense he is responsible to those who appointed him: the supervisory board and, behind it, the shareholders, whose interest is profit. In the lectures we saw that ownership of a corporation is ownership in a special sense: shareholders own a claim to profit, managers control the decisions. The manager controls what others own, so he is responsible to them for it, which is why part of his bonus is now paid years later. In the second sense he is responsible to the law and the state: BaFin, food and drug laws, environmental rules. In the third sense he is responsible to those affected: subordinates (should he respect them even when it costs targets?), customers, society and future generations.
+
+The problem is that these responsibilities can collide. Shareholders want wages as low as possible, workers as high as possible. Respecting employees may mean missing a target. The Beech-Nut managers knowingly sold adulterated juice for babies; one asked, "What was I supposed to do? Close down the factory?" He saw only his responsibility for the company's survival, not his responsibility to the babies. And because ownership and control are split and depend on each other, responsibility is spread across many people, so it easily disappears: the company pleaded guilty, no one went to prison.
+
+So a manager is responsible to many, in different senses, and the role itself does not tell him how to weigh them. That he has to decide, and can be asked to justify his decision, is perhaps the core of being a manager.`},
+{id:'ice-sust', inclass:'In-class essay · 30 Sep', topic:'Sustainability', dossier:'rzd-sust', q:'What kind of characteristic (property, feature) is "sustainable" when used in connection with business/economy?',
+outline:['Many things can be sustainable (processes, states, objects, ideas, features); the word is not strictly regulated.','Two kinds of property: added like the redness of a red car, or essential like the roundness of a circle.','Standard (Brundtland) view and its problems with needs; the heroin trade: a "business" that destroys its customers.','Argument for "roundness": an economy that destroys its own conditions is defective (Raatzsch: do not define economy first and add sustainability).','Problem: in practice it is secured by state regulation, i.e. treated like redness; consequence for the proper business person.'],
+problems:['Accidental vs. essential property.','"Sustainable" for the company (survival) vs. for the world.','Conceptually essential, practically imposed from outside (regulation).'],
+model:`Many things can be called sustainable: processes like fishing, states like a level of debt, objects like a building, ideas, features of an activity. So the question is what kind of property "sustainable" is when we speak of a sustainable business or economy.
+
+There are two possibilities. It could be like the redness of a red car: a property the car happens to have and could lose without ceasing to be a car. Then a business is complete without sustainability, and sustainability is an extra, a green logo or a CSR report. Or it could be like the roundness of a circle: a property without which the thing is not what it is. Then a business that is not sustainable would not be a business with a missing extra, but a defective business.
+
+The standard definition does not decide this. Brundtland speaks of development that meets present needs without compromising the ability of future generations to meet theirs. But what counts as a need, and how could we know the needs of future generations, if humans change historically?
+
+A better way in is the question from class: in which sense is trading heroin (not) a business? It is a business in the sense that people buy, sell and make money. But it destroys its own customers and the communities around them. We hesitate to call it a proper business because it works against the very conditions on which economic activity depends. The same holds for an economy that destroys soil, water and climate: as Raatzsch argues in his own work, it is a mistake to first define "economy" and then add sustainability. Economic activity is how humans reproduce the conditions of their lives, so sustainability belongs to it, like roundness to a circle. The Calvin and Hobbes cartoon about species pushed to extinction makes the same point ironically: an activity that destroys its own world is not a sign of intelligence.
+
+But here lies the problem. In practice sustainability is largely secured by state regulation, against the profit interest of corporations, so in reality it is treated like redness, as something added from outside. The oil industry earns most by selling as much oil as possible. So the concept says roundness, while the social form of today's economy says redness. A proper business person would have to close this gap himself.`},
+{id:'ice-comp', inclass:'In-class essay · 1 Oct', topic:'Compliance', dossier:'rzd-comp', q:'What is compliance (with laws, rules, regulations, …)?',
+outline:['The general idea: rules regulate economic activity, include punishment rules, compliance departments make sure they are obeyed.','The picture "rules come from outside business" and why it is only half true (company planning; business constituted by rules).','What a rule is: the defect engine; rules exist in a practice of being followed; breaking presupposes understanding.','Compliance therefore needs integrity (Raatzsch\'s paper), punishment alone leads to a regress; rules can become so complex that nobody knows what they say.','Problem: integrity can require breaking a rule that has grown too narrow (William James); compliance is necessary but not good in itself.'],
+problems:['Rules from outside vs. rules that constitute business.','A rule nobody follows is no rule (defect engine).','Compliance vs. integrity in both directions.'],
+model:`Compliance means acting in accordance with laws, rules and regulations. The general idea is that economic activity needs rules, because without them it can cause huge problems (the financial crisis, drug dealing, pollution); that rules need sub-rules for punishment to be followed; and that compliance departments make sure the rules are obeyed. Behind this stands a picture: the rules come, as it were, from outside business.
+
+That picture is only half true. State regulations do come from outside the company and appear, from the point of view of profit, as costs. But a company is itself a system of rules: plans, budgets, processes and codes of conduct are rules made inside. And business as such exists only within rules: property, contracts, money and the corporation as a legal person are created by a legal order. The rules do not just limit business, they make it possible, as the rules of chess make the king a king.
+
+What is a rule? A defect engine is still an engine, but only because it is measured against working engines. Likewise a broken rule is still a rule, because it is measured against a practice in which it is generally followed. A "rule" that nobody had ever obeyed would not be a rule at all. And rules, unlike laws of nature, can be broken only by agents who understand them. So compliance cannot be produced by punishment alone: the punishment rules would need enforcing, the enforcers controlling, and so on. When rules become so many and so complex that at some point nobody knows what they actually say, the system breaks down. Compliance presupposes people who follow rules because they see their point. This is Raatzsch's own thesis: there is no compliance in the full sense without integrity; compliance without integrity is a pathological case, like the defect engine.
+
+But integrity does not always mean obedience. William James argues that moral progress sometimes consists in breaking rules that have grown too narrow for the actual case; a whistleblower breaks loyalty rules to reveal fraud. So compliance is necessary for any economy, but it is not good in itself. The real question is who judges when a rule should be followed and when it has grown too narrow.`},
+{id:'corp-beech-arg', inclass:'Class task · 30 Sep', topic:'Corporation', dossier:'rzd-corp', q:'Beech-Nut: What goes wrong with the following argument? (a) A corporation is not a human being. (b) Only the guilty should be punished. (c) The corporation pleaded guilty. (d) The corporation had been subject to punishment. (e) The president and vice-president should not even have had to be subject to a trial, but only the corporation.',
+outline:['Reconstruct: from (a)–(d) the argument concludes (e).','Tension inside the premises: if a corporation is not a human being (a), in which sense can it be "guilty" (b, c)?','Equivocation: "guilty" and "punished" mean something different for persons (will, prison) and corporations (liability, fine).','The corporation acts and pleads only through persons; its guilt does not exclude theirs; both can be guilty.','Consequence: (e) does not follow; the real problem is how corporate and personal responsibility relate (methodological individualism, emergence).'],
+problems:['Equivocation on "guilty"/"punished".','Corporate guilt does not exclude personal guilt.','Who acts when a corporation acts?'],
+model:`The argument draws a conclusion from four premises: a corporation is not a human being (a), only the guilty should be punished (b), the corporation pleaded guilty (c) and was punished (d); therefore the president and vice-president should not even have been tried, only the corporation (e). The premises sound plausible, yet the conclusion is absurd: the two people who knowingly sold adulterated juice for babies would be free of any trial.
+
+The first problem lies inside the premises. If a corporation is not a human being (a), in which sense can it be guilty at all (b, c)? Guilt, in the moral sense, belongs to beings with a will who could have acted otherwise. So either "guilty" in (c) means something different from "guilty" in (b), for example legal liability rather than moral guilt, or a corporation is after all something like a person. The argument moves between these meanings without noticing. The same is true of "punished": a fine paid by a corporation is not the same as a prison sentence for a person, and it is paid by shareholders and employees who did nothing wrong.
+
+The second problem is the step to (e). Even if the corporation is guilty, it does not follow that no person is. A corporation acts only through people: someone decided to buy the cheap concentrate, someone decided to keep selling it. The corporation pleaded guilty only through people who spoke for it. Corporate guilt and personal guilt can exist side by side; the one does not absorb the other. The argument silently assumes that guilt is a fixed amount that can be either with the corporation or with the persons.
+
+So what goes wrong is an equivocation on "guilty" and "punished" plus a hidden premise that guilt cannot be shared. Behind this lies the real question of the case: how is the corporation related to the individuals acting in it? Methodological individualism says it is nothing but their interaction; but then we cannot say that "Beech-Nut" did anything. Calling the corporation "emergent" only names the problem. What the case shows is that a corporation is a social form with positions and roles, and responsibility is distributed across them, which makes it easy for everyone to escape it.`},
+{id:'corp-heroin', inclass:'Class task · 30 Sep', topic:'Sustainability', dossier:'rzd-sust', q:'In which sense is trading heroin (not) a business?',
+outline:['In which sense it is a business: buying, selling, profit, organisation, competition, even "management".','In which sense not: illegal (not part of the legal order that constitutes business), and it destroys its customers and their communities.','Is "business" defined by profit alone? Then heroin trade is business; but we hesitate.','The hesitation shows that our concept of business includes more: producing goods people need, keeping the conditions of economic life intact (link to sustainability as roundness).','Problem: legal businesses can also destroy their conditions (oil, tobacco); where is the line, and who draws it?'],
+problems:['Business as profit-making vs. business as a proper economic activity.','Legality vs. what makes something a proper business.','Legal businesses with similar effects.'],
+model:`In one sense trading heroin is clearly a business. People buy and sell a product, there are prices, profits, supply chains, competition and organisation; drug cartels have something like management. If business simply means making money by selling something, the heroin trade is a business, and a very profitable one.
+
+Yet we hesitate to call it a business in the full sense, and the hesitation is instructive. First, it is illegal: business as we know it exists within a legal order of property, contracts and courts, and the heroin trade lives outside that order (a dealer cannot sue a customer who does not pay). Second, and more important, it destroys its own customers and the communities around them: one dose can make someone an addict for life. An activity that lives on destroying the people it serves seems to contradict the point of economic activity, which is to produce what people need to live.
+
+This shows that our concept of business is not exhausted by profit. If it were, there would be nothing odd about calling heroin trade a business. The fact that something seems wrong suggests that "proper business" includes producing something worth producing and keeping intact the conditions of economic life. Here the question connects with sustainability: if a sustainable economy is one that does not destroy its own conditions, then sustainability belongs to what business properly is, like roundness to a circle, not like the redness of a car.
+
+But the example also raises a problem. Legal businesses can have similar effects: tobacco kills its customers, the oil industry contributes to global warming. If heroin trade is "not a business" because it destroys people, are these businesses less proper too? Or is the line simply drawn by law, so that what counts as business depends on what a state happens to allow? The honest answer is that the line is not given by the concept alone; it has to be drawn, and drawing it is a political and moral decision.`},
+{id:'corp-after', inclass:'Class task · 30 Sep', topic:'Corporation', dossier:'rzd-corp', q:'As there were (and are) other social forms of economic activity before (parallel to) corporations, what could come after the corporation?',
+outline:['Corporations are a historical social form (since the mid-19th century: steel, textiles, railways); 300,000 years of economic activity without them.','Other forms before and parallel: households, crafts and guilds, family firms, cooperatives, state enterprises.','What could come after: nobody knows; communism as one attempt ("did not work" — in which sense?).','Reasons for change: internal problems (unwelcome effects of profit, climate), regulation already changes the form; AI.','Consequence: not prediction but awareness of the structure and openness; the corporation is not a law of nature.'],
+problems:['A historical form presented as natural.','"It didn\'t work": by which standard?','We cannot know what comes after, but the internal problems are visible.'],
+model:`Economic activity is as old as humankind, roughly 300,000 years, but the corporation in today's sense is young. It appeared in the middle of the 19th century, when steel, textiles and railways needed more capital and organisation than any single owner could provide, and it then spread to chemistry, pharmaceuticals, energy and almost everything else. Before and alongside it there were and are other social forms: the household, crafts organised in guilds, family firms run by their owners, cooperatives, state enterprises. So the corporation is a historical form, not a law of nature, and what came into being can also disappear.
+
+What could come after it? The honest answer, which Raatzsch gave as well, is that nobody knows. There was one large attempt to organise economic life without corporations in the capitalist sense: communism. Many say it did not work. But we should ask in which sense: it failed by some standards, yet if global warming destroys the conditions of human life, that will not have been caused by communism. "It works" is not a neutral judgment; it depends on what we expect an economy to achieve.
+
+What we can see are the internal problems of the present form. A corporation aims at profit, and from that aim unwelcome effects follow predictably: wages pressed down, pollution, climate change, financial crises. Societies already react by changing the form step by step through regulation; in this sense we are already on the way to something different, a corporation whose freedom is limited by many duties. New technologies such as AI may change how work, ownership and decisions are organised in ways nobody foresees. Cooperatives, foundations owning companies, or platform structures show that other forms exist even now.
+
+So the point of the question is not to predict the future. It is to see that the corporation is one social form among others, with its own achievements and its own problems, and to stay open to the possibility that it will be transformed or replaced, as it once replaced older forms.`},
 {id:'own-social', topic:'Ownership', dossier:'rzd-own', q:'What is ownership? (Put emphasis on why every form of ownership is social.)',
 outline:['Words: "own", "property", "belongs to" are used interchangeably; I mean the relation in which someone may decide about a thing and exclude others.','Primitive forms: the child\'s toy ("Give it back!") vs. the apple you just take; ownership appears in the reaction of others.','Kinds: private ("Hands off!"), collective, public, species-specific (?).','Why social: "Hands off!" is addressed to someone; Robinson Crusoe.','Problem: ownership needs recognition and is tied to control, which can come apart (shareholders); the best form cannot be decided in general.'],
 problems:['Robinson Crusoe: is there ownership without others?','Ownership as control vs. ownership where control is restricted.','Recognition: what about the thief\'s "This is mine"?'],
@@ -2597,8 +2691,8 @@ The standard definition says that corporations are "ultimately groups of people 
 Is there then one corporate function, for example generating profit or return on investment? Raatzsch compares this with the animal kingdom: is there just one thing that constitutes survival? An animal survives by eating, breathing, avoiding enemies and reproducing; none of these alone is "the" function of living. For an ordinary corporation profit is certainly necessary, like breathing: a company that never makes a profit disappears. But it does not follow that profit is its only function or its purpose. A corporation also produces goods people need, employs and trains people, must stay within the law and, in some industries, fulfils public tasks such as energy supply.
 
 Here lies the problem. If we accept one function, as Jensen does with value maximisation, decisions become clear: whatever increases value is right. But then products, workers and the environment become mere means, and harmful effects are no surprise (the oil industry earns most by selling as much oil as possible). If we accept many functions, the corporation looks more like real life, but nobody can say how to weigh them, and someone has to decide. A corporation is therefore best described not by one essence but as a historical social form, which appeared in the 19th century with railways, steel and textiles, which pursues several functions at once, and whose central question is who decides between them.`},
-{id:'corp-monster', topic:'Corporation', dossier:'rzd-corp', q:'Is the corporation an evil, profit-hungry monster? (Address the interests of shareholders and employees.)',
-outline:['Answer the question first: not by definition.','Profit = revenue − costs; wages: zero-sum (birthday cake) vs. dynamic win-win; interests stay opposed.','Shareholder interests not evil (pension funds); stakeholder/shareholder as interests.','But unwelcome effects are predictable: oil and climate; waves of regulation; minimum wage.','Avoid the one-example fallacy ("the factory helps the town").'],
+{id:'corp-monster', topic:'Corporation', dossier:'rzd-corp', inclass:'Class task · 30 Sep', q:'Is a corporation an evil, profit-hungry monster (as said by Joel Bakan: The Corporation: The Pathological Pursuit of Profit and Power, 2005; there is also a documentary)? (Hint: CAN we do away with corporations just so? And does "should" imply "can"?)',
+outline:['Answer the question first: not by definition (Bakan: "pathological").','Profit = revenue − costs; wages: zero-sum (birthday cake) vs. dynamic win-win; interests stay opposed.','Shareholder interests not evil (pension funds); stakeholder/shareholder as interests.','But unwelcome effects are predictable: oil and climate; waves of regulation; minimum wage.','Avoid the one-example fallacy ("the factory helps the town").'],
 problems:['A general claim cannot be proven by one example.','Conflict of interests is structural, even in win-win situations.','Regulation as a sign that profit-orientation produces unwelcome effects.'],
 model:`No, not by definition. A corporation aims at profit, and there is nothing evil in that as such: what is evil about the Norwegian state fund or a pension fund that wants its money to grow for the pensions of teachers? But the question hides a real problem, and it lies in the structure of profit itself.
 
@@ -2606,7 +2700,9 @@ Profit is revenue minus costs. Costs are materials, energy, buildings and, very 
 
 The opposite claim, "the richer corporations get, the better for everyone", is not true either. It is usually defended with an example, a factory that brings jobs to a poor town. But an example does not prove a general claim. The oil industry earns the most by selling as much oil as possible, and if climate science is right, burning as much oil as possible leads to global warming that may destroy the conditions of life for everyone.
 
-So the correct answer is: a corporation is not a monster, but if it is an institution that aims at profit, it is no surprise that its actions have unwelcome effects. That is why states regulate corporations, in waves: after the crisis of 1929, then deregulation under Reagan and Thatcher, then the Asian crisis of 1997 and the financial crisis of 2007/08, followed by new regulation. The minimum wage shows the same logic: even a government without compassion has an interest in preventing desperate poverty, crime and instability. The moral question is therefore not whether corporations are evil, but which effects of profit-seeking a society accepts and who decides about that.`},
+So the correct answer is: a corporation is not a monster, but if it is an institution that aims at profit, it is no surprise that its actions have unwelcome effects. That is why states regulate corporations, in waves: after the crisis of 1929, then deregulation under Reagan and Thatcher, then the Asian crisis of 1997 and the financial crisis of 2007/08, followed by new regulation. The minimum wage shows the same logic: even a government without compassion has an interest in preventing desperate poverty, crime and instability. The moral question is therefore not whether corporations are evil, but which effects of profit-seeking a society accepts and who decides about that.
+
+His hint adds a further problem. Bakan calls the corporation pathological, as if it should be abolished. But can we do away with corporations just so? They organise almost all production we live on, and there is no ready alternative. If "should" implies "can", a demand that cannot be fulfilled is no real duty; then the honest demand is not "abolish corporations" but "change their form", which regulation already does step by step.`},
 {id:'corp-beech', topic:'Corporation', dossier:'rzd-corp', q:'A corporation pleads guilty, but no person goes to prison. What is a corporation, that this is possible? (Look at the Beech-Nut case.)',
 outline:['The case: adulterated baby juice, 215 counts, $2 million fine, nobody imprisoned or fired.','The tension: a corporation is not a person; only the guilty should be punished.','Who could have gone to prison? Methodological individualism vs. corporation as unit; emergence.','Punishing persons also hits innocents (Lisa); punishing the corporation hits workers and shareholders.','Consequence: corporation as a social form with its own kind of responsibility; open question.'],
 problems:['Guilt seems to belong to persons with a will.','The corporation as more than the sum of individuals: emergence is only a name.','Every punishment hits innocent people too.'],
@@ -2653,7 +2749,7 @@ Second, it tells us something about how corporations act in today's world. Picki
 Third, it raises the question of the proper business person. If sustainability is not just an addition to business activity, then a business person who earns money by destroying the conditions of business is not a good business person with a bad habit, but a bad business person, as a doctor who poisons patients is a bad doctor. That would mean that a proper business person cares for sustainability even where the law does not demand it.
 
 Here lies the problem. Can we expect individual managers to act against the profit interest of their corporation and against competitors who do not? If they do, they may lose the competition; if they do not, they leave everything to the state. So the fact of regulation shows a tension built into corporations: what a proper economy requires and what a profit-oriented corporation rewards can fall apart. Who should close this gap, the state, the corporation or the individual, is the open question.`},
-{id:'comp-outside', topic:'Compliance', dossier:'rzd-comp', q:'What is compliance? (Put emphasis on whether the rules really come from outside business.)',
+{id:'comp-outside', topic:'Compliance', dossier:'rzd-comp', inclass:'Class task · 1 Oct', q:'What do you make of the following statement: "Rules and regulations, which companies, by installing compliance departments, have to make sure are obeyed, come, as it were, from outside business." (Hint: compare state ordered regulations with company-planning.)',
 outline:['The general idea in three steps.','In which sense true: state rules limit the profit aim.','In which sense false: company planning makes rules; business constituted by rules (property, contracts, legal persons; king in chess); lobbying.','Consequence: compliance is about rules inside and outside.','Problem: compliance needs integrity; mere fear of punishment is not enough.'],
 problems:['External vs. internal rules (state regulation vs. company planning).','Business constituted by rules.','Punishment alone cannot secure compliance.'],
 model:`The general idea of compliance is simple. Economic activity needs rules, because without them it can cause huge problems: think of the financial crisis, drug dealing or pollution. For rules to be followed, they include sub-rules for punishment. And compliance departments make sure that rules and regulations are obeyed. Behind this lies a picture: the rules come from outside business, from the state, and business has to adapt to them.
@@ -2698,7 +2794,7 @@ const RZ_EXAM_INFO = `<div class="rz-exam-card">
       <li><b>3 questions, answer 2.</b> Skip the topic you have the weakest grip on.</li>
       <li><b>15 points each</b> (30 in total) ≈ 15 minutes each. Time is flexible: the exam is 90 minutes shared with the other examiners' parts.</li>
       <li>Each question comes with <b>hints in brackets</b>, e.g. “What is X? (Put emphasis on why …)”.</li>
-      <li>Very similar to the <b>in-class essays</b>; the exam questions may even be the same ones.</li></ul></div>
+      <li>Very similar to the <b>in-class essays</b>; the exam questions may even be the same ones:<br>· <i>To whom is a manager, by being a manager, responsible – and in which sense or way?</i> (30 Sep)<br>· <i>What kind of characteristic (property, feature) is "sustainable" when used in connection with business/economy?</i> (30 Sep)<br>· <i>What is compliance (with laws, rules, regulations, …)?</i> (1 Oct)</li></ul></div>
     <div><h4>What he grades</h4><ul>
       <li><b>Only two things: clarity and awareness of problems.</b></li>
       <li>There is no “complete” answer (whole libraries exist on these topics), but there is a <b>minimum</b>: don't write too little.</li></ul>
@@ -4968,7 +5064,7 @@ function rzSection(div, sel, h, text, key){
   renderSummary(wrap.querySelector('.rz-sec-body'), 'POM', text, key);
 }
 function rzModelHtml(q, open){
-  return `<details class="rz-model"${open?' open':''} data-q="${q.id}"><summary><span class="rz-num">${esc(q.topic)}</span> ${esc(q.q)}</summary>
+  return `<details class="rz-model"${open?' open':''} data-q="${q.id}"><summary>${q.inclass?`<span class="rz-ice">${esc(q.inclass)}</span>`:''}<span class="rz-num">${esc(q.topic)}</span> ${esc(q.q)}</summary>
     <div class="rz-model-grid">
       <div><h5>Outline (5 steps)</h5><ol>${q.outline.map(o=>`<li>${esc(o)}</li>`).join('')}</ol></div>
       <div><h5>Problems you must show</h5><ul>${q.problems.map(o=>`<li>${esc(o)}</li>`).join('')}</ul></div>
@@ -5007,7 +5103,7 @@ function buildRZDossiers(){
       div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('summary')} Prof. Raatzsch · Exam topic ${di+1} of 5</div><h2>${esc(d.title)}</h2><p>${esc(d.short)}</p></div>
         <div class="page-body">
           <div class="rz-core"><h4>The core in three sentences</h4><p>${esc(d.core)}</p></div>
-          <div class="rz-likely"><h4>Questions he could ask (with his kind of hint)</h4>${qs.map(q=>`<div class="rz-likely-q"><span>${esc(q.q)}</span><button class="btn ghost" onclick="window.__rzWrite('${q.id}')">Write it</button></div>`).join('')}</div>
+          <div class="rz-likely"><h4>Questions he could ask (with his kind of hint)</h4>${qs.map(q=>`<div class="rz-likely-q"><span>${q.inclass?`<span class="rz-ice">${esc(q.inclass)}</span> `:''}${esc(q.q)}</span><button class="btn ghost" onclick="window.__rzWrite('${q.id}')">Write it</button></div>`).join('')}</div>
           <div class="tabbar"><button class="tabbtn active" data-tab="learn">1 · Learn the content</button><button class="tabbtn" data-tab="models">2 · Model answers</button><button class="tabbtn" data-tab="recall">3 · Check yourself</button></div>
           <div class="tabpanel active rz-secs" data-panel="learn"></div>
           <div class="tabpanel" data-panel="models"><p class="rz-tip">Read the outline first, try to say the answer in your own words, then open the model. In the exam about 250 to 350 words per question are a good target.</p>${qs.map((q,i)=>rzModelHtml(q, i===0)).join('')}</div>
@@ -5048,7 +5144,7 @@ function buildRZExam(){
           <span class="rz-min ${w===0?'':w<200?'low':'ok'}">${w===0?'Not answered':w<200?w+' words: probably below his minimum; add an example and a problem':w+' words'}</span></div>
         ${rzModelHtml(q, true)}</div>`; };
     const editor = (q, i)=>`<div class="rz-task rz-ex-q" data-id="${q.id}">
-        <div class="rz-task-head"><span class="rz-num">${i!=null?'Q'+(i+1):esc(q.topic)}</span><h4>${i!=null?esc(q.topic):'15 points · about 15 minutes'}</h4>${i!=null?'<span class="rz-ex-pts">15 points</span>':''}</div>
+        <div class="rz-task-head">${q.inclass?`<span class="rz-ice">${esc(q.inclass)}</span>`:''}<span class="rz-num">${i!=null?'Q'+(i+1):esc(q.topic)}</span><h4>${i!=null?esc(q.topic):'15 points · about 15 minutes'}</h4>${i!=null?'<span class="rz-ex-pts">15 points</span>':''}</div>
         <p class="rz-prompt">${esc(q.q)}</p>
         <textarea class="rz-answer" rows="12" placeholder="${i!=null?'Leave this one empty if you skip it.':'Write your essay here. It is saved automatically in this browser.'}">${esc(saved()[q.id]||'')}</textarea>
         <div class="rz-foot"><span class="rz-count">${words(saved()[q.id]||'')} words</span>${i==null?`<button class="btn ghost rz-peek">Stuck? Show the outline</button>`:''}</div>
@@ -5065,7 +5161,8 @@ function buildRZExam(){
       clearInterval(timer);
       const q = rzQ(id) || RZ_EXAM_QS[0];
       const groups = [...new Set(RZ_EXAM_QS.map(x=>x.topic))];
-      box.innerHTML = `<div class="rz-ex-bar"><select class="rz-pick">${groups.map(g=>`<optgroup label="${esc(g)}">${RZ_EXAM_QS.filter(x=>x.topic===g).map(x=>`<option value="${x.id}"${x.id===q.id?' selected':''}>${esc(x.q)}</option>`).join('')}</optgroup>`).join('')}</select>
+      const ices = RZ_EXAM_QS.filter(x=>/essay/i.test(x.inclass||''));
+      box.innerHTML = `<div class="rz-ex-bar"><select class="rz-pick"><optgroup label="In-class essays (most likely in the exam)">${ices.map(x=>`<option value="${x.id}"${x.id===q.id?' selected':''}>${esc(x.q)}</option>`).join('')}</optgroup>${groups.map(g=>`<optgroup label="${esc(g)}">${RZ_EXAM_QS.filter(x=>x.topic===g && !ices.includes(x)).map(x=>`<option value="${x.id}"${x.id===q.id?' selected':''}>${esc(x.q)}</option>`).join('')}</optgroup>`).join('')}</select>
           <span class="rz-ex-time">15:00</span><button class="btn ghost rz-ex-start1">Start 15-minute timer</button></div>
         ${editor(q)}
         <button class="btn rz-ex-finish">Finish &amp; compare</button>`;
@@ -5083,7 +5180,8 @@ function buildRZExam(){
     const exam = ()=>{
       clearInterval(timer);
       // three questions from three different topics, like the real exam
-      const byTopic = {}; shuffle(RZ_EXAM_QS).forEach(q=>{ (byTopic[q.topic] = byTopic[q.topic] || []).push(q); });
+      // in-class essay questions come first within their topic (he said the exam questions may be exactly these)
+      const byTopic = {}; shuffle(RZ_EXAM_QS).sort((a,b)=>(/essay/i.test(b.inclass||''))-(/essay/i.test(a.inclass||''))).forEach(q=>{ (byTopic[q.topic] = byTopic[q.topic] || []).push(q); });
       const qs = shuffle(Object.keys(byTopic)).slice(0,3).map(t=>byTopic[t][0]);
       box.innerHTML = `<div class="rz-ex-bar"><span class="rz-ex-time">30:00</span><span>Choose <b>2 of 3</b>. Write in your own words.</span><button class="btn ghost rz-ex-new">New set</button></div>
         ${qs.map((q,i)=>editor(q,i)).join('')}<button class="btn rz-ex-finish">Finish &amp; compare</button>`;
