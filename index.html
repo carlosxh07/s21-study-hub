@@ -993,183 +993,14 @@ function rnd(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 
 /* ============================================================ SUBJECT META ============================================================ */
 const SUBJECTS = [
-  {id:'ob', label:'Organizational Theory & Behaviour', short:'Shemla: motivation, self-leadership, evidence-based mgmt + more course topics.', color:'ob'},
+  {id:'ob', label:'Organizational Theory & Behaviour', short:'All 9 sessions (Shemla, Floegel, Ghani): individuals, groups, leadership.', color:'ob'},
   {id:'pom', label:'Principles of Management', short:'Managers, planning & strategy, control & change — what the exam covers.', color:'pom'},
   {id:'aw', label:'Academic Writing & Presentations', short:'Argumentation, citation, structure, delivery and CVs.', color:'aw'}
 ];
 
 /* ============================================================ OB DATA ============================================================ */
 const OB_TOPICS = [
-{id:'ob-2',title:'Motivation',summary:`Motivation is the force that energizes, directs, and sustains behavior, arising from intrinsic sources (personality, emotions, needs, goals, values) and extrinsic sources (rewards, punishments, empowerment, recognition, work characteristics). Locus of control (internal vs. external) affects responsiveness to change; self-efficacy relates to effort, persistence, and resilience. Promotion focus ("playing to win") vs. prevention focus ("playing not to lose") shape goal framing.
-
-The module's core framework is the "four drives" model:
-- the drive to acquire (reward system)
-- the drive to bond (culture)
-- the drive to comprehend (job design)
-- the drive to defend (resource allocation)
-
-Classic theories:
-- Herzberg's two-factor theory (hygiene factors prevent dissatisfaction; motivators drive performance)
-- Vroom's expectancy theory (effort → performance → reward)
-- Latham & Locke's goal-setting theory (difficult, specific goals raise performance)
-- Hackman & Oldham's Job Characteristics Model (skill variety, task identity, task significance, autonomy, feedback → meaningfulness, responsibility, knowledge of results) — these three critical psychological states in turn drive motivation, performance and satisfaction
-
-Pay-for-motivation has limited/mixed effects; organizational change reactions move:
-=> denial → resistance → valley of tears → adaptation → commitment
-
-Promotion vs. prevention focus in more detail:
-Promotion focus :: goals are opportunities for gain or advancement; focus on the rewards of succeeding ("playing to win"); these people respond best to optimism and praise
-Prevention focus :: goals are risks that must be prevented ("playing not to lose")
-
-What satisfies each of the four drives:
-Drive to acquire :: a reward system that clearly links rewards to performance
-Drive to bond :: a culture of collaboration, openness and friendship
-Drive to comprehend :: jobs that are meaningful and allow growth and learning; frustration comes from senseless, monotonous dead-end jobs
-Drive to defend :: institutions that promote justice, have clear goals and intentions, and let people express their ideas and opinions (voice); when met: security and confidence, when unmet: fear and resentment (e.g. resistance to change)
-
-Pay effects: pay influences how attractive an organization is, but individuals prefer individual over group pay and fixed over variable pay. Profit sharing increases commitment, but mainly for high performers, the effect can be lessened by inequality, and it can encourage unethical and risky behaviour.
-
-In the change curve (room of habit → resistance → adaptation → renewal), motivation belongs to the final stage: commitment, in the "room of renewal", where people emotionally accept and internalize the change.
-
-Herzberg's two factors with examples:
-Hygiene factors :: salary, working conditions, supervision, company policies; they prevent dissatisfaction but do not motivate higher performance
-Motivators :: achievement, recognition, responsibility, the work itself; they drive satisfaction and performance
-
-The Job Characteristics Model (JCM) links its five core characteristics to three critical psychological states, and these in turn to motivation, performance and satisfaction.`,
-cards:[
-{q:"How does the module define motivation?",a:"The force that energizes, directs, and sustains behavior."},
-{q:"What is the difference between intrinsic and extrinsic motivators?",a:"Intrinsic = inner influences (personality, emotions, needs, goals, values); extrinsic = external influences (rewards, punishments, empowerment, recognition)."},
-{q:"What is the difference between internal and external locus of control?",a:"Internal = behavior guided by own decisions/effort (growth mindset). External = behavior guided by fate/luck (fixed mindset, harder to motivate)."},
-{q:"What is self-efficacy?",a:"A person's generalized belief in their ability to execute a course of action; related to effort, persistence, resilience after failure."},
-{q:"Distinguish promotion focus from prevention focus.",a:"Promotion focus = opportunities for gain, \"playing to win,\" responds to praise. Prevention focus = risks to avoid, \"playing not to lose,\" needs security."},
-{q:"What are the \"four drives\" underlying motivation?",a:"The drive to acquire, the drive to bond, the drive to comprehend, and the drive to defend."},
-{q:"Which organizational lever corresponds to each drive?",a:"Acquire → Reward system; Bond → Culture; Comprehend → Job design; Defend → Resource allocation."},
-{q:"What is Herzberg's two-factor theory?",a:"Hygiene factors (pay, conditions, policy) prevent dissatisfaction but don't raise performance. Motivators (achievement, recognition, responsibility, growth) motivate and increase productivity."},
-{q:"What is Vroom's expectancy theory?",a:"Motivation follows an Effort → Performance → Reward chain."},
-{q:"What are Latham & Locke's main conclusions?",a:"Difficult, specific goals lead to higher performance than easy/abstract goals; higher goals → higher performance; personality/incentives affect commitment; goals have cognitive impact."},
-{q:"What are the five core job characteristics in the JCM?",a:"Skill variety, task identity, task significance, autonomy, feedback."},
-{q:"What three psychological states does the JCM say drive intrinsic motivation?",a:"Experienced meaningfulness, experienced responsibility, and knowledge of actual results."}
-],
-quiz:[
-{q:"According to Herzberg, which is a hygiene factor?",opts:["Achievement in challenging work","Recognition from the manager","Salary and working conditions","Responsibility for own projects"],correct:2,exp:"Hygiene factors prevent dissatisfaction but don't themselves motivate higher performance."},
-{q:"In Vroom's expectancy theory, motivation is a chain of which three elements?",opts:["Needs, drives, satisfaction","Effort, performance, reward","Goals, feedback, commitment","Skill variety, autonomy, feedback"],correct:1,exp:"Vroom's chain is Effort → Performance → Reward."},
-{q:"Which drive is fulfilled primarily through the reward system?",opts:["The drive to bond","The drive to comprehend","The drive to acquire","The drive to defend"],correct:2,exp:"The drive to acquire is best satisfied through the reward system."},
-{q:"An internal locus of control means believing behavior is guided by:",opts:["Fate and luck","Personal decisions and effort","External circumstances","Organizational policy alone"],correct:1,exp:"Internal locus of control = belief that outcomes result from one's own effort."},
-{q:"Employees with a promotion focus respond best to:",opts:["Criticism and threat of failure","Optimism and praise","Strict rules and job security","Avoidance of risk"],correct:1,exp:"Promotion-focused individuals respond best to optimism and praise."},
-{q:"Which theory identifies skill variety, task identity, significance, autonomy, feedback as core characteristics?",opts:["Herzberg's two-factor theory","Goal-setting theory","Job Characteristics Model","Expectancy theory"],correct:2,exp:"The JCM links these five characteristics to psychological states and outcomes."},
-{q:"Per Latham & Locke, which goals lead to highest performance?",opts:["Easy, general goals","Abstract goals with no deadline","Difficult, specific goals","Goals set entirely by management"],correct:2,exp:"Difficult, specific goals lead to significantly higher performance."},
-{q:"What is a key limitation of pay/profit-sharing as a motivator?",opts:["It always increases unethical behavior among employees, regardless of how the scheme is designed","Its commitment effect applies mainly to high performers and can be lessened by inequality","Employees consistently prefer group or variable pay over a fixed salary, whatever their role","It has no effect on how attractive the employer is to applicants"],correct:1,exp:"Profit sharing mainly boosts commitment for high performers and can be undermined by inequality."},
-{q:"Which drive is satisfied by justice, clear goals, and voice?",opts:["The drive to acquire","The drive to defend","The drive to comprehend","The drive to bond"],correct:1,exp:"The drive to defend is met by justice, clear goals, and the ability to express opinions."},
-{q:"In the change curve, motivation is most associated with which stage?",opts:["Denial","Resistance","Commitment (Room of Renewal)","First euphoria"],correct:2,exp:"The model places motivation at the Commitment stage."}
-]},
-{id:'ob-5',title:'Self-Leadership',summary:`Self-leadership sits at the center of Shemla's leadership model (alongside task-, relation-, change-, ethics-oriented leadership), grounded in self-awareness. It entails managing behavior toward standards, intrinsic motivation, skill development, and self-discipline.
-
-Sleep: inadequate sleep raises risk of infection, hypertension, depression; Barnes et al. show sleep-deprived leaders show less self-discipline, poorer judgment, are less charismatic.
-
-Attitudes/Motivation/Goals: built on Mischel & Shoda's CAPS model — mindsets encode situational cues to activate behavior; fixed vs. growth mindset shapes response to failure; promotion vs. prevention focus shape goal reactions.
-
-Five techniques to change mindsets:
-- map current mindsets
-- be present
-- change language
-- be specific about goals
-- fixed daily reflection
-
-Expanding skills: systematic exposure approach (decide, design experiment, reflect) and cultural meta-cognition (awareness of "cultural cruise control" and stereotypes via perspective-taking).
-
-Sleep in detail: sleeping one hour less cannot be offset by sleeping longer at the weekend. Sleep-deprived people procrastinate more and resist unhealthy food less.
-
-In the CAPS model, the encoding process determines which personality elements (beliefs, goals, emotions) are activated to match the demands of a situation.
-
-The five techniques to change mindsets, with examples:
-Map your mindsets :: notice which beliefs drive your reactions
-Be present :: pay attention to the here and now
-Change your language :: reframe pressured phrasing, e.g. "I must not get less than 80" becomes "Ideally I'll get more than 80"
-Be specific about goals :: define what exactly you want to achieve
-Fixed daily reflection :: 10 minutes a day is about 70 minutes a week, roughly 60 hours a year
-
-Cultural cruise control means behaving on built-in cultural assumptions (ingrained mental programming) while ignoring other signals; cultural meta-cognition counters it through awareness and perspective-taking.`,
-cards:[
-{q:"What sits at the center of Shemla's leadership model?",a:"Self-awareness, with self-, task-, relation-, change-, and ethics-oriented leadership arranged around it."},
-{q:"What duties does self-leadership entail?",a:"Managing behavior toward standards, evaluating/setting standards, intrinsic motivation, skill development, growth-oriented attitudes, self-discipline."},
-{q:"What risks does Epstein link to insufficient sleep?",a:"Infections, hypertension, depression, anxiety, decreased memory/attention, lower self-control."},
-{q:"What did Barnes et al. find about sleep-deprived leaders?",a:"Reduced self-discipline, poorer judgment, more abusive/selfish behavior, perceived as less charismatic."},
-{q:"What is the Cognitive-Affective Processing System (CAPS)?",a:"Mischel & Shoda's model of how situational cues are encoded and activate personality-system elements to generate behavior."},
-{q:"Contrast fixed and growth mindset.",a:"Fixed: abilities can't improve, internalizes failure. Growth: abilities can improve, sees failure as learning."},
-{q:"Differentiate promotion focus and prevention focus.",a:"Promotion: opportunities for gain, plays to win. Prevention: risks to avoid, plays not to lose."},
-{q:"What are the three steps of the systematic exposure approach?",a:"Decide what to self-manage; design an experiment (before/during/after); reflect and increase exposure."},
-{q:"What is \"cultural cruise control\"?",a:"Behaving on built-in cultural assumptions while ignoring other cultural signals."},
-{q:"What is the \"10 minutes rule\"?",a:"10 minutes a day of curiosity-building, totaling roughly 60 hours a year."}
-],
-quiz:[
-{q:"What forms the core of Shemla's leadership model?",opts:["Emotional intelligence","Self-awareness","Charisma","Locus of control"],correct:1,exp:"Self-awareness sits at the center."},
-{q:"Sleeping one hour less cannot be offset by:",opts:["Taking vitamin supplements","Sleeping longer on weekends","Daily exercise in the evening","Drinking more water during the day"],correct:1,exp:"Weekend catch-up doesn't prevent the problems caused by weekday sleep loss."},
-{q:"Sleep-deprived individuals were more likely to:",opts:["Resist unhealthy food better","Procrastinate more, resist unhealthy food less","Show no change","Become more collaborative"],correct:1,exp:"Lower resistance to unhealthy food and more procrastination."},
-{q:"Who developed the CAPS model?",opts:["Dweck & Barnes","Mischel & Shoda","Lanaj & Epstein","Dawson & Reid"],correct:1,exp:"Mischel & Shoda."},
-{q:"The CAPS \"encoding process\" function is to:",opts:["Store memories of past situations for later use","Activate personality elements matching situational demands","Produce behavior directly without any interpretation of the situation","Replace personal goals with the goals of the group the person currently belongs to"],correct:1,exp:"Encoding determines which personality elements activate."},
-{q:"\"I must not get less than 80\" should be reframed using which technique?",opts:["Be present","Change your language","Map current mindsets","Fixed reflection moments"],correct:1,exp:"\"Change your language\" reframes pressured phrasing positively."},
-{q:"Someone who \"plays not to lose\" and needs security exemplifies:",opts:["Promotion focus","Growth mindset","Prevention focus","Internal locus of control"],correct:2,exp:"Prevention focus views goals as risks to avoid."},
-{q:"Correct order of the systematic exposure approach:",opts:["Design, decide, reflect","Decide, design, reflect","Reflect, decide, design","Increase exposure, decide, design"],correct:1,exp:"Decide → design an experiment → reflect and iterate."},
-{q:"Behaving on built-in cultural assumptions while ignoring other signals is:",opts:["Cultural meta-cognition","Perspective taking","Cultural cruise control","Growth mindset"],correct:2,exp:"Cultural cruise control relies on ingrained mental programming."},
-{q:"10 minutes a day equals roughly how many hours per year?",opts:["10","30","60","100"],correct:2,exp:"About 70 minutes a week, ~60 hours a year."}
-]},
-{id:'ob-9',title:'Evidence-Based Management',summary:`This module teaches critical evaluation of claims before using them for decisions. Confirmation bias — searching for/favoring/recalling belief-confirming information — manifests via naïve acceptance, blinkered scepticism, biased search, and selective recall. Black-and-white thinking ignores moderation, granularity, and double-edgedness.
-
-The "ladder of inference" (statement → fact → data → evidence → proof) shows each level may fail at the next:
-- statements may be inaccurate
-- facts unrepresentative
-- data biased/correlational (not causal — confounds)
-- evidence may lack external validity
-
-Question phrasing, scale design, anchoring, and ordering all bias data collection.
-
-Solutions for individuals:
-- seek opposing views
-- rely on aggregated research over single studies
-- be wary of non-top-journal publications
-
-Solutions for groups:
-- leverage diversity
-- avoid informational cascades (collect opinions privately first)
-- reduce hierarchy
-- run a pre-mortem
-
-Soeters & Boer: higher power distance correlates with higher aviation accident rates. Three principles for leveraging team differences: shared reality, encouraged dissent, shared identity.
-
-The studies behind the lessons:
-Hartman & Hoever :: after a trip, people recalled more stereotype-confirming and fewer disconfirming instances (selective recall)
-"Smashed" vs. "contacted" :: a more intense verb in the question led to higher speed estimates (52 vs. 37 km/h) and more false memories of broken glass
-MIT wine-bidding study :: irrelevant anchors (the last digits of a social security number) distorted bids by up to 346%
-Journal selectivity :: on gender diversity, top journals reported 39% positive findings, less-selective journals 92%, so selectivity strongly affects the reported direction of effects
-Soeters & Boer :: higher power distance goes with higher aviation accident rates, because questioning authority is discouraged
-
-Why data is not yet evidence: data mining (a biased search for a particular conclusion) and correlation that is not causation (a common cause can drive both). External validity asks whether an effect generalizes to other settings. An informational cascade in groups (early speakers suppress dissent) is prevented by collecting opinions privately first. The three principles for leveraging team differences are shared reality, encouraged dissent and shared identity, and hierarchy should be reduced, not maximized.`,
-cards:[
-{q:"What is confirmation bias?",a:"The tendency to search for, favor, and recall information confirming existing beliefs."},
-{q:"What are the four manifestations of confirmation bias?",a:"Naïve acceptance, blinkered scepticism (motivated reasoning), biased search, selective recall."},
-{q:"What are the three manifestations of black-and-white thinking?",a:"Ignoring moderation, ignoring granularity, ignoring double-edgedness."},
-{q:"What is the \"ladder\" of data reliability?",a:"Statement → Fact → Data → Evidence → Proof — each level may not hold at the next."},
-{q:"What is data mining, and why is it a problem?",a:"A biased search for a favorable conclusion via selective measures/samples — can misleadingly support a conclusion."},
-{q:"Difference between internal and external validity?",a:"Internal = true causation established within a study; external = the effect generalizes to other settings."},
-{q:"What did the \"smashed\" vs. \"contacted\" verb study show?",a:"Higher-intensity verbs produced higher speed estimates and more false memories of broken glass."},
-{q:"What is the anchoring effect?",a:"Fixating on an irrelevant number when making judgments (MIT wine-bidding study: up to 346% higher bids)."},
-{q:"What is an informational cascade, and its remedy?",a:"Opinions expressed in the same direction suppress dissent; remedy is collecting opinions privately first."},
-{q:"What did Soeters & Boer find about power distance and accidents?",a:"Higher national power distance correlates with higher military aviation accident rates."},
-{q:"What are the three principles for leveraging differences in teams?",a:"Create a shared reality, encourage dissent/elaboration, create a shared identity."}
-],
-quiz:[
-{q:"Which bias involves believing liked claims uncritically vs. rejecting disliked claims via motivated reasoning?",opts:["Anchoring bias","Confirmation bias","Groupthink","Framing bias (wording effects)"],correct:1,exp:"Naïve acceptance and blinkered scepticism are both confirmation-bias manifestations."},
-{q:"In the Hartman & Hoever study, recalled stereotype instances after a trip:",opts:["Both increased equally","Confirming rose, disconfirming fell","Both decreased","Disconfirming rose, confirming fell"],correct:1,exp:"Selective recall shifted memories to fit prior beliefs."},
-{q:"Why might data not qualify as evidence?",opts:["Data is always incomplete","Data mining and correlation ≠ causation","Data cannot be quantified","Evidence requires peer review"],correct:1,exp:"Biased selection or confounding variables undermine data as evidence."},
-{q:"External validity refers to:",opts:["Whether the sample size is large enough","The prestige and impact factor of the journal that published the study","Whether an effect generalizes to other settings","Whether the researcher was biased in collecting data"],correct:2,exp:"External validity is about generalization beyond the original context."},
-{q:"In the \"smashed\" vs. \"contacted\" experiment, higher-intensity verbs led to:",opts:["No effect","Higher speed estimates and more false memories","Lower estimates","Only affected color recall"],correct:1,exp:"52 km/h vs. 37 km/h, and more false recall of broken glass."},
-{q:"Remedy for an informational cascade in group decisions:",opts:["Let the most senior person decide","Collect opinions privately first","Increase the size of the meeting","Always defer to the majority view"],correct:1,exp:"Private input prevents early speakers from suppressing dissent."},
-{q:"Soeters & Boer found regarding power distance and aviation safety:",opts:["Lower PD → higher accident rates","No relationship between PD and accidents","Higher PD → higher accident rates","Only affects civilian aviation, not military"],correct:2,exp:"High-power-distance cultures discourage questioning authority."},
-{q:"Regarding journal selectivity and gender-diversity research findings:",opts:["Less-selective journals reported fewer positive findings than top journals","Top journals: 39% positive; less-selective: 92% positive","Both types of journal reported practically identical shares of positive results","Top journals never publish negative findings"],correct:1,exp:"Selectivity strongly affects reported effect direction."},
-{q:"Which is NOT one of the three principles for leveraging team differences?",opts:["Shared reality","Encourage dissent and debate","Shared identity","Maximize hierarchy"],correct:3,exp:"The module recommends reducing, not maximizing, hierarchy."},
-{q:"The MIT wine-bidding anchoring study demonstrates:",opts:["People reliably ignore irrelevant numbers when they bid","Irrelevant anchors can significantly distort judgments","Anchoring only affects experts, not ordinary buyers","Prices are immune to arbitrary cues like social security numbers"],correct:1,exp:"Social-security digits distorted bids by up to 346%."}
-]},
-{id:'ob-1',extra:'Teaching Team + Ghani',title:'Organizational Behavior',summary:`Organizational Behavior (OB) is the systematic, interdisciplinary study of human behavior within organizational contexts, operating at three levels:
+{id:'ob-1',by:'Teaching Team + Ghani',title:'Organizational Behavior',summary:`Organizational Behavior (OB) is the systematic, interdisciplinary study of human behavior within organizational contexts, operating at three levels:
 - individuals (personality, perception, motivation)
 - groups (dynamics, communication, team collaboration)
 - organizational systems (structure, culture, policies)
@@ -1270,7 +1101,69 @@ quiz:[
 {q:"New hire Anna gets conflicting instructions from her manager and a senior colleague, stops asking questions, and is later criticised for lacking initiative. Which OB level best explains the root problem?",opts:["Individual only — Anna simply lacks motivation and initiative","Organizational — unclear roles, procedures and communication","Neuroscience — her stress response blocks decision-making and makes her avoid questions","None — it is common sense that new hires need time"],correct:1,exp:"The main cause is situational/organizational (inconsistent instructions, unclear responsibility); blaming Anna's personality would be a quick judgment."},
 {q:"Which is part of the SITUATION in the Person → Situation → Behaviour → Outcome framework?",opts:["Personality traits such as conscientiousness","Values the person brings to work","Team and leadership expectations","Past experience from previous jobs"],correct:2,exp:"Task, team, leadership, expectations and work environment are situational factors; personality, values and experience belong to the person."}
 ]},
-{id:'ob-3',extra:'Teaching Team',title:'Personality and Values',summary:`Personality is the unique, relatively stable pattern of thoughts, feelings, and behaviors shaping workplace reactions. The MBTI sorts people into 16 types across four dichotomies but has limited scientific validity; the Big Five (OCEAN) is the most scientifically robust framework, with Conscientiousness the strongest predictor of job performance.
+{id:'ob-2',by:'Shemla',title:'Motivation',summary:`Motivation is the force that energizes, directs, and sustains behavior, arising from intrinsic sources (personality, emotions, needs, goals, values) and extrinsic sources (rewards, punishments, empowerment, recognition, work characteristics). Locus of control (internal vs. external) affects responsiveness to change; self-efficacy relates to effort, persistence, and resilience. Promotion focus ("playing to win") vs. prevention focus ("playing not to lose") shape goal framing.
+
+The module's core framework is the "four drives" model:
+- the drive to acquire (reward system)
+- the drive to bond (culture)
+- the drive to comprehend (job design)
+- the drive to defend (resource allocation)
+
+Classic theories:
+- Herzberg's two-factor theory (hygiene factors prevent dissatisfaction; motivators drive performance)
+- Vroom's expectancy theory (effort → performance → reward)
+- Latham & Locke's goal-setting theory (difficult, specific goals raise performance)
+- Hackman & Oldham's Job Characteristics Model (skill variety, task identity, task significance, autonomy, feedback → meaningfulness, responsibility, knowledge of results) — these three critical psychological states in turn drive motivation, performance and satisfaction
+
+Pay-for-motivation has limited/mixed effects; organizational change reactions move:
+=> denial → resistance → valley of tears → adaptation → commitment
+
+Promotion vs. prevention focus in more detail:
+Promotion focus :: goals are opportunities for gain or advancement; focus on the rewards of succeeding ("playing to win"); these people respond best to optimism and praise
+Prevention focus :: goals are risks that must be prevented ("playing not to lose")
+
+What satisfies each of the four drives:
+Drive to acquire :: a reward system that clearly links rewards to performance
+Drive to bond :: a culture of collaboration, openness and friendship
+Drive to comprehend :: jobs that are meaningful and allow growth and learning; frustration comes from senseless, monotonous dead-end jobs
+Drive to defend :: institutions that promote justice, have clear goals and intentions, and let people express their ideas and opinions (voice); when met: security and confidence, when unmet: fear and resentment (e.g. resistance to change)
+
+Pay effects: pay influences how attractive an organization is, but individuals prefer individual over group pay and fixed over variable pay. Profit sharing increases commitment, but mainly for high performers, the effect can be lessened by inequality, and it can encourage unethical and risky behaviour.
+
+In the change curve (room of habit → resistance → adaptation → renewal), motivation belongs to the final stage: commitment, in the "room of renewal", where people emotionally accept and internalize the change.
+
+Herzberg's two factors with examples:
+Hygiene factors :: salary, working conditions, supervision, company policies; they prevent dissatisfaction but do not motivate higher performance
+Motivators :: achievement, recognition, responsibility, the work itself; they drive satisfaction and performance
+
+The Job Characteristics Model (JCM) links its five core characteristics to three critical psychological states, and these in turn to motivation, performance and satisfaction.`,
+cards:[
+{q:"How does the module define motivation?",a:"The force that energizes, directs, and sustains behavior."},
+{q:"What is the difference between intrinsic and extrinsic motivators?",a:"Intrinsic = inner influences (personality, emotions, needs, goals, values); extrinsic = external influences (rewards, punishments, empowerment, recognition)."},
+{q:"What is the difference between internal and external locus of control?",a:"Internal = behavior guided by own decisions/effort (growth mindset). External = behavior guided by fate/luck (fixed mindset, harder to motivate)."},
+{q:"What is self-efficacy?",a:"A person's generalized belief in their ability to execute a course of action; related to effort, persistence, resilience after failure."},
+{q:"Distinguish promotion focus from prevention focus.",a:"Promotion focus = opportunities for gain, \"playing to win,\" responds to praise. Prevention focus = risks to avoid, \"playing not to lose,\" needs security."},
+{q:"What are the \"four drives\" underlying motivation?",a:"The drive to acquire, the drive to bond, the drive to comprehend, and the drive to defend."},
+{q:"Which organizational lever corresponds to each drive?",a:"Acquire → Reward system; Bond → Culture; Comprehend → Job design; Defend → Resource allocation."},
+{q:"What is Herzberg's two-factor theory?",a:"Hygiene factors (pay, conditions, policy) prevent dissatisfaction but don't raise performance. Motivators (achievement, recognition, responsibility, growth) motivate and increase productivity."},
+{q:"What is Vroom's expectancy theory?",a:"Motivation follows an Effort → Performance → Reward chain."},
+{q:"What are Latham & Locke's main conclusions?",a:"Difficult, specific goals lead to higher performance than easy/abstract goals; higher goals → higher performance; personality/incentives affect commitment; goals have cognitive impact."},
+{q:"What are the five core job characteristics in the JCM?",a:"Skill variety, task identity, task significance, autonomy, feedback."},
+{q:"What three psychological states does the JCM say drive intrinsic motivation?",a:"Experienced meaningfulness, experienced responsibility, and knowledge of actual results."}
+],
+quiz:[
+{q:"According to Herzberg, which is a hygiene factor?",opts:["Achievement in challenging work","Recognition from the manager","Salary and working conditions","Responsibility for own projects"],correct:2,exp:"Hygiene factors prevent dissatisfaction but don't themselves motivate higher performance."},
+{q:"In Vroom's expectancy theory, motivation is a chain of which three elements?",opts:["Needs, drives, satisfaction","Effort, performance, reward","Goals, feedback, commitment","Skill variety, autonomy, feedback"],correct:1,exp:"Vroom's chain is Effort → Performance → Reward."},
+{q:"Which drive is fulfilled primarily through the reward system?",opts:["The drive to bond","The drive to comprehend","The drive to acquire","The drive to defend"],correct:2,exp:"The drive to acquire is best satisfied through the reward system."},
+{q:"An internal locus of control means believing behavior is guided by:",opts:["Fate and luck","Personal decisions and effort","External circumstances","Organizational policy alone"],correct:1,exp:"Internal locus of control = belief that outcomes result from one's own effort."},
+{q:"Employees with a promotion focus respond best to:",opts:["Criticism and threat of failure","Optimism and praise","Strict rules and job security","Avoidance of risk"],correct:1,exp:"Promotion-focused individuals respond best to optimism and praise."},
+{q:"Which theory identifies skill variety, task identity, significance, autonomy, feedback as core characteristics?",opts:["Herzberg's two-factor theory","Goal-setting theory","Job Characteristics Model","Expectancy theory"],correct:2,exp:"The JCM links these five characteristics to psychological states and outcomes."},
+{q:"Per Latham & Locke, which goals lead to highest performance?",opts:["Easy, general goals","Abstract goals with no deadline","Difficult, specific goals","Goals set entirely by management"],correct:2,exp:"Difficult, specific goals lead to significantly higher performance."},
+{q:"What is a key limitation of pay/profit-sharing as a motivator?",opts:["It always increases unethical behavior among employees, regardless of how the scheme is designed","Its commitment effect applies mainly to high performers and can be lessened by inequality","Employees consistently prefer group or variable pay over a fixed salary, whatever their role","It has no effect on how attractive the employer is to applicants"],correct:1,exp:"Profit sharing mainly boosts commitment for high performers and can be undermined by inequality."},
+{q:"Which drive is satisfied by justice, clear goals, and voice?",opts:["The drive to acquire","The drive to defend","The drive to comprehend","The drive to bond"],correct:1,exp:"The drive to defend is met by justice, clear goals, and the ability to express opinions."},
+{q:"In the change curve, motivation is most associated with which stage?",opts:["Denial","Resistance","Commitment (Room of Renewal)","First euphoria"],correct:2,exp:"The model places motivation at the Commitment stage."}
+]},
+{id:'ob-3',by:'Teaching Team',title:'Personality and Values',summary:`Personality is the unique, relatively stable pattern of thoughts, feelings, and behaviors shaping workplace reactions. The MBTI sorts people into 16 types across four dichotomies but has limited scientific validity; the Big Five (OCEAN) is the most scientifically robust framework, with Conscientiousness the strongest predictor of job performance.
 
 Values split into Terminal (desired end-states) and Instrumental (preferred behaviors), per Rokeach. Person-Job Fit predicts performance; Person-Organization Fit predicts satisfaction/retention. Holland's RIASEC model links six types (Realistic, Investigative, Artistic, Social, Enterprising, Conventional) to matching careers.
 
@@ -1326,7 +1219,7 @@ quiz:[
 {q:"Google's Project Aristotle found the strongest predictor of team performance was:",opts:["Individual technical skill","Personality composition","Psychological safety","High Conscientiousness scores"],correct:2,exp:"Psychological safety outweighed personality composition or technical skills."},
 {q:"Cultural Intelligence (CQ) includes which components?",opts:["Cultural knowledge, mindfulness, behavioral adaptability, motivation/curiosity","Extraversion, agreeableness and openness, as measured by the Big Five personality model","MBTI type combined with a RIASEC career code","Terminal and instrumental values, plus fluency in the local language and its business etiquette"],correct:0,exp:"CQ is built through knowledge, mindfulness, adaptability, and curiosity."}
 ]},
-{id:'ob-4',extra:'Teaching Team + Ghani',title:'Emotional Intelligence',summary:`Emotional Intelligence (EI) is the ability to understand and manage emotions — one's own and others' — to navigate relationships and make better decisions. The module frames EI around four components (Goleman): Self-Awareness, Self-Management, Social Awareness, Relationship Management.
+{id:'ob-4',by:'Teaching Team + Ghani',title:'Emotional Intelligence',summary:`Emotional Intelligence (EI) is the ability to understand and manage emotions — one's own and others' — to navigate relationships and make better decisions. The module frames EI around four components (Goleman): Self-Awareness, Self-Management, Social Awareness, Relationship Management.
 
 The amygdala triggers fight-or-flight in milliseconds; the prefrontal cortex is slower — giving the "6-Second Rule" for emotional chemicals to clear.
 
@@ -1406,7 +1299,58 @@ quiz:[
 {q:"Mina (customer service) stays polite with angry customers, has few breaks, and her manager only monitors call numbers. After work she is tense and impatient. Which explanation fits OB best?",opts:["Mina has a personality disorder that makes her unsuited to customer service","Repeated emotional labour plus situational factors (few breaks, monitoring) spill over","Mina lacks the intelligence needed to handle difficult customers calmly and professionally","Customers are always the cause, so nothing about Mina's job or her working conditions matters"],correct:1,exp:"The lecture stresses not diagnosing Mina: repeated emotional demands plus the work situation plausibly explain the spillover; the employer can change conditions."},
 {q:"Which is NOT one of the three EI steps in the Ghani lecture?",opts:["Perceive","Understand","Regulate/Use","Dominate"],correct:3,exp:"The three steps are perceive, understand, regulate/use."}
 ]},
-{id:'ob-6',extra:'Floegel',title:'Leadership and Power',summary:`Leadership inspires toward shared goals ("what/why"); Management plans/organizes/coordinates ("how/when"); Power is the capacity to influence via control of resources ("who controls what").
+{id:'ob-5',by:'Shemla',title:'Self-Leadership',summary:`Self-leadership sits at the center of Shemla's leadership model (alongside task-, relation-, change-, ethics-oriented leadership), grounded in self-awareness. It entails managing behavior toward standards, intrinsic motivation, skill development, and self-discipline.
+
+Sleep: inadequate sleep raises risk of infection, hypertension, depression; Barnes et al. show sleep-deprived leaders show less self-discipline, poorer judgment, are less charismatic.
+
+Attitudes/Motivation/Goals: built on Mischel & Shoda's CAPS model — mindsets encode situational cues to activate behavior; fixed vs. growth mindset shapes response to failure; promotion vs. prevention focus shape goal reactions.
+
+Five techniques to change mindsets:
+- map current mindsets
+- be present
+- change language
+- be specific about goals
+- fixed daily reflection
+
+Expanding skills: systematic exposure approach (decide, design experiment, reflect) and cultural meta-cognition (awareness of "cultural cruise control" and stereotypes via perspective-taking).
+
+Sleep in detail: sleeping one hour less cannot be offset by sleeping longer at the weekend. Sleep-deprived people procrastinate more and resist unhealthy food less.
+
+In the CAPS model, the encoding process determines which personality elements (beliefs, goals, emotions) are activated to match the demands of a situation.
+
+The five techniques to change mindsets, with examples:
+Map your mindsets :: notice which beliefs drive your reactions
+Be present :: pay attention to the here and now
+Change your language :: reframe pressured phrasing, e.g. "I must not get less than 80" becomes "Ideally I'll get more than 80"
+Be specific about goals :: define what exactly you want to achieve
+Fixed daily reflection :: 10 minutes a day is about 70 minutes a week, roughly 60 hours a year
+
+Cultural cruise control means behaving on built-in cultural assumptions (ingrained mental programming) while ignoring other signals; cultural meta-cognition counters it through awareness and perspective-taking.`,
+cards:[
+{q:"What sits at the center of Shemla's leadership model?",a:"Self-awareness, with self-, task-, relation-, change-, and ethics-oriented leadership arranged around it."},
+{q:"What duties does self-leadership entail?",a:"Managing behavior toward standards, evaluating/setting standards, intrinsic motivation, skill development, growth-oriented attitudes, self-discipline."},
+{q:"What risks does Epstein link to insufficient sleep?",a:"Infections, hypertension, depression, anxiety, decreased memory/attention, lower self-control."},
+{q:"What did Barnes et al. find about sleep-deprived leaders?",a:"Reduced self-discipline, poorer judgment, more abusive/selfish behavior, perceived as less charismatic."},
+{q:"What is the Cognitive-Affective Processing System (CAPS)?",a:"Mischel & Shoda's model of how situational cues are encoded and activate personality-system elements to generate behavior."},
+{q:"Contrast fixed and growth mindset.",a:"Fixed: abilities can't improve, internalizes failure. Growth: abilities can improve, sees failure as learning."},
+{q:"Differentiate promotion focus and prevention focus.",a:"Promotion: opportunities for gain, plays to win. Prevention: risks to avoid, plays not to lose."},
+{q:"What are the three steps of the systematic exposure approach?",a:"Decide what to self-manage; design an experiment (before/during/after); reflect and increase exposure."},
+{q:"What is \"cultural cruise control\"?",a:"Behaving on built-in cultural assumptions while ignoring other cultural signals."},
+{q:"What is the \"10 minutes rule\"?",a:"10 minutes a day of curiosity-building, totaling roughly 60 hours a year."}
+],
+quiz:[
+{q:"What forms the core of Shemla's leadership model?",opts:["Emotional intelligence","Self-awareness","Charisma","Locus of control"],correct:1,exp:"Self-awareness sits at the center."},
+{q:"Sleeping one hour less cannot be offset by:",opts:["Taking vitamin supplements","Sleeping longer on weekends","Daily exercise in the evening","Drinking more water during the day"],correct:1,exp:"Weekend catch-up doesn't prevent the problems caused by weekday sleep loss."},
+{q:"Sleep-deprived individuals were more likely to:",opts:["Resist unhealthy food better","Procrastinate more, resist unhealthy food less","Show no change","Become more collaborative"],correct:1,exp:"Lower resistance to unhealthy food and more procrastination."},
+{q:"Who developed the CAPS model?",opts:["Dweck & Barnes","Mischel & Shoda","Lanaj & Epstein","Dawson & Reid"],correct:1,exp:"Mischel & Shoda."},
+{q:"The CAPS \"encoding process\" function is to:",opts:["Store memories of past situations for later use","Activate personality elements matching situational demands","Produce behavior directly without any interpretation of the situation","Replace personal goals with the goals of the group the person currently belongs to"],correct:1,exp:"Encoding determines which personality elements activate."},
+{q:"\"I must not get less than 80\" should be reframed using which technique?",opts:["Be present","Change your language","Map current mindsets","Fixed reflection moments"],correct:1,exp:"\"Change your language\" reframes pressured phrasing positively."},
+{q:"Someone who \"plays not to lose\" and needs security exemplifies:",opts:["Promotion focus","Growth mindset","Prevention focus","Internal locus of control"],correct:2,exp:"Prevention focus views goals as risks to avoid."},
+{q:"Correct order of the systematic exposure approach:",opts:["Design, decide, reflect","Decide, design, reflect","Reflect, decide, design","Increase exposure, decide, design"],correct:1,exp:"Decide → design an experiment → reflect and iterate."},
+{q:"Behaving on built-in cultural assumptions while ignoring other signals is:",opts:["Cultural meta-cognition","Perspective taking","Cultural cruise control","Growth mindset"],correct:2,exp:"Cultural cruise control relies on ingrained mental programming."},
+{q:"10 minutes a day equals roughly how many hours per year?",opts:["10","30","60","100"],correct:2,exp:"About 70 minutes a week, ~60 hours a year."}
+]},
+{id:'ob-6',by:'Floegel',title:'Leadership and Power',summary:`Leadership inspires toward shared goals ("what/why"); Management plans/organizes/coordinates ("how/when"); Power is the capacity to influence via control of resources ("who controls what").
 
 Leadership styles:
 - Autocratic (crisis)
@@ -1455,7 +1399,7 @@ quiz:[
 {q:"Which leadership approach puts followers' needs first?",opts:["Charismatic","Transactional","Servant","Autocratic"],correct:2,exp:"Servant leadership."},
 {q:"The \"Dark Side of Power\" produces which three effects?",opts:["Self-interest, objectification, overconfidence","Trust, transparency and reduced office politics","Delegation, reduced hierarchy, stronger networks","Ethics, accountability, stakeholder focus"],correct:0,exp:"Self-interest, objectifying others, overconfidence."}
 ]},
-{id:'ob-7',extra:'Floegel',title:'Group Behaviour and Teams',summary:`A group shares information with neutral/individual synergy; a team's cooperation produces collective performance greater than the sum of contributions. Social Identity Theory explains ingroup favoritism.
+{id:'ob-7',by:'Floegel',title:'Group Behaviour and Teams',summary:`A group shares information with neutral/individual synergy; a team's cooperation produces collective performance greater than the sum of contributions. Social Identity Theory explains ingroup favoritism.
 
 Tuckman's Model: Forming, Storming, Norming, Performing, Adjourning (Gersick's Punctuated-Equilibrium Model as alternative). Key group properties: roles, norms, status, size, cohesion.
 
@@ -1496,7 +1440,7 @@ quiz:[
 {q:"Groups making more extreme decisions than individuals is:",opts:["Groupthink","Groupshift (risky shift)","Social loafing","Ingroup favoritism"],correct:1,exp:"Diffusion of responsibility drives groupshift."},
 {q:"Who identified \"groupthink\"?",opts:["Janis","Tuckman","Gersick","Asch"],correct:0,exp:"Janis."}
 ]},
-{id:'ob-8',extra:'Floegel + Ghani',title:'Communication and Conflict',summary:`Communication transmits information and meaning via encoding, sending, interpreting. Conflict begins when one party perceives another has negatively affected something they care about.
+{id:'ob-8',by:'Floegel + Ghani',title:'Communication and Conflict',summary:`Communication transmits information and meaning via encoding, sending, interpreting. Conflict begins when one party perceives another has negatively affected something they care about.
 
 The Shannon-Weaver Model: sender, encoding, channel, noise, decoding, receiver, feedback. Mehrabian's 55/38/7 rule: body language 55%, vocal 38%, words 7%. Media Richness Theory matches rich channels to complex messages, lean channels to routine ones.
 
@@ -1581,6 +1525,62 @@ quiz:[
 {q:"Your teammate has not finished their section the day before the deadline. You suggest splitting the remaining work. Which style is this?",opts:["Avoiding","Accommodating","Compromising","Competing"],correct:2,exp:"Each side gives up something to reach an acceptable solution — compromising. Discussing the problem and agreeing a joint plan would be collaborating."},
 {q:"Which statement reflects the more recent view of conflict?",opts:["All conflict must be eliminated because it always harms performance and relationships","Some conflict can be useful, but personal/intense conflict is harmful","Conflict never affects performance, whether task- or relationship-based","Only managers experience conflict"],correct:1,exp:"The recent view accepts some constructive conflict while warning about personal, intense, poorly managed conflict."},
 {q:"In the Oscar & Brittany case, what turned the issue into a relationship conflict?",opts:["The size of the bonus Oscar expected for his waste-reduction work and the new criteria","Brittany sharing Oscar's private grievance threat with the committee","Oscar's decision to stop working on waste reduction after the bonus change","The committee chair election"],correct:1,exp:"Sharing private information broke Oscar's trust, making the conflict personal."}
+]},
+{id:'ob-9',by:'Shemla',title:'Evidence-Based Management',summary:`This module teaches critical evaluation of claims before using them for decisions. Confirmation bias — searching for/favoring/recalling belief-confirming information — manifests via naïve acceptance, blinkered scepticism, biased search, and selective recall. Black-and-white thinking ignores moderation, granularity, and double-edgedness.
+
+The "ladder of inference" (statement → fact → data → evidence → proof) shows each level may fail at the next:
+- statements may be inaccurate
+- facts unrepresentative
+- data biased/correlational (not causal — confounds)
+- evidence may lack external validity
+
+Question phrasing, scale design, anchoring, and ordering all bias data collection.
+
+Solutions for individuals:
+- seek opposing views
+- rely on aggregated research over single studies
+- be wary of non-top-journal publications
+
+Solutions for groups:
+- leverage diversity
+- avoid informational cascades (collect opinions privately first)
+- reduce hierarchy
+- run a pre-mortem
+
+Soeters & Boer: higher power distance correlates with higher aviation accident rates. Three principles for leveraging team differences: shared reality, encouraged dissent, shared identity.
+
+The studies behind the lessons:
+Hartman & Hoever :: after a trip, people recalled more stereotype-confirming and fewer disconfirming instances (selective recall)
+"Smashed" vs. "contacted" :: a more intense verb in the question led to higher speed estimates (52 vs. 37 km/h) and more false memories of broken glass
+MIT wine-bidding study :: irrelevant anchors (the last digits of a social security number) distorted bids by up to 346%
+Journal selectivity :: on gender diversity, top journals reported 39% positive findings, less-selective journals 92%, so selectivity strongly affects the reported direction of effects
+Soeters & Boer :: higher power distance goes with higher aviation accident rates, because questioning authority is discouraged
+
+Why data is not yet evidence: data mining (a biased search for a particular conclusion) and correlation that is not causation (a common cause can drive both). External validity asks whether an effect generalizes to other settings. An informational cascade in groups (early speakers suppress dissent) is prevented by collecting opinions privately first. The three principles for leveraging team differences are shared reality, encouraged dissent and shared identity, and hierarchy should be reduced, not maximized.`,
+cards:[
+{q:"What is confirmation bias?",a:"The tendency to search for, favor, and recall information confirming existing beliefs."},
+{q:"What are the four manifestations of confirmation bias?",a:"Naïve acceptance, blinkered scepticism (motivated reasoning), biased search, selective recall."},
+{q:"What are the three manifestations of black-and-white thinking?",a:"Ignoring moderation, ignoring granularity, ignoring double-edgedness."},
+{q:"What is the \"ladder\" of data reliability?",a:"Statement → Fact → Data → Evidence → Proof — each level may not hold at the next."},
+{q:"What is data mining, and why is it a problem?",a:"A biased search for a favorable conclusion via selective measures/samples — can misleadingly support a conclusion."},
+{q:"Difference between internal and external validity?",a:"Internal = true causation established within a study; external = the effect generalizes to other settings."},
+{q:"What did the \"smashed\" vs. \"contacted\" verb study show?",a:"Higher-intensity verbs produced higher speed estimates and more false memories of broken glass."},
+{q:"What is the anchoring effect?",a:"Fixating on an irrelevant number when making judgments (MIT wine-bidding study: up to 346% higher bids)."},
+{q:"What is an informational cascade, and its remedy?",a:"Opinions expressed in the same direction suppress dissent; remedy is collecting opinions privately first."},
+{q:"What did Soeters & Boer find about power distance and accidents?",a:"Higher national power distance correlates with higher military aviation accident rates."},
+{q:"What are the three principles for leveraging differences in teams?",a:"Create a shared reality, encourage dissent/elaboration, create a shared identity."}
+],
+quiz:[
+{q:"Which bias involves believing liked claims uncritically vs. rejecting disliked claims via motivated reasoning?",opts:["Anchoring bias","Confirmation bias","Groupthink","Framing bias (wording effects)"],correct:1,exp:"Naïve acceptance and blinkered scepticism are both confirmation-bias manifestations."},
+{q:"In the Hartman & Hoever study, recalled stereotype instances after a trip:",opts:["Both increased equally","Confirming rose, disconfirming fell","Both decreased","Disconfirming rose, confirming fell"],correct:1,exp:"Selective recall shifted memories to fit prior beliefs."},
+{q:"Why might data not qualify as evidence?",opts:["Data is always incomplete","Data mining and correlation ≠ causation","Data cannot be quantified","Evidence requires peer review"],correct:1,exp:"Biased selection or confounding variables undermine data as evidence."},
+{q:"External validity refers to:",opts:["Whether the sample size is large enough","The prestige and impact factor of the journal that published the study","Whether an effect generalizes to other settings","Whether the researcher was biased in collecting data"],correct:2,exp:"External validity is about generalization beyond the original context."},
+{q:"In the \"smashed\" vs. \"contacted\" experiment, higher-intensity verbs led to:",opts:["No effect","Higher speed estimates and more false memories","Lower estimates","Only affected color recall"],correct:1,exp:"52 km/h vs. 37 km/h, and more false recall of broken glass."},
+{q:"Remedy for an informational cascade in group decisions:",opts:["Let the most senior person decide","Collect opinions privately first","Increase the size of the meeting","Always defer to the majority view"],correct:1,exp:"Private input prevents early speakers from suppressing dissent."},
+{q:"Soeters & Boer found regarding power distance and aviation safety:",opts:["Lower PD → higher accident rates","No relationship between PD and accidents","Higher PD → higher accident rates","Only affects civilian aviation, not military"],correct:2,exp:"High-power-distance cultures discourage questioning authority."},
+{q:"Regarding journal selectivity and gender-diversity research findings:",opts:["Less-selective journals reported fewer positive findings than top journals","Top journals: 39% positive; less-selective: 92% positive","Both types of journal reported practically identical shares of positive results","Top journals never publish negative findings"],correct:1,exp:"Selectivity strongly affects reported effect direction."},
+{q:"Which is NOT one of the three principles for leveraging team differences?",opts:["Shared reality","Encourage dissent and debate","Shared identity","Maximize hierarchy"],correct:3,exp:"The module recommends reducing, not maximizing, hierarchy."},
+{q:"The MIT wine-bidding anchoring study demonstrates:",opts:["People reliably ignore irrelevant numbers when they bid","Irrelevant anchors can significantly distort judgments","Anchoring only affects experts, not ordinary buyers","Prices are immune to arbitrary cues like social security numbers"],correct:1,exp:"Social-security digits distorted bids by up to 346%."}
 ]}
 ];
 
@@ -3352,8 +3352,7 @@ function buildSidebarNav(subjId){
     html += `<div class="nav-section-label">Topics</div>`;
     const topics = subjId==='ob'?OB_TOPICS:POM_TOPICS;
     topics.forEach((t,i)=>{
-      if(t.extra && !topics[i-1].extra) html += `<div class="nav-section-label">Further course content · maybe in exam</div>`;
-      html += `<div class="nav-item${t.extra?' nav-minor':''}" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${i+1}. ${t.title}</span></div>`;
+      html += `<div class="nav-item" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${i+1}. ${t.title}</span></div>`;
     });
   }
   if(subjId==='pom'){
@@ -3531,7 +3530,7 @@ function initHomeSearch(){
 function buildHomeCards(){
   const wrap = document.getElementById('home-cards');
   const meta = {
-    ob:{banner:'var(--tile-banner)', stat1:'3 + 6 topics', stat2:'4 tools'},
+    ob:{banner:'var(--tile-banner)', stat1:'9 topics', stat2:'4 tools'},
     pom:{banner:'var(--tile-banner)', stat1:'3 exam topics', stat2:'exam simulator'},
     aw:{banner:'var(--tile-banner)', stat1:'reference + drills', stat2:'3 tools'}
   };
@@ -4111,7 +4110,7 @@ function radarAxes(subj){
 function planItemPool(){
   const items = [];
   const weightOf = s => s==null ? 1 : 1-s;
-  OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t))*(t.extra?.6:1), size:topicSize(t)}));
+  OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   RZ_TOPICS.filter(t=>!RZ_FOUNDATION.includes(t.id)).forEach(t=> items.push({subj:'pom', label:'Raatzsch: '+t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   RZ_DOSSIERS.forEach(d=>{ const done = d.exam.filter(id=>(ls('rz-ex-ans',{})[id]||'').trim().split(/\s+/).length>=120).length; items.push({subj:'pom', label:'Raatzsch essay: '+d.title, page:d.id, weight:.9-.25*done/d.exam.length, size:14}); });
@@ -4195,8 +4194,8 @@ const EXAMS = [
      how:'Only single-choice questions with 5 options, usually a short business case (e.g. "According to Mintzberg, the engineer is playing the role of a ___").',
      tips:['Content = the "Slides for written exam" only (managers & managing, planning & strategy, control & change).','Apply terms to a situation, not just define them.'],
      links:[['pom-sim','POM Exam Simulator'],['pom-cheat','Cheat Sheet']]},
-    {subj:'OB', who:'Prof. Dr. Meir Shemla', course:'Organizational Behaviour', pts:30, type:'Multiple choice only', badge:'mcq',
-     how:'Written part of the shared 90-minute exam (30 points, "Dr. Shemla\'s course on Organizational Behavior"), multiple-choice questions only. Priority: his own modules Motivation, Self-Leadership and Evidence-Based Management. Nasar\'s exam slides also list personality, emotions, teams, communication, conflict and leading people as course content (taught by Floegel, Ghani and the teaching team), so these may come up too.',
+    {subj:'OB', who:'Prof. Dr. Meir Shemla, Lena Floegel, Bilqees Ghani', course:'Organizational Behaviour', pts:30, type:'Multiple choice · 4 options, 1 correct', badge:'mcq',
+     how:'Written part of the shared 90-minute exam (30 points). Confirmed by Shemla\'s email (1 Oct): the part covers all nine Organizational Behaviour sessions led by Lena Floegel, Bilqees Ghani and himself; multiple-choice questions with four options and only one correct answer; only material directly discussed in class.',
      tips:['Know the models well enough to recognise them in a short case, and read all options: they often differ in one detail (e.g. which TKI style, which bias).','The "Quick Canvas Exams" after Teams & Groups, Communication & Conflict and Leadership & Power were his graded online quizzes, so a good preview of his question style.'],
      links:[['ob-sim','OB Exam Simulator'],['ob-cheat','Cheat Sheet']]},
     {subj:'POM', who:'Prof. Richard Raatzsch', course:'Ethics, Law & Politics (in Business)', pts:30, type:'Essay: answer 2 of 3', badge:'essay',
@@ -4863,18 +4862,13 @@ function buildOBHome(){
     div.innerHTML = `
       <div class="page-header">
         <div class="eyebrow">${icon('home')} Organizational Theory &amp; Behaviour</div>
-        <h2>3 + 6 Topics</h2>
-        <p>Prof. Shemla's three modules first, then the further course content taught by Floegel, Ghani and the teaching team, which may also come up. Pick a topic, or jump into a cross-topic tool below.</p>
+        <h2>9 Topics</h2>
+        <p>All nine Organizational Behaviour sessions (Prof. Shemla, Lena Floegel, Bilqees Ghani) are in the exam: 30 points, multiple choice with four options and one correct answer, only material discussed in class. Pick a topic, or jump into a cross-topic tool below.</p>
       </div>
       <div class="page-body">
         ${lectureMasteryHtml('ob')}
         <div class="topic-grid">
-          ${OB_TOPICS.filter(t=>!t.extra).map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">SHEMLA · TOPIC ${i+1}</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
-        </div>
-        <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Further course content · Floegel / Ghani / Teaching Team · maybe in exam</div>
-        <p class="ob-extra-note">Nasar's exam slides list personality, emotions, teams, communication, conflict and leading people as part of Shemla's OB course. Learn Shemla's three topics first, then these.</p>
-        <div class="topic-grid">
-          ${OB_TOPICS.filter(t=>t.extra).map((t,i)=>`<div class="topic-card ob-extra" onclick="navTo('${t.id}')"><div class="num">${esc(t.extra.toUpperCase())} · MAYBE IN EXAM</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
+          ${OB_TOPICS.map((t,i)=>`<div class="topic-card" onclick="navTo('${t.id}')"><div class="num">TOPIC ${i+1} · ${esc((t.by||'').toUpperCase())}</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
         </div>
         <div class="nav-section-label" style="padding-left:0;margin-top:28px;">Cross-topic tools</div>
         <div class="tool-tiles">
