@@ -768,6 +768,31 @@ body.hl-armed .hl-container{cursor:text;}
 .rz-exam-grid li{margin-bottom:5px;}
 .rz-exam-grid b{color:var(--ink);}
 .rz-exam-small{font-size:.78rem;color:var(--ink-faint);line-height:1.5;}
+.rz-core{padding:16px 18px;border-radius:var(--radius);background:var(--accent-bg);border:1px solid var(--line);margin-bottom:16px;}
+.rz-core h4,.rz-likely h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent-ink);margin:0 0 6px;}
+.rz-core p{margin:0;line-height:1.65;font-size:.95rem;}
+.rz-likely{margin-bottom:18px;}
+.rz-likely-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem;}
+.rz-likely-q .btn{flex-shrink:0;padding:6px 14px;font-size:.8rem;}
+.rz-sec{margin:6px 0 22px;}
+.rz-sec .summary-text p:first-of-type::first-letter,.rz-model-text .summary-text p:first-of-type::first-letter{font:inherit;float:none;padding:0;color:inherit;line-height:inherit;}
+.rz-sec h3{font-size:1.05rem;margin:0 0 8px;}
+.rz-tip{font-size:.85rem;color:var(--ink-soft);margin:0 0 14px;}
+.rz-model{border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;margin-bottom:12px;background:var(--panel);}
+.rz-model summary{cursor:pointer;font-weight:600;font-size:.93rem;line-height:1.5;}
+.rz-model h5{font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent-ink);margin:14px 0 6px;}
+.rz-model-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.rz-model-grid ol,.rz-model-grid ul{padding-left:18px;margin:0;font-size:.86rem;line-height:1.55;color:var(--ink-soft);}
+.rz-model-grid li{margin-bottom:4px;}
+.rz-model .rz-write{margin-top:10px;}
+.rz-recall{padding:12px 0;border-bottom:1px solid var(--line);}
+.rz-recall-q{font-weight:600;font-size:.92rem;margin-bottom:8px;}
+.rz-recall-a{display:none;font-size:.9rem;line-height:1.6;color:var(--ink-soft);padding:8px 12px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:var(--radius-sm);}
+.rz-recall-a.show{display:block;}
+.rz-pick{flex:1;min-width:220px;max-width:100%;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:.85rem;}
+.rz-review{margin-top:14px;}
+.rz-cta{margin-top:8px;}
+@media(max-width:700px){.rz-model-grid{grid-template-columns:1fr;}.rz-likely-q{flex-direction:column;align-items:flex-start;}}
 .rz-note{margin-bottom:18px;padding:11px 14px;border-left:3px solid var(--warn);background:var(--warn-bg);border-radius:var(--radius-sm);font-size:.85rem;line-height:1.55;color:var(--ink-soft);}
 .rz-note b{color:var(--ink);} .rz-note a{color:var(--accent-ink);font-weight:600;}
 .lee-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
@@ -2201,16 +2226,446 @@ quiz:[
 {q:"An investor insists: \"A company exists for exactly one reason: profit.\" What does Raatzsch's comparison with the animal kingdom question?",opts:["Whether animals make profit in the same way companies do","Whether there is just one thing that constitutes survival, and so one corporate function","Whether companies are living beings that grow, die and reproduce just like animals in nature","Whether profit can be sustained over many generations of owners, managers and employees"],correct:1,exp:"Is there only one thing that constitutes survival in the animal kingdom? If not, why should a corporation have only one function?"}
 ]}
 ];
+// ===== Raatzsch essay lab (rebuilt 1 Oct 2026): sources = slides 6-10, lecture 30 Sep (corporations), essay feedback 24 Sep,
+// exam briefing 30 Sep, Raatzsch's papers on sustainability (Inquiry 2012) and compliance (JMD 2015, abstract)
+const RZ_METHOD = {
+grading: `Raatzsch grades only two things, and he said so in every session: clarity and awareness of problems. There is no "complete" answer (whole libraries exist on ownership or corporations), but there is a minimum: an essay that is too short cannot show either.
+
+Clarity :: can he read it, does he know what you want to say, and does each "therefore" really follow from what came before? Two sentences that only belong together in your head are a lack of clarity.
+Awareness of problems :: do you see where things get difficult? Not a list of facts and not a definition, but the point where two ways of looking at the matter pull in different directions, where a definition breaks, or where a nice answer has a price.
+
+His own example (essay "Should a manager respect subordinates?", 24 Sep): a student gave two reasons, (1) people deserve respect because they are human, (2) respected employees are more productive. Both were clear. But they are two completely different kinds of argument, and they can collide: if respect only counts because of its effects, then disrespect is fine whenever it works better (Beethoven's father, harsh sports coaches). If respect is owed unconditionally, a manager may have to pay a price and miss a target. The essay did not notice this. Noticing it, in one or two sentences, is exactly the "awareness of problems" he is looking for.`,
+steps: `=> Say how you use the word (ordinary use, not strictly regulated) → Start from examples (clear cases, non-cases, borderline cases, primitive forms) → Give the standard view or definition and what it gets right → Show the problem (where it breaks, two views collide, the price) → Draw a consequence or name the open question`,
+stepsText: `The five steps are his own way of working in the lectures, so following them is the safest structure:
+
+- Say how you use the word. He starts every topic with "Beware: the use of words like ... is not strictly regulated." Show that you know this: in ordinary language "company", "firm" and "corporation" or "own", "is mine" and "belongs to" are used interchangeably, and you say in which sense you use the word.
+- Start from examples, not from a definition. In the corporations lecture he said literally: "We do not start with a general definition, we start with examples." Clear cases (Siemens), clear non-cases (a family), metaphorical cases (Japan Inc.), borderline cases (IG Farben in liquidation). For ownership the primitive forms (a toy, an apple).
+- Give the standard view and what it captures: du Plessis' definition of a corporation, Brundtland's definition of sustainable development, "ownership is control", "compliance means following rules from outside".
+- Show the problem. This is where the points are. Use the problem from the hint in brackets and develop it: why exactly does the definition break, which two views collide, what is the price of each answer?
+- End with a consequence or an open question, not with a fake solution. "So the question is not X but Y" or "This shows that ... and we have to decide ..." is better than "In conclusion, both sides have a point."`,
+mistakes: `Typical mistakes he pointed out in class:
+- Two arguments of different kinds side by side without noticing that they can conflict (the respect essay).
+- A general claim supported only by one example. "The richer corporations get, the better for everyone, for example a factory helps a poor town": he answered that the example is not the question, the question is whether the general claim is true.
+- "Always" and "never". Claiming you can always reach your aims respectfully, or that shareholders can set any goal they like ("as many parties as possible"), ignores the cases that break the claim.
+- Not answering the question asked. He asked five times whether shareholders can decide that the goal is to have parties before anyone said "no". Answer the question first, then differentiate.
+- Claiming knowledge you cannot have. On Trump and the oil industry he said: you have no access to his bank accounts, so do not write "he is influenced"; "he acts in the interest of the oil industry" is enough and is clearly true.
+- Writing too little. There is no complete answer, but there is a minimum. Roughly one handwritten page per question (about 250 to 350 words) is a sensible target for 15 minutes.`,
+phrases: `Useful sentences for the exam:
+In ordinary language :: "In ordinary language it makes no difference whether we say ... or ...; I use X in the sense of ..."
+Examples first :: "Before giving a definition, look at clear cases (...), clear non-cases (...) and borderline cases (...)."
+Standard view :: "The standard answer is ... This captures ..., but ..."
+Problem :: "Here a problem arises: if ..., then ...; but if ..., then ..."
+Two views :: "These are two different kinds of argument, and they can collide when ..."
+Price :: "Whichever answer we choose has a price: ..."
+Open end :: "So the real question is not whether ..., but who decides ... and on what basis."`
+};
+
+const RZ_DOSSIERS = [
+{id:'rzd-own', title:'Ownership', short:'Primitive forms, genealogy, kinds, ownership as control, Robinson Crusoe',
+core:`Ownership is not a property of things but a social relation between people with regard to things: "This is mine!" only makes sense where someone else could take it. Raatzsch approaches it through its primitive forms and through what we do and say, and builds a genealogy from a child's toy to "we acquired 51 % of company A". At its core it is control ("Hands off!"), and its forms change together with our technical and social capabilities.`,
+sections:[
+{h:'His method: primitive forms and what we do and say', text:`Beware: words like "to own", "owner", "ownership", "property" and "belongs to" are not strictly regulated. In ordinary life it makes no difference whether we say "N.N. owns X", "X is N.N.'s property" or "X belongs to N.N.". So do not start with a legal definition; say how you use the words.
+
+The method: understand ownership through its primitive forms and by looking at what we do and say. Saying is already a doing: "This is mine!" is not a report about an object but a claim that others are expected to respect.
+
+Two primitive forms:
+- You take a toy away from a child, and what usually happens: the child protests, "Give it back!". Ownership shows itself first in the reaction to someone else taking or using something.
+- Someone wants to eat an apple hanging on a tree, and what they usually do: they reach out and take it. Here there is appropriation but no ownership yet. The question "whose apple?" only arises when others are around, when the tree was planted by someone, or when the apple cannot simply be grabbed.
+
+What we do and say, from the simplest to the most complex:
+- "Give it back to me!" and "This is mine!" (the child)
+- "Get out of my house!" and "Do not enter." (exclusion of others)
+- "Today, we acquired 51 % of the stocks of company A." (ownership of a corporation)
+- "And the winner is …!" (ownership through a social procedure, a prize)
+
+All these utterances claim, establish, transfer or defend what someone may control and what others must leave alone.`},
+{h:'The genealogy: from the toy to the stock market', text:`Raatzsch's questions lead to a "genealogy" of ownership, a story of how its forms develop:
+- What do we actually teach the child, and how and when? We teach "mine" and "yours", asking before taking, sharing, giving back. Ownership is learned as part of a practice with rules, not discovered as a fact about objects.
+- What if the apple is too far away to simply grab it? Then you need tools (a ladder, a stick) or the help of others. New questions arise: who owns the ladder, who gets the apples if two people worked together, who owns the tree?
+- What if it is not an apple but whales? Hunting whales needs boats, crews, organisation and knowledge of the sea; whales migrate through waters nobody owns. Ownership now needs rules between groups, and today between states.
+
+=> Toy ("Give it back!") → Apple within reach (just take it) → Apple out of reach (tools, cooperation, rules) → Whales (organised groups, territories, states) → Corporation (51 % of the stocks)
+
+The general point, in his words: an extension of our "technological" capabilities usually goes along with a change in our "social" capabilities, and vice versa. The more we can do, the more complex the forms of ownership we need: shares, patents, data, emission rights.
+
+In the corporations lecture he took this up again: picking an apple influences nobody else, and a small community hunting whales hardly affects anyone outside its territory. Today much ordinary economic activity can no longer be carried out in isolation (Lehman Brothers, the Strait of Hormuz, the Red Sea). That is why modern ownership comes with regulation.`},
+{h:'Kinds of ownership, and why all of it is social', text:`Kinds of ownership (slide 9):
+Private :: "Hands off!": others are excluded from using or deciding about the thing
+Collective :: a group owns together (a family, a cooperative, a village commons)
+Public :: owned by the state or the community for everyone (roads, parks, public broadcasting)
+Species-specific (?) :: what might belong to humankind as such (the oceans, the atmosphere, the climate). His question mark asks whether this is still ownership at all.
+
+All of it is social. Even private ownership, which looks like the most individual form, is a relation to others: "Hands off!" is addressed to someone.
+
+That is the point of his question "Was Robinson Crusoe an owner?". Alone on his island Robinson uses, controls and works on things, but there is nobody who could take them and nobody to exclude, so "This island is mine" has no addressee. Ownership in the full sense starts with Friday, or with the ship that might arrive. You can add a second layer: Robinson still thinks in terms of property because he grew up in a society; he brings the social form with him. Either way, ownership is not a relation between a person and a thing, but between persons with regard to things.`},
+{h:'Ownership and control', text:`In the lectures ownership is tied to control: to own something is, or essentially includes, being able to decide what happens with it and to exclude others from that decision. In the corporations lecture he asked: "What did we say is ownership? Control, right?"
+
+This is the bridge to the corporation. A shareholder owns shares, but cannot control what happens in the company. If ownership is control, then ownership of a corporation can only be ownership "in a very special sense", which is the idea behind the slogan "separation of ownership and control" (see the dossier Ownership of a corporation).
+
+Ownership and control also come apart in everyday cases: a landlord may not simply enter the flat he owns; the owner of a listed historic building may not change its facade; a bank owns the house you are still paying off, but you live in it and decide about it.`},
+{h:'The problems you should show', text:`Problems with ownership (slide 10):
+- How can we justify private or collective property as opposed to public property, and vice versa?
+- What is the best form of ownership?
+
+Before answering, he wants you to ask three counter-questions:
+- What real difference would an answer make? A general "private property is best" decides nothing about a concrete case such as the water supply of a city.
+- Can we answer this in general terms? Probably not: the best form of ownership for a toothbrush, a forest, a railway network, a vaccine patent or the climate differs.
+- Who should answer which question? Some questions belong to courts, some to parliaments, some to the owners themselves, some to science.
+
+Further problems you can develop:
+- Where does ownership begin? Taking the apple is not yet owning it. Ownership needs recognition by others, but what about a thief who says "This is mine"?
+- If owning is controlling, what exactly do we own when control is restricted (shareholders, landlords, listed buildings, a bank's majority owner who needs BaFin's approval for a CEO)?
+- Technology stretches the concept: data, ideas, genes, orbits for satellites, emission rights. The genealogy shows that our concept grows and changes, not that it has one fixed essence.
+- Species-specific ownership: if the climate "belongs to humankind", who may decide about it, and who is excluded? Here ownership leads directly into sustainability.`},
+{h:'Connections for combination questions', text:`Ownership × corporation :: "We acquired 51 %": ownership in a very special sense; shareholders own shares, not decisions (separation of ownership and control)
+Ownership × sustainability :: species-specific ownership of the climate or the oceans; the needs of future generations as claims on what we use today
+Ownership × compliance :: property only exists as a rule others follow; a "Do not enter" that nobody ever respected would not establish ownership (the defect-engine question)`}
+],
+recall:[
+{q:'Why does Raatzsch start with the toy and the apple instead of a definition?', a:'His method is to understand a concept through its primitive forms and through what we do and say. The toy shows ownership in the reaction to someone taking something; the apple shows mere appropriation without ownership. A definition would hide these steps.'},
+{q:'What is the point of the apple that is too far away and the whales?', a:'They lead to a genealogy: when we need tools, cooperation and organisation, new questions of ownership arise (who owns the ladder, the catch, the sea). Technological and social capabilities change together.'},
+{q:'Was Robinson Crusoe an owner? Give the argument.', a:'Hardly in the full sense: "This is mine" has no addressee when nobody could take anything or be excluded. Ownership is a relation between persons with regard to things, so it starts with Friday. (Alternatively: he brings the social form with him from his society.)'},
+{q:'Which three counter-questions does he want you to ask before "What is the best form of ownership?"?', a:'What real difference would an answer make? Can we answer this in general terms? Who should answer which question?'},
+{q:'What is the link between ownership and control, and why does it matter for corporations?', a:'Ownership essentially includes control, deciding what happens and excluding others. Shareholders cannot control most decisions in a corporation, so they own it only in a very special sense (separation of ownership and control).'}
+],
+exam:['own-social','own-tech','own-best']},
+
+{id:'rzd-owncorp', title:'Ownership of a corporation', short:'"We acquired 51 %", shareholder qua shareholder, separation of ownership and control, BaFin, shareholder vs stakeholder',
+core:`"Today we acquired 51 % of company A" looks like ordinary ownership, but it is ownership in a very special sense. A shareholder as a shareholder is defined only by an interest in profit and cannot make, let alone control, the countless decisions that make up a corporation. If ownership is control, the famous "separation of ownership and control" means that ownership of a corporation is split, restricted and regulated; and shareholder and stakeholder "theories" turn out to be expressions of interests rather than theories.`,
+sections:[
+{h:'What a corporation is made of: billions of decisions', text:`Raatzsch began with a question: which decisions are made in a corporation like Toyota, Siemens or Volkswagen? New products, whom to hire or fire, the menu in the cafeteria, the colour of the walls and the size of the windows in a new office building, which energy to use and from whom to buy it, which language is spoken in a foreign subsidiary, whether the next factory goes left or right of the river, whether the exhaust pipe of a new diesel engine is built this way or that way. There are billions of such decisions, and some of them decide whether the company sells 10 % fewer cars or has to recall them.
+
+Which of these can a shareholder, as a shareholder, make? Almost none: 99.999 % of them require competences that a shareholder as such does not have.`},
+{h:'The shareholder "as a shareholder"', text:`The concept of a shareholder: someone with a stake in the profit of a corporation, and in everything closely related to reaching that aim. That is all. Why does anybody buy Volkswagen shares? Not because they care about cars, but because they hope the company earns money and so do they.
+
+His example: the largest shareholder in the world is the Norwegian state fund (Norway's oil, gas and hydropower wealth). It is not interested in cars, shoes, rockets or social networks; its only purpose is to keep the invested money and, in the best case, to increase it as much as possible.
+
+A shareholder may also happen to be an engineer and buy BMW shares because he loves cars. But that is accidental: then he is a shareholder and an engineer. The concept of the shareholder contains only the interest in profit.
+
+What shareholders can decide, always with an eye on the dividend:
+- who sits on the supervisory board (with 51 % of the shares you practically are the supervisory board)
+- through the supervisory board, who sits on the management board and how they are paid
+- the strategic direction, for example by rejecting a strategy that did not deliver enough profit
+
+What they cannot decide: whether the industry is moving towards electric vehicles or staying with combustion engines (for that they hire experts), how the exhaust pipe is built, what is on the menu. Can ordinary shareholders decide that from now on the purpose of the corporation is "to have as many parties as possible"? In a Hollywood film perhaps; in the real world, no.`},
+{h:'Separation of ownership and control', text:`If ownership is control, or at least essentially connected to control, the shareholder cannot be the owner of the corporation in the ordinary sense. Two readings are possible:
+- Either many people own parts of the corporation: whoever controls a relevant decision (the head of R&D who decides on the engine) "owns" that decision in some sense.
+- Or the shareholders own it, but only in a very special sense.
+
+Taken literally, "separation of ownership and control" would mean "separation of ownership and ownership", which says nothing. The slogan (Fama & Jensen 1983) only makes sense as a sign that ownership of a corporation is a special, complex form of ownership.
+
+The history behind it:
+=> Early capitalism (owner runs the business; managers only by accident, e.g. the owner dies) → Adam Smith distrusts managers (they have their own interests) → Mid-19th century (firms too large and complex for any single owner) → Professional management (control moves to managers)
+
+Managers come closest to the shareholders because they must always keep an eye on profit, but they decide things shareholders do not. Managers can also follow their own interests: board members stay 3 to 5 years on average, so they might boost short-term results and leave. That is why, for roughly ten years, bonuses have been split into a short-term part and a long-term part paid about five years later, depending on how the company developed.`},
+{h:'Limits from outside: BaFin and an interconnected world', text:`Even 51 % is not full control. If you own 51 % of Deutsche Bank, you are practically the supervisory board, yet you cannot install a new CEO on your own: BaFin, the state financial supervisor, must agree and can refuse if it considers the person not qualified enough or not up to the required ethical standards. Similar state institutions decide which drugs pharmaceutical companies may sell and which rules energy companies must follow.
+
+Why? Not mainly because we "found out" that companies left alone hurt people, but because the world has changed. A collapse of Deutsche Bank a hundred years ago would have hit parts of Germany. When Lehman Brothers went bankrupt in 2008, governments feared a breakdown of the whole financial system, as if the blood circulation of the body were cut off. The closure of the Strait of Hormuz (about 50 km) or the route through the Red Sea causes problems in countries that have nothing to do with the conflict. Picking an apple affects nobody; today much ordinary economic activity cannot be carried out in isolation. Ownership of a corporation therefore comes with duties and controls that the owner of a toy never faced.`},
+{h:'Shareholder vs. stakeholder theory', text:`Profit is revenue minus costs (ignoring taxes). Costs are materials, energy, real estate and, very often the largest part, wages. So by definition you can increase profit by innovation (cheaper or better products) or by reducing costs, and one way of reducing costs is lowering wages or letting people work longer for the same wage.
+
+This creates a conflict of interests: the employee wants wages as high as possible, the shareholder wants them as low as possible. In a static situation it is a zero-sum game, like Lisa's birthday cake: if one piece gets bigger, at least one other piece gets smaller. In a dynamic situation it can become win-win: workers agree to 10 hours instead of 8 for a 10 % raise, the company undercuts its only competitor, drives it out of business and can then raise prices. But even then the underlying interests stay opposed.
+
+Raatzsch's point: shareholder theory is not a theory, it is the expression of the interests of shareholders (sometimes we call that an ideology). Stakeholder theory is not a theory either, but the expression of the interests of all other groups with a stake in the corporation: employees, customers, suppliers, the government. And the shareholder is also a stakeholder, so the opposition does not even make sense; still, in practice you have to decide whose interests come first. Shareholder interests are not evil by definition: what is evil about the Norwegian state fund or a pension fund?`},
+{h:'The problems you should show', text:`- If ownership is control, who owns the corporation? The shareholders (in a special sense), the managers who control decisions, or nobody in the ordinary sense?
+- The shareholder as a shareholder only wants profit, but the corporation consists of billions of decisions that are about cars, menus and engines. Owning the claim to the profit is not owning the activity.
+- Even majority ownership is limited from outside (BaFin, drug approval, environmental law): ownership of a corporation is regulated ownership, and the reason is the interconnection of today's economy.
+- Managers control what shareholders own, and their interests can differ (Adam Smith's suspicion, short-term bonuses).
+- Shareholder vs. stakeholder: an opposition of interests, not of theories; the shareholder is a stakeholder too, so "stakeholder theory" should include shareholders, and yet someone has to decide.`}
+],
+recall:[
+{q:'What is a shareholder "as a shareholder"? Use his example.', a:'Someone defined only by an interest in the profit of the corporation (and what serves that aim). The Norwegian state fund, the largest shareholder in the world, only wants to keep and increase its money; whether it is cars or shoes does not matter. Being an engineer as well is accidental.'},
+{q:'Why can shareholders not control a corporation?', a:'A corporation consists of billions of decisions (products, hiring, menus, factory location, exhaust pipes) that need competences shareholders as shareholders do not have. They decide board members, pay schemes and strategic direction, always with an eye on profit.'},
+{q:'Why does "separation of ownership and control" taken literally say nothing?', a:'If ownership is control, it would mean "separation of ownership and ownership". It only makes sense as a sign that ownership of a corporation is a special, split form of ownership.'},
+{q:'Why can a 51 % owner of Deutsche Bank not simply choose the CEO?', a:'BaFin must approve the person (qualification, ethical standards). Because the economy is interconnected (Lehman 2008, Strait of Hormuz), ownership of a corporation is regulated from outside.'},
+{q:'Why are shareholder and stakeholder "theories" not theories, according to Raatzsch?', a:'They express interests (profit vs. wages and other claims), they do not explain anything; the shareholder is itself a stakeholder, so the opposition does not even make sense, yet someone has to decide.'}
+],
+exam:['owncorp-51','owncorp-who']},
+
+{id:'rzd-corp', title:'Corporation', short:'Examples and borderline cases (IG Farben), du Plessis, Beech-Nut, one corporate function?, history, achievements and limits',
+core:`There is no single definition of a corporation, so start with examples: clear cases (Siemens, Suzuki), clear non-cases (a family), metaphorical uses (Japan Inc.) and borderline cases (IG Farben "in liquidation"). The standard idea that corporations are "groups of people acting towards a common goal" (du Plessis) has the classical definition form and runs into problems: whose goal, who is guilty (Beech-Nut), and is profit the one corporate function? Corporations are a historical social form, not a natural fact: they appeared in the 19th century and may disappear.`,
+sections:[
+{h:'Start with examples, not a definition', text:`Beware: "corporation", "company", "firm" and "enterprise" are used interchangeably in ordinary life; "legalish" is not ordinary language.
+
+In the lecture of 30 Sep he started with cases:
+Clear cases :: Suzuki, Siemens, Apple, Volkswagen
+Clear non-cases :: your family, your local sports club
+Metaphorical cases :: "Japan Inc.": a country spoken of as if it were a corporation
+Borderline cases :: IG Farben: in the 1920s German chemical and pharmaceutical firms (BASF, Bayer, Hoechst and others) merged into the "Interessengemeinschaft Farben", by far the largest chemical corporation in the world. Under the Nazis it used forced labour and concentration-camp prisoners and produced Zyklon B, which was used to murder people. After the war it was dissolved, but for many years "IG Farben in Auflösung" still existed in Frankfurt as a postal address with a secretary: legally a corporation, but with no factories, no customers, practically no employees, no CEO, no board.
+
+His comment: for an answer to "What is a corporation?" that is a very good beginning. We do not start with a general definition; we start with what we all more or less understand, for example the decisions that are made in a corporation.`},
+{h:'The standard definition and its problems', text:`du Plessis et al.: "Corporations are ultimately groups of people acting towards a common goal." This has the classical definition form (genus: group of people; difference: acting towards a common goal). It captures something true, but:
+- IG Farben in liquidation is legally a corporation without any group of people acting together.
+- Whose goal is the common goal? The shareholders want profit, the employees high wages, the engineers a good engine, the government stable employment. Individual intentions (painting a house together, taking a walk together) are not simply added up to a collective one.
+- Methodological individualism says the corporation is just the result of individuals interacting; "emergence" names this problem, it does not solve it.
+- Beech-Nut: the president and vice-president knowingly sold adulterated apple juice for babies; the corporation pleaded guilty to 215 counts and paid a $2 million fine, but no one went to prison and no one was fired. A corporation is not a human being, only the guilty should be punished, yet the company was punished and persons could have been too. Who could have gone to prison? If ethics is about the good or evil will of persons, what exactly is the ethical problem with a corporation?
+- The slide also mentions the conflict between "career" and "life", as if one's career were not part of one's life: the corporation is part of how we live, not something outside it.`},
+{h:'One corporate function?', text:`Slide 15: is there something like a corporate function, say generating return on investment or profit, and if so, can there only be one such function? His analogy: is there just one thing that constitutes survival in the animal kingdom? An animal survives by eating, breathing, avoiding predators, keeping warm, reproducing; none of these is "the" function of being alive.
+
+For an ordinary corporation profit is clearly necessary, like breathing: without profit in the long run it disappears. But it does not follow that profit is the only function or the purpose. A corporation also has to produce goods or services people want, employ and train people, stay within the law, keep its reputation, and in some cases fulfil public tasks (energy supply, railways). Jensen (2010) argues for one objective, value maximisation, because a firm with many objectives has no criterion for decisions. Raatzsch's question shows the problem: one function makes decisions clear but turns everything else into a mere means; many functions match reality but leave open who decides between them.
+
+Non-profit corporations are the exception that follows its own rules: their shareholders by definition do not have an interest in profit. When we talk about corporations, we usually mean ordinary ones.`},
+{h:'A historical social form: achievements and limits', text:`Corporations in today's sense started in the middle of the 19th century: steel, textiles and railways "invented" this social form; then chemistry, pharmaceuticals, energy and almost everything else followed. Humans did economic activity for about 300,000 years without corporations. Corporations appeared at some point in time, and for all we know they will disappear at some point. What could come after them? Communism was one attempt; some say it "did not work", but what exactly does "work" mean? If global warming destroys the conditions of human life, it will not have been caused by communism. Nobody knows what comes next (AI may change a lot). His point: be aware of the structure and its internal problems and stay open to developments.
+
+Achievements :: organising extremely complex activities (billions of decisions), pooling capital, professional management, creating whole industries
+Limits :: aiming at profit, they produce unwelcome effects (low wages, pollution, climate change, financial crises), so states regulate them
+
+Is the corporation an evil, profit-hungry monster? Not by definition (what is evil about a pension fund?). But if a corporation is an institution that aims at profit, it is no surprise that its actions have unwelcome effects: the oil industry makes the most money by selling as much oil as possible, and burning as much oil as possible means global warming. Hence the waves of regulation: after the crisis of 1929, rolled back from the 1970s (Reagan, Thatcher), followed by the Asian crisis of 1997 and the financial crisis of 2007/08, after which regulation was partly reinstated. The minimum wage shows the same logic: if wages are too low, people cannot live decently; you get desperate poverty, crime, health costs and instability, so even a government without compassion has an interest in a minimum wage.`},
+{h:'The problems you should show', text:`- No single definition: clear, metaphorical and borderline cases (IG Farben) show that "corporation" has no sharp boundary.
+- "A group of people acting towards a common goal": whose goal, and how do individual intentions become a common one? Methodological individualism vs. the corporation as a unit; emergence names the problem.
+- Guilt and punishment (Beech-Nut): the corporation pleads guilty, persons stay free; but punishing a person also hits innocent people (his example of Lisa, whose father goes to prison).
+- One function or many: profit as necessary condition vs. profit as the only purpose (animal kingdom analogy).
+- A historical form: since the 19th century, not forever; what comes after?
+- Evil monster or engine of welfare? Neither follows from the concept; but unwelcome effects follow predictably from the aim of profit, which explains regulation.`}
+],
+recall:[
+{q:'Which four kinds of cases does Raatzsch use to approach "corporation"?', a:'Clear cases (Siemens, Suzuki), clear non-cases (a family), metaphorical cases (Japan Inc.), borderline cases (IG Farben in liquidation: legally a corporation, but only a postal address).'},
+{q:'State du Plessis\' definition and two problems with it.', a:'"Corporations are ultimately groups of people acting towards a common goal." Problems: IG Farben in liquidation has no group acting; whose goal is the common goal (shareholders vs. workers); Beech-Nut: the corporation is guilty but no person goes to prison.'},
+{q:'What is the point of the animal-kingdom analogy?', a:'Survival does not consist in one thing (eating, breathing, fleeing, reproducing). So why should a corporation have only one function, such as profit? Profit is necessary, like breathing, but not necessarily the only function.'},
+{q:'When did corporations in today\'s sense appear, and why does it matter?', a:'In the mid-19th century (steel, textiles, railways). Economic activity existed for 300,000 years without them, so they are a historical social form that may disappear.'},
+{q:'Is the corporation an evil, profit-hungry monster?', a:'Not by definition (pension funds are not evil). But if it aims at profit, unwelcome effects are no surprise (oil and climate, wages), which explains waves of regulation (1929, 1997, 2007/08) and minimum wages.'}
+],
+exam:['corp-function','corp-monster','corp-beech']},
+
+{id:'rzd-sust', title:'Sustainability', short:'Redness vs. roundness, Brundtland, needs, future generations, regulation, sustainable corporation',
+core:`Processes, states, objects, ideas and features can be sustainable. The key question is what kind of property "sustainable" is: added to an economy from outside like the redness of a red car, or part of what a proper economy is, like the roundness of a circle. Brundtland defines sustainable development by the needs of current and future generations, but we cannot know future needs, because humans are historical beings who change. Raatzsch's own view: it is a mistake to first define "economy" and then add sustainability; an economy that destroys its own conditions is a defective economy.`,
+sections:[
+{h:'What can be sustainable, and what kind of property is it?', text:`Beware: "sustainable" is not strictly regulated either. Processes, states, objects, ideas and features can be sustainable: a fishery, a level of debt, a building, a business idea, a habit.
+
+The central question (slide 18): what kind of property is "sustainable" in "sustainable economy"?
+Like the redness of a red car :: an added property; the car would be just as much a car if it were blue. Sustainability would be an extra (a green logo, a CSR department) on top of a business that is complete without it.
+Like the roundness of a circle :: a property that belongs to what the thing is; something that is not round is not a circle. Sustainability would belong to what a proper economy or a proper business is.
+
+Raatzsch's own paper (On the Notion of Sustainability, Inquiry 2012) argues against the error of first analysing "the concept of economy" while ignoring sustainability and then adding a separate discussion of which economies are sustainable. That way of proceeding, he says, leads to a serious misunderstanding of both the concepts and the practical demands of today's economic problems. In the terms of the slide: sustainability is closer to roundness than to redness.
+
+Why that is plausible: an economy is the activity by which humans produce and reproduce the conditions of their life. An activity that destroys its own conditions (soil, water, climate, the health of its workers, the trust of its customers) is not simply an economy without an extra feature; it is a defective economy, as a defect engine is still an engine but one that does not do what engines are for.`},
+{h:'The standard definition (Brundtland 1987)', text:`The most widely used definition: a sustainable development is a "development which meets the needs of current generations without compromising the ability of future generations to meet their own needs" (Brundtland Commission, World Commission on Environment and Development, 1987).
+
+What is the point of this definition, whatever its exact wording? It turns sustainability into a question of fairness between generations: we may use the world, but not in a way that takes away the possibilities of those who come after us. It also connects ecology with economy and with justice (needs).
+
+Background, not from the slides: the word comes from 18th-century German forestry (Carlowitz, 1713): cut only as much wood as grows back.`},
+{h:'The problems with the standard definition', text:`- What is a need, compared to a wish, a demand or a desire? Thirst is a need; a smartphone, a car, a flight to Mallorca? If everything people demand counts as a need, the definition protects consumption; if only biological needs count, it says too little about how humans actually live.
+- If thirst is a need, did humans always satisfy it in the same form? River water, wells, tap water, bottled water, soft drinks: the need stays, the form changes completely, and the forms decide what is sustainable.
+- Humans are historical creatures, they change essentially. So how should we know what the needs of future generations are? People in 1900 could not have known that we need electricity, the internet or rare earths. We do not know what technologies, values or forms of life our grandchildren will have.
+
+The problem in one sentence: the definition asks us to protect the ability of future generations to meet their needs, but the needs it refers to are exactly what we cannot know. And still we have to decide now, under uncertainty; doing nothing is also a decision with consequences for them.`},
+{h:'Consequences for business and corporations (slide 21)', text:`- If being sustainable is not just something in addition to an activity being a business activity, what does it mean to be a proper business person? Then a business person who makes profit by destroying the conditions of business (overfishing, burning as much oil as possible) is not a good business person with a bad extra habit, but a bad business person, like a doctor who heals by poisoning.
+- If sustainability is, today, largely secured by state regulation (emission trading, fishing quotas, bans on substances, minimum standards), what does this tell us about the social form of economic processes today? It shows that the economy as it is organised, by profit-oriented corporations, does not by itself produce sustainability; it has to be added from outside, like redness.
+- And what does it tell us about the nature of corporations? If their function is profit, sustainability appears to them as a cost or a constraint. The oil industry makes the most money by selling as much oil as possible; if climate science is right (an overwhelming majority, he said), that means global warming with unforeseeable consequences.
+
+So there is a tension: conceptually, sustainability belongs to a proper economy (roundness); practically, it is secured by regulation against the interest of profit-oriented corporations (redness). Showing this tension is the awareness of problems he wants.`},
+{h:'Connections for combination questions', text:`Sustainability × corporation :: "What makes a corporation sustainable?": a corporation that only survives (economic sustainability) vs. one whose activity keeps the conditions of life intact; profit as one function among others
+Sustainability × compliance :: if sustainability is secured by rules from outside, compliance departments become the place where sustainability is enforced; but compliance without integrity is box-ticking (greenwashing)
+Sustainability × ownership :: species-specific ownership of the climate, the oceans; who may decide in the name of future generations?`}
+],
+recall:[
+{q:'What does the comparison "redness of a car vs. roundness of a circle" ask?', a:'Whether sustainability is an added, accidental property of an economy (like a car\'s colour) or belongs to what a proper economy is (like roundness to a circle).'},
+{q:'Quote the Brundtland definition and its point.', a:'"Development which meets the needs of current generations without compromising the ability of future generations to meet their own needs" (1987). Point: fairness between generations; we may use the world but not take away the possibilities of those after us.'},
+{q:'Name the three problems with the definition.', a:'What is a need (vs. wish, demand, desire)? Needs like thirst are satisfied in changing forms. Humans are historical and change essentially, so we cannot know the needs of future generations.'},
+{q:'What is the thesis of Raatzsch\'s own paper on sustainability?', a:'It is a mistake to first analyse "economy" and then add sustainability; that misunderstands both the concepts and today\'s practical demands. Sustainability belongs to what a proper economy is.'},
+{q:'What does it tell us that sustainability is largely secured by state regulation?', a:'That today\'s profit-oriented form of the economy does not produce sustainability by itself; for corporations it appears as an external cost (redness), although conceptually it belongs to a proper economy (roundness).'}
+],
+exam:['sust-needs','sust-corp','sust-reg']},
+
+{id:'rzd-comp', title:'Compliance', short:'The general idea, rules "from outside"?, the defect engine, breaking rules, integrity, William James',
+core:`The general idea of compliance: economic activity needs rules (financial crisis, drug dealing, pollution), rules need sub-rules for punishment, and compliance departments make sure rules are obeyed. Raatzsch questions all three steps: in which sense do the rules come from outside business; would something be a rule if nobody ever obeyed it (the defect engine); and how is breaking rules possible at all? His own answer in his paper: there is no compliance in the full sense without integrity; compliance without integrity is a pathological case.`,
+sections:[
+{h:'The general idea (slide 23)', text:`=> We need rules to regulate economic activity (otherwise BIG problems: the financial crisis, drug dealing, pollution) → To be followed, rules include (sub)rules for punishment → Compliance departments make sure rules and regulations are obeyed
+
+And the implicit picture behind it: rules and regulations, which companies have to make sure are obeyed, come, as it were, from outside business.
+
+Example from our times you can use: Volkswagen had a compliance organisation, and still engineers built software to cheat emission tests (diesel scandal, 2015). Rules, punishments and a department were all there.`},
+{h:'First problem: do the rules really come from outside business?', text:`Hint on the slide: compare state-ordered regulations with company planning.
+
+In which sense it is true :: laws, BaFin rules, environmental standards are made by the state, not by the company, and from the point of view of the profit aim they appear as external costs and limits.
+In which sense it is false :: a company is itself a system of rules: plans, budgets, job descriptions, codes of conduct, processes. Company planning is rule-making from inside, and employees experience it as just as binding as law.
+Deeper: business is constituted by rules :: property, contracts, money, limited liability, the corporation as a legal person exist only because of a legal order. Without rules there would be no business that rules could then regulate from outside. Like the king in chess: the rules do not limit the king from outside, they make him a king.
+And the other direction :: many regulations are shaped by business itself (industry standards, lobbying), and business needs them to function (trust in banks, fair competition).
+
+So the picture "rules from outside, business inside" is too simple. The question becomes: which rules are experienced as external, by whom, and why?`},
+{h:'Second problem: the defect engine', text:`Would something be a rule (law, regulation) if never ever anybody obeyed it? Hint: is a defect engine only different from a functioning engine in that it does not work?
+
+A defect engine is still an engine, but only because it is measured against working engines: we know what it is supposed to do, and "defect" means it falls short of that. If no engine had ever worked, there would be no engines, only lumps of metal. Likewise, a broken rule is still a rule, because breaking is measured against a practice in which the rule is generally followed. A "rule" that nobody ever obeyed, that nobody ever used as a standard, would not be a rule at all, only words on paper.
+
+Consequence for compliance: rules live in practice. They exist because they are generally followed, not because they are written down or because punishments are attached. Compliance therefore cannot be produced by punishment alone; it presupposes a practice in which most people follow the rules most of the time for other reasons than fear.`},
+{h:'Third problem: how is breaking rules possible?', text:`If rules and laws are indeed often not obeyed, how is that possible? Rules are not laws of nature. A stone cannot break the law of gravity; a person can break a law, because a rule is a standard for agents who understand it and can act otherwise. You can only break a rule you know.
+
+This means: compliance is not a mechanism but a matter of the will and understanding of the people involved. And punishment cannot carry the whole weight. If rules were only followed because of punishment, the punishment rules would need enforcing too, and so would the rules for the enforcers: who controls the controllers? At some point people must follow rules because they accept them.
+
+Raatzsch's paper (On the very notion of compliance, with Cornuel and Hommel, 2015) draws exactly this conclusion: there is no such thing as compliance in the full sense without integrity. Compliance without integrity, outward conformity only out of fear of punishment, is a pathological case of compliance, as a defect engine is a defect case of an engine.
+
+And there is a second side, from William James (in the reader): moral progress sometimes consists in breaking rules that have grown too narrow for the actual case. So compliance is not automatically good either. A person of integrity may have to break a rule (a whistleblower breaks loyalty rules to report fraud), and a "compliant" employee may follow orders into wrongdoing (at Beech-Nut people kept working as instructed while the company broke food law).`},
+{h:'The problems you should show', text:`- Rules "from outside": true from the profit perspective, false because companies make rules themselves and because business is constituted by rules (property, contracts, legal persons).
+- The defect engine: rules exist only in a practice of following them; a rule nobody ever obeyed would be no rule.
+- Breaking rules presupposes agents who understand them; compliance cannot be secured by punishment alone (who controls the controllers?).
+- Compliance and integrity: compliance without integrity is pathological (box-ticking, greenwashing, VW); but integrity can require breaking a rule that has grown too narrow (William James), so compliance is not good in itself.`}
+],
+recall:[
+{q:'State the general idea of compliance in three steps.', a:'Economic activity needs rules (financial crisis, drugs, pollution); rules need sub-rules for punishment; compliance departments make sure the rules are obeyed. Implicit: the rules come from outside business.'},
+{q:'In which sense do rules come from outside business, and in which sense not?', a:'True: state law limits the profit aim from outside. False: companies make rules themselves (planning, codes), and business is constituted by rules (property, contracts, legal persons), like the king in chess.'},
+{q:'What is the point of the defect engine?', a:'A defect engine is an engine only measured against working engines. A broken rule is a rule only against a practice of following it; a rule nobody ever obeyed would not be a rule.'},
+{q:'Why is breaking a rule possible, and what follows?', a:'Rules are standards for agents who understand them and can act otherwise, not laws of nature. So compliance depends on the will of people; punishment alone leads to a regress (who controls the controllers?).'},
+{q:'What is the thesis of Raatzsch\'s compliance paper?', a:'There is no compliance in the full sense without integrity; compliance without integrity is a pathological case. (And, with William James: sometimes integrity means breaking rules that have grown too narrow.)'}
+],
+exam:['comp-outside','comp-never','comp-integrity']}
+];
+
 const RZ_EXAM_QS = [
-{topic:"Ownership",q:"What is ownership? (Put emphasis on why every form of ownership is social.)",pointers:["Start from primitive forms: taking a toy away from a child, picking an apple from a tree, and what we say (\"This is mine!\", \"Give it back!\").", "Kinds: private (\"Hands off!\"), collective, public, species-specific (?). All of them are social.", "Problem: was Robinson Crusoe an owner? \"Mine\" only has a point among others.", "Words like own / owner / property are not strictly regulated; say how you use them."]},
-{topic:"Ownership",q:"How do ownership and technology change together? (Use the apple that is too far away and the whales.)",pointers:["An extension of our technological capabilities usually goes along with a change in our social capabilities, and vice versa.", "Apple within reach: grab it. Apple too far away: tools, cooperation, rules about who gets it. Whales: what could \"owning\" them even mean?", "Show the problem: forms of ownership are not fixed; they grow with what we can do."]},
-{topic:"Ownership of a corporation",q:"What is ownership of a corporation? (Address what changes when someone says: \"Today we acquired 51% of the stocks of company A.\")",pointers:["Compare with primitive ownership: you cannot hold a corporation like a toy. What exactly is owned: shares, votes, assets, a right to profits?", "Link to corporations: \"groups of people acting towards a common goal\" (du Plessis). Can a group of people be owned?", "Awareness of problems: ownership and control come apart (Fama & Jensen); who decides, who is responsible (Beech-Nut: who could have gone to prison?)."]},
-{topic:"Corporation",q:"What is a corporation? (Address the question whether there is only one corporate function.)",pointers:["Start with the common definition: \"groups of people acting towards a common goal\" (du Plessis et al.), and show its limits (classical definition form, many forms of organizations).", "Is profit / ROI the one function a corporation must realize to exist? Compare: is there just one thing that constitutes survival in the animal kingdom?", "Corporation, company, firm, enterprise are used interchangeably in ordinary language; legal language is different."]},
-{topic:"Corporation",q:"A corporation pleads guilty, but no person goes to prison. What is a corporation, that this is possible? (Look at the Beech-Nut case.)",pointers:["Beech-Nut: adulterated baby juice sold knowingly, 215 counts, $2 million fine, nobody fired or imprisoned.", "Tension: a corporation is not a person, only the guilty should be punished, yet the company was punished and people could have been.", "Relation persons – organization: sum of individuals? Methodological individualism; \"emergence\" names the problem, it does not solve it."]},
-{topic:"Sustainability",q:"What is sustainability? (Look at the problem of knowing the needs of future generations.)",pointers:["Standard definition (Brundtland 1987): meeting the needs of current generations without compromising the ability of future generations to meet their own needs.", "What is a need, compared to a wish, a demand or a desire? Thirst is a need, but has it always been satisfied in the same form?", "Humans are historic creatures who change essentially: how can we know what future generations will need?"]},
-{topic:"Sustainability",q:"What makes a corporation sustainable? (Address whether \"sustainable\" is like the redness of a car or like the roundness of a circle.)",pointers:["Redness: an added, contingent property. Roundness: part of what a circle is.", "If sustainability is not just an add-on to business activity, what does it mean to be a proper business person?", "If sustainability is largely secured by state regulation today, what does that say about the social form of economic processes and the nature of corporations?"]},
-{topic:"Compliance",q:"What is compliance? (Put emphasis on whether the rules really come from outside business.)",pointers:["General idea: rules regulate economic activity (financial crisis, drugs, pollution); they include rules for punishment; compliance departments make sure they are obeyed.", "In which sense do the rules come from outside, and in which not? Compare state regulation with company planning (companies make rules too).", "Show the problem instead of only describing departments."]},
-{topic:"Compliance",q:"Would a rule still be a rule if nobody ever obeyed it? What follows for compliance? (Use the defect engine.)",pointers:["Is a defect engine only different from a functioning engine in that it does not work? A broken engine is still an engine, but only against the background of working ones.", "If rules are often not obeyed, how is that possible? Breaking a rule presupposes the rule.", "Consequence for compliance: punishment rules, the difference between a rule and a regularity."]}
+{id:'own-social', topic:'Ownership', dossier:'rzd-own', q:'What is ownership? (Put emphasis on why every form of ownership is social.)',
+outline:['Words: "own", "property", "belongs to" are used interchangeably; I mean the relation in which someone may decide about a thing and exclude others.','Primitive forms: the child\'s toy ("Give it back!") vs. the apple you just take; ownership appears in the reaction of others.','Kinds: private ("Hands off!"), collective, public, species-specific (?).','Why social: "Hands off!" is addressed to someone; Robinson Crusoe.','Problem: ownership needs recognition and is tied to control, which can come apart (shareholders); the best form cannot be decided in general.'],
+problems:['Robinson Crusoe: is there ownership without others?','Ownership as control vs. ownership where control is restricted.','Recognition: what about the thief\'s "This is mine"?'],
+model:`In ordinary language it makes no difference whether we say "N.N. owns X", "X is N.N.'s property" or "X belongs to N.N."; the words are not strictly regulated. By ownership I mean the relation in which someone may decide what happens with a thing and may exclude others from that decision.
+
+Instead of starting with a definition, it helps to look at primitive forms and at what we do and say. When you take a toy away from a child, the child protests: "Give it back, it's mine!" When someone wants an apple from a tree, they simply reach out and take it. In the second case there is appropriation, but not yet ownership. Ownership only shows itself where someone else could take, use or claim the thing, and where we expect them to respect our claim. "This is mine!" is not a description of the toy but a demand addressed to others.
+
+This is why every form of ownership is social. Private property means "Hands off!", and that sentence needs someone it is said to. Collective ownership (a family farm, a cooperative) and public ownership (roads, parks) are obviously relations between people. Even the strange case of species-specific ownership, the oceans or the climate as belonging to humankind, only raises the question of who may decide and who is excluded. Was Robinson Crusoe an owner? Alone on his island he uses and controls things, but "This island is mine" has no addressee; there is nobody to exclude and nobody who could recognise his claim. Ownership in the full sense begins when Friday arrives. One could object that Robinson brings the idea of property with him from his society, but that only confirms the point: the concept is social, even when one person is alone.
+
+Here a problem appears. If ownership depends on recognition, what about the thief who says "This is mine"? And if ownership means control, what do we own when control is restricted? A shareholder "owns" a corporation but cannot decide about its products, and even the owner of 51 % of a bank needs the approval of BaFin to choose its CEO. So ownership is not one fixed thing: its forms grow with our technical and social capabilities, from the toy to the stock market. That is also why the question "What is the best form of ownership?" cannot be answered in general. It depends on whether we speak of a toothbrush, a forest or the climate, and on who should decide.`},
+{id:'own-tech', topic:'Ownership', dossier:'rzd-own', q:'How do ownership and technology change together? (Use the apple that is too far away and the whales.)',
+outline:['The genealogy idea: ownership develops in forms, not one essence.','Apple within reach: no ownership question; out of reach: tools, cooperation → who owns the ladder, the apples?','Whales: organisation, boats, territories, states.','Raatzsch\'s thesis: technological and social capabilities change together, both directions.','Problem: today\'s interconnection (Lehman, Strait of Hormuz) and new objects (data, emission rights) stretch the concept; regulation follows.'],
+problems:['New technologies create objects that do not fit the old concept (data, ideas, emission rights).','Interconnection: activities can no longer be carried out in isolation, so ownership comes with regulation.','Does social change also drive technology (vice versa)?'],
+model:`Ownership is not one fixed relation between a person and a thing; it has a history, a genealogy, and this history runs parallel to what we are able to do.
+
+Take the simplest case: an apple hangs within reach and you eat it. No question of ownership arises, there is only appropriation. Now suppose the apple is too far away to simply grab it. You need a tool, a stick or a ladder, or you need someone to lift you. At once new questions appear: who owns the ladder, who gets the apples if two people worked together, and does the person who planted the tree have a claim? A technical extension, the tool, brings a social one with it: rules about sharing, lending and dividing.
+
+Now take whales instead of apples. Hunting whales requires boats, crews, knowledge of the sea, organisation and a division of the catch. Whales migrate through waters that nobody owns, so ownership now needs rules between groups and, today, between states (fishing zones, international agreements). This is what Raatzsch means when he says that an extension of our "technological" capabilities usually goes along with a change in our "social" capabilities, and vice versa: new tools require new forms of ownership, and new forms of ownership, such as the corporation with its shares, make new technologies possible, for example railways or chemical industries that no single owner could have financed.
+
+The problem is that this development does not stop and does not stay contained. Picking an apple affects nobody; but when Lehman Brothers collapsed, or when a 50-kilometre strait is closed, the effects reach countries that have nothing to do with it. Ownership of large economic units therefore comes with regulation that the owner of an apple tree never faced. And technology keeps producing things that hardly fit the old concept: data, ideas, genes, rights to emit CO2. Can they be owned like a toy? The genealogy shows that our concept of ownership is stretched with each step, and that we have to decide again and again how far it should reach.`},
+{id:'own-best', topic:'Ownership', dossier:'rzd-own', q:'Is there a best form of ownership? (Address what real difference an answer would make and who should answer which question.)',
+outline:['Kinds: private, collective, public, species-specific (?); all social.','The usual debate: justify private vs. collective vs. public property.','Raatzsch\'s three counter-questions.','Examples: toothbrush, water supply, railway, climate.','Problem: general answers are empty, concrete answers need decisions, and the question of who decides is itself a question of power/ownership.'],
+problems:['General answers decide nothing in concrete cases.','Different objects need different forms.','Who decides is itself contested.'],
+model:`There are different kinds of ownership: private ("Hands off!"), collective (a cooperative, a family farm), public (roads, schools) and perhaps species-specific (the oceans, the climate). All of them are social, because each regulates who may use and decide about something and who is excluded. The classic debate asks which of them can be justified and which is the best.
+
+Raatzsch suggests three counter-questions before answering. First: what real difference would an answer make? Suppose we prove that private property is in general the best form. That decides nothing about whether a city should sell its water supply, whether a vaccine patent should be released in a pandemic, or whether railways should be public. A general answer would be true and useless.
+
+Second: can we answer this in general terms at all? Probably not. The best form of ownership for a toothbrush is obviously private; for a village pasture it may be collective; for a road network public; and for the climate we do not even know whether "ownership" is the right concept. The question changes its meaning with the object.
+
+Third: who should answer which question? Some questions belong to the owners themselves (what colour my house is), some to courts (whose the land is), some to parliaments (whether energy networks are public), some to international bodies (fishing in the open sea). Here a problem appears: deciding who decides is itself a form of control, and control is the core of ownership. So the question "who owns the decision?" returns at the next level.
+
+So the honest answer is: there is no best form of ownership in general, and searching for one hides the real work, which is to decide case by case, with awareness of whose interests are at stake. This is not relativism. In concrete cases there can be good reasons for one form; but the reasons come from the case, not from a general theory of property.`},
+{id:'owncorp-51', topic:'Ownership of a corporation', dossier:'rzd-owncorp', q:'What is ownership of a corporation? (Address what changes when someone says: "Today we acquired 51 % of the stocks of company A.")',
+outline:['Compare with primitive ownership: the toy can be held and controlled; a corporation cannot.','What 51 % gives: shares, votes, practically the supervisory board, a claim to profit.','What it does not give: control over billions of decisions; shareholder as shareholder only wants profit (Norwegian fund).','Separation of ownership and control; regulation (BaFin).','Problem: if ownership is control, who owns the corporation?'],
+problems:['Owning the claim to profit ≠ owning the activity.','Ownership is control, but shareholders cannot control → special sense or split ownership.','Even 51 % is limited from outside (BaFin).'],
+model:`"Today we acquired 51 % of the stocks of company A" sounds like "This toy is mine", only bigger. But if we compare the two, we see that ownership of a corporation is ownership in a very special sense.
+
+The child can hold the toy, use it and refuse to give it back; ownership here is control. What does the buyer of 51 % get? Shares, votes and, with a majority, practically the supervisory board: they can choose the management board, decide its pay and reject a strategy that brings too little profit. What they do not get is control over what the corporation actually does. A corporation like Volkswagen consists of billions of decisions: which products to build, whom to hire, where the next factory goes, how the exhaust pipe of a new engine is designed, even what is on the menu in the cafeteria. The shareholder as a shareholder cannot make these decisions, because a shareholder is defined only by an interest in profit. The Norwegian state fund, the largest shareholder in the world, does not care whether it holds shares in cars or shoes. If a shareholder also happens to be an engineer, that is accidental.
+
+So who owns the corporation? If ownership is control, there are two options. Either many people own parts of it, everyone who controls relevant decisions, like the head of research who decides on the engine. Or the shareholders own it only in a special sense: they own a claim to its profit and a say in its direction, not the activity itself. This is what the slogan "separation of ownership and control" points to; taken literally, it would mean "separation of ownership and ownership".
+
+A further change: even 51 % is limited from outside. Whoever owns 51 % of Deutsche Bank still needs BaFin's approval for a new CEO, because today the collapse of one bank can threaten the whole financial system, as Lehman Brothers showed. What changes, then, from the toy to the 51 % is that ownership becomes split (between shareholders and managers), mediated (through boards and votes) and regulated (by the state). We still use the same word, but the relation behind it is completely different.`},
+{id:'owncorp-who', topic:'Ownership of a corporation', dossier:'rzd-owncorp', q:'Who owns a corporation? (Put emphasis on the separation of ownership and control.)',
+outline:['Standard answer: the shareholders.','Ownership is (essentially) control.','Shareholders cannot control the decisions; managers do; history (Adam Smith, 19th-century firms).','Two readings of the separation; managers\' own interests (bonuses).','Stakeholder vs. shareholder as interests; the shareholder is a stakeholder.'],
+problems:['If ownership = control, the shareholders are not owners in the ordinary sense.','Managers control but may follow their own interests.','Shareholder/stakeholder: interests, not theories; someone must decide.'],
+model:`The standard answer is simple: a corporation belongs to its shareholders. Legally that is correct. But if we ask what ownership means, the answer becomes problematic.
+
+In its primitive forms ownership is control: the owner decides what happens with the thing and excludes others. Shareholders cannot do that with a corporation. The billions of decisions that make up a company, products, hiring, investments, technical details, need competences that a shareholder as such does not have. A shareholder is defined by an interest in profit, nothing else. What shareholders can decide, always with an eye on the dividend, is who sits on the boards, how managers are paid and, roughly, the strategic direction.
+
+This situation has a history. In early capitalism the owner usually ran the business, and Adam Smith was deeply suspicious of managers because they follow their own interests. In the 19th century firms became too large and complex for any owner to run; professional management emerged and control moved to the managers. This is the "separation of ownership and control" (Fama & Jensen). Taken literally, the phrase makes no sense if ownership is control, because it would mean the separation of ownership from ownership. So it means either that ownership is split, shareholders own the claim to profit, managers "own" the decisions, or that shareholders own the corporation in a very special sense.
+
+The separation creates a real problem: managers may use their control for their own interests. Since board members stay only three to five years on average, they could boost short-term results and leave, which is why part of their bonus is now paid about five years later.
+
+Finally, the debate between shareholder and stakeholder theory shows that the question "who owns it?" is really a question of interests. Shareholders want profit, workers high wages, and since wages are a major cost, these interests conflict. Neither "theory" explains anything; each expresses an interest. And the shareholder is a stakeholder too. So the answer is: the shareholders own the corporation in a legal and very limited sense, while control lies with others, and whose interests count is not settled by ownership but has to be decided.`},
+{id:'corp-function', topic:'Corporation', dossier:'rzd-corp', q:'What is a corporation? (Address the question whether there is only one corporate function.)',
+outline:['Ordinary use: company, firm, corporation interchangeable.','Examples: clear (Siemens), non-case (family), metaphorical (Japan Inc.), borderline (IG Farben in liquidation).','du Plessis: group of people acting towards a common goal; what it captures, where it breaks.','One function? Profit/ROI vs. animal-kingdom analogy; profit necessary like breathing.','Open problem: one function gives a decision criterion but makes everything else a means; many functions need someone who decides.'],
+problems:['Borderline cases break the definition (IG Farben).','Whose common goal?','Profit as necessary condition vs. only purpose.'],
+model:`In ordinary language we do not distinguish between a corporation, a company, a firm or an enterprise; legal language does, but that is not ordinary language. So instead of beginning with a definition, I begin with examples. Siemens, Suzuki and Volkswagen are clear cases of corporations. A family is clearly not one. "Japan Inc." uses the word metaphorically. And IG Farben is a borderline case: once the largest chemical corporation in the world, after the war it was dissolved, yet for many years it existed "in liquidation" as a postal address in Frankfurt, legally a corporation without factories, customers or employees.
+
+The standard definition says that corporations are "ultimately groups of people acting towards a common goal" (du Plessis). This captures the clear cases, but IG Farben in liquidation is a corporation without any group acting, and it is unclear whose goal the common goal is: shareholders want profit, workers high wages, engineers a good product, the state stable jobs.
+
+Is there then one corporate function, for example generating profit or return on investment? Raatzsch compares this with the animal kingdom: is there just one thing that constitutes survival? An animal survives by eating, breathing, avoiding enemies and reproducing; none of these alone is "the" function of living. For an ordinary corporation profit is certainly necessary, like breathing: a company that never makes a profit disappears. But it does not follow that profit is its only function or its purpose. A corporation also produces goods people need, employs and trains people, must stay within the law and, in some industries, fulfils public tasks such as energy supply.
+
+Here lies the problem. If we accept one function, as Jensen does with value maximisation, decisions become clear: whatever increases value is right. But then products, workers and the environment become mere means, and harmful effects are no surprise (the oil industry earns most by selling as much oil as possible). If we accept many functions, the corporation looks more like real life, but nobody can say how to weigh them, and someone has to decide. A corporation is therefore best described not by one essence but as a historical social form, which appeared in the 19th century with railways, steel and textiles, which pursues several functions at once, and whose central question is who decides between them.`},
+{id:'corp-monster', topic:'Corporation', dossier:'rzd-corp', q:'Is the corporation an evil, profit-hungry monster? (Address the interests of shareholders and employees.)',
+outline:['Answer the question first: not by definition.','Profit = revenue − costs; wages: zero-sum (birthday cake) vs. dynamic win-win; interests stay opposed.','Shareholder interests not evil (pension funds); stakeholder/shareholder as interests.','But unwelcome effects are predictable: oil and climate; waves of regulation; minimum wage.','Avoid the one-example fallacy ("the factory helps the town").'],
+problems:['A general claim cannot be proven by one example.','Conflict of interests is structural, even in win-win situations.','Regulation as a sign that profit-orientation produces unwelcome effects.'],
+model:`No, not by definition. A corporation aims at profit, and there is nothing evil in that as such: what is evil about the Norwegian state fund or a pension fund that wants its money to grow for the pensions of teachers? But the question hides a real problem, and it lies in the structure of profit itself.
+
+Profit is revenue minus costs. Costs are materials, energy, buildings and, very often the largest part, wages. So one way to increase profit is to reduce wages or to let people work longer for the same pay. The employee has an interest in wages as high as possible, the shareholder in wages as low as possible. In a fixed situation this is a zero-sum game, like cutting a birthday cake: if one piece gets bigger, another gets smaller. In a dynamic situation both sides can win: workers accept ten hours instead of eight for a ten percent raise, the company undercuts its competitor and later raises prices. But even then the interests remain opposed. Shareholder theory and stakeholder theory are therefore not theories but expressions of these interests, and since shareholders are stakeholders too, the opposition is less clear than it seems.
+
+The opposite claim, "the richer corporations get, the better for everyone", is not true either. It is usually defended with an example, a factory that brings jobs to a poor town. But an example does not prove a general claim. The oil industry earns the most by selling as much oil as possible, and if climate science is right, burning as much oil as possible leads to global warming that may destroy the conditions of life for everyone.
+
+So the correct answer is: a corporation is not a monster, but if it is an institution that aims at profit, it is no surprise that its actions have unwelcome effects. That is why states regulate corporations, in waves: after the crisis of 1929, then deregulation under Reagan and Thatcher, then the Asian crisis of 1997 and the financial crisis of 2007/08, followed by new regulation. The minimum wage shows the same logic: even a government without compassion has an interest in preventing desperate poverty, crime and instability. The moral question is therefore not whether corporations are evil, but which effects of profit-seeking a society accepts and who decides about that.`},
+{id:'corp-beech', topic:'Corporation', dossier:'rzd-corp', q:'A corporation pleads guilty, but no person goes to prison. What is a corporation, that this is possible? (Look at the Beech-Nut case.)',
+outline:['The case: adulterated baby juice, 215 counts, $2 million fine, nobody imprisoned or fired.','The tension: a corporation is not a person; only the guilty should be punished.','Who could have gone to prison? Methodological individualism vs. corporation as unit; emergence.','Punishing persons also hits innocents (Lisa); punishing the corporation hits workers and shareholders.','Consequence: corporation as a social form with its own kind of responsibility; open question.'],
+problems:['Guilt seems to belong to persons with a will.','The corporation as more than the sum of individuals: emergence is only a name.','Every punishment hits innocent people too.'],
+model:`In the Beech-Nut case the president and vice-president of the company admitted that they knowingly sold adulterated apple juice for babies. The corporation pleaded guilty to 215 counts of violating food and drug laws and paid a fine of two million dollars. Nobody went to prison, nobody was fired, all salaries and legal costs were paid. One executive asked: "What was I supposed to do? Close down the factory?"
+
+This seems strange, and the strangeness tells us something about what a corporation is. On the one hand a corporation is not a human being; it has no body to put in prison and, it seems, no will that could be good or evil. On the other hand we say that it pleaded guilty, that it was punished, that it acted. And we hold that only the guilty should be punished.
+
+One answer is methodological individualism: the corporation is nothing but the result of individuals interacting, so only individuals can be guilty, and the right reaction would have been to punish the managers. But then the corporation as such disappears, and we cannot explain why it makes sense to say that "Beech-Nut" sold the juice: no single employee did it alone; the deed was done through a structure of roles, orders and routines. To say that the corporation "emerges" from the individuals only names this problem, it does not solve it.
+
+The opposite answer treats the corporation as a kind of person. Then the fine is its punishment. But a fine against a corporation is paid by people who did nothing wrong: shareholders, perhaps workers whose wages or jobs are cut. And punishing the managers would also hit innocent people, their children for example, as in the case of Lisa whose father goes to prison. Courts take such side effects into account, but they cannot avoid them.
+
+So the case shows that a corporation is neither just a group of people nor a person, but a social form with roles and positions: as a waiter cannot declare war, a manager can only act as a manager within this structure. Responsibility is spread across this structure, which makes it possible that a corporation is guilty while no one goes to prison. Whether that is acceptable is exactly the open question we have to face.`},
+{id:'sust-needs', topic:'Sustainability', dossier:'rzd-sust', q:'What is sustainability? (Look at the problem of knowing the needs of future generations.)',
+outline:['What can be sustainable: processes, states, objects, ideas, features.','Brundtland 1987 and its point: fairness between generations.','Need vs. wish/demand/desire; changing forms (thirst).','Humans are historical: future needs unknowable.','Consequence: we must decide under uncertainty; sustainability as part of a proper economy (roundness).'],
+problems:['What counts as a need?','The forms of satisfying needs change.','Future needs are unknowable, but not deciding is also a decision.'],
+model:`Many things can be sustainable: processes like fishing, states like a level of debt, objects like a building, ideas, and features of an activity. The most widely used definition comes from the Brundtland Commission (1987): a sustainable development is a "development which meets the needs of current generations without compromising the ability of future generations to meet their own needs." Whatever its exact wording, the point of this definition is fairness between generations: we may use the world, but not in a way that takes away the possibilities of those who come after us.
+
+The definition rests on the concept of a need, and here the problems begin. What is a need, compared to a wish, a demand or a desire? Thirst is clearly a need. But is a car, a smartphone or a holiday flight a need? If everything people demand counts as a need, the definition protects our consumption; if only biological needs count, it says almost nothing about how people actually live. Moreover, even a basic need like thirst has never been satisfied in the same form: people drank from rivers, then from wells, then from taps, and today from plastic bottles. The need stays, but its forms change completely, and it is the forms that decide whether something is sustainable.
+
+The deepest problem is that humans are historical creatures; they change essentially. People in 1900 could not know that their grandchildren would need electricity, antibiotics or the internet. We cannot know what technologies, values and ways of life future generations will have, so we cannot know their needs. The definition asks us to protect precisely what we cannot know.
+
+Does that make sustainability empty? No, but it changes the question. We have to decide now, under uncertainty, and doing nothing is also a decision with consequences for them. A good way out is to look not at unknown future needs but at the conditions of any human life: a climate in which people can live, soil, water, functioning institutions. An economy that destroys these conditions is not an economy with a missing extra feature; it is a defective economy. In this sense sustainability is less like the red colour of a car than like the roundness of a circle: it belongs to what a proper economy is.`},
+{id:'sust-corp', topic:'Sustainability', dossier:'rzd-sust', q:'What makes a corporation sustainable? (Address whether "sustainable" is like the redness of a car or like the roundness of a circle.)',
+outline:['Two meanings: the corporation survives (economic sustainability) vs. its activity keeps the conditions of life intact.','Redness: added feature (CSR, logo); roundness: part of what proper business is.','Raatzsch\'s paper: do not define economy first and add sustainability.','Profit function vs. sustainability: oil example; regulation shows external enforcement.','Tension: conceptually roundness, practically redness; consequence for the proper business person.'],
+problems:['Sustainable for whom: the corporation or the world?','Profit can conflict with sustainability.','If it must be enforced from outside, the actual form treats it as redness.'],
+model:`"A sustainable corporation" can mean two different things. It can mean a corporation that survives in the long run, economically sustainable. Or it can mean a corporation whose activity does not destroy the conditions of life of present and future generations. The two can fall apart: a coal company may be economically very sustainable for decades precisely by being unsustainable in the second sense.
+
+Raatzsch asks what kind of property "sustainable" is. Is it like the redness of a red car, a feature added to something that would be complete without it? Then a corporation is first of all a profit-making institution, and sustainability is an extra: a CSR department, a green logo, a report. Or is it like the roundness of a circle, a property without which the thing is not what it is? Then a corporation that destroys the conditions of its own activity, the soil, the climate, the health of its workers, the trust of its customers, would not be a corporation without an extra, but a defective one, as a broken engine is still an engine, but not a good one.
+
+Raatzsch argues in his own work that it is an error to first define "economy" and then add sustainability; that misunderstands both concepts. I find this convincing: economic activity is the way humans produce the conditions of their lives, and an activity that destroys these conditions contradicts its own point.
+
+But here the problem appears. In practice sustainability is today largely secured by state regulation: emission trading, quotas, bans. This shows that the actual social form of the economy, profit-oriented corporations, does not produce sustainability by itself. For a corporation whose function is profit, sustainability appears as a cost from outside, like redness. The oil industry earns the most by selling as much oil as possible, and that means global warming. So conceptually sustainability belongs to proper business, while practically it is imposed against the interest in profit.
+
+What makes a corporation sustainable, then, is not a label but whether its way of making profit keeps intact the conditions it depends on. And the consequence for the business person is uncomfortable: being a proper business person would mean treating sustainability as part of the job, even where the law does not yet demand it and even if it costs profit.`},
+{id:'sust-reg', topic:'Sustainability', dossier:'rzd-sust', q:'Sustainability is today largely secured by state regulation. What does this tell us about the nature of corporations? (Address the question of a proper business person.)',
+outline:['Facts: emission trading, quotas, bans; regulation waves.','Reading 1: corporations aim at profit; sustainability external (redness).','Reading 2: the interconnected world makes isolated activity impossible; regulation is part of business today.','Proper business person: sustainability as part of good business (roundness).','Problem: who should act — the state, the corporation, the individual manager?'],
+problems:['Profit-orientation does not produce sustainability by itself.','Regulation as a sign of interconnection.','Responsibility of the individual business person vs. the system.'],
+model:`Much of what makes today's economy more sustainable comes from the state: emission trading, fishing quotas, bans on harmful substances, building standards. Corporations follow these rules, but they rarely set them on their own. What does this tell us?
+
+First, it tells us something about the social form of the economy. Corporations are institutions that aim at profit, and for them sustainability usually appears as a cost: cleaner production, fewer catches, less oil sold. If it had to be brought in by the state, then the economy as it is organised does not produce sustainability by itself. In Raatzsch's terms, sustainability is treated in practice like the redness of a car, something added from outside, not like the roundness of a circle.
+
+Second, it tells us something about how corporations act in today's world. Picking an apple affects nobody, but the activity of large corporations affects people far away and in the future. The more interconnected the world becomes, the less any economic activity can be carried out in isolation, and the more regulation becomes part of what business is. Seen this way, regulation is not simply an attack on business from outside, but the form in which a society keeps the conditions of business intact.
+
+Third, it raises the question of the proper business person. If sustainability is not just an addition to business activity, then a business person who earns money by destroying the conditions of business is not a good business person with a bad habit, but a bad business person, as a doctor who poisons patients is a bad doctor. That would mean that a proper business person cares for sustainability even where the law does not demand it.
+
+Here lies the problem. Can we expect individual managers to act against the profit interest of their corporation and against competitors who do not? If they do, they may lose the competition; if they do not, they leave everything to the state. So the fact of regulation shows a tension built into corporations: what a proper economy requires and what a profit-oriented corporation rewards can fall apart. Who should close this gap, the state, the corporation or the individual, is the open question.`},
+{id:'comp-outside', topic:'Compliance', dossier:'rzd-comp', q:'What is compliance? (Put emphasis on whether the rules really come from outside business.)',
+outline:['The general idea in three steps.','In which sense true: state rules limit the profit aim.','In which sense false: company planning makes rules; business constituted by rules (property, contracts, legal persons; king in chess); lobbying.','Consequence: compliance is about rules inside and outside.','Problem: compliance needs integrity; mere fear of punishment is not enough.'],
+problems:['External vs. internal rules (state regulation vs. company planning).','Business constituted by rules.','Punishment alone cannot secure compliance.'],
+model:`The general idea of compliance is simple. Economic activity needs rules, because without them it can cause huge problems: think of the financial crisis, drug dealing or pollution. For rules to be followed, they include sub-rules for punishment. And compliance departments make sure that rules and regulations are obeyed. Behind this lies a picture: the rules come from outside business, from the state, and business has to adapt to them.
+
+In one sense this is true. Laws, BaFin requirements and environmental standards are made by the state, not by the company, and from the perspective of profit they appear as limits and costs imposed from outside.
+
+But in another sense it is false. A company is itself full of rules: plans, budgets, job descriptions, processes and codes of conduct. Company planning is rule-making from inside, and for an employee an internal instruction is often more binding than a law. Even more important: business as we know it is constituted by rules. Property, contracts, money, limited liability and the corporation as a legal person only exist within a legal order. Without these rules there would be no business that could then be regulated from outside, just as the rules of chess do not limit the king from outside but make him a king. And many regulations are shaped by business itself, through industry standards or lobbying, because business needs trust and fair competition.
+
+So compliance is not simply the adaptation of business to something foreign. It is the attempt to keep an activity within the rules that make this activity possible in the first place.
+
+This leads to a further problem. If compliance only meant avoiding punishment, it would need endless control: rules, punishments, controllers, and controllers of the controllers. Volkswagen had a compliance organisation and still engineers manipulated emission tests. Rules exist only where they are generally followed for other reasons than fear. That is why there is no compliance in the full sense without integrity: people who follow rules because they see the point of them. Compliance without integrity is a defective case, like a defect engine.`},
+{id:'comp-never', topic:'Compliance', dossier:'rzd-comp', q:'Would a rule still be a rule if nobody ever obeyed it? What follows for compliance? (Use the defect engine.)',
+outline:['The defect engine: an engine because measured against working engines.','Applied to rules: a broken rule is a rule against a practice of following; a rule never followed is only words.','How is breaking possible: rules are standards, not laws of nature.','Consequence: compliance depends on a practice and on will; punishment cannot carry all; regress.','Compliance needs integrity; but James: breaking narrow rules can be progress.'],
+problems:['Rules exist only in practice.','Breaking presupposes understanding.','Compliance vs. integrity in both directions.'],
+model:`A defect engine is still an engine. It differs from a working engine in that it does not work, but that is not the only difference: we can call it defect only because we know what engines are supposed to do, and that we know from engines that work. If no engine had ever worked, there would be no engines at all, only metal in a particular shape. "Defect" is measured against the normal case.
+
+The same holds for rules. A rule that is sometimes broken is still a rule; we can even say that it is broken only because there is a practice in which it is generally followed and used as a standard. A speed limit that is exceeded now and then is a rule; a "rule" that nobody had ever obeyed, that nobody used to judge behaviour, would not be a rule but words on paper. Rules live in a practice of following them.
+
+This also explains how breaking rules is possible at all. A stone cannot break the law of gravity, because laws of nature describe what happens. Rules are different: they are standards for agents who understand them and who can act otherwise. You can only break a rule you know.
+
+What follows for compliance? First, compliance cannot be produced by punishment alone. If people followed rules only because of the threat of punishment, the punishment rules would need enforcing as well, and the enforcers would need controlling, and so on: who controls the controllers? At some point there must be people who follow rules because they accept them. Raatzsch draws this conclusion in his own paper: there is no compliance in the full sense without integrity, and compliance without integrity is a pathological case, a defect compliance, like a defect engine.
+
+Second, compliance departments presuppose what they cannot create: a practice in which most rules are followed most of the time. Their job is to deal with deviations, not to produce the practice. And there is a further twist: integrity does not always mean obedience. William James reminds us that moral progress sometimes consists in breaking rules that have grown too narrow for the actual case, as a whistleblower does. Compliance is therefore necessary for a functioning economy, but it is not good in itself.`},
+{id:'comp-integrity', topic:'Compliance', dossier:'rzd-comp', q:'Is following the rules enough? (Address the relation between compliance and integrity.)',
+outline:['Compliance as rule-following, secured by punishment and departments.','Compliance without integrity: box-ticking, fear, loopholes (VW, Beech-Nut).','Raatzsch\'s thesis: no full compliance without integrity; pathological case.','Integrity may require breaking rules (William James, whistleblowing).','Open problem: who decides when a rule is too narrow?'],
+problems:['Outward conformity vs. inner acceptance.','Rules cannot foresee every case.','Integrity can conflict with compliance.'],
+model:`Following the rules seems to be exactly what compliance means: companies have to make sure that laws and regulations are obeyed, and compliance departments check this. But is following the rules enough?
+
+Imagine an employee who follows every rule only because he is afraid of being caught. Where he is not watched, he looks for loopholes; where a rule does not explicitly forbid something harmful, he does it. Formally he is compliant, but compliance in this form is fragile: it needs constant control, and the control needs control. The Volkswagen diesel scandal happened in a company with a large compliance organisation. At Beech-Nut employees kept doing what they were told while the company broke food law. Rule-following without inner acceptance is a defective case of compliance.
+
+Raatzsch's own thesis, from his paper on the notion of compliance, is therefore that there is no compliance in the full sense without integrity. Compliance without integrity is a pathological case of compliance, as a defect engine is a defect case of an engine. Integrity here means that a person follows rules because she understands and accepts their point, and that her actions fit together with her convictions also where no rule and no controller reaches.
+
+But the relation has a second side, and here the problem lies. Integrity does not always lead to obedience. William James, whose text is in the reader, argues that moral progress sometimes consists in breaking rules that have grown too narrow for the actual case. A whistleblower who breaks loyalty and confidentiality rules to reveal fraud acts with integrity against compliance. A manager who refuses an order that is legal but clearly harmful does the same.
+
+So following the rules is not enough, and not always right. Compliance needs integrity to be more than fear; and integrity can require breaking a rule. The difficult question is who decides when a rule has grown too narrow: the individual, the company, or the legislator? A company that only trains rule-following will get either box-ticking or blind obedience. A company that wants real compliance has to develop people who can judge, and that means accepting that they will sometimes disagree.`}
 ];
 // from Prof. Raatzsch's exam briefing (recorded 30 Sep 2026)
 const RZ_EXAM_INFO = `<div class="rz-exam-card">
@@ -2592,9 +3047,10 @@ function navTo(pageId){
     if(md) renderMistakes(md);
   } else {
     const subj = pageId.split('-')[0];
-    const subjId = subj==='rz' ? 'pom' : subj; // Raatzsch pages live under POM
+    const subjId = (subj==='rz' || subj==='rzd') ? 'pom' : subj; // Raatzsch pages live under POM
     if(SUBJECTS.find(s=>s.id===subjId)) selectSubject(subjId, false);
   }
+  if(el && el.__onShow) el.__onShow();
   requestAnimationFrame(updateHlIslandVisibility);
 }
 
@@ -2691,9 +3147,12 @@ function buildSidebarNav(subjId){
   }
   if(subjId==='pom'){
     html += `<div class="nav-section-label">Ethics &amp; Philosophy · Raatzsch</div>`;
-    html += `<div class="nav-item" data-page="rz-exam" onclick="navTo('rz-exam')">${icon('timer')}<span>Exam Essay Trainer</span></div>`;
-    [...RZ_TOPICS.filter(t=>!RZ_FOUNDATION.includes(t.id)), ...RZ_TOPICS.filter(t=>RZ_FOUNDATION.includes(t.id))].forEach(t=>{ const f = RZ_FOUNDATION.includes(t.id); html += `<div class="nav-item${f?' nav-minor':''}" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${f?'Foundations: ':''}${t.title}</span></div>`; });
-    html += `<div class="nav-item" data-page="rz-tasks" onclick="navTo('rz-tasks')">${icon('doc')}<span>Task Sheets 1–5</span></div>`;
+    html += `<div class="nav-item" data-page="rz-method" onclick="navTo('rz-method')">${icon('doc')}<span>Essay method: how he grades</span></div>`;
+    html += `<div class="nav-item" data-page="rz-exam" onclick="navTo('rz-exam')">${icon('timer')}<span>Essay Trainer + model answers</span></div>`;
+    RZ_DOSSIERS.forEach((d,i)=>{ html += `<div class="nav-item" data-page="${d.id}" onclick="navTo('${d.id}')">${icon('summary')}<span>${i+1}. ${esc(d.title)}</span></div>`; });
+    html += `<div class="nav-section-label">Raatzsch · lecture material</div>`;
+    [...RZ_TOPICS.filter(t=>!RZ_FOUNDATION.includes(t.id)), ...RZ_TOPICS.filter(t=>RZ_FOUNDATION.includes(t.id))].forEach(t=>{ const f = RZ_FOUNDATION.includes(t.id); html += `<div class="nav-item nav-minor" data-page="${t.id}" onclick="navTo('${t.id}')">${icon('summary')}<span>${f?'Foundations: ':'Lecture summary & quiz: '}${t.title}</span></div>`; });
+    html += `<div class="nav-item nav-minor" data-page="rz-tasks" onclick="navTo('rz-tasks')">${icon('doc')}<span>Task Sheets 1–5 (foundations)</span></div>`;
   }
   nav.innerHTML = html;
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.page===location.hash.replace('#','')));
@@ -2724,6 +3183,8 @@ function buildSearchIndex(){
   AW_CARDS.forEach(c=>add({type:'Flashcard', rank:3, title:c.q, text:c.a, where:'AW · Flashcards', page:'aw-flash'}));
   AW_QUIZ.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:'AW · Quiz', page:'aw-quiz'}));
   POM_EXAM_SCENARIOS.forEach(q=>add({type:'Quiz', rank:4, title:q.q, text:(q.exp||''), where:'POM · Exam Simulator', page:'pom-sim'}));
+  RZ_DOSSIERS.forEach(d=>{ add({type:'Topic', rank:0, title:'Raatzsch: '+d.title, text:d.core, where:'POM · Raatzsch · exam topic', page:d.id}); d.sections.forEach(sec=>sec.text.split(/\n\n+/).forEach(par=>add({type:'Summary', rank:1, title:d.title+' · '+sec.h, text:searchFlat(par), where:'POM · Raatzsch · '+d.title, page:d.id}))); });
+  RZ_EXAM_QS.forEach(q=>add({type:'Essay', rank:2, title:q.q, text:searchFlat(q.model), where:'POM · Raatzsch · Essay Trainer', page:q.dossier}));
   RZ_TASKS.forEach(t=>add({type:'Task', rank:3, title:t.title, text:t.prompt, where:`POM · Raatzsch · Task sheet ${t.sheet}`, page:'rz-tasks', tab:'s'+t.sheet}));
   AW_VERBS.forEach(v=>add({type:'Action verbs', rank:2, title:v.cat, text:v.verbs.join(', '), where:'AW · Action Verbs', page:'aw-verbs'}));
   [['ob',OB_NAV],['pom',POM_NAV],['aw',AW_NAV]].forEach(([subj,nav])=>nav.forEach(sec=>sec.items.forEach(it=>
@@ -3442,7 +3903,8 @@ function planItemPool(){
   OB_TOPICS.forEach(t=> items.push({subj:'ob', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t))*(t.extra?.6:1), size:topicSize(t)}));
   POM_TOPICS.forEach(t=> items.push({subj:'pom', label:t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
   RZ_TOPICS.filter(t=>!RZ_FOUNDATION.includes(t.id)).forEach(t=> items.push({subj:'pom', label:'Raatzsch: '+t.title, page:t.id, weight:weightOf(topicKnowledge(t)), size:topicSize(t)}));
-  items.push({subj:'pom', label:'Raatzsch: Exam Essay Trainer (2 of 3 questions)', page:'rz-exam', weight:.8, size:12});
+  RZ_DOSSIERS.forEach(d=>{ const done = d.exam.filter(id=>(ls('rz-ex-ans',{})[id]||'').trim().split(/\s+/).length>=200).length; items.push({subj:'pom', label:'Raatzsch essay: '+d.title, page:d.id, weight:.9-.25*done/d.exam.length, size:14}); });
+  items.push({subj:'pom', label:'Raatzsch: Essay Trainer, full exam (2 of 3 questions)', page:'rz-exam', weight:.8, size:12});
   const pomSim = knowledgeScore(null, 0, 'pom-exam-sim', 20);
   items.push({subj:'pom', label:'POM Exam Simulator (single choice)', page:'pom-sim', weight:pomSim==null ? .8 : 1-pomSim, size:POM_EXAM_SCENARIOS.length});
   const leeItems = AW_LEE_DRILLS.reduce((n,d)=>n+d.items.length, 0);
@@ -3529,7 +3991,7 @@ const EXAMS = [
     {subj:'POM', who:'Prof. Richard Raatzsch', course:'Ethics, Law & Politics (in Business)', pts:30, type:'Essay: answer 2 of 3', badge:'essay',
      how:'Three conceptual questions with hints in brackets ("What is X? (Put emphasis on why …)"); you answer two, 15 points each (≈ 15 min each, time flexible within the 90 minutes).',
      tips:['Graded only on clarity and awareness of problems; no "complete" answer, but a minimum.','Topics: ownership, ownership of a corporation, corporation, sustainability, compliance. Not the first five lectures.'],
-     links:[['rz-exam','Exam Essay Trainer'],['rz-3','Exam topic summary']]}
+     links:[['rz-method','Essay method'],['rz-exam','Essay Trainer + model answers'],['rzd-own','Topic dossiers']]}
   ]},
   {date:new Date(2026,9,6), title:'Academic Writing, Effective Communication & Personal Mastery', sub:'Written exam · 60 points (module total 90 with presentation 15 + CV 15)', parts:[
     {subj:'AW', who:'Shalini Rogbeer, Ph.D.', course:'Academic Writing', pts:35, type:'5 MCQ + 2 structured questions', badge:'struct',
@@ -4158,6 +4620,7 @@ function buildTopicPage(t, subjColor){
         <p>Summary and quiz for this topic (flashcards optional, on the right).</p>
       </div>
       <div class="page-body">
+        ${t.id==='rz-3' ? `<div class="rz-note"><b>For the essay, learn from the five exam-topic dossiers</b> (Ownership, Ownership of a corporation, Corporation, Sustainability, Compliance): they contain the content in depth and model answers. This page is the compact lecture summary.</div>` : ''}
         ${RZ_FOUNDATION.includes(t.id) ? `<div class="rz-note"><b>Foundations, not asked in the exam.</b> Raatzsch said the first five lectures only introduced conceptual investigation; exam questions are about ownership, corporations, sustainability and compliance. Useful background for writing clearly.</div>` : ''}
         <div class="tabbar">
           <button class="tabbtn active" data-tab="sum">Summary</button>
@@ -4454,12 +4917,18 @@ function buildPOMHome(){
         <section class="rz-home">
           <div class="rz-home-head"><h3>Ethics &amp; Philosophy · Prof. Raatzsch</h3><p>His own part of the module (“Ethics, Law &amp; Politics in Business”, <b>30 points</b> of the written exam): two short essays on ownership, corporations, sustainability or compliance.</p></div>
           ${RZ_EXAM_INFO}
+          <div class="nav-section-label" style="padding-left:0;margin-top:6px;">Exam topics · learn the content for the essay</div>
           <div class="topic-grid">
-            ${[...RZ_TOPICS].sort((a,b)=>RZ_FOUNDATION.includes(a.id)-RZ_FOUNDATION.includes(b.id)).map(t=>`<div class="topic-card${RZ_FOUNDATION.includes(t.id)?' rz-foundation':''}" onclick="navTo('${t.id}')"><div class="num">${RZ_FOUNDATION.includes(t.id)?'FOUNDATIONS · NOT IN EXAM':'RAATZSCH · EXAM TOPIC'}</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
+            ${RZ_DOSSIERS.map((d,i)=>`<div class="topic-card" onclick="navTo('${d.id}')"><div class="num">RAATZSCH · EXAM TOPIC ${i+1}</div><h4>${esc(d.title)}</h4><p>${esc(d.short)}</p><div class="meta"><span>Content</span><span>${d.exam.length} model answers</span><span>Self-check</span></div></div>`).join('')}
           </div>
           <div class="tool-tiles">
-            <div class="tool-tile" onclick="navTo('rz-exam')"><div class="ic">${icon('timer')}</div><h4>Exam Essay Trainer</h4><p>3 exam-style questions, answer 2 in 30 minutes, then check clarity and problems.</p></div>
-            <div class="tool-tile" onclick="navTo('rz-tasks')"><div class="ic">${icon('doc')}</div><h4>Task Sheets 1–5</h4><p>${RZ_TASKS.length} tasks: write your answer, then compare with pointers from the lecture.</p></div>
+            <div class="tool-tile" onclick="navTo('rz-method')"><div class="ic">${icon('doc')}</div><h4>Essay method</h4><p>How he grades (clarity, awareness of problems), the five steps, mistakes from class.</p></div>
+            <div class="tool-tile" onclick="navTo('rz-exam')"><div class="ic">${icon('timer')}</div><h4>Essay Trainer</h4><p>${RZ_EXAM_QS.length} exam questions: write, then compare with outline, problems and model answer. Or a full 30-minute exam.</p></div>
+          </div>
+          <div class="nav-section-label" style="padding-left:0;margin-top:22px;">Lecture material</div>
+          <div class="topic-grid">
+            ${[...RZ_TOPICS].sort((a,b)=>RZ_FOUNDATION.includes(a.id)-RZ_FOUNDATION.includes(b.id)).map(t=>`<div class="topic-card rz-foundation" onclick="navTo('${t.id}')"><div class="num">${RZ_FOUNDATION.includes(t.id)?'FOUNDATIONS · NOT IN EXAM':'LECTURE SUMMARY & QUIZ'}</div><h4>${esc(t.title)}</h4><p>${t.quiz.length} quiz questions</p><div class="meta"><span>Summary</span><span>Quiz</span></div></div>`).join('')}
+            <div class="topic-card rz-foundation" onclick="navTo('rz-tasks')"><div class="num">FOUNDATIONS · WORKSHEETS</div><h4>Task Sheets 1–5</h4><p>${RZ_TASKS.length} tasks with pointers</p><div class="meta"><span>Write</span><span>Compare</span></div></div>
           </div>
         </section>
       </div>`;
@@ -4467,50 +4936,151 @@ function buildPOMHome(){
 }
 
 // Raatzsch task sheets: own answer (saved per task) + pointers from the lecture, one tab per sheet
-// Raatzsch exam trainer: 3 random exam-style questions (hints in brackets), answer 2, 30-minute timer, then pointers + self-check
+// Raatzsch essay lab: method page, five topic dossiers, essay trainer with model answers
+const rzQ = id => RZ_EXAM_QS.find(q=>q.id===id);
+function rzSection(div, sel, h, text, key){
+  const wrap = document.createElement('section'); wrap.className = 'rz-sec';
+  wrap.innerHTML = `<h3>${esc(h)}</h3><div class="rz-sec-body"></div>`;
+  div.querySelector(sel).appendChild(wrap);
+  renderSummary(wrap.querySelector('.rz-sec-body'), 'POM', text, key);
+}
+function rzModelHtml(q, open){
+  return `<details class="rz-model"${open?' open':''} data-q="${q.id}"><summary><span class="rz-num">${esc(q.topic)}</span> ${esc(q.q)}</summary>
+    <div class="rz-model-grid">
+      <div><h5>Outline (5 steps)</h5><ol>${q.outline.map(o=>`<li>${esc(o)}</li>`).join('')}</ol></div>
+      <div><h5>Problems you must show</h5><ul>${q.problems.map(o=>`<li>${esc(o)}</li>`).join('')}</ul></div>
+    </div>
+    <h5>Model answer (${(q.model.match(/\S+/g)||[]).length} words, about one handwritten page)</h5>
+    <div class="rz-model-text"></div>
+    <button class="btn ghost rz-write" onclick="window.__rzWrite('${q.id}')">Write this one yourself →</button>
+  </details>`;
+}
+// model text is highlightable; rendered lazily when a <details> opens
+function rzBindModels(root){
+  root.querySelectorAll('details.rz-model').forEach(d=>{
+    const fill = ()=>{ const box = d.querySelector('.rz-model-text'); if(box.dataset.done) return; box.dataset.done = '1'; renderSummary(box, 'POM', rzQ(d.dataset.q).model, 'rzq-'+d.dataset.q); };
+    if(d.open) fill();
+    d.addEventListener('toggle', ()=>{ if(d.open) fill(); });
+  });
+}
+window.__rzWrite = id => { window.__rzPick = id; navTo('rz-exam'); };
+
+function buildRZMethod(){
+  registerPage('rz-method', (div)=>{
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('doc')} Prof. Raatzsch · Essay method</div><h2>How to write his essay</h2><p>What he grades, the five steps he uses himself in every lecture, the mistakes he pointed out in class, and sentences you can use.</p></div>
+      <div class="page-body"><div class="rz-secs"></div></div>`;
+    rzSection(div, '.rz-secs', 'What he grades: clarity and awareness of problems', RZ_METHOD.grading, 'rz-method-grading');
+    rzSection(div, '.rz-secs', 'The five steps of a good answer', RZ_METHOD.steps + '\n\n' + RZ_METHOD.stepsText, 'rz-method-steps');
+    rzSection(div, '.rz-secs', 'Mistakes he pointed out in class', RZ_METHOD.mistakes, 'rz-method-mistakes');
+    rzSection(div, '.rz-secs', 'Sentence toolkit', RZ_METHOD.phrases, 'rz-method-phrases');
+    div.querySelector('.rz-secs').insertAdjacentHTML('beforeend', `<div class="rz-cta"><button class="btn" onclick="navTo('rz-exam')">Practise with the Essay Trainer →</button></div>`);
+  });
+}
+
+function buildRZDossiers(){
+  RZ_DOSSIERS.forEach((d, di)=>{
+    registerPage(d.id, (div)=>{
+      const qs = d.exam.map(rzQ);
+      div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('summary')} Prof. Raatzsch · Exam topic ${di+1} of 5</div><h2>${esc(d.title)}</h2><p>${esc(d.short)}</p></div>
+        <div class="page-body">
+          <div class="rz-core"><h4>The core in three sentences</h4><p>${esc(d.core)}</p></div>
+          <div class="rz-likely"><h4>Questions he could ask (with his kind of hint)</h4>${qs.map(q=>`<div class="rz-likely-q"><span>${esc(q.q)}</span><button class="btn ghost" onclick="window.__rzWrite('${q.id}')">Write it</button></div>`).join('')}</div>
+          <div class="tabbar"><button class="tabbtn active" data-tab="learn">1 · Learn the content</button><button class="tabbtn" data-tab="models">2 · Model answers</button><button class="tabbtn" data-tab="recall">3 · Check yourself</button></div>
+          <div class="tabpanel active rz-secs" data-panel="learn"></div>
+          <div class="tabpanel" data-panel="models"><p class="rz-tip">Read the outline first, try to say the answer in your own words, then open the model. In the exam about 250 to 350 words per question are a good target.</p>${qs.map((q,i)=>rzModelHtml(q, i===0)).join('')}</div>
+          <div class="tabpanel" data-panel="recall"><p class="rz-tip">Answer out loud or on paper first (his "Iron Rule": writing is better than reading), then reveal.</p>${d.recall.map((r,i)=>`<div class="rz-recall"><div class="rz-recall-q">${i+1}. ${esc(r.q)}</div><button class="btn ghost" onclick="this.nextElementSibling.classList.add('show');this.remove()">Show answer</button><div class="rz-recall-a">${esc(r.a)}</div></div>`).join('')}</div>
+        </div>`;
+      d.sections.forEach((s, si)=>rzSection(div, '.rz-secs', s.h, s.text, `${d.id}-s${si}`));
+      const bar = div.querySelector('.tabbar');
+      bar.querySelectorAll('.tabbtn').forEach(b=>b.addEventListener('click', ()=>{
+        bar.querySelectorAll('.tabbtn').forEach(x=>x.classList.toggle('active', x===b));
+        div.querySelectorAll('.tabpanel').forEach(p=>p.classList.toggle('active', p.dataset.panel===b.dataset.tab));
+      }));
+      rzBindModels(div);
+    });
+  });
+}
+
+// Raatzsch essay trainer: practise one question or a full exam (3 questions, answer 2, 30 min); answers are saved,
+// afterwards outline, problems and the model answer are shown next to your text
 function buildRZExam(){
   registerPage('rz-exam', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('timer')} Prof. Raatzsch · Exam practice</div><h2>Exam Essay Trainer</h2><p>Like the real exam: three questions with hints in brackets, you answer two. About 15 minutes per question. He grades only clarity and awareness of problems.</p></div>
-      <div class="page-body">${RZ_EXAM_INFO.replace('<button class="btn" onclick="navTo(\'rz-exam\')">Practise in exam format → Essay Trainer</button>','')}<div class="rz-ex"></div></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('timer')} Prof. Raatzsch · Exam practice</div><h2>Essay Trainer</h2><p>Write first, then compare with the outline, the problems you must show and a model answer. He grades only clarity and awareness of problems.</p></div>
+      <div class="page-body">${RZ_EXAM_INFO.replace('<button class="btn" onclick="navTo(\'rz-exam\')">Practise in exam format → Essay Trainer</button>','')}
+        <div class="tabbar"><button class="tabbtn active" data-mode="one">Practise one question</button><button class="tabbtn" data-mode="exam">Full exam: 3 questions, answer 2, 30 min</button></div>
+        <div class="rz-ex"></div></div>`;
     const box = div.querySelector('.rz-ex');
     const words = t => (t.trim().match(/\S+/g)||[]).length;
+    const saved = ()=>ls('rz-ex-ans', {});
+    const save = (id, txt)=>{ const a = saved(); a[id] = txt; lsSet('rz-ex-ans', a); };
     let timer = null;
-    const start = ()=>{
-      // three questions from three different topics
-      const byTopic = {}; shuffle(RZ_EXAM_QS).forEach(q=>{ (byTopic[q.topic] = byTopic[q.topic] || []).push(q); });
-      const qs = shuffle(Object.keys(byTopic)).slice(0,3).map(t=>byTopic[t][0]);
-      let left = 30*60; clearInterval(timer);
-      box.innerHTML = `<div class="rz-ex-bar"><span class="rz-ex-time">30:00</span><span>Choose <b>2 of 3</b> questions. Write in your own words.</span><button class="btn ghost rz-ex-new">New set</button></div>
-        ${qs.map((q,i)=>`<div class="rz-task rz-ex-q" data-i="${i}">
-          <div class="rz-task-head"><span class="rz-num">Q${i+1}</span><h4>${esc(q.topic)}</h4><span class="rz-ex-pts">15 points</span></div>
-          <p class="rz-prompt">${esc(q.q)}</p>
-          <textarea class="rz-answer" rows="9" placeholder="Leave this one empty if you skip it."></textarea>
-          <div class="rz-foot"><span class="rz-count">0 words</span></div>
-          <div class="rz-ex-review"></div>
-        </div>`).join('')}
-        <button class="btn rz-ex-finish">Finish &amp; review</button>`;
-      const tEl = box.querySelector('.rz-ex-time');
-      timer = setInterval(()=>{ left--; if(left<0){ clearInterval(timer); tEl.textContent='Time is up'; tEl.classList.add('over'); return; } tEl.textContent = String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0'); }, 1000);
-      box.querySelector('.rz-ex-new').addEventListener('click', ()=>{ if(confirm('Start a new set? Your current answers will be cleared.')) start(); });
-      box.addEventListener('input', e=>{ const ta = e.target.closest('.rz-answer'); if(ta) ta.closest('.rz-ex-q').querySelector('.rz-count').textContent = words(ta.value)+' words'; });
-      box.querySelector('.rz-ex-finish').addEventListener('click', ()=>{
-        clearInterval(timer);
-        const answered = [...box.querySelectorAll('.rz-ex-q')].filter(el=>words(el.querySelector('.rz-answer').value)>0).length;
-        box.querySelectorAll('.rz-ex-q').forEach(el=>{
-          const q = qs[+el.dataset.i]; const w = words(el.querySelector('.rz-answer').value);
-          el.querySelector('.rz-ex-review').innerHTML = `<ul class="rz-hints" style="display:block">${q.pointers.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>
-            <div class="rz-check"><b>Self-check (his two criteria):</b>
-              <label><input type="checkbox"> <b>Clarity:</b> I said in my own words how I use the key word(s), with an example.</label>
-              <label><input type="checkbox"> <b>Awareness of problems:</b> I showed at least one real problem or tension, not just a definition.</label>
-              <label><input type="checkbox"> I used the hint in brackets.</label>
-              <span class="rz-min ${w===0?'':w<120?'low':'ok'}">${w===0?'Skipped':w<120?w+' words: probably below his minimum, add a problem or an example':w+' words'}</span></div>`;
-        });
-        box.querySelector('.rz-ex-finish').outerHTML = `<p class="rz-ex-done">${answered===2?'Two answers, like in the exam.':answered<2?'In the exam you answer two questions; here you answered '+answered+'.':'You answered all three; in the exam two are enough, so you can spend more time on each.'} <button class="btn ghost rz-ex-again">New set</button></p>`;
-        box.querySelector('.rz-ex-again').addEventListener('click', start);
+    const clock = (sec, el, onEnd)=>{ clearInterval(timer); let left = sec; const show = ()=>{ el.textContent = String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0'); }; show();
+      timer = setInterval(()=>{ left--; if(left<0){ clearInterval(timer); el.textContent='Time is up'; el.classList.add('over'); if(onEnd) onEnd(); return; } show(); }, 1000); };
+    const review = (q, txt)=>{ const w = words(txt);
+      return `<div class="rz-review">
+        <div class="rz-check"><b>Self-check against his two criteria</b>
+          <label><input type="checkbox"> <b>Clarity:</b> I said how I use the word, my sentences follow from each other, every "therefore" really follows.</label>
+          ${q.problems.map(p=>`<label><input type="checkbox"> <b>Problem shown:</b> ${esc(p)}</label>`).join('')}
+          <label><input type="checkbox"> I used the hint in brackets and answered the question that was asked.</label>
+          <span class="rz-min ${w===0?'':w<200?'low':'ok'}">${w===0?'Not answered':w<200?w+' words: probably below his minimum; add an example and a problem':w+' words'}</span></div>
+        ${rzModelHtml(q, true)}</div>`; };
+    const editor = (q, i)=>`<div class="rz-task rz-ex-q" data-id="${q.id}">
+        <div class="rz-task-head"><span class="rz-num">${i!=null?'Q'+(i+1):esc(q.topic)}</span><h4>${i!=null?esc(q.topic):'15 points · about 15 minutes'}</h4>${i!=null?'<span class="rz-ex-pts">15 points</span>':''}</div>
+        <p class="rz-prompt">${esc(q.q)}</p>
+        <textarea class="rz-answer" rows="12" placeholder="${i!=null?'Leave this one empty if you skip it.':'Write your essay here. It is saved automatically in this browser.'}">${esc(saved()[q.id]||'')}</textarea>
+        <div class="rz-foot"><span class="rz-count">${words(saved()[q.id]||'')} words</span>${i==null?`<button class="btn ghost rz-peek">Stuck? Show the outline</button>`:''}</div>
+        <ol class="rz-hints">${q.outline.map(o=>`<li>${esc(o)}</li>`).join('')}</ol>
+        <div class="rz-ex-review"></div></div>`;
+    const wire = ()=>{
+      box.querySelectorAll('.rz-ex-q').forEach(el=>{
+        const ta = el.querySelector('.rz-answer');
+        ta.addEventListener('input', ()=>{ el.querySelector('.rz-count').textContent = words(ta.value)+' words'; save(el.dataset.id, ta.value); });
+        const peek = el.querySelector('.rz-peek'); if(peek) peek.addEventListener('click', ()=>{ el.querySelector('.rz-hints').style.display='block'; peek.remove(); });
       });
     };
-    box.innerHTML = `<div style="text-align:center;padding:30px 10px;"><p style="color:var(--ink-soft);max-width:520px;margin:0 auto 18px;">You will get three questions from different exam topics. Pick two, write for about 30 minutes, then compare with the pointers from his lectures.</p><button class="btn rz-ex-start">Start (30 minutes)</button></div>`;
-    box.querySelector('.rz-ex-start').addEventListener('click', start);
+    const one = (id)=>{
+      clearInterval(timer);
+      const q = rzQ(id) || RZ_EXAM_QS[0];
+      const groups = [...new Set(RZ_EXAM_QS.map(x=>x.topic))];
+      box.innerHTML = `<div class="rz-ex-bar"><select class="rz-pick">${groups.map(g=>`<optgroup label="${esc(g)}">${RZ_EXAM_QS.filter(x=>x.topic===g).map(x=>`<option value="${x.id}"${x.id===q.id?' selected':''}>${esc(x.q)}</option>`).join('')}</optgroup>`).join('')}</select>
+          <span class="rz-ex-time">15:00</span><button class="btn ghost rz-ex-start1">Start 15-minute timer</button></div>
+        ${editor(q)}
+        <button class="btn rz-ex-finish">Finish &amp; compare</button>`;
+      box.querySelector('.rz-pick').addEventListener('change', e=>one(e.target.value));
+      box.querySelector('.rz-ex-start1').addEventListener('click', e=>{ e.target.remove(); clock(15*60, box.querySelector('.rz-ex-time')); });
+      wire();
+      box.querySelector('.rz-ex-finish').addEventListener('click', ()=>{
+        clearInterval(timer);
+        const el = box.querySelector('.rz-ex-q');
+        el.querySelector('.rz-ex-review').innerHTML = review(q, el.querySelector('.rz-answer').value);
+        rzBindModels(el); box.querySelector('.rz-ex-finish').remove();
+        el.querySelector('.rz-ex-review').scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    };
+    const exam = ()=>{
+      clearInterval(timer);
+      // three questions from three different topics, like the real exam
+      const byTopic = {}; shuffle(RZ_EXAM_QS).forEach(q=>{ (byTopic[q.topic] = byTopic[q.topic] || []).push(q); });
+      const qs = shuffle(Object.keys(byTopic)).slice(0,3).map(t=>byTopic[t][0]);
+      box.innerHTML = `<div class="rz-ex-bar"><span class="rz-ex-time">30:00</span><span>Choose <b>2 of 3</b>. Write in your own words.</span><button class="btn ghost rz-ex-new">New set</button></div>
+        ${qs.map((q,i)=>editor(q,i)).join('')}<button class="btn rz-ex-finish">Finish &amp; compare</button>`;
+      clock(30*60, box.querySelector('.rz-ex-time'));
+      wire();
+      box.querySelector('.rz-ex-new').addEventListener('click', exam);
+      box.querySelector('.rz-ex-finish').addEventListener('click', ()=>{
+        clearInterval(timer);
+        const els = [...box.querySelectorAll('.rz-ex-q')];
+        const answered = els.filter(el=>words(el.querySelector('.rz-answer').value)>0).length;
+        els.forEach(el=>{ el.querySelector('.rz-ex-review').innerHTML = review(rzQ(el.dataset.id), el.querySelector('.rz-answer').value); rzBindModels(el); });
+        box.querySelector('.rz-ex-finish').outerHTML = `<p class="rz-ex-done">${answered===2?'Two answers, like in the exam.':answered<2?'In the exam you answer two questions; here you answered '+answered+'.':'You answered all three; in the exam two are enough, so you can spend more time on each.'} <button class="btn ghost rz-ex-again">New set</button></p>`;
+        box.querySelector('.rz-ex-again').addEventListener('click', exam);
+      });
+    };
+    const bar = div.querySelector('.tabbar');
+    bar.querySelectorAll('.tabbtn').forEach(b=>b.addEventListener('click', ()=>{ bar.querySelectorAll('.tabbtn').forEach(x=>x.classList.toggle('active', x===b)); b.dataset.mode==='exam' ? exam() : one(window.__rzPick); }));
+    one(window.__rzPick);
+    // a "Write it" button elsewhere opens this page with a question preselected
+    div.__onShow = ()=>{ if(window.__rzPick){ bar.querySelectorAll('.tabbtn').forEach(x=>x.classList.toggle('active', x.dataset.mode==='one')); one(window.__rzPick); window.__rzPick = null; } };
   });
 }
 
@@ -4562,7 +5132,7 @@ function buildPOMCheat(){
 
 POM_TOPICS.forEach(t=>buildTopicPage(t,'pom'));
 buildPOMHome(); buildPOMCheat(); buildPOMSim();
-RZ_TOPICS.forEach(t=>buildTopicPage(t,'pom')); buildRZTasks(); buildRZExam();
+RZ_TOPICS.forEach(t=>buildTopicPage(t,'pom')); buildRZTasks(); buildRZExam(); buildRZMethod(); buildRZDossiers();
 
 /* ============================================================ AW PAGES ============================================================ */
 function buildAWHome(){
