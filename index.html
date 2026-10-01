@@ -799,6 +799,8 @@ body.hl-armed .hl-container{cursor:text;}
 @media(max-width:700px){.rz-model-grid{grid-template-columns:1fr;}.rz-likely-q{flex-direction:column;align-items:flex-start;}}
 .rz-note{margin-bottom:18px;padding:11px 14px;border-left:3px solid var(--warn);background:var(--warn-bg);border-radius:var(--radius-sm);font-size:.85rem;line-height:1.55;color:var(--ink-soft);}
 .rz-note b{color:var(--ink);} .rz-note a{color:var(--accent-ink);font-weight:600;}
+.plan-done-sum{font-size:.86rem;color:var(--ink-soft);margin:0 0 12px;}
+.plan-done-sum b{color:var(--good);}
 .lee-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 20px;margin-bottom:16px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);}
 .lee-stat{flex:1;min-width:0;}
 .lee-big{font-size:1.9rem;font-weight:700;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
@@ -3787,6 +3789,11 @@ function knowledgeScore(fcKey, nCards, quizKey, nQuiz){
   }
   return parts.length ? parts.reduce((a,b)=>a+b,0)/parts.length : null;
 }
+function cleanInflatedBests(){
+  const pairs = [...OB_TOPICS, ...POM_TOPICS, ...RZ_TOPICS].map(t=>['quiz-'+t.id, t.quiz.length])
+    .concat([['quiz-aw', AW_QUIZ.length], ['quiz-aw-mockmc', AW_MOCK_MC.length], ['ob-exam-sim', 20], ['pom-exam-sim', 20], ['pom-exam-practice', POM_EXAM_SCENARIOS.length]]);
+  pairs.forEach(([k,n])=>{ const b = ls(k+'-best', null); if(b!=null && b>n) lsSet(k+'-best', null); });
+}
 function topicKnowledge(t){ return knowledgeScore('fc-'+t.id, t.cards.length, 'quiz-'+t.id, t.quiz.length); }
 function topicSize(t){ return t.quiz.length + Math.round(t.summary.split(/\s+/).length/60); }
 
@@ -4122,7 +4129,8 @@ function buildStudyPlan(){
     div.querySelector('#plan-days-list').addEventListener('change', e=>{
       const cb = e.target.closest('input[type=checkbox][data-key]'); if(!cb) return;
       const state = ls('plan-checks', {});
-      state[cb.dataset.key] = cb.checked;
+      // store what was done, so the item stays visible on that day even if the plan is recalculated
+      state[cb.dataset.key] = cb.checked ? {label: cb.dataset.label, subj: cb.dataset.subj, page: cb.dataset.page, at: Date.now()} : false;
       lsSet('plan-checks', state);
       renderPlanDays(div);
     });
@@ -4143,20 +4151,34 @@ function renderPlanDays(div){
   const todayIso = planIso(new Date());
   let html = '';
   let anyDay = false;
-  for(let day=1; day<=maxDay; day++){
-    const items = byDay[day];
-    if(!items || !items.length) continue;
-    anyDay = true;
+  // labels for ticks saved before 1 Oct (stored as plain true)
+  const known = {}; Object.values(byDay).flat().forEach(it=>{ known[it.page] = it; });
+  const pageLabel = pg => (known[pg] && known[pg].label) || ((document.querySelector(`.nav-item[data-page="${pg}"]`)||{}).textContent||'').trim() || pg;
+  let doneTotal = 0;
+  const tickDays = Object.keys(checks).filter(k=>checks[k]).map(k=>{ const [y,m,d] = k.slice(0,10).split('-').map(Number); return Math.round((new Date(y,m-1,d) - start)/86400000) + 1; }).filter(n=>n>0 && n<400);
+  const lastDay = Math.max(maxDay, ...tickDays);
+  for(let day=1; day<=lastDay; day++){
     const date = new Date(start); date.setDate(date.getDate() + day - 1);
     const iso = planIso(date);
+    const planned = byDay[day] || [];
+    const plannedPages = new Set(planned.map(it=>it.page));
+    // ticked items of this day that the recalculated plan no longer lists: keep them, marked as done
+    const kept = Object.keys(checks).filter(k=>checks[k] && k.startsWith(iso+'_') && !plannedPages.has(k.slice(iso.length+1))).map(k=>{
+      const c = checks[k], pg = k.slice(iso.length+1);
+      return {page:pg, label: (c && c.label) || pageLabel(pg), subj: (c && c.subj) || (known[pg] && known[pg].subj) || (pg.startsWith('ob')?'ob':pg.startsWith('aw')?'aw':'pom'), kept:true};
+    });
+    const items = [...planned, ...kept];
+    if(!items.length) continue;
+    anyDay = true;
     const dateLabel = date.toLocaleDateString(undefined, {weekday:'short', day:'numeric', month:'short'});
     html += `<div class="plan-day${iso<todayIso?' past':''}${iso===todayIso?' today':''}">
       <div class="plan-day-head"><span class="plan-day-num">Day ${day}</span><span class="plan-day-date">${dateLabel}</span>${iso===todayIso?'<span class="plan-today-chip">Today</span>':''}</div>
       ${items.map(it=>{
         const key = iso+'_'+it.page;
         const done = !!checks[key];
+        if(done) doneTotal++;
         return `<div class="plan-item ${done?'done':''}${it.prio?' prio':''}">
-          <input type="checkbox" id="pc-${key}" data-key="${key}" ${done?'checked':''}>
+          <input type="checkbox" id="pc-${key}" data-key="${key}" data-label="${esc(it.label)}" data-subj="${it.subj}" data-page="${it.page}" ${done?'checked':''}>
           <span class="plan-subj-tag">${it.subj.toUpperCase()}</span>
           <label for="pc-${key}" onclick="event.preventDefault();navTo('${it.page}')" style="cursor:pointer;flex:1;">${esc(it.label)}</label>
           ${it.prio?'<span class="plan-badge prio">Priority</span>':''}${it.large?'<span class="plan-badge large">Lots of content</span>':''}
@@ -4165,6 +4187,7 @@ function renderPlanDays(div){
     </div>`;
   }
   if(!anyDay) html = `<p style="color:var(--ink-soft);">No plan yet — pick a start date before the exams.</p>`;
+  else html = `<p class="plan-done-sum">✓ <b>${doneTotal}</b> task${doneTotal===1?'':'s'} done so far. Ticked tasks stay on their day, even when the plan adapts to your quiz results.</p>` + html;
   const list = div.querySelector('#plan-days-list');
   if(list) list.innerHTML = html;
 }
@@ -4458,7 +4481,9 @@ function renderQuiz(container, questions, storeKey, opts){
   let topicScores = {};
   let timeLeft = opts.timerSec || null;
   let timerHandle = null;
-  const best = ls(storeKey+'-best', null);
+  let best = ls(storeKey+'-best', null);
+  // a best above the number of questions came from the old double-click bug: it is not a real result, so drop it
+  if(best!=null && best>questions.length){ best = null; lsSet(storeKey+'-best', null); }
 
   function topicOf(qi){ return opts.topicOf ? opts.topicOf(qi) : 'General'; }
 
@@ -4500,6 +4525,9 @@ function renderQuiz(container, questions, storeKey, opts){
     if(!timerHandle && timeLeft!==null) startTimer();
   }
   function answer(i){
+    const optsEl = container.querySelector('#qopts');
+    if(!optsEl || optsEl.classList.contains('locked')) return; // a question counts once, later clicks do nothing
+    optsEl.classList.add('locked');
     const qi = order[idx]; const q = questions[qi];
     const correct = q.correct;
     container.querySelectorAll('.quiz-option').forEach(el=>{
@@ -4660,6 +4688,9 @@ function buildOBScenario(){
         <div class="quiz-summary"><span class="best-score">Grounded in the real course frameworks.</span><button class="btn ghost" id="scennext" style="display:none" onclick="window.__scenNext()">Next &rarr;</button></div>`;
     }
     window.__scenAnswer = (i)=>{
+      const optsEl = document.getElementById('scenopts');
+      if(!optsEl || optsEl.classList.contains('locked')) return;
+      optsEl.classList.add('locked');
       const s = OB_SCENARIOS[order[idx]];
       document.querySelectorAll('#scenopts .quiz-option').forEach(el=>{
         el.classList.add('disabled');
@@ -5087,7 +5118,7 @@ function buildPOMCheat(){
 
 POM_TOPICS.forEach(t=>buildTopicPage(t,'pom'));
 buildPOMHome(); buildPOMCheat(); buildPOMSim();
-RZ_TOPICS.forEach(t=>buildTopicPage(t,'pom')); buildRZTasks(); buildRZExam(); buildRZMethod(); buildRZDossiers();
+RZ_TOPICS.forEach(t=>buildTopicPage(t,'pom')); buildRZTasks(); buildRZExam(); buildRZMethod(); buildRZDossiers(); cleanInflatedBests();
 
 /* ============================================================ AW PAGES ============================================================ */
 function buildAWHome(){
