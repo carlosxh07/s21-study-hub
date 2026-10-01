@@ -799,7 +799,34 @@ body.hl-armed .hl-container{cursor:text;}
 @media(max-width:700px){.rz-model-grid{grid-template-columns:1fr;}.rz-likely-q{flex-direction:column;align-items:flex-start;}}
 .rz-note{margin-bottom:18px;padding:11px 14px;border-left:3px solid var(--warn);background:var(--warn-bg);border-radius:var(--radius-sm);font-size:.85rem;line-height:1.55;color:var(--ink-soft);}
 .rz-note b{color:var(--ink);} .rz-note a{color:var(--accent-ink);font-weight:600;}
-.lee-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.lee-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 20px;margin-bottom:16px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);}
+.lee-stat{flex:1;min-width:0;}
+.lee-big{font-size:1.9rem;font-weight:700;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+.lee-big small{font-size:.9rem;font-weight:600;color:var(--ink-soft);margin-left:6px;}
+.lee-sub{font-size:.8rem;color:var(--ink-faint);margin:6px 0 10px;}
+.lee-bar{display:flex;height:8px;border-radius:6px;background:var(--bg2);overflow:hidden;max-width:420px;}
+.lee-bar-ok{background:var(--good);transition:width .3s;}
+.lee-bar-bad{background:var(--bad);opacity:.75;transition:width .3s;}
+.lee-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:18px;}
+.lee-tab{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:12px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--panel);cursor:pointer;color:var(--ink);font:inherit;position:relative;transition:border-color .15s,background .15s;}
+.lee-tab:hover{border-color:var(--accent);}
+.lee-tab.active{border-color:var(--accent);background:var(--accent-bg);}
+.lee-tab-name{font-weight:700;font-size:.9rem;padding-right:42px;}
+.lee-tab-sub{font-size:.76rem;color:var(--ink-soft);}
+.lee-tab-count{position:absolute;top:11px;right:12px;font-size:.72rem;font-weight:700;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+.lee-tab-count.full{color:var(--good);}
+.lee-card{padding:16px 18px;margin-bottom:12px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);}
+.lee-q{display:flex;gap:10px;font-size:.93rem;font-weight:600;line-height:1.55;margin-bottom:12px;}
+.lee-n{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--accent-bg);color:var(--accent-ink);font-size:.74rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.lee-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;}
+.lee-opts button{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg2);color:var(--ink);font:inherit;font-size:.86rem;font-weight:600;cursor:pointer;transition:border-color .15s,background .15s;}
+.lee-opts button:hover:not(:disabled){border-color:var(--accent);}
+.lee-opts button:disabled{cursor:default;}
+.lee-l{flex-shrink:0;width:22px;height:22px;border-radius:7px;background:var(--panel);border:1px solid var(--line);font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);}
+.lee-opts button.correct{border-color:var(--good);background:var(--good-bg);color:var(--good);}
+.lee-opts button.wrong{border-color:var(--bad);background:var(--bad-bg);color:var(--bad);}
+.lee-card .doc-rule{margin-top:10px;}
+@media(max-width:600px){.lee-head{flex-direction:column;align-items:stretch;}.lee-tabs{grid-template-columns:1fr 1fr;}}
 .lee-src{font-size:.78rem;color:var(--ink-soft);margin:0 0 12px;}
 .lee-score{font-size:.85rem;color:var(--ink-soft);}
 .topic-card.rz-foundation,.topic-card.ob-extra{opacity:.6;}
@@ -5347,46 +5374,64 @@ function buildAWMockExamWritten(){
 
 function buildAWLeeDrills(){
   registerPage('aw-lee-drills', (div)=>{
-    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('verb')} Lee Hawkins — Extra Practice</div><h2>Grammar &amp; Language Drills</h2><p>New exercises from Lee Hawkins's sessions — linking words, persuasive language, and presentation structure — with answers to reveal.</p></div><div class="page-body" id="aw-lee-body"></div>`;
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('verb')} Lee Hawkins — Extra Practice</div><h2>Grammar &amp; Language Drills</h2><p>Exercises from Lee Hawkins's sheets — linking words, persuasive language, presentation phrases and trend vocabulary. Pick an answer to see the explanation.</p></div><div class="page-body" id="aw-lee-body"></div>`;
     const body = div.querySelector('#aw-lee-body');
-    // every run (first render and each reset) shuffles the answer order; reset clears all picked answers and keeps the open tab
-    const renderLee = (active=0)=>{
-    body.innerHTML = `<div class="lee-toolbar"><span class="lee-score" id="lee-score"></span><button class="btn ghost lee-reset" type="button">↺ Reset answers</button></div>
-      <div class="tabbar">${AW_LEE_DRILLS.map((t,i)=>`<button class="tabbtn${i===active?' active':''}" data-i="${i}">${esc(t.topic)}</button>`).join('')}</div>
-      ${AW_LEE_DRILLS.map((t,ti)=>`<div class="tabpanel${ti===active?' active':''}" id="lee-panel-${ti}">
-        <p class="lee-src">Adapted from Lee's exercise sheet: ${esc(t.src)}</p>
-        ${t.items.map((it,ii)=>`
-          <div class="doc-card">
-            <div style="font-size:.92rem;margin-bottom:12px;line-height:1.6;font-weight:600;">${esc(it.q)}</div>
-            <div class="logic-types" id="lee-btns-${ti}-${ii}">${shuffle(it.opts.slice()).map(o=>`<button onclick="window.__leePick(${ti},${ii},'${esc(o).replace(/'/g,"\\'")}')">${esc(o)}</button>`).join('')}</div>
-            <div class="doc-rule" id="lee-exp-${ti}-${ii}" style="margin-top:10px;">${esc(it.exp)}</div>
+    const total = AW_LEE_DRILLS.reduce((n,t)=>n+t.items.length,0);
+    // the correct answer is spread evenly over the positions within each tab (random order, never the same slot twice in a row)
+    const arrange = t => {
+      let prev = -1;
+      const slots = shuffle(t.items.map((_,i)=>i % Math.max(...t.items.map(it=>it.opts.length))));
+      return t.items.map((it,ii)=>{
+        const k = it.opts.length; let pos = slots[ii] % k;
+        if(pos===prev) pos = (pos + 1 + Math.floor(Math.random()*(k-1))) % k;
+        prev = pos;
+        const others = shuffle(it.opts.filter(o=>o!==it.a)); others.splice(pos, 0, it.a); return others;
+      });
+    };
+    let active = 0;
+    const renderLee = ()=>{
+      body.innerHTML = `<div class="lee-head">
+          <div class="lee-stat"><div class="lee-big"><span id="lee-right">0</span><small>/ <span id="lee-done">0</span> right</small></div><div class="lee-sub"><span id="lee-answered">0</span> of ${total} answered</div>
+            <div class="lee-bar"><div class="lee-bar-ok" id="lee-bar-ok"></div><div class="lee-bar-bad" id="lee-bar-bad"></div></div></div>
+          <button class="btn ghost lee-reset" type="button">↺ Reset &amp; reshuffle</button></div>
+        <div class="lee-tabs">${AW_LEE_DRILLS.map((t,i)=>{ const [name, sub] = t.topic.split(' — '); return `<button class="lee-tab${i===active?' active':''}" data-i="${i}"><span class="lee-tab-name">${esc(name)}</span><span class="lee-tab-sub">${esc(sub||'')}</span><span class="lee-tab-count" id="lee-count-${i}">0/${t.items.length}</span></button>`; }).join('')}</div>
+        ${AW_LEE_DRILLS.map((t,ti)=>{ const order = arrange(t); return `<div class="tabpanel${ti===active?' active':''}" id="lee-panel-${ti}">
+          <p class="lee-src">Adapted from Lee's exercise sheet: ${esc(t.src)}</p>
+          ${t.items.map((it,ii)=>`<div class="lee-card">
+            <div class="lee-q"><span class="lee-n">${ii+1}</span><span>${esc(it.q)}</span></div>
+            <div class="lee-opts" id="lee-btns-${ti}-${ii}">${order[ii].map((o,oi)=>`<button data-o="${esc(o)}" onclick="window.__leePick(${ti},${ii},this)"><span class="lee-l">${String.fromCharCode(65+oi)}</span>${esc(o)}</button>`).join('')}</div>
+            <div class="doc-rule" id="lee-exp-${ti}-${ii}">${esc(it.exp)}</div>
           </div>`).join('')}
-      </div>`).join('')}`;
-    body.querySelectorAll('.tabbtn').forEach(btn=>{
-      btn.onclick=()=>{
-        body.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
-        body.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
-        btn.classList.add('active');
-        body.querySelector(`#lee-panel-${btn.dataset.i}`).classList.add('active');
-      };
-    });
-    body.querySelector('.lee-reset').onclick = ()=>{ const cur = body.querySelector('.tabbtn.active'); renderLee(cur ? +cur.dataset.i : 0); };
-    leeScore();
+        </div>`; }).join('')}`;
+      body.querySelectorAll('.lee-tab').forEach(btn=>btn.addEventListener('click', ()=>{
+        active = +btn.dataset.i;
+        body.querySelectorAll('.lee-tab').forEach(b=>b.classList.toggle('active', b===btn));
+        body.querySelectorAll('.tabpanel').forEach(p=>p.classList.toggle('active', p.id==='lee-panel-'+active));
+      }));
+      body.querySelector('.lee-reset').addEventListener('click', renderLee);
+      leeScore();
     };
     const leeScore = ()=>{
-      const done = [...body.querySelectorAll('.logic-types')].filter(w=>w.querySelector('button:disabled')).length;
-      const right = [...body.querySelectorAll('.logic-types')].filter(w=>w.querySelector('button:disabled') && !w.querySelector('button.wrong')).length;
-      const total = AW_LEE_DRILLS.reduce((n,t)=>n+t.items.length,0);
-      const el = body.querySelector('#lee-score'); if(el) el.textContent = done ? `${right} / ${done} right · ${total} drills` : `${total} drills`;
+      let done = 0, right = 0;
+      AW_LEE_DRILLS.forEach((t,ti)=>{ let d = 0, r = 0;
+        t.items.forEach((_,ii)=>{ const w = body.querySelector(`#lee-btns-${ti}-${ii}`); if(w && w.classList.contains('done')){ d++; if(!w.querySelector('.wrong')) r++; } });
+        const c = body.querySelector('#lee-count-'+ti); if(c){ c.textContent = `${r}/${t.items.length}`; c.classList.toggle('full', r===t.items.length); }
+        done += d; right += r; });
+      body.querySelector('#lee-right').textContent = right; body.querySelector('#lee-done').textContent = done; body.querySelector('#lee-answered').textContent = done;
+      body.querySelector('#lee-bar-ok').style.width = (right/total*100)+'%'; body.querySelector('#lee-bar-bad').style.width = ((done-right)/total*100)+'%';
     };
     renderLee();
-    window.__leePick = (ti, ii, choice)=>{
+    // a new visit gets a fresh order as long as nothing has been answered yet
+    div.__onShow = ()=>{ if(!body.querySelector('.lee-opts.done')) renderLee(); };
+    window.__leePick = (ti, ii, btn)=>{
       const it = AW_LEE_DRILLS[ti].items[ii];
       const wrap = document.getElementById(`lee-btns-${ti}-${ii}`);
+      if(wrap.classList.contains('done')) return;
+      wrap.classList.add('done');
       wrap.querySelectorAll('button').forEach(b=>{
         b.disabled = true;
-        if(b.textContent===it.a) b.classList.add('correct');
-        else if(b.textContent===choice) b.classList.add('wrong');
+        if(b.dataset.o===it.a) b.classList.add('correct');
+        else if(b===btn) b.classList.add('wrong');
       });
       document.getElementById(`lee-exp-${ti}-${ii}`).classList.add('show');
       leeScore();
