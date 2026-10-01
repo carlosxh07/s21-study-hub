@@ -3835,6 +3835,8 @@ const AW_AREAS = [
   {label:'Formatting, Figures & Tables', page:'aw-rules', quiz:[9], mock:[18,19,20,21,22,23,24,25,26,27,28,29]},
   {label:'Structure & Genres', page:'aw-peel', quiz:[4,5,6,7,8], mock:[30,31,32,33,34,35,36,37]}
 ];
+// Lee's drills: last result per drill ('ti-ii' -> 1 right / 0 wrong), kept across reloads and resets
+function leeStats(){ const r = ls('lee-res', {}); const n = AW_LEE_DRILLS.reduce((a,t)=>a+t.items.length,0); const vals = Object.values(r); return {n, seen: vals.length, right: vals.filter(v=>v===1).length}; }
 const POM_SHORT = {'pom-0':'Foundations','pom-2':'Planning & Strategy','pom-4':'Control & Change'};
 function radarAxes(subj){
   if(subj==='ob') return OB_TOPICS.map(t=>({label:t.title, page:t.id, score:topicKnowledge(t)}));
@@ -3860,7 +3862,8 @@ function radarAxes(subj){
   return [
     ...AW_AREAS.map(a=>({label:a.label, page:a.page, ...withEstimate(
       qresDetail([...a.quiz.map(i=>AW_QUIZ[i]), ...a.mock.map(i=>AW_MOCK_MC[i])].filter(Boolean)),
-      [a.quiz.length ? bestRatio('quiz-aw', AW_QUIZ.length) : null, a.mock.length ? bestRatio('quiz-aw-mockmc', AW_MOCK_MC.length) : null])}))
+      [a.quiz.length ? bestRatio('quiz-aw', AW_QUIZ.length) : null, a.mock.length ? bestRatio('quiz-aw-mockmc', AW_MOCK_MC.length) : null])})),
+    {label:'English (Lee) · Language drills', page:'aw-lee-drills', ...withEstimate(leeStats(), [])}
   ];
 }
 
@@ -3880,7 +3883,7 @@ function planItemPool(){
   items.push({subj:'aw', label:'AW Quiz', page:'aw-quiz', weight:awQuiz==null ? .8 : 1-awQuiz, size:AW_QUIZ.length});
   items.push({subj:'aw', label:'Mockup MCQ Exam', page:'aw-mockexam-mc', weight:awMock==null ? .8 : 1-awMock, size:AW_MOCK_MC.length});
   items.push({subj:'aw', label:'Mockup Written Exam', page:'aw-mockexam-written', weight:.8, size:AW_MOCK_WRITTEN.length*8});
-  items.push({subj:'aw', label:'Lee Hawkins — Grammar & Language Drills', page:'aw-lee-drills', weight:.55, size:leeItems});
+  { const ls_ = leeStats(); items.push({subj:'aw', label:'Lee Hawkins — Grammar & Language Drills', page:'aw-lee-drills', weight: ls_.seen ? 1 - ls_.right/ls_.n : .55, size:leeItems}); }
   items.push({subj:'aw', label:'Marie Claire — Exam-Prep MCQ', page:'aw-marie-quiz', weight:.55, size:AW_MARIE_QUIZ.length});
   // "lots of content" = largest ~third; "priority" = weakest ~third (ties broken by size)
   const bySize = items.map(i=>i.size).sort((a,b)=>b-a);
@@ -5428,7 +5431,7 @@ function buildAWLeeDrills(){
     let active = 0;
     const renderLee = ()=>{
       body.innerHTML = `<div class="lee-head">
-          <div class="lee-stat"><div class="lee-big"><span id="lee-right">0</span><small>/ <span id="lee-done">0</span> right</small></div><div class="lee-sub"><span id="lee-answered">0</span> of ${total} answered</div>
+          <div class="lee-stat"><div class="lee-big"><span id="lee-right">0</span><small>/ <span id="lee-done">0</span> right</small></div><div class="lee-sub"><span id="lee-answered">0</span> of ${total} answered this round · <span id="lee-saved"></span></div>
             <div class="lee-bar"><div class="lee-bar-ok" id="lee-bar-ok"></div><div class="lee-bar-bad" id="lee-bar-bad"></div></div></div>
           <button class="btn ghost lee-reset" type="button">↺ Reset &amp; reshuffle</button></div>
         <div class="lee-tabs">${AW_LEE_DRILLS.map((t,i)=>{ const [name, sub] = t.topic.split(' — '); return `<button class="lee-tab${i===active?' active':''}" data-i="${i}"><span class="lee-tab-name">${esc(name)}</span><span class="lee-tab-sub">${esc(sub||'')}</span><span class="lee-tab-count" id="lee-count-${i}">0/${t.items.length}</span></button>`; }).join('')}</div>
@@ -5456,6 +5459,7 @@ function buildAWLeeDrills(){
         done += d; right += r; });
       body.querySelector('#lee-right').textContent = right; body.querySelector('#lee-done').textContent = done; body.querySelector('#lee-answered').textContent = done;
       body.querySelector('#lee-bar-ok').style.width = (right/total*100)+'%'; body.querySelector('#lee-bar-bad').style.width = ((done-right)/total*100)+'%';
+      const st = leeStats(); body.querySelector('#lee-saved').textContent = st.seen ? `saved for the study plan: ${st.right}/${st.n} right (last answer per drill)` : 'results are saved for the study plan';
     };
     renderLee();
     // a new visit gets a fresh order as long as nothing has been answered yet
@@ -5471,6 +5475,7 @@ function buildAWLeeDrills(){
         else if(b===btn) b.classList.add('wrong');
       });
       document.getElementById(`lee-exp-${ti}-${ii}`).classList.add('show');
+      const res = ls('lee-res', {}); res[ti+'-'+ii] = btn.dataset.o===it.a ? 1 : 0; lsSet('lee-res', res);
       leeScore();
     };
   });
