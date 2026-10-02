@@ -3832,7 +3832,8 @@ const OB_NAV = [
     {id:'ob-cheat', label:'Cheat Sheet', icon:'cheat'},
     {id:'ob-scenario', label:'Scenario Lab', icon:'scenario'},
     {id:'ob-match', label:'Framework Matcher', icon:'match'},
-    {id:'ob-sim', label:'Exam Simulator', icon:'timer'}
+    {id:'ob-sim', label:'Exam Simulator', icon:'timer'},
+    {id:'ob-official', label:'Official Questions (Canvas + sample exam)', icon:'quiz'}
   ]}
 ];
 // POM contains only what is in "Principles of Management_Slides for written exam" (History and Organizing removed)
@@ -5562,9 +5563,18 @@ function buildOBSim(){
   });
 }
 
+function buildOBOfficial(){
+  registerPage('ob-official', (div)=>{
+    const qs = [];
+    OB_TOPICS.forEach(t=>t.quiz.forEach(q=>{ if(q.src) qs.push({...q, topic:t.title}); }));
+    div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('quiz')} Exam Prep</div><h2>Official Questions</h2><p>All ${qs.length} original questions from the Canvas quizzes (Ghani, Shemla) and the OB sample exam, across all topics. Closest to the real exam: use it as a diagnostic.</p></div><div id="ob-official-body"></div>`;
+    renderQuiz(div.querySelector('#ob-official-body'), qs, 'ob-official', {topicOf:(qi)=>qs[qi].topic});
+  });
+}
+
 /* Register OB pages */
 OB_TOPICS.forEach(t=>buildTopicPage(t,'ob'));
-buildOBHome(); buildOBCheat(); buildOBScenario(); buildOBMatch(); buildOBSim();
+buildOBHome(); buildOBCheat(); buildOBScenario(); buildOBMatch(); buildOBSim(); buildOBOfficial();
 
 /* ============================================================ POM PAGES ============================================================ */
 // Scenario-style single-choice questions in the format of Dr. Minullah's example exam question (5 options a–e)
