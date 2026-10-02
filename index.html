@@ -5270,12 +5270,30 @@ AW_MOCK_MC.forEach(q=>{ q.src = 'Shalini · Sample Exam Q1'; });
 AW_MOCK_WRITTEN.forEach(w=>{ w.src = 'Shalini · Sample Exam ' + (/10/.test(w.pts||'') ? 'Q3' : 'Q2'); });
 AW_MARIE_QUIZ.forEach(q=>{ q.src = 'Marie Claire · Session 2 exam-prep slides'; });
 RZ_TASKS.forEach(t=>{ t.src = 'Raatzsch · Worksheet ' + t.sheet; });
+
+/* ---------- copy wrong answers to the clipboard (button after every quiz) ---------- */
+function quizTitleFor(el){
+  const page = el.closest('.page') || document;
+  const h = page.querySelector('.page-header h2') || document.querySelector('.page.active .page-header h2');
+  return h ? h.textContent.trim() : 'Quiz';
+}
+function mistakesText(title, list){
+  const d = new Date().toLocaleDateString('de-DE');
+  return `Mistakes · ${title} · ${d} (${list.length})\n\n` + list.map((m,i)=>
+    `${i+1}. ${m.topic?'['+m.topic+'] ':''}${m.q}\n   My answer: ${m.mine}\n   Correct: ${m.right}${m.exp?'\n   Why: '+m.exp:''}`).join('\n\n');
+}
+function copyToClipboard(text, btn){
+  const done = ()=>{ if(!btn) return; const o = btn.dataset.label || btn.textContent; btn.dataset.label = o; btn.textContent = 'Copied ✓'; setTimeout(()=>{ btn.textContent = o; }, 1800); };
+  if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(text).then(done, ()=>fallback()); } else fallback();
+  function fallback(){ const t = document.createElement('textarea'); t.value = text; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.select(); try{ document.execCommand('copy'); done(); }catch(e){ alert('Copy failed'); } t.remove(); }
+}
+
 function renderQuiz(container, questions, storeKey, opts){
   opts = opts||{};
   // shuffle answer options so the correct letter isn't predictable (authored banks tend to cluster on B/C)
   questions = questions.map(q=>{ const ord = shuffle(q.opts.map((_,i)=>i)); return {...q, opts:ord.map(i=>q.opts[i]), correct:ord.indexOf(q.correct)}; });
   let order = opts.order || shuffle(questions.map((_,i)=>i));
-  let idx = 0, score = 0, answered = [];
+  let idx = 0, score = 0, answered = [], wrongs = [];
   let topicScores = {};
   let timeLeft = opts.timerSec || null;
   let timerHandle = null;
@@ -5341,6 +5359,7 @@ function renderQuiz(container, questions, storeKey, opts){
     topicScores[t] = topicScores[t]||{right:0,total:0};
     topicScores[t].total++;
     if(isRight) topicScores[t].right++;
+    if(!isRight) wrongs.push({topic: opts.topicOf ? t : '', q:q.q, mine:q.opts[i], right:q.opts[correct], exp:q.exp});
     container.querySelector('#qexp').textContent = q.exp;
     container.querySelector('#qexp').classList.add('show');
     container.querySelector('#qnextbtn').style.display='inline-block';
@@ -5365,12 +5384,15 @@ function renderQuiz(container, questions, storeKey, opts){
         <p style="color:var(--ink-soft);margin-bottom:6px;font-size:1.05rem;">Score: <strong>${score} / ${order.length}</strong> (${pct}%)</p>
         <p style="color:var(--ink-faint);font-size:.8rem;margin-bottom:20px;">${best!==null?`Personal best: ${best}/${questions.length}`:''}</p>
         <button class="btn" id="quiz-restart-btn">Try again</button>
+        ${wrongs.length?`<button class="btn ghost" id="quiz-copy-btn" style="margin-left:8px;" title="Copy all wrong questions with your answer, the correct answer and the explanation">Copy mistakes (${wrongs.length})</button>`:''}
       </div>${breakdownHtml}`;
     container.querySelector('#quiz-restart-btn').addEventListener('click', restart);
+    const cb = container.querySelector('#quiz-copy-btn');
+    if(cb) cb.addEventListener('click', ()=>copyToClipboard(mistakesText(quizTitleFor(container), wrongs), cb));
   }
   function restart(){
     order = opts.order || shuffle(questions.map((_,i)=>i));
-    idx=0; score=0; answered=[]; topicScores={}; timeLeft=opts.timerSec||null; timerHandle=null;
+    idx=0; score=0; answered=[]; wrongs=[]; topicScores={}; timeLeft=opts.timerSec||null; timerHandle=null;
     render();
   }
   render();
@@ -5464,10 +5486,10 @@ function buildOBScenario(){
     div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('scenario')}</div><h2>Scenario Lab</h2><p>Real "Alex vs. Ben" exam-style scenario questions — pick which framework applies and why.</p></div><div class="page-body" id="ob-scen-body"></div>`;
     const body = div.querySelector('#ob-scen-body');
     let order = shuffle(OB_SCENARIOS.map((_,i)=>i));
-    let idx = 0, score=0;
+    let idx = 0, score=0, scenWrongs=[];
     function render(){
       if(idx>=order.length){
-        body.innerHTML = `<div style="text-align:center;padding:40px;"><h3 style="font-size:1.4rem;margin-bottom:10px;">Scenario Lab complete</h3><p style="color:var(--ink-soft);margin-bottom:20px;">Score: ${score} / ${order.length}</p><button class="btn" onclick="window.__scenRestart()">Restart</button></div>`;
+        body.innerHTML = `<div style="text-align:center;padding:40px;"><h3 style="font-size:1.4rem;margin-bottom:10px;">Scenario Lab complete</h3><p style="color:var(--ink-soft);margin-bottom:20px;">Score: ${score} / ${order.length}</p><button class="btn" onclick="window.__scenRestart()">Restart</button>${scenWrongs.length?`<button class="btn ghost" style="margin-left:8px;" onclick="window.__scenCopy(this)">Copy mistakes (${scenWrongs.length})</button>`:''}</div>`;
         return;
       }
       const s = OB_SCENARIOS[order[idx]];
@@ -5496,13 +5518,14 @@ function buildOBScenario(){
         if(oi===s.correct) el.classList.add('correct');
         else if(oi===i) el.classList.add('wrong');
       });
-      if(i===s.correct) score++;
+      if(i===s.correct) score++; else scenWrongs.push({q:s.a.name+': '+s.a.desc+' / '+s.b.name+': '+s.b.desc+' — '+s.q, mine:s.opts[i], right:s.opts[s.correct], exp:s.exp});
       document.getElementById('scenexp').textContent = s.exp;
       document.getElementById('scenexp').classList.add('show');
       document.getElementById('scennext').style.display='inline-block';
     };
     window.__scenNext = ()=>{ idx++; render(); };
-    window.__scenRestart = ()=>{ order=shuffle(OB_SCENARIOS.map((_,i)=>i)); idx=0; score=0; render(); };
+    window.__scenRestart = ()=>{ order=shuffle(OB_SCENARIOS.map((_,i)=>i)); idx=0; score=0; scenWrongs=[]; render(); };
+    window.__scenCopy = (btn)=>copyToClipboard(mistakesText('Scenario Lab', scenWrongs), btn);
     render();
   });
 }
@@ -6231,7 +6254,7 @@ function buildAWLeeDrills(){
       body.innerHTML = `<div class="lee-head">
           <div class="lee-stat"><div class="lee-big"><span id="lee-right">0</span><small>/ <span id="lee-done">0</span> right</small></div><div class="lee-sub"><span id="lee-answered">0</span> of ${total} answered this round · <span id="lee-saved"></span></div>
             <div class="lee-bar"><div class="lee-bar-ok" id="lee-bar-ok"></div><div class="lee-bar-bad" id="lee-bar-bad"></div></div></div>
-          <button class="btn ghost lee-reset" type="button">↺ Reset &amp; reshuffle</button></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn ghost lee-copy" type="button">Copy mistakes</button><button class="btn ghost lee-reset" type="button">↺ Reset &amp; reshuffle</button></div></div>
         <div class="lee-tabs">${AW_LEE_DRILLS.map((t,i)=>{ const [name, sub] = t.topic.split(' — '); return `<button class="lee-tab${i===active?' active':''}" data-i="${i}"><span class="lee-tab-name">${esc(name)}</span><span class="lee-tab-sub">${esc(sub||'')}</span><span class="lee-tab-count" id="lee-count-${i}">0/${t.items.length}</span></button>`; }).join('')}</div>
         ${AW_LEE_DRILLS.map((t,ti)=>{ const order = arrange(t); return `<div class="tabpanel${ti===active?' active':''}" id="lee-panel-${ti}">
           <p class="lee-src">Adapted from Lee's exercise sheet: ${esc(t.src)}</p>
@@ -6247,6 +6270,13 @@ function buildAWLeeDrills(){
         body.querySelectorAll('.tabpanel').forEach(p=>p.classList.toggle('active', p.id==='lee-panel-'+active));
       }));
       body.querySelector('.lee-reset').addEventListener('click', renderLee);
+      body.querySelector('.lee-copy').addEventListener('click', e=>{
+        const list = [];
+        AW_LEE_DRILLS.forEach((t,ti)=>t.items.forEach((it,ii)=>{ const w = body.querySelector(`#lee-btns-${ti}-${ii}`); const bad = w && w.querySelector('.wrong');
+          if(bad) list.push({topic:t.topic.split(' — ')[0], q:it.q, mine:bad.dataset.o, right:it.a, exp:it.exp}); }));
+        if(!list.length){ e.currentTarget.textContent = 'No mistakes this round'; setTimeout(()=>{ e.target.textContent='Copy mistakes'; },1800); return; }
+        copyToClipboard(mistakesText('Lee drills', list), e.currentTarget);
+      });
       leeScore();
     };
     const leeScore = ()=>{
@@ -6300,6 +6330,15 @@ function buildAWMarieQuiz(){
         <div class="quiz-exp" id="marie-exp-${i}">${esc(q.exp)}</div>
       </div>`).join('');
     const picks = AW_MARIE_QUIZ.map(()=>new Set());
+    body.insertAdjacentHTML('afterbegin', `<div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><button class="btn ghost" id="marie-copy-btn" title="Copy the checked questions you got wrong">Copy mistakes</button></div>`);
+    body.querySelector('#marie-copy-btn').addEventListener('click', e=>{
+      const L = i=>String.fromCharCode(65+i), list = [];
+      AW_MARIE_QUIZ.forEach((q,qi)=>{ const w = document.getElementById(`marie-opts-${qi}`); if(!w || !w.classList.contains('locked')) return;
+        const mine = [...picks[qi]].sort(); const ok = mine.length===q.correct.length && q.correct.every(c=>picks[qi].has(c));
+        if(!ok) list.push({q:q.q, mine: mine.map(i=>L(i)+') '+q.opts[i]).join(' + ') || '(nothing)', right:q.correct.map(i=>L(i)+') '+q.opts[i]).join(' + '), exp:q.exp}); });
+      if(!list.length){ e.currentTarget.textContent = 'No mistakes checked yet'; setTimeout(()=>{ e.target.textContent='Copy mistakes'; },1800); return; }
+      copyToClipboard(mistakesText('Marie Claire stress MCQ', list), e.currentTarget);
+    });
     window.__marieToggle = (qi, oi)=>{
       if(document.getElementById(`marie-opts-${qi}`).classList.contains('locked')) return;
       const set = picks[qi];
