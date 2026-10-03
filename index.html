@@ -530,7 +530,7 @@ body.hl-armed .hl-container{cursor:text;}
 .day-tl{position:relative;margin-top:8px;padding-left:52px;}
 .day-hour{position:absolute;left:0;width:100%;border-top:1px solid var(--line);font-size:.66rem;color:var(--ink-faint);}
 .day-hour span{position:absolute;left:0;top:-8px;background:inherit;}
-.day-block{position:absolute;left:52px;right:0;border-radius:12px;padding:6px 10px 6px 34px;background:var(--accent-bg);border-left:4px solid var(--accent);overflow:hidden;font-size:.8rem;line-height:1.3;cursor:pointer;transition:opacity .2s;}
+.day-block{position:absolute;left:52px;right:0;border-radius:12px;padding:6px 10px 6px 34px;white-space:nowrap;text-overflow:ellipsis;background:var(--accent-bg);border-left:4px solid var(--accent);overflow:hidden;font-size:.8rem;line-height:1.3;cursor:pointer;transition:opacity .2s;}
 .day-block.brk{background:var(--bg2);border-left-color:var(--ink-faint);color:var(--ink-soft);cursor:default;padding-left:12px;}
 .day-block.done{opacity:.5;border-left-color:var(--good);background:var(--good-bg);}
 .day-block.done .day-txt{text-decoration:line-through;}
@@ -5034,7 +5034,16 @@ function renderDayCard(){
   const rows=data.rows, done=data.done||{};
   const now=new Date(), nowM=now.getHours()*60+now.getMinutes();
   const first=Math.floor(Math.min(rows[0].start, nowM)/60)*60, last=Math.ceil(Math.max(rows[rows.length-1].end, Math.min(nowM, rows[rows.length-1].end+60))/60)*60;
-  const PX=1.5, H=(last-first)*PX;
+  // layout: to scale (PX per minute), but every block gets at least MINH so its text fits; later blocks are pushed down
+  // and hours / the now line follow the same piecewise mapping, so nothing ever overlaps
+  const PX=1.6, MINH=30, GAP=3;
+  const pos=[]; let yPrev=-Infinity, mPrev=first;
+  rows.forEach(r=>{ const top=Math.max((r.start-first)*PX, yPrev===-Infinity?0:yPrev+GAP+(r.start-mPrev)*PX); const h=Math.max(MINH,(r.end-r.start)*PX-GAP); pos.push({top,h}); yPrev=top+h; mPrev=r.end; });
+  const anchors=[[first,0]]; rows.forEach((r,i)=>{ anchors.push([r.start,pos[i].top]); anchors.push([r.end,pos[i].top+pos[i].h+GAP]); });
+  anchors.push([last, anchors[anchors.length-1][1]+(last-anchors[anchors.length-1][0])*PX]);
+  anchors.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+  const mapY=m=>{ let a=anchors[0]; for(const b of anchors){ if(b[0]>=m){ if(b[0]===a[0]) return Math.max(a[1],b[1]); return a[1]+(b[1]-a[1])*(m-a[0])/(b[0]-a[0]); } a=b; } return a[1]+(m-a[0])*PX; };
+  const H=mapY(last);
   // status: compare where you are (first unticked session) with the clock
   const open=rows.map((r,i)=>({...r,i})).filter(r=>!r.brk && !done[r.i]);
   let status='', cls='';
@@ -5045,13 +5054,13 @@ function renderDayCard(){
     else if(nowM<cur.start){ const d=cur.start-nowM; status=`${d} min ahead`; cls='ahead'; }
     else { status=`On track · now: ${cur.txt.slice(0,40)} (until ${fmtMin(cur.end)})`; cls='ontrack'; }
   }
-  let hours=''; for(let h=first; h<=last; h+=60) hours+=`<div class="day-hour" style="top:${(h-first)*PX}px"><span>${fmtMin(h)}</span></div>`;
-  const blocks=rows.map((r,i)=>`<div class="day-block${r.brk?' brk':''}${done[i]?' done':''}" data-i="${i}" style="top:${(r.start-first)*PX+1}px;height:${Math.max(18,(r.end-r.start)*PX-2)}px" title="${esc(fmtMin(r.start)+'–'+fmtMin(r.end)+' '+r.txt)}">
+  let hours=''; for(let h=first; h<=last; h+=60) hours+=`<div class="day-hour" style="top:${mapY(h)}px"><span>${fmtMin(h)}</span></div>`;
+  const blocks=rows.map((r,i)=>`<div class="day-block${r.brk?' brk':''}${done[i]?' done':''}" data-i="${i}" style="top:${pos[i].top}px;height:${pos[i].h}px" title="${esc(fmtMin(r.start)+'–'+fmtMin(r.end)+' '+r.txt)}">
       ${r.brk?'':`<span class="day-chk">${done[i]?'✓':''}</span>`}<span class="day-time">${fmtMin(r.start)}–${fmtMin(r.end)}</span>${r.src?esc(r.src)+' · ':''}<span class="day-txt">${esc(r.txt)}</span></div>`).join('');
   const showNow = nowM>=first && nowM<=last;
   card.innerHTML=`<div class="day-head"><h3>Today's schedule</h3><span class="day-status ${cls}">${esc(status)}</span>
       <div class="day-actions"><button class="btn ghost day-edit">Paste new plan</button><button class="btn ghost day-clear">Clear</button></div></div>
-    <div class="day-tl" style="height:${H+10}px">${hours}${blocks}${showNow?`<div class="day-now" style="top:${(nowM-first)*PX}px"><span>${fmtMin(nowM)}</span></div>`:''}</div>`;
+    <div class="day-tl" style="height:${H+10}px">${hours}${blocks}${showNow?`<div class="day-now" style="top:${mapY(nowM)}px"><span>${fmtMin(nowM)}</span></div>`:''}</div>`;
   card.querySelectorAll('.day-block:not(.brk)').forEach(b=>b.addEventListener('click',()=>{
     const d=ls(dayKey(),null); if(!d) return; d.done=d.done||{}; const i=b.dataset.i; if(d.done[i]) delete d.done[i]; else d.done[i]=Date.now(); lsSet(dayKey(), d); renderDayCard();
   }));
