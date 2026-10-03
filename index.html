@@ -5008,7 +5008,8 @@ function parseDayPlan(text){
     let src=''; if(rest.length && /^(📄|💻)/.test(rest[0])){ src=rest[0]; rest=rest.slice(1); }
     const txt=rest.join(' · ').replace(/^[·\s]+/,'').trim();
     const brk=!txt || /^(pause|break|mittag|lunch|einkaufen|essen|🛒)/i.test(txt) || /^(pause|break)\b/i.test(txt.replace(/^[^a-z]+/i,''));
-    rows.push({start,end,src,txt:txt||'Pause',brk});
+    const pre=/^\s*\|?\s*(✓|✔|\[x\])/i.test(line);
+    rows.push({start,end,src,txt:(txt||'Pause').replace(/^(✓|✔)\s*/,''),brk,pre});
   });
   return rows.sort((a,b)=>a.start-b.start);
 }
@@ -5018,13 +5019,14 @@ function renderDayCard(){
   const data=ls(dayKey(), null);
   if(!data || card.dataset.editing==='1'){
     card.innerHTML=`<div class="day-head"><h3>Today's schedule</h3></div>
-      <div class="day-paste"><p>Paste a day plan with times (e.g. the table Claude gives you: “10:15–10:35 | 📄 Sheet | …”). Only today's schedule changes; the revision plan below stays as it is.</p>
+      <div class="day-paste"><p>Paste a day plan with times (e.g. the table Claude gives you: “10:15–10:35 | 📄 Sheet | …”). Only today's schedule changes; the revision plan below stays as it is. Lines starting with ✓ are ticked off automatically.</p>
       <textarea placeholder="10:15–10:35 | 📄 Sheet | Mistakes review&#10;10:35–11:05 | 💻 Hub | Quiz OB 9 EBM&#10;11:05–11:20 | | Pause"></textarea>
       <div class="day-actions" style="margin-top:10px;"><button class="btn day-save">Save plan</button>${data?'<button class="btn ghost day-cancel">Cancel</button>':''}</div></div>`;
     card.querySelector('.day-save').addEventListener('click',()=>{
       const rows=parseDayPlan(card.querySelector('textarea').value);
       if(!rows.length){ card.querySelector('.day-paste p').textContent='No lines with times found. Each session needs a time range like 10:15–10:35.'; return; }
-      lsSet(dayKey(), {rows, done:{}}); card.dataset.editing='0'; renderDayCard();
+      const done={}; rows.forEach((r,i)=>{ if(r.pre && !r.brk) done[i]=Date.now(); delete r.pre; });
+      lsSet(dayKey(), {rows, done}); card.dataset.editing='0'; renderDayCard();
     });
     const c=card.querySelector('.day-cancel'); if(c) c.addEventListener('click',()=>{ card.dataset.editing='0'; renderDayCard(); });
     return;
