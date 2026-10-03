@@ -516,6 +516,32 @@ body.hl-armed .hl-container{cursor:text;}
 .plan-day.today{border-color:var(--accent);}
 .plan-today-chip{font-size:.66rem;font-weight:700;color:#fff;background:var(--accent);padding:2px 8px;border-radius:var(--radius-pill);}
 .radar-card{padding:20px 22px;border-radius:var(--radius);margin-bottom:22px;}
+/* ---------- Today's schedule (pasted day plan with a calendar-style now line) ---------- */
+.day-card{padding:20px 22px;border-radius:var(--radius);margin-bottom:22px;}
+.day-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+.day-head h3{font-size:1.05rem;}
+.day-status{font-size:.8rem;font-weight:700;padding:5px 11px;border-radius:999px;background:var(--bg2);color:var(--ink-soft);}
+.day-status.ahead{background:var(--good-bg);color:var(--good);}
+.day-status.behind{background:var(--bad-bg);color:var(--bad);}
+.day-status.ontrack{background:var(--accent-bg);color:var(--accent-ink);}
+.day-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.day-paste textarea{width:100%;min-height:150px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg2);color:var(--ink);padding:12px;font:inherit;font-size:.82rem;resize:vertical;}
+.day-paste p{font-size:.78rem;color:var(--ink-soft);margin:6px 0 10px;}
+.day-tl{position:relative;margin-top:8px;padding-left:52px;}
+.day-hour{position:absolute;left:0;width:100%;border-top:1px solid var(--line);font-size:.66rem;color:var(--ink-faint);}
+.day-hour span{position:absolute;left:0;top:-8px;background:inherit;}
+.day-block{position:absolute;left:52px;right:0;border-radius:12px;padding:6px 10px 6px 34px;background:var(--accent-bg);border-left:4px solid var(--accent);overflow:hidden;font-size:.8rem;line-height:1.3;cursor:pointer;transition:opacity .2s;}
+.day-block.brk{background:var(--bg2);border-left-color:var(--ink-faint);color:var(--ink-soft);cursor:default;padding-left:12px;}
+.day-block.done{opacity:.5;border-left-color:var(--good);background:var(--good-bg);}
+.day-block.done .day-txt{text-decoration:line-through;}
+.day-block .day-time{font-weight:700;font-size:.72rem;color:var(--ink-soft);margin-right:6px;}
+.day-block .day-chk{position:absolute;left:9px;top:7px;width:17px;height:17px;border-radius:5px;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;}
+.day-block.done .day-chk{background:var(--good);border-color:var(--good);}
+.day-now{position:absolute;left:44px;right:0;height:0;border-top:2px solid #ff3b30;z-index:5;pointer-events:none;}
+.day-now::before{content:"";position:absolute;left:-6px;top:-6px;width:10px;height:10px;border-radius:50%;background:#ff3b30;}
+.day-now span{position:absolute;left:-46px;top:-9px;font-size:.66rem;font-weight:700;color:#ff3b30;}
+.day-empty{font-size:.85rem;color:var(--ink-soft);}
+
 .radar-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px;}
 .radar-head h3{font-size:1.05rem;}
 .radar-tabs{margin-bottom:0;border-bottom:none;}
@@ -4913,6 +4939,7 @@ function buildStudyPlan(){
     div.innerHTML = `
       <div class="page-header"><div class="eyebrow">Cross-subject</div><h2>Study Plan</h2><p>See where your knowledge is weak, then follow a day-by-day revision plan built from your quiz and exam-simulator results. Weak topics show up more often, mastered ones fade out, and everything gets denser as each exam gets closer.</p></div>
       <div class="page-body">
+        <div class="day-card glass" id="day-card"></div>
         <div class="radar-card glass">
           <div class="radar-head"><div><h3>Weak-Spot Radar</h3><span class="radar-basis"></span></div>
             <div class="tabbar radar-tabs">${SUBJECTS.map(s=>`<button class="tabbtn" data-subj="${s.id}">${s.id.toUpperCase()}</button>`).join('')}</div>
@@ -4937,6 +4964,8 @@ function buildStudyPlan(){
         <div class="plan-legend"><span class="plan-badge prio">Priority</span> weakest topics, do these first <span class="plan-badge large">Lots of content</span> big topic, plan extra time</div>
         <div id="plan-days-list"></div>
       </div>`;
+    window.__dayCard = div.querySelector('#day-card'); renderDayCard();
+    const prevShow = div.__onShow; div.__onShow = ()=>{ if(prevShow) prevShow(); if(window.__dayCard.dataset.editing!=='1') renderDayCard(); };
     const startInput = div.querySelector('.plan-start-input');
     startInput.value = planIso(planStart());
     startInput.addEventListener('change', ()=>{
@@ -4966,6 +4995,68 @@ function buildStudyPlan(){
     renderPlanDays(div);
   });
 }
+
+
+/* ---------- Today's schedule: paste a timed day plan, tick sessions, see a now line like Apple Calendar ---------- */
+function dayKey(){ const d=new Date(); return 'day-plan-'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function parseDayPlan(text){
+  const rows=[]; const re=/(\d{1,2})[:.](\d{2})\s*[–—-]\s*(\d{1,2})[:.](\d{2})/;
+  text.split('\n').forEach(line=>{
+    const m=line.match(re); if(!m) return;
+    const start=+m[1]*60+ +m[2], end=+m[3]*60+ +m[4]; if(end<=start) return;
+    let rest=line.slice(line.indexOf(m[0])+m[0].length).replace(/\*\*/g,'').split('|').map(x=>x.trim()).filter(Boolean);
+    let src=''; if(rest.length && /^(📄|💻)/.test(rest[0])){ src=rest[0]; rest=rest.slice(1); }
+    const txt=rest.join(' · ').replace(/^[·\s]+/,'').trim();
+    const brk=!txt || /^(pause|break|mittag|lunch|einkaufen|essen|🛒)/i.test(txt) || /^(pause|break)\b/i.test(txt.replace(/^[^a-z]+/i,''));
+    rows.push({start,end,src,txt:txt||'Pause',brk});
+  });
+  return rows.sort((a,b)=>a.start-b.start);
+}
+function fmtMin(m){ return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0'); }
+function renderDayCard(){
+  const card=window.__dayCard || document.getElementById('day-card'); if(!card) return;
+  const data=ls(dayKey(), null);
+  if(!data || card.dataset.editing==='1'){
+    card.innerHTML=`<div class="day-head"><h3>Today's schedule</h3></div>
+      <div class="day-paste"><p>Paste a day plan with times (e.g. the table Claude gives you: “10:15–10:35 | 📄 Sheet | …”). Only today's schedule changes; the revision plan below stays as it is.</p>
+      <textarea placeholder="10:15–10:35 | 📄 Sheet | Mistakes review&#10;10:35–11:05 | 💻 Hub | Quiz OB 9 EBM&#10;11:05–11:20 | | Pause"></textarea>
+      <div class="day-actions" style="margin-top:10px;"><button class="btn day-save">Save plan</button>${data?'<button class="btn ghost day-cancel">Cancel</button>':''}</div></div>`;
+    card.querySelector('.day-save').addEventListener('click',()=>{
+      const rows=parseDayPlan(card.querySelector('textarea').value);
+      if(!rows.length){ card.querySelector('.day-paste p').textContent='No lines with times found. Each session needs a time range like 10:15–10:35.'; return; }
+      lsSet(dayKey(), {rows, done:{}}); card.dataset.editing='0'; renderDayCard();
+    });
+    const c=card.querySelector('.day-cancel'); if(c) c.addEventListener('click',()=>{ card.dataset.editing='0'; renderDayCard(); });
+    return;
+  }
+  const rows=data.rows, done=data.done||{};
+  const now=new Date(), nowM=now.getHours()*60+now.getMinutes();
+  const first=Math.floor(Math.min(rows[0].start, nowM)/60)*60, last=Math.ceil(Math.max(rows[rows.length-1].end, Math.min(nowM, rows[rows.length-1].end+60))/60)*60;
+  const PX=1.5, H=(last-first)*PX;
+  // status: compare where you are (first unticked session) with the clock
+  const open=rows.map((r,i)=>({...r,i})).filter(r=>!r.brk && !done[r.i]);
+  let status='', cls='';
+  if(!open.length){ status='All sessions done 🎉'; cls='ahead'; }
+  else {
+    const cur=open[0];
+    if(nowM>cur.end){ const d=nowM-cur.end; status=`${d} min behind · “${cur.txt.slice(0,40)}” should have ended at ${fmtMin(cur.end)}`; cls='behind'; }
+    else if(nowM<cur.start){ const d=cur.start-nowM; status=`${d} min ahead`; cls='ahead'; }
+    else { status=`On track · now: ${cur.txt.slice(0,40)} (until ${fmtMin(cur.end)})`; cls='ontrack'; }
+  }
+  let hours=''; for(let h=first; h<=last; h+=60) hours+=`<div class="day-hour" style="top:${(h-first)*PX}px"><span>${fmtMin(h)}</span></div>`;
+  const blocks=rows.map((r,i)=>`<div class="day-block${r.brk?' brk':''}${done[i]?' done':''}" data-i="${i}" style="top:${(r.start-first)*PX+1}px;height:${Math.max(18,(r.end-r.start)*PX-2)}px" title="${esc(fmtMin(r.start)+'–'+fmtMin(r.end)+' '+r.txt)}">
+      ${r.brk?'':`<span class="day-chk">${done[i]?'✓':''}</span>`}<span class="day-time">${fmtMin(r.start)}–${fmtMin(r.end)}</span>${r.src?esc(r.src)+' · ':''}<span class="day-txt">${esc(r.txt)}</span></div>`).join('');
+  const showNow = nowM>=first && nowM<=last;
+  card.innerHTML=`<div class="day-head"><h3>Today's schedule</h3><span class="day-status ${cls}">${esc(status)}</span>
+      <div class="day-actions"><button class="btn ghost day-edit">Paste new plan</button><button class="btn ghost day-clear">Clear</button></div></div>
+    <div class="day-tl" style="height:${H+10}px">${hours}${blocks}${showNow?`<div class="day-now" style="top:${(nowM-first)*PX}px"><span>${fmtMin(nowM)}</span></div>`:''}</div>`;
+  card.querySelectorAll('.day-block:not(.brk)').forEach(b=>b.addEventListener('click',()=>{
+    const d=ls(dayKey(),null); if(!d) return; d.done=d.done||{}; const i=b.dataset.i; if(d.done[i]) delete d.done[i]; else d.done[i]=Date.now(); lsSet(dayKey(), d); renderDayCard();
+  }));
+  card.querySelector('.day-edit').addEventListener('click',()=>{ card.dataset.editing='1'; renderDayCard(); });
+  card.querySelector('.day-clear').addEventListener('click',()=>{ if(confirm("Remove today's schedule?")){ lsSet(dayKey(), null); renderDayCard(); } });
+}
+setInterval(()=>{ const c=window.__dayCard; if(c && c.offsetParent!==null && c.dataset.editing!=='1') renderDayCard(); }, 60000);
 
 function renderPlanDays(div){
   renderRadar(div);
