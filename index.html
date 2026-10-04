@@ -530,7 +530,8 @@ body.hl-armed .hl-container{cursor:text;}
 .day-tl{position:relative;margin-top:8px;padding-left:52px;}
 .day-hour{position:absolute;left:0;width:100%;border-top:1px solid var(--line);font-size:.66rem;color:var(--ink-faint);}
 .day-hour span{position:absolute;left:0;top:-8px;background:inherit;}
-.day-block{position:absolute;left:52px;right:0;border-radius:12px;padding:6px 10px 6px 34px;white-space:nowrap;text-overflow:ellipsis;background:var(--accent-bg);border-left:4px solid var(--accent);overflow:hidden;font-size:.8rem;line-height:1.3;cursor:pointer;transition:opacity .2s;}
+.day-block{position:absolute;left:52px;right:0;border-radius:12px;padding:6px 10px 6px 34px;background:var(--accent-bg);border-left:4px solid var(--accent);overflow:hidden;font-size:.8rem;line-height:1.3;cursor:pointer;transition:opacity .2s;}
+.day-block.one{white-space:nowrap;text-overflow:ellipsis;}
 .day-block.brk{background:var(--bg2);border-left-color:var(--ink-faint);color:var(--ink-soft);cursor:default;padding-left:12px;}
 .day-block.done{opacity:.5;border-left-color:var(--good);background:var(--good-bg);}
 .day-block.done .day-txt{text-decoration:line-through;}
@@ -5038,7 +5039,7 @@ function renderDayCard(){
   // and hours / the now line follow the same piecewise mapping, so nothing ever overlaps
   const PX=1.6, MINH=30, GAP=3;
   const pos=[]; let yPrev=-Infinity, mPrev=first;
-  rows.forEach(r=>{ const top=Math.max((r.start-first)*PX, yPrev===-Infinity?0:yPrev+GAP+(r.start-mPrev)*PX); const h=Math.max(MINH,(r.end-r.start)*PX-GAP); pos.push({top,h}); yPrev=top+h; mPrev=r.end; });
+  rows.forEach(r=>{ const top=Math.max((r.start-first)*PX, yPrev===-Infinity?0:yPrev+GAP+(r.start-mPrev)*PX); const lines=Math.max(1,Math.ceil(((r.src||'').length+r.txt.length+14)/ (window.innerWidth<700?38:95))); const h=Math.max(MINH, 12+lines*19, (r.end-r.start)*PX-GAP); pos.push({top,h}); yPrev=top+h; mPrev=r.end; });
   const anchors=[[first,0]]; rows.forEach((r,i)=>{ anchors.push([r.start,pos[i].top]); anchors.push([r.end,pos[i].top+pos[i].h+GAP]); });
   anchors.push([last, anchors[anchors.length-1][1]+(last-anchors[anchors.length-1][0])*PX]);
   anchors.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
@@ -5055,7 +5056,7 @@ function renderDayCard(){
     else { status=`On track · now: ${cur.txt.slice(0,40)} (until ${fmtMin(cur.end)})`; cls='ontrack'; }
   }
   let hours=''; for(let h=first; h<=last; h+=60) hours+=`<div class="day-hour" style="top:${mapY(h)}px"><span>${fmtMin(h)}</span></div>`;
-  const blocks=rows.map((r,i)=>`<div class="day-block${r.brk?' brk':''}${done[i]?' done':''}" data-i="${i}" style="top:${pos[i].top}px;height:${pos[i].h}px" title="${esc(fmtMin(r.start)+'–'+fmtMin(r.end)+' '+r.txt)}">
+  const blocks=rows.map((r,i)=>`<div class="day-block${r.brk?' brk':''}${done[i]?' done':''}${pos[i].h<40?' one':''}" data-i="${i}" style="top:${pos[i].top}px;height:${pos[i].h}px" title="${esc(fmtMin(r.start)+'–'+fmtMin(r.end)+' '+r.txt)}">
       ${r.brk?'':`<span class="day-chk">${done[i]?'✓':''}</span>`}<span class="day-time">${fmtMin(r.start)}–${fmtMin(r.end)}</span>${r.src?esc(r.src)+' · ':''}<span class="day-txt">${esc(r.txt)}</span></div>`).join('');
   const showNow = nowM>=first && nowM<=last;
   card.innerHTML=`<div class="day-head"><h3>Today's schedule</h3><span class="day-status ${cls}">${esc(status)}</span>
