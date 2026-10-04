@@ -240,7 +240,7 @@ a,button{font-family:inherit;}
 .summary-text .sum-vocab dt{font-weight:700;color:var(--ink);}
 .summary-text .sum-vocab dd{margin:0;color:var(--ink-soft);}
 @media(max-width:640px){.summary-text .sum-vocab{grid-template-columns:1fr;gap:2px;}.summary-text .sum-vocab dd{margin-bottom:8px;}}
-.summary-text p:first-of-type::first-letter{font-family:'Inter',-apple-system,sans-serif;font-size:2.6em;font-weight:700;float:left;line-height:.85;padding-right:8px;padding-top:4px;color:var(--accent-ink);}
+/* no drop cap: a floated big first letter made highlights in the first line look shifted (the mark could not cover it) */
 
 /* ============ HIGHLIGHTING ============ */
 mark.hl{border-radius:3px;padding:.05em 0;cursor:pointer;color:inherit;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
@@ -807,7 +807,7 @@ body.hl-armed .hl-container{cursor:text;}
 .rz-likely-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem;}
 .rz-likely-q .btn{flex-shrink:0;padding:6px 14px;font-size:.8rem;}
 .rz-sec{margin:6px 0 22px;}
-.rz-sec .summary-text p:first-of-type::first-letter,.rz-model-text .summary-text p:first-of-type::first-letter{font:inherit;float:none;padding:0;color:inherit;line-height:inherit;}
+.rz-core .summary-text p:first-of-type::first-letter,.rz-sec .summary-text p:first-of-type::first-letter,.rz-model-text .summary-text p:first-of-type::first-letter{font:inherit;float:none;padding:0;color:inherit;line-height:inherit;}
 .rz-sec h3{font-size:1.05rem;margin:0 0 8px;}
 .rz-tip{font-size:.85rem;color:var(--ink-soft);margin:0 0 14px;}
 .rz-model{border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;margin-bottom:12px;background:var(--panel);}
@@ -5930,13 +5930,14 @@ function buildRZDossiers(){
       const qs = d.exam.map(rzQ);
       div.innerHTML = `<div class="page-header"><div class="eyebrow">${icon('summary')} Prof. Raatzsch · Exam topic ${di+1} of 5</div><h2>${esc(d.title)}</h2><p>${esc(d.short)}</p></div>
         <div class="page-body">
-          <div class="rz-core"><h4>The core in three sentences</h4><p>${esc(d.core)}</p></div>
+          <div class="rz-core"><h4>The core in three sentences</h4><div class="rz-core-body"></div></div>
           <div class="rz-likely"><h4>Likely exam questions (short, as in class; the exam adds a hint in brackets)</h4>${qs.map(q=>`<div class="rz-likely-q"><span>${q.inclass?`<span class="rz-ice">${esc(q.inclass)}</span> `:''}${esc(q.q)}</span><button class="btn ghost" onclick="window.__rzWrite('${q.id}')">Write it</button></div>`).join('')}</div>
           <div class="tabbar"><button class="tabbtn active" data-tab="learn">1 · Learn the content</button><button class="tabbtn" data-tab="models">2 · Model answers</button><button class="tabbtn" data-tab="recall">3 · Check yourself</button></div>
           <div class="tabpanel active rz-secs" data-panel="learn"></div>
           <div class="tabpanel" data-panel="models"><p class="rz-tip">Read the outline first, try to say the answer in your own words, then open the model. Your proven in-class format is about four short paragraphs (150 to 200 words); in the exam you have 15 minutes per question, so the long version shows how far you can go.</p>${qs.map((q,i)=>rzModelHtml(q, i===0)).join('')}</div>
           <div class="tabpanel" data-panel="recall"><p class="rz-tip">Answer out loud or on paper first (his "Iron Rule": writing is better than reading), then reveal.</p>${d.recall.map((r,i)=>`<div class="rz-recall"><div class="rz-recall-q">${i+1}. ${esc(r.q)}</div><button class="btn ghost" onclick="this.nextElementSibling.classList.add('show');this.remove()">Show answer</button><div class="rz-recall-a">${esc(r.a)}</div></div>`).join('')}</div>
         </div>`;
+      renderSummary(div.querySelector('.rz-core-body'), 'POM', d.core, `${d.id}-core`); // the blue core box can be highlighted too
       d.sections.forEach((s, si)=>rzSection(div, '.rz-secs', s.h, s.text, `${d.id}-s${si}`));
       const bar = div.querySelector('.tabbar');
       bar.querySelectorAll('.tabbtn').forEach(b=>b.addEventListener('click', ()=>{
