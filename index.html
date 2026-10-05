@@ -6292,14 +6292,17 @@ function buildAWCitation(){
       <div class="doc-card">
         <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-ink);margin-bottom:10px;">Broken citation ${i+1}</div>
         <div class="doc-broken">${esc(c.broken)}</div>
-        <button class="btn ghost" onclick="window.__docReveal(${i})">Reveal fix &amp; rule</button>
+        <button class="btn ghost" id="doc-btn-${i}" onclick="window.__docReveal(${i})">Reveal fix &amp; rule</button>
         <div class="doc-fixed" id="doc-fixed-${i}">${esc(c.fixed)}</div>
         <div class="doc-rule" id="doc-rule-${i}">${esc(c.rule)}</div>
       </div>`).join('');
-    window.__docReveal = (i)=>{
-      document.getElementById('doc-fixed-'+i).classList.add('show');
-      document.getElementById('doc-rule-'+i).classList.add('show');
+    body.insertAdjacentHTML('afterbegin', `<div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><button class="btn ghost" type="button" onclick="window.__docResetAll()">↺ Reset all</button></div>`);
+    window.__docReveal = (i, force)=>{
+      const f = document.getElementById('doc-fixed-'+i), on = force===undefined ? !f.classList.contains('show') : force;
+      f.classList.toggle('show', on); document.getElementById('doc-rule-'+i).classList.toggle('show', on);
+      document.getElementById('doc-btn-'+i).innerHTML = on ? '↺ Hide again' : 'Reveal fix &amp; rule';
     };
+    window.__docResetAll = ()=>AW_CITATIONS.forEach((_,i)=>window.__docReveal(i,false));
   });
 }
 
@@ -6313,7 +6316,15 @@ function buildAWLogic(){
         <div style="font-size:.92rem;margin-bottom:6px;line-height:1.6;">${esc(l.text)}</div>
         <div class="logic-types" id="logic-btns-${i}">${TYPES.map(t=>`<button onclick="window.__logicPick(${i},'${t}')">${t}</button>`).join('')}</div>
         <div class="doc-rule" id="logic-exp-${i}" style="margin-top:10px;">${esc(l.exp)}</div>
+        <button class="btn ghost" id="logic-reset-${i}" style="margin-top:10px;display:none;" onclick="window.__logicReset(${i})">↺ Try again</button>
       </div>`).join('');
+    body.insertAdjacentHTML('afterbegin', `<div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><button class="btn ghost" type="button" onclick="window.__logicResetAll()">↺ Reset all</button></div>`);
+    window.__logicReset = (i)=>{
+      document.getElementById('logic-btns-'+i).querySelectorAll('button').forEach(b=>{ b.disabled=false; b.classList.remove('correct','wrong'); });
+      document.getElementById('logic-exp-'+i).classList.remove('show');
+      document.getElementById('logic-reset-'+i).style.display='none';
+    };
+    window.__logicResetAll = ()=>AW_LOGIC.forEach((_,i)=>window.__logicReset(i));
     window.__logicPick = (i, choice)=>{
       const l = AW_LOGIC[i];
       const wrap = document.getElementById('logic-btns-'+i);
@@ -6323,6 +6334,7 @@ function buildAWLogic(){
         else if(b.textContent===choice) b.classList.add('wrong');
       });
       document.getElementById('logic-exp-'+i).classList.add('show');
+      document.getElementById('logic-reset-'+i).style.display='';
     };
   });
 }
@@ -6362,10 +6374,16 @@ function buildAWMockExamWritten(){
       <div class="doc-card">
         ${srcBadge(w.src)}<div class="case-q">${esc(w.title)}</div>
         <div style="white-space:pre-line;font-size:.87rem;color:var(--ink-soft);line-height:1.7;margin-bottom:16px;">${esc(w.prompt)}</div>
-        <button class="btn ghost" onclick="window.__mockWrReveal(${i})">Reveal model answer</button>
+        <button class="btn ghost" id="mockwr-btn-${i}" onclick="window.__mockWrReveal(${i})">Reveal model answer</button>
         <div class="case-model" id="mockwr-model-${i}" style="white-space:pre-line;margin-top:14px;"><h5>Model Answer</h5>${esc(w.model)}</div>
       </div>`).join('');
-    window.__mockWrReveal = (i)=>{ document.getElementById('mockwr-model-'+i).classList.add('show'); };
+    body.insertAdjacentHTML('afterbegin', `<div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><button class="btn ghost" type="button" onclick="window.__mockWrResetAll()">↺ Reset all</button></div>`);
+    window.__mockWrReveal = (i, force)=>{
+      const m = document.getElementById('mockwr-model-'+i), on = force===undefined ? !m.classList.contains('show') : force;
+      m.classList.toggle('show', on);
+      document.getElementById('mockwr-btn-'+i).textContent = on ? '↺ Hide model answer' : 'Reveal model answer';
+    };
+    window.__mockWrResetAll = ()=>AW_MOCK_WRITTEN.forEach((_,i)=>window.__mockWrReveal(i,false));
   });
 }
 
@@ -6463,10 +6481,11 @@ function buildAWMarieQuiz(){
           ${q.opts.map((o,oi)=>`<div class="quiz-option" data-oi="${oi}" onclick="window.__marieToggle(${i},${oi})"><span class="letter">${String.fromCharCode(65+oi)}</span><span>${esc(o)}</span></div>`).join('')}
         </div>
         <button class="btn ghost" style="margin-top:12px;" onclick="window.__marieCheck(${i})">Check answer</button>
+        <button class="btn ghost" id="marie-reset-${i}" style="margin-top:12px;display:none;" onclick="window.__marieReset(${i})">↺ Try again</button>
         <div class="quiz-exp" id="marie-exp-${i}">${esc(q.exp)}</div>
       </div>`).join('');
     const picks = AW_MARIE_QUIZ.map(()=>new Set());
-    body.insertAdjacentHTML('afterbegin', `<div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><button class="btn ghost" id="marie-copy-btn" title="Copy the checked questions you got wrong">Copy mistakes</button></div>`);
+    body.insertAdjacentHTML('afterbegin', `<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px;"><button class="btn ghost" id="marie-copy-btn" title="Copy the checked questions you got wrong">Copy mistakes</button><button class="btn ghost" type="button" onclick="window.__marieResetAll()">↺ Reset all</button></div>`);
     body.querySelector('#marie-copy-btn').addEventListener('click', e=>{
       const L = i=>String.fromCharCode(65+i), list = [];
       AW_MARIE_QUIZ.forEach((q,qi)=>{ const w = document.getElementById(`marie-opts-${qi}`); if(!w || !w.classList.contains('locked')) return;
@@ -6493,7 +6512,16 @@ function buildAWMarieQuiz(){
         else if(picks[qi].has(oi)) el.classList.add('wrong');
       });
       document.getElementById(`marie-exp-${qi}`).classList.add('show');
+      document.getElementById(`marie-reset-${qi}`).style.display='';
     };
+    window.__marieReset = (qi)=>{
+      picks[qi].clear();
+      const wrap = document.getElementById(`marie-opts-${qi}`); wrap.classList.remove('locked');
+      wrap.querySelectorAll('.quiz-option').forEach(el=>{ el.classList.remove('disabled','correct','wrong'); el.style.background=''; el.style.borderColor=''; });
+      document.getElementById(`marie-exp-${qi}`).classList.remove('show');
+      document.getElementById(`marie-reset-${qi}`).style.display='none';
+    };
+    window.__marieResetAll = ()=>AW_MARIE_QUIZ.forEach((_,i)=>window.__marieReset(i));
   });
 }
 
